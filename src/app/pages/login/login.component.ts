@@ -29,11 +29,11 @@ import { LoginForm } from '../../define/user';
 })
 export class LoginComponent {
   validateForm: FormGroup<{
-    userName: FormControl<string>;
+    username: FormControl<string>;
     password: FormControl<string>;
     remember: FormControl<boolean>;
   }> = this.fb.group({
-    userName: ['admin', [Validators.required]],
+    username: ['admin', [Validators.required]],
     password: ['123456', [Validators.required]],
     remember: [true]
   });
@@ -43,8 +43,7 @@ export class LoginComponent {
 
   submitForm(): void {
     if (this.validateForm.valid) {
-      console.log('submit', this.validateForm.value);
-      this.doLogin(this.validateForm.value as LoginForm);
+      this.loginService.login(this.validateForm.value as LoginForm);
     } else {
       Object.values(this.validateForm.controls).forEach(control => {
         if (control.invalid) {
@@ -54,13 +53,4 @@ export class LoginComponent {
       });
     }
   }
-
-  doLogin(data: LoginForm): void {
-    this.loginService.login(data).subscribe(res => {
-      if (res.success && res.data) {
-        this.authService.saveUser(res.data);
-      }
-    })
-  }
-
 }

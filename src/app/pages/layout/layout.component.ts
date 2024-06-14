@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { NzIconModule } from 'ng-zorro-antd/icon';
@@ -10,6 +10,8 @@ import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzDividerComponent } from 'ng-zorro-antd/divider';
 import { NzInputModule } from 'ng-zorro-antd/input';
+import { LogoutService } from '../../services/login/logout.service';
+import { AuthenticationService } from '../../services/auth/authentication.service';
 
 @Component({
   selector: 'app-layout',
@@ -30,7 +32,19 @@ import { NzInputModule } from 'ng-zorro-antd/input';
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.css'
 })
-export class LayoutComponent {
+export class LayoutComponent implements OnInit {
   isCollapsed = false;
   showFooter = true;
+
+  constructor(private logoutService: LogoutService, private authService: AuthenticationService) {
+  }
+
+  logout() {
+    this.logoutService.logout();
+  }
+
+  ngOnInit(): void {
+    console.log(123);
+    this.authService.ngOnInit();
+  }
 }

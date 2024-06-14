@@ -63,7 +63,7 @@
                 <li nz-menu-item><span nz-icon nzType="user" nzTheme="outline"></span> 个人设置</li>
                 <li nz-menu-item><span nz-icon nzType="key" nzTheme="outline"></span> 修改密码</li>
                 <li><nz-divider style="margin: 5px 0"></nz-divider></li>
-                <li nz-menu-item><span nz-icon nzType="logout" nzTheme="outline"></span> 退出登录</li>
+                <li nz-menu-item (click)="logout()"><span nz-icon nzType="logout" nzTheme="outline"></span> 退出登录</li>
               </ul>
             </nz-dropdown-menu>
           </div>

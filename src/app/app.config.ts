@@ -8,7 +8,8 @@ import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
 import { FormsModule } from '@angular/forms';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { baseUrlInterceptor } from './http/base-url.interceptor';
 
 registerLocaleData(zh);
 
@@ -20,6 +21,6 @@ export const appConfig: ApplicationConfig = {
     provideNzI18n(zh_CN),
     importProvidersFrom(FormsModule),
     provideAnimationsAsync(),
-    provideHttpClient()
+    provideHttpClient(withInterceptors([baseUrlInterceptor]))
   ]
 };
