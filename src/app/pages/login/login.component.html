@@ -1,0 +1,37 @@
+<div class="login-container">
+  <div nz-row>
+    <div nz-col nzSpan="12" [nzOffset]="12">
+      <div class="login-form-container">
+        <h2 class="login-title">登录 DarkBlue</h2>
+        <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
+          <nz-form-item>
+            <nz-form-control nzErrorTip="Please input your username!">
+              <nz-input-group nzPrefixIcon="user">
+                <input nz-input nzSize="large" type="text" formControlName="userName" placeholder="用户名"/>
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-control nzErrorTip="Please input your Password!">
+              <nz-input-group nzPrefixIcon="lock">
+                <input nz-input nzSize="large" type="password" formControlName="password" placeholder="密码"/>
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+          <div nz-row class="login-form-margin">
+            <div nz-col [nzSpan]="12">
+              <label nz-checkbox formControlName="remember">
+                <span>记住我</span>
+              </label>
+            </div>
+            <div nz-col [nzSpan]="12">
+              <a class="login-form-forgot">忘记密码？</a>
+            </div>
+          </div>
+          <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'">登录</button>
+          <a>注册新用户!</a>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

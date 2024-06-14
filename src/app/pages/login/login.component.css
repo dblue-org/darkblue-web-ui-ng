@@ -1,0 +1,42 @@
+.login-container {
+  background-image: url("../../../assets/images/background/6.jpg");
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.login-form-container {
+  margin: 300px auto 0 auto;
+  background-color: rgba(200, 200, 200, 0.5);
+  padding: 50px;
+  max-width: 500px;
+  border-radius: 5px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.login-form {
+  margin: 0 auto;
+  max-width: 400px;
+}
+
+:host ::ng-deep .ant-input {
+  height: 32px;
+  font-size: 16px;
+  margin-left: 5px;
+}
+
+.login-form-margin {
+  margin-bottom: 16px;
+}
+
+.login-form-forgot {
+  float: right;
+}
+
+.login-form-button {
+  width: 100%;
+}
+
+.login-title {
+  color: #161684;
+}
