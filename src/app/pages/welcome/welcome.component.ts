@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { ACLDirective, ACLIfDirective } from '@delon/acl';
+import { DelonACLModule} from '@delon/acl';
+import {PermIfDirective} from "../../directives/perm-if.directive";
 
 @Component({
   selector: 'app-welcome',
   standalone: true,
   templateUrl: './welcome.component.html',
   imports: [
-    ACLIfDirective,
-    ACLDirective
+    DelonACLModule,
+    PermIfDirective
   ],
   styleUrls: ['./welcome.component.css']
 })

@@ -9,28 +9,7 @@
       <img src="/assets/images/component-exchange.svg" alt="logo">
       <h1>DarkBlue Of Angular</h1>
     </div>
-    <ul nz-menu nzTheme="light" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
-      <li nz-submenu nzOpen nzTitle="Dashboard" nzIcon="dashboard">
-        <ul>
-          <li nz-menu-item nzMatchRouter>
-            <a routerLink="/welcome">Welcome</a>
-          </li>
-          <li nz-menu-item nzMatchRouter>
-            <a>Monitor</a>
-          </li>
-          <li nz-menu-item nzMatchRouter>
-            <a>Workplace</a>
-          </li>
-        </ul>
-      </li>
-      <li nz-submenu nzOpen nzTitle="Form" nzIcon="form">
-        <ul>
-          <li nz-menu-item nzMatchRouter>
-            <a>Basic Form</a>
-          </li>
-        </ul>
-      </li>
-    </ul>
+    <app-menu [isCollapsed]="isCollapsed"></app-menu>
   </nz-sider>
   <nz-layout>
     <nz-header>
@@ -46,29 +25,38 @@
           </div>
           <div nz-col class="gutter-row" [nzSpan]="15">
             <nz-input-group [nzPrefix]="prefixTemplateUser">
-              <input type="text" nz-input placeholder="Enter your username" />
+              <input type="text" nz-input placeholder="Enter your username"/>
             </nz-input-group>
             <ng-template #prefixTemplateUser><span nz-icon nzType="search" nzTheme="outline"></span></ng-template>
           </div>
-          <div nz-col class="gutter-row" [nzSpan]="6" style="text-align: right;padding-right:32px">
+          <div nz-col class="gutter-row" [nzSpan]="6" style="text-align: right;padding-right:32px;">
             <button nz-button nzType="primary" class="header-button">
-              <span nz-icon nzType="setting" nzTheme="outline"></span>
+              &nbsp;&nbsp;
+              <nz-badge [nzCount]="5" nzSize="small">
+                <span nz-icon nzType="bell" style="color: white;font-size: 20px;" nzTheme="outline"></span>
+              </nz-badge>
+              &nbsp;&nbsp;
             </button>
-            <span class="header-user" nz-dropdown [nzDropdownMenu]="menu">
-              <nz-avatar nzText="Ad" [nzSize]="30" [nzGap]="16"></nz-avatar>
+            <button nz-button nzType="primary" class="header-button">
+              <span nz-icon nzType="setting" style="font-size: 20px;" nzTheme="outline"></span>
+            </button>
+            <span class="header-avatar"  nz-dropdown [nzDropdownMenu]="menu">
+              <nz-avatar nzText="Ad"
+                         style="margin-top: -6px;"
+                         nzShape="square" [nzSize]="32" [nzGap]="16"></nz-avatar>
               超级管理员
             </span>
             <nz-dropdown-menu #menu="nzDropdownMenu">
               <ul nz-menu nzSelectable style="min-width: 150px">
-                <li nz-menu-item><span nz-icon nzType="user" nzTheme="outline"></span> 个人设置</li>
-                <li nz-menu-item><span nz-icon nzType="key" nzTheme="outline"></span> 修改密码</li>
+                <li nz-menu-item><span nz-icon nzType="user" nzTheme="outline"></span> 个人设置 </li>
+                <li nz-menu-item><span nz-icon nzType="key" nzTheme="outline"></span> 修改密码 </li>
                 <li><nz-divider style="margin: 5px 0"></nz-divider></li>
-                <li nz-menu-item (click)="logout()"><span nz-icon nzType="logout" nzTheme="outline"></span> 退出登录</li>
+                <li nz-menu-item (click)="logout()"><span nz-icon nzType="logout" nzTheme="outline"></span> 退出登录 </li>
               </ul>
             </nz-dropdown-menu>
+
           </div>
         </div>
-
       </div>
     </nz-header>
     <nz-content>

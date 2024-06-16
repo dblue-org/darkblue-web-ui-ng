@@ -1,0 +1,20 @@
+<ul nz-menu nzTheme="light" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
+  <ng-template #menuItem let-item="item">
+    <li nz-submenu [nzTitle]="item.menuName" [nzIcon]="item.menuIcon" *ngIf="item.menuType == 1">
+      <ul *ngIf="item.children && item.children.length > 0" class="sub-menus">
+        <ng-container *ngFor="let childItem of item.children; let i = index">
+          <ng-container *ngTemplateOutlet="menuItem; context: { item: childItem }"></ng-container>
+        </ng-container>
+      </ul>
+    </li>
+    <li nz-menu-item nzMatchRouter *ngIf="item.menuType == 2">
+      <span nz-icon [nzType]="item.menuIcon" nzTheme="outline"></span>&nbsp;&nbsp;
+      <a [routerLink]="item.menuUrl" *ngIf="item.menuUrl">{{item.menuName}}</a>
+      <a *ngIf="!item.menuUrl">{{item.menuName}}</a>
+    </li>
+  </ng-template>
+
+  <ng-container *ngFor="let item of menuItems; let i = index">
+    <ng-container *ngTemplateOutlet="menuItem; context: { item: item }"></ng-container>
+  </ng-container>
+</ul>

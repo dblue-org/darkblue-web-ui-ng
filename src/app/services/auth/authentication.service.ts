@@ -44,12 +44,19 @@ export class AuthenticationService implements OnInit {
 
   setAcl(user: User) {
     const authorities = user.authorities;
-    if (authorities) {
+    if (authorities && authorities.length > 0) {
       const roles = authorities.filter(o => o.startsWith(ROLE_PREFIX)).map(o => o.replace(ROLE_PREFIX, ''))
       const permissions = authorities.filter(o => !o.startsWith(ROLE_PREFIX));
       this.aclService.set({
         role: roles,
-        ability: permissions
+        ability: permissions,
+        mode: 'oneOf'
+      })
+    } else {
+      this.aclService.set({
+        role: [],
+        ability: [],
+        mode: 'oneOf'
       })
     }
   }

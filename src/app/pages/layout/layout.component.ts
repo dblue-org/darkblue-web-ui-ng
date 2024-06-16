@@ -12,6 +12,8 @@ import { NzDividerComponent } from 'ng-zorro-antd/divider';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { LogoutService } from '../../services/login/logout.service';
 import { AuthenticationService } from '../../services/auth/authentication.service';
+import {MenuComponent} from "./menu/menu.component";
+import {NzBadgeComponent} from "ng-zorro-antd/badge";
 
 @Component({
   selector: 'app-layout',
@@ -28,7 +30,10 @@ import { AuthenticationService } from '../../services/auth/authentication.servic
     NzAvatarModule,
     NzDropDownModule,
     NzDividerComponent,
-    NzInputModule],
+    NzInputModule,
+    MenuComponent,
+    NzBadgeComponent
+  ],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.css'
 })
@@ -44,7 +49,6 @@ export class LayoutComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(123);
     this.authService.ngOnInit();
   }
 }
