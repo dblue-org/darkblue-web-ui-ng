@@ -6,7 +6,7 @@
             [(nzCollapsed)]="isCollapsed"
             [nzTrigger]="null">
     <div class="sidebar-logo">
-      <img src="/assets/images/component-exchange.svg" alt="logo">
+      <img ngSrc="/assets/images/component-exchange.svg" alt="logo" height="10" width="10">
       <h1>DarkBlue Of Angular</h1>
     </div>
     <app-menu [isCollapsed]="isCollapsed"></app-menu>
@@ -30,12 +30,10 @@
             <ng-template #prefixTemplateUser><span nz-icon nzType="search" nzTheme="outline"></span></ng-template>
           </div>
           <div nz-col class="gutter-row" [nzSpan]="6" style="text-align: right;padding-right:32px;">
-            <button nz-button nzType="primary" class="header-button">
-              &nbsp;&nbsp;
+            <button nz-button nzType="primary" class="header-button" (click)="showMessagingDrawer()">
               <nz-badge [nzCount]="5" nzSize="small">
                 <span nz-icon nzType="bell" style="color: white;font-size: 20px;" nzTheme="outline"></span>
               </nz-badge>
-              &nbsp;&nbsp;
             </button>
             <button nz-button nzType="primary" class="header-button">
               <span nz-icon nzType="setting" style="font-size: 20px;" nzTheme="outline"></span>
@@ -60,6 +58,16 @@
       </div>
     </nz-header>
     <nz-content>
+      <div class="router-tabs">
+        <nz-tabset nzLinkRouter nzType="editable-card" nzHideAdd (nzClose)="closeTab($event)" [(nzSelectedIndex)]="selectedTabIndex">
+          <nz-tab *ngFor="let item of tabs" [nzClosable]="item.closable">
+            <a *nzTabLink nz-tab-link [routerLink]="[item.routerLink]" [queryParams]="item.queryParams" queryParamsHandling="merge">
+              {{ item.name }}
+            </a>
+          </nz-tab>
+        </nz-tabset>
+      </div>
+
       <div class="inner-content">
         <router-outlet></router-outlet>
       </div>
@@ -67,3 +75,5 @@
     <nz-footer class="footer" *ngIf="showFooter">Power by <a href="https://dblue.org">DarkBlue</a></nz-footer>
   </nz-layout>
 </nz-layout>
+
+<app-messaging #messaging></app-messaging>

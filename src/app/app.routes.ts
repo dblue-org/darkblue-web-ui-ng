@@ -7,7 +7,7 @@ export const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: '/welcome'
+    redirectTo: '/home'
   },
   {
     path: 'login',
@@ -15,16 +15,20 @@ export const routes: Routes = [
     canActivate: [authGuard]
   },
   {
-    path: 'welcome',
+    path: '',
     component: LayoutComponent,
-    loadChildren: () => import('./pages/welcome/welcome.routes').then(m => m.WELCOME_ROUTES),
-    canActivate: [unAuthGuard]
+    children: [
+      {
+        path: 'home',
+        loadChildren: () => import('./pages/welcome/welcome.routes').then(m => m.WELCOME_ROUTES),
+        canActivate: [unAuthGuard]
+      },
+      {
+        path: 'sys',
+        loadChildren: () => import('./pages/sys/sys.routers').then(m => m.SYS_ROUTES),
+        canActivate: [unAuthGuard]
+      }
+    ]
   },
-  {
-    path: 'sys',
-    component: LayoutComponent,
-    loadChildren: () => import('./pages/sys/sys.routers').then(m => m.SYS_ROUTES),
-    canActivate: [unAuthGuard]
-  }
 ];
 

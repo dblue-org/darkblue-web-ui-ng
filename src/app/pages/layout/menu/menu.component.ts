@@ -1,6 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {NzMenuDirective, NzMenuItemComponent, NzSubMenuComponent} from "ng-zorro-antd/menu";
-import {RouterLink} from "@angular/router";
+import { NavigationStart, Router, RouterLink } from '@angular/router';
 import {MenuItem} from "../../../define/menu";
 import {MenuService} from "../../../services/menu/menu.service";
 import {NgForOf, NgIf, NgTemplateOutlet} from "@angular/common";
@@ -17,7 +17,7 @@ import {NzIconModule} from "ng-zorro-antd/icon";
     NgForOf,
     NgIf,
     NgTemplateOutlet,
-    NzIconModule
+    NzIconModule,
   ],
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.css'
@@ -25,6 +25,7 @@ import {NzIconModule} from "ng-zorro-antd/icon";
 export class MenuComponent implements OnInit {
 
   @Input() isCollapsed = false;
+  @Output() onMenuItemClick: EventEmitter<MenuItem> = new EventEmitter<MenuItem>();
 
   menuItems: MenuItem[] = [];
 
@@ -36,4 +37,5 @@ export class MenuComponent implements OnInit {
       this.menuItems = menus;
     })
   }
+
 }

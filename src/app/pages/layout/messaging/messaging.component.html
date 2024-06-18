@@ -1,0 +1,61 @@
+<nz-drawer
+  [nzClosable]="false"
+  [nzVisible]="visible"
+  nzPlacement="right"
+  (nzOnClose)="close()"
+>
+  <ng-container *nzDrawerContent>
+    <nz-tabset>
+      <nz-tab nzTitle="通知">
+        <nz-list nzItemLayout="vertical">
+          <nz-list-item>
+            <nz-list-item-meta>
+              <nz-list-item-meta-avatar nzSrc="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></nz-list-item-meta-avatar>
+              <nz-list-item-meta-title>
+                系统将于 2024-7-10 20:30 停服更新，届时系统所有功能将停用。预计 3 小时更新完毕。请合理安排工作任务，谢谢大家的配合。
+              </nz-list-item-meta-title>
+              <nz-list-item-meta-description>
+                2024-07-03 09:10:23
+              </nz-list-item-meta-description>
+            </nz-list-item-meta>
+          </nz-list-item>
+          <nz-list-item>
+            <nz-list-item-meta>
+              <nz-list-item-meta-avatar nzSrc="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></nz-list-item-meta-avatar>
+              <nz-list-item-meta-title>
+                您提交的合同[HT-2024-000001]已审批通过。
+              </nz-list-item-meta-title>
+              <nz-list-item-meta-description>
+                2024-07-03 09:17:43
+              </nz-list-item-meta-description>
+            </nz-list-item-meta>
+          </nz-list-item>
+        </nz-list>
+      </nz-tab>
+      <nz-tab nzTitle="待办">
+        <ng-container *ngFor="let item of todoList">
+          <nz-card [nzTitle]="titleTpl" [nzActions]="createActionTemplates(item.actions)" style="margin-bottom: 20px">
+            <div nz-row style="margin-bottom: 10px;">
+              <div nz-col nzSpan="12">
+                <span class="todo-content-createTime">{{item.createTime}}</span>
+              </div>
+              <div nz-col nzSpan="12" style="text-align: right">
+                <nz-tag [nzColor]="'#108ee9'">{{item.status}}</nz-tag>
+              </div>
+            </div>
+            <div *ngFor="let contentItem of item.content">{{contentItem}}</div>
+            <div *ngIf="item.tags" class="tags">
+              <nz-tag *ngFor="let tag of item.tags">{{ tag }}</nz-tag>
+            </div>
+
+          </nz-card>
+          <ng-template #titleTpl>
+            <nz-tag>{{item.type}}</nz-tag> {{item.title}}
+          </ng-template>
+        </ng-container>
+      </nz-tab>
+    </nz-tabset>
+  </ng-container>
+</nz-drawer>
+
+<ng-container #container></ng-container>

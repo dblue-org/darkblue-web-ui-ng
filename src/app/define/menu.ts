@@ -4,7 +4,11 @@ export interface MenuItem {
   menuType?: number;
   menuName: string;
   menuUrl?: string;
-  level?: number;
+  level: number;
+  sort?: number;
+  isEnable?: boolean;
+  isVisible?: boolean;
+  isProductionVisible?: boolean;
   menuIcon: string;
   children?: MenuItem[];
   expand?: boolean;

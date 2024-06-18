@@ -25,7 +25,7 @@ export class LoginService {
       if (res.success && res.data) {
         this.authService.saveUser(res.data);
         this.authService.saveAccessToken(res.data.accessToken.tokenValue);
-        this.router.navigate(['/welcome']);
+        this.router.navigate(['/home']);
       }
     });
   }

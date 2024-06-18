@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {NzTableModule} from "ng-zorro-antd/table";
 import {NgForOf, NgIf} from "@angular/common";
 import {NzButtonComponent} from "ng-zorro-antd/button";
@@ -7,6 +7,8 @@ import {MenuItem} from "../../../define/menu";
 import {NzIconDirective} from "ng-zorro-antd/icon";
 import {ToolbarComponent} from "../../../components/toolbar/toolbar.component";
 import {NzGridModule} from "ng-zorro-antd/grid";
+import { MenuAddModalComponent } from './menu-add-modal/menu-add-modal.component';
+import { NzPopconfirmComponent, NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 
 @Component({
   selector: 'app-menu-manage',
@@ -18,7 +20,9 @@ import {NzGridModule} from "ng-zorro-antd/grid";
     NzButtonComponent,
     NzIconDirective,
     ToolbarComponent,
-    NzGridModule
+    NzGridModule,
+    MenuAddModalComponent,
+    NzPopconfirmModule
   ],
   templateUrl: './menu-manage.component.html',
   styleUrl: './menu-manage.component.css'
@@ -26,11 +30,14 @@ import {NzGridModule} from "ng-zorro-antd/grid";
 export class MenuManageComponent implements OnInit {
   listOfMapData: MenuItem[] = [];
   mapOfExpandedData: { [key: string]: MenuItem[] } = {};
+  @ViewChild('menuAddModal') menuAddModal!: MenuAddModalComponent;
+  loading = false;
 
   constructor(private menuService: MenuService) {
   }
 
   collapse(array: MenuItem[], data: MenuItem, $event: boolean): void {
+    console.log(array, data, $event);
     if (!$event) {
       if (data.children) {
         data.children.forEach(d => {
@@ -71,12 +78,59 @@ export class MenuManageComponent implements OnInit {
   }
 
   loadMenu(): void {
+    this.loading = true;
     this.menuService.getUserMenu().subscribe(menus => {
       this.listOfMapData = menus;
       this.listOfMapData.forEach(item => {
         this.mapOfExpandedData[item.menuId] = this.convertTreeToList(item);
       });
-    });
+    }, null, () => this.loading = false);
+  }
+
+  showAddMenuModal(menu?: MenuItem) {
+    if (menu) {
+      this.menuAddModal.showAddModal(
+        {
+          parentId: menu.menuId,
+          parentName: menu.menuName
+        }
+      )
+    } else {
+      this.menuAddModal.showAddModal(
+        {
+          parentId: '',
+          parentName: ''
+        }
+      )
+    }
+  }
+
+  deleteMenu(menuId: string) {
+    this.menuService.deleteMenu(menuId).subscribe(res => {
+      if (res.success) {
+        this.loadMenu();
+      }
+    })
+  }
+
+  enableMenu(menuId: string) {
+    this.menuService.enableMenu(menuId).subscribe(res => {
+      if (res.success) {
+        this.loadMenu();
+      }
+    })
+  }
+
+  disabledMenu(menuId: string) {
+    this.menuService.disabledMenu(menuId).subscribe(res => {
+      if (res.success) {
+        this.loadMenu();
+      }
+    })
+  }
+
+  showEditMenuModal(menu: MenuItem) {
+    this.menuAddModal.showUpdateModal(menu);
   }
 
   ngOnInit(): void {

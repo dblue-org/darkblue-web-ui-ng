@@ -76,10 +76,14 @@ nz-content {
   margin: 24px;
 }
 
+.router-tabs {
+  background: #fff;
+  padding: 0 0 0 0;
+}
 .inner-content {
   padding: 24px;
   background: #fff;
-  height: 100%;
+  height: calc(100% - 58px);
 }
 
 .footer {

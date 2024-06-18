@@ -1,15 +1,16 @@
 <app-toolbar>
   <div nz-row>
     <div nz-col nzSpan="12">
-      <button nz-button nzType="primary">新增</button>
-      <button nz-button nzType="default">展开/折叠所有</button>
+      <button nz-button nzType="primary" (click)="showAddMenuModal()">新增</button>
     </div>
     <div nz-col nzSpan="12" class="right">
-      <button nz-button nzType="default" nzShape="circle"><span nz-icon nzType="reload"></span></button>
+      <button nz-button nzType="default" nzShape="circle" [nzLoading]="loading" (click)="loadMenu()">
+        <span nz-icon nzType="reload"></span>
+      </button>
     </div>
   </div>
 </app-toolbar>
-<nz-table #expandTable [nzData]="listOfMapData" nzTableLayout="fixed">
+<nz-table #expandTable [nzData]="listOfMapData" nzTableLayout="fixed" [nzLoading]="loading" [nzShowPagination]="false">
   <thead>
   <tr>
     <th nzWidth="200px">菜单名称</th>
@@ -35,20 +36,29 @@
           <span nz-icon [nzType]="item.menuIcon" nzTheme="outline"></span>
           {{ item.menuName }}
         </td>
-        <td>{{ item.menuType }}</td>
+        <td>{{ item.menuType == 1 ? '菜单组' : '菜单项' }}</td>
         <td>{{ item.menuUrl }}</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>{{ item.sort || '-' }}</td>
+        <td>{{ item.isEnable ? '是' : '否' }}</td>
+        <td>{{ item.isVisible ? '是' : '否' }}</td>
+        <td>{{ item.isProductionVisible ? '是' : '否' }}</td>
         <td>
-          <button nz-button nzSize="small" nzType="primary">添加</button>
-          <button nz-button nzSize="small" nzType="default">修改</button>
-          <button nz-button nzSize="small" nzType="primary" nzDanger>删除</button>
-          <button nz-button nzSize="small" nzType="default" nzDanger>禁用</button>
+          <button *ngIf="item.menuType == 1" nz-button nzSize="small" nzType="primary" (click)="showAddMenuModal(item)">添加</button>
+          <button nz-button nzSize="small" nzType="default" (click)="showEditMenuModal(item)">修改</button>
+          <button *ngIf="!item.children || item.children.length == 0"
+                  nz-button nzSize="small"
+                  nzType="primary"
+                  nz-popconfirm
+                  nzPopconfirmTitle="是否确认删除此菜单?"
+                  (nzOnConfirm)="deleteMenu(item.menuId)"
+                  nzDanger>删除</button>
+          <button *ngIf="item.isEnable" nz-button nzSize="small" nzType="default" nzDanger (click)="disabledMenu(item.menuId)">禁用</button>
+          <button *ngIf="!item.isEnable" nz-button nzSize="small" nzType="default" nzDanger (click)="enableMenu(item.menuId)">启用</button>
         </td>
       </tr>
     </ng-container>
   </ng-container>
   </tbody>
 </nz-table>
+
+<app-menu-add-modal #menuAddModal (onSuccess)="loadMenu()" />

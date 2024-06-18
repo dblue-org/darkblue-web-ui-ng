@@ -1,0 +1,22 @@
+.todo-content-title {
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.tags {
+  margin-top: 10px;
+}
+
+.actions {
+  margin-top: 20px;
+  text-align: right;
+}
+.actions button {
+  margin-left: 20px;
+}
+
+.todo-content-createTime {
+  text-align: right;
+  color: gray;
+}

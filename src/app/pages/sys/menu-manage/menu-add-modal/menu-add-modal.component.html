@@ -1,0 +1,59 @@
+<nz-modal [(nzVisible)]="isVisible" nzWidth="800px" nzTitle="添加菜单" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()" [nzOkLoading]="loading">
+  <ng-container *nzModalContent>
+    <form nz-form [formGroup]="menuForm">
+      <nz-form-item *ngIf="!isEdit">
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="parentName">上级</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <input nz-input formControlName="parentName" id="parentName" readonly />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="menuName">菜单名称</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="菜单名称不能为空">
+          <input nz-input formControlName="menuName" id="menuName" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="menuType">
+          菜单类型<span style="margin-left: 5px;" nz-icon nzType="question-circle" nzTheme="outline"></span>
+        </nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <nz-select formControlName="menuType" id="menuType" (ngModelChange)="onMenuTypeChange($event)" >
+            <nz-option [nzValue]="1" nzLabel="菜单组"></nz-option>
+            <nz-option [nzValue]="2" nzLabel="菜单项"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item *ngIf="menuForm.controls.menuType.value == 2">
+        <nz-form-label [nzSm]="6" [nzXs]="24"  [nzRequired]="menuForm.controls.menuType.value == 2" nzFor="menuUrl">路由地址</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="路由地址不能为空">
+          <input nz-input formControlName="menuUrl" id="menuUrl" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" [nzRequired]="menuForm.controls.menuType.value == 1" nzFor="menuIcon">菜单图标</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="菜单图标不能为空">
+          <input nz-input formControlName="menuIcon" id="menuIcon" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="sort">菜单顺序</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <input nz-input formControlName="sort" id="sort" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="isVisible">是否可见</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <nz-switch formControlName="isVisible" id="isVisible" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="isProductionVisible">生产环境可见</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <nz-switch formControlName="isProductionVisible" id="isProductionVisible" />
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </ng-container>
+</nz-modal>

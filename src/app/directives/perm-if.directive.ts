@@ -55,7 +55,6 @@ export class PermIfDirective implements OnDestroy {
       return;
     }
     const res = this.srv.canAbility(this._value);
-    console.log(this._value,res)
     if (res) {
       if (!this._thenViewRef) {
         this._viewContainer.clear();

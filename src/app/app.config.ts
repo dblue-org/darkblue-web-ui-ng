@@ -1,5 +1,5 @@
-import { ApplicationConfig, provideZoneChangeDetection, importProvidersFrom } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { ApplicationConfig, provideZoneChangeDetection, importProvidersFrom, Injectable } from '@angular/core';
+import { provideRouter, RouteReuseStrategy, RouterStateSnapshot, TitleStrategy } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideNzIcons } from './icons-provider';
@@ -11,8 +11,11 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { baseUrlInterceptor } from './http/base-url.interceptor';
 import {responseInterceptor} from "./http/response.interceptor";
+import { TemplatePageTitleStrategy } from './platform/template-page-title-strategy';
+import { UrlMatcherRouteReuseStrategy } from './platform/url-matcher-route-reuse-strategy';
 
 registerLocaleData(zh);
+
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -22,6 +25,10 @@ export const appConfig: ApplicationConfig = {
     provideNzI18n(zh_CN),
     importProvidersFrom(FormsModule),
     provideAnimationsAsync(),
-    provideHttpClient(withInterceptors([baseUrlInterceptor, responseInterceptor]))
+    provideHttpClient(withInterceptors([baseUrlInterceptor, responseInterceptor])),
+    {provide: TitleStrategy, useClass: TemplatePageTitleStrategy},
+    /*{provide: RouteReuseStrategy, useClass: UrlMatcherRouteReuseStrategy},*/
   ]
 };
+
+

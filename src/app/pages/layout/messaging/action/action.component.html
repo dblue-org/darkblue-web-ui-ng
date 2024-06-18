@@ -1,0 +1,6 @@
+<ng-template #actionTemplate>
+  <span *ngIf="action">
+    <a [routerLink]="action.url" *ngIf="action.url" >{{ action.name }}</a>
+    <a *ngIf="!action.url" >{{ action.name }}</a>
+  </span>
+</ng-template>
