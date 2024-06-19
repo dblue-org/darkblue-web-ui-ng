@@ -81,9 +81,10 @@ nz-content {
   padding: 0 0 0 0;
 }
 .inner-content {
-  padding: 24px;
+  padding: 8px 24px 24px 24px;
   background: #fff;
   height: calc(100% - 58px);
+  overflow: auto;
 }
 
 .footer {

@@ -18,3 +18,11 @@ export interface LoginForm {
   password: string;
   remember?: boolean
 }
+
+export interface Department {
+  deptId: string;
+  deptName: string;
+  parentId?: string;
+  expanded?: boolean;
+  children?: Department[]
+}

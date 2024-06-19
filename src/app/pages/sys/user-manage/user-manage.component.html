@@ -1,0 +1,55 @@
+<nz-layout class="user-layout">
+  <nz-sider class="dept-sider" nzWidth="300px">
+    <nz-card [nzBordered]="false" nzTitle="部门列表" [nzExtra]="extraTemplate">
+      <nz-tree
+        [nzData]="departments"
+        nzShowLine
+        [nzTreeTemplate]="nzTreeTemplate"
+        (nzClick)="onTreeNodeSelected($event)"
+      />
+
+      <ng-template #nzTreeTemplate let-node let-origin="origin">
+      <span class="custom-node">
+        <span *ngIf="!node.isLeaf">
+          <span nz-icon [nzType]="node.isExpanded ? 'folder-open' : 'folder'"></span>
+          <span class="folder-name">{{ node.title }}</span>
+        </span>
+        <span *ngIf="node.isLeaf">
+          <span nz-icon nzType="file"></span>
+          <span class="file-name">{{ node.title }}</span>
+        </span>
+      </span>
+      </ng-template>
+    </nz-card>
+    <ng-template #extraTemplate>
+      <div class="dept-tree-toolbar">
+        <button nz-button nzType="default" nzShape="circle">
+          <span nz-icon nzType="plus"></span>
+        </button>
+        <button nz-button nzType="default" nzShape="circle" [disabled]="!(selectedDepartment && selectedDepartment.key)">
+          <span nz-icon nzType="edit"></span>
+        </button>
+        <button nz-button nzType="default" nzShape="circle" [disabled]="!(selectedDepartment && selectedDepartment.key)">
+          <span nz-icon nzType="delete"></span>
+        </button>
+      </div>
+    </ng-template>
+  </nz-sider>
+  <nz-content class="user-content">
+    <app-form-search-bar  [formGroup]="userSearchForm" (onSearch)="search($event)">
+      <form nz-form [formGroup]="userSearchForm" class="ant-advanced-search-form">
+        <div nz-row [nzGutter]="24">
+          <app-search-form-item nz-col [nzSpan]="8">
+            <nz-form-item>
+              <nz-form-label [nzSm]="6" [nzXs]="24"  nzFor="name">姓名</nz-form-label>
+              <nz-form-control [nzSm]="17" [nzXs]="24">
+                <input nz-input placeholder="模糊搜索姓名" formControlName="name" />
+              </nz-form-control>
+            </nz-form-item>
+          </app-search-form-item>
+        </div>
+      </form>
+
+    </app-form-search-bar>
+  </nz-content>
+</nz-layout>

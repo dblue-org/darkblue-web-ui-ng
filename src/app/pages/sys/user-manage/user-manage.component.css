@@ -1,0 +1,24 @@
+.user-layout {
+  height: 100%;
+  background-color: white;
+}
+
+.dept-sider {
+  background-color: white;
+  border: 1px solid #f0f0f0;
+}
+
+.user-content {
+  padding-left: 24px;
+}
+
+.dept-tree-toolbar {
+  text-align: right;
+}
+
+.dept-tree-toolbar [nz-button] {
+  margin-left: 8px;
+}
+.file-name, .folder-name {
+  margin-left: 4px;
+}
