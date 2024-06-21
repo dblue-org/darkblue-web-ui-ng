@@ -17,6 +17,7 @@ import { User } from '@site/app/define/user';
 import { SimpleRole } from '@site/app/define/role';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { UserAddModalComponent } from './user-add-modal/user-add-modal.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-manage',
@@ -71,7 +72,7 @@ export class UserManageComponent implements OnInit {
   stateLoading = false;
 
 
-  constructor(private fb: NonNullableFormBuilder, private userService: UserService) {
+  constructor(private fb: NonNullableFormBuilder, private userService: UserService, private router: Router) {
 
   }
 
@@ -148,6 +149,14 @@ export class UserManageComponent implements OnInit {
       },
       complete: () => this.stateLoading = false
     })
+  }
+
+  gotoDetails(user: User): void {
+    this.router.navigate(['/sys/user/details'], {
+      queryParams: {
+        userId: user.userId
+      }
+    }).then()
   }
 
   search() {

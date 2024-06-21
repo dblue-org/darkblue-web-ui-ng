@@ -27,6 +27,16 @@ export const routes: Routes = [
         path: 'sys',
         loadChildren: () => import('./pages/sys/sys.routers').then(m => m.SYS_ROUTES),
         canActivate: [unAuthGuard]
+      },
+      {
+        path: 'setting',
+        loadChildren: () => import('./pages/settings/settings.routers').then(m => m.SETTINGS_ROUTES),
+        canActivate: [unAuthGuard]
+      },
+      {
+        path: 'ops',
+        loadChildren: () => import('./pages/ops/ops.routers').then(m => m.OPS_ROUTES),
+        canActivate: [unAuthGuard]
       }
     ]
   },

@@ -3,8 +3,6 @@ import { CommonModule, NgOptimizedImage } from '@angular/common';
 import {
   ActivatedRoute,
   ActivationEnd,
-  NavigationEnd,
-  NavigationStart,
   Router,
   RouterLink,
   RouterOutlet
@@ -24,7 +22,6 @@ import { MenuComponent } from './menu/menu.component';
 import { NzBadgeComponent } from 'ng-zorro-antd/badge';
 import { MessagingComponent } from './messaging/messaging.component';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
-import { MenuItem } from '../../define/menu';
 
 @Component({
   selector: 'app-layout',
@@ -79,13 +76,10 @@ export class LayoutComponent implements OnInit {
     this.router.events.subscribe(event => {
       if (event instanceof ActivationEnd) {
         const path = this.router.routerState.snapshot.url;
-        const routerData = event.snapshot.routeConfig?.data;
-        let tabTitle = "新标签页";
-        if (routerData) {
-          tabTitle = routerData['title'];
-        }
+        const routerTitle = event.snapshot.routeConfig?.title as string;
+        let tabTitle = routerTitle || "新标签页";
         if (tabTitle && path) {
-          this.addTab(tabTitle, path);
+          this.addTab(tabTitle, this.tripePath(path), event.snapshot.queryParams);
         }
       }
     })
@@ -97,13 +91,20 @@ export class LayoutComponent implements OnInit {
       while (route.firstChild) {
         route = route.firstChild;
       }
-      const routerData = route.snapshot.routeConfig?.data;
-      let tabTitle = routerData? routerData['title'] : "新标签页";
+      const routerTitle = route.snapshot.routeConfig?.title as string;
+      let tabTitle = routerTitle || "新标签页";
       if (tabTitle && path) {
-        this.addTab(tabTitle, path);
+        this.addTab(tabTitle, this.tripePath(path), route.snapshot.queryParams);
       }
     }
 
+  }
+
+  private tripePath(path: string) {
+    if (path.indexOf('?') > 0) {
+      return path.substring(0, path.indexOf('?'))
+    }
+    return path;
   }
 
   showMessagingDrawer(): void {
@@ -111,22 +112,32 @@ export class LayoutComponent implements OnInit {
   }
 
   closeTab({ index }: { index: number }): void {
-    this.selectedTabIndex = index - 1;
-    const selectTab = this.tabs[this.selectedTabIndex];
-    this.router.navigateByUrl(selectTab.routerLink).then(() => {
+    const isActive = this.selectedTabIndex == index;
+    if (isActive) {
+      this.selectedTabIndex = index - 1;
+      const selectTab = this.tabs[this.selectedTabIndex];
+      this.router.navigateByUrl(selectTab.routerLink).then(() => {
+        this.tabs.splice(index, 1);
+      })
+    } else {
       this.tabs.splice(index, 1);
-    })
+    }
   }
 
-  addTab(title: string, url: string) {
-    const exist = this.tabs.some((val) => val.routerLink == url);
-    if (!exist) {
+  addTab(title: string, url: string, params: any) {
+    const existTab = this.tabs.find((val) => val.routerLink == url);
+    if (!existTab) {
       this.tabs.push({
         name: title,
         routerLink: url,
-        queryParams: {},
+        queryParams: {
+          ...params
+        },
         closable: true
       })
+      this.selectedTabIndex = this.tabs.length - 1;
+    } else {
+      existTab.queryParams = params;
     }
   }
 

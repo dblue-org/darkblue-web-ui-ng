@@ -1,0 +1,16 @@
+<div class="section">
+  <div nz-row class="section-header">
+    <div nz-col [nzSpan]="12" class="section-title">
+      <ng-container *ngIf="isTemplate(title); else text">
+        <ng-container *ngTemplateOutlet="title" />
+      </ng-container>
+      <ng-template #text>{{title}}</ng-template>
+    </div>
+    <div nz-col [nzSpan]="12" class="section-extra">
+      <ng-container *ngIf="extra">
+        <ng-container *ngTemplateOutlet="extra" />
+      </ng-container>
+    </div>
+  </div>
+  <ng-content />
+</div>

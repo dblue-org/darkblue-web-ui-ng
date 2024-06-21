@@ -94,7 +94,25 @@ export class MenuService {
             isEnable: true,
             menuIcon: 'bars',
             menuUrl: '/sys/menu',
-          }
+          },
+          {
+            menuId: '00000104',
+            menuName: '权限管理',
+            menuType: 2,
+            level: 2,
+            isEnable: true,
+            menuIcon: 'safety',
+            menuUrl: '/sys/permission',
+          },
+          {
+            menuId: '00000105',
+            menuName: '资源管理',
+            menuType: 2,
+            level: 2,
+            isEnable: true,
+            menuIcon: 'link',
+            menuUrl: '/sys/resource',
+          },
         ]
       },
       {
@@ -124,6 +142,55 @@ export class MenuService {
             menuIcon: 'edit',
             menuUrl: ''
           },
+        ]
+      },
+      {
+        menuId: '000003',
+        menuName: '系统配置',
+        menuType: 1,
+        level: 1,
+        isEnable: true,
+        menuIcon: 'profile',
+        menuUrl: '',
+        children: [
+          {
+            menuId: '00000301',
+            menuName: '配置参数管理',
+            menuType: 2,
+            level: 2,
+            isEnable: true,
+            menuIcon: 'login',
+            menuUrl: '/setting/properties'
+          },
+          {
+            menuId: '00000302',
+            menuName: '字典管理',
+            menuType: 2,
+            level: 2,
+            isEnable: true,
+            menuIcon: 'edit',
+            menuUrl: '/setting/dict'
+          },
+        ]
+      },
+      {
+        menuId: '000004',
+        menuName: '运维中心',
+        menuType: 1,
+        level: 1,
+        isEnable: true,
+        menuIcon: 'profile',
+        menuUrl: '',
+        children: [
+          {
+            menuId: '00000401',
+            menuName: '缓存管理',
+            menuType: 2,
+            level: 2,
+            isEnable: true,
+            menuIcon: 'login',
+            menuUrl: '/ops/caching'
+          }
         ]
       }
     ]

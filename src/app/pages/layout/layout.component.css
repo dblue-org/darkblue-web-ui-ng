@@ -120,5 +120,11 @@ nz-content {
   cursor: pointer;
 }
 
+.ant-tabs-dropdown-menu-item a[nz-tab-link] {
+  position: relative !important;
+}
 
+a[nz-tab-link] {
+  position: static !important;
+}
 
