@@ -1,0 +1,15 @@
+<nz-select
+  [nzMaxTagCount]="10"
+  [nzMode]="mode"
+  nzPlaceHolder="请选择"
+  [(ngModel)]="value"
+  [nzDisabled]="isDisabled"
+  nzAllowClear
+  nzShowSearch
+  nzServerSearch
+  (ngModelChange)="onModalValueChange($event)"
+  (nzOnSearch)="onSearch($event)"
+  [nzLoading]="isLoading"
+>
+  <nz-option *ngFor="let item of options" [nzLabel]="item.name" [nzValue]="item.userId" />
+</nz-select>

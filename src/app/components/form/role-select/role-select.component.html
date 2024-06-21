@@ -1,0 +1,10 @@
+<nz-select
+  [nzMaxTagCount]="10"
+  nzMode="multiple"
+  nzPlaceHolder="Please select"
+  [(ngModel)]="value"
+  [nzDisabled]="isDisabled"
+  (ngModelChange)="onModalValueChange($event)"
+>
+  <nz-option *ngFor="let item of options" [nzLabel]="item.roleName" [nzValue]="item.roleId" />
+</nz-select>

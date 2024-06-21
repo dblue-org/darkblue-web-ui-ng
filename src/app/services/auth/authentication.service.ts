@@ -1,5 +1,5 @@
 import { Injectable, OnInit } from '@angular/core';
-import { User } from '../../define/user';
+import { LoginUser } from '../../define/user';
 import { ACLService } from '@delon/acl';
 
 const ROLE_PREFIX = 'ROLE_';
@@ -11,12 +11,12 @@ export class AuthenticationService implements OnInit {
 
   constructor(private aclService: ACLService) { }
 
-  saveUser(user: User) {
+  saveUser(user: LoginUser) {
     localStorage.setItem('user', JSON.stringify(user));
     this.setAcl(user);
   }
 
-  getUser(): User | null {
+  getUser(): LoginUser | null {
     const userJson = localStorage.getItem('user');
     if (userJson != null) {
       return JSON.parse(userJson);
@@ -42,7 +42,7 @@ export class AuthenticationService implements OnInit {
     localStorage.removeItem('access_token');
   }
 
-  setAcl(user: User) {
+  setAcl(user: LoginUser) {
     const authorities = user.authorities;
     if (authorities && authorities.length > 0) {
       const roles = authorities.filter(o => o.startsWith(ROLE_PREFIX)).map(o => o.replace(ROLE_PREFIX, ''))

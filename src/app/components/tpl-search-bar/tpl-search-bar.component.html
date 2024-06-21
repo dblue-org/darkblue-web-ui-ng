@@ -1,0 +1,68 @@
+<div [class]="{'search-form-bar': true, 'search-bar-line': !isShowCollapsed}">
+  <!--<div [class]="{'search-form': true, 'single-line': itemNum <= columnNum}">
+    <form nz-form [formGroup]="formGroup" class="ant-advanced-search-form" *ngIf="formGroup">
+      <div nz-row [nzGutter]="24">
+        <ng-container *ngFor="let formItem of filteredItems; let i = index">
+          <div nz-col [nzSpan]="24 / columnNum" *ngIf="!isCollapsed || (isCollapsed && i < columnNum * 2)">
+            <nz-form-item>
+              <nz-form-label [nzSm]="6" [nzXs]="24"  [nzFor]="formItem.name">{{formItem.label}}</nz-form-label>
+              <nz-form-control [nzSm]="17" [nzXs]="24" *ngIf="formItem.item">
+                <ng-container  *ngTemplateOutlet="formItem.item"/>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </ng-container>
+      </div>
+    </form>
+    <div class="collapsed-btn" *ngIf="isShowCollapsed" (click)="toggleCollapsed()">
+      <span [class]="isCollapsed ? 'collapsed':'un-collapsed' " nz-icon nzType="double-right" nzTheme="outline"></span>
+    </div>
+  </div>
+  <div class="search-form-button">
+    <button nz-button nzType="primary" (click)="search()" [nzLoading]="loading">
+      <span nz-icon nzType="search"></span>
+      查询
+    </button>
+    <button nz-button nzType="default" (click)="reset()">
+      <span nz-icon nzType="clear"></span>
+      重置
+    </button>
+  </div>-->
+  <div>
+    <form nz-form [formGroup]="formGroup" class="ant-advanced-search-form" *ngIf="formGroup">
+      <div nz-row [nzGutter]="24">
+        <ng-container *ngFor="let formItem of filteredItems; let i = index">
+          <div nz-col [nzSpan]="24 / columnNum" *ngIf="!isCollapsed || (isCollapsed && i < columnNum * 2)">
+            <nz-form-item>
+              <nz-form-label [nzSm]="6" [nzXs]="24"  [nzFor]="formItem.name">{{formItem.label}}</nz-form-label>
+              <nz-form-control [nzSm]="18" [nzXs]="24" *ngIf="formItem.item">
+                <ng-container  *ngTemplateOutlet="formItem.item"/>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </ng-container>
+      </div>
+    </form>
+  </div>
+  <div nz-row>
+    <div nz-col [nzSpan]="16" class="buttons-left">
+      <ng-container *ngIf="buttons">
+        <ng-container *ngTemplateOutlet="buttons" />
+      </ng-container>
+    </div>
+    <div nz-col [nzSpan]="8" class="buttons-right">
+      <button nz-button nzType="primary" (click)="search()" [nzLoading]="loading">
+        <span nz-icon nzType="search"></span>
+        查询
+      </button>
+      <button nz-button nzType="default" (click)="reset()">
+        <span nz-icon nzType="clear"></span>
+        重置
+      </button>
+      <a class="collapse" (click)="toggleCollapsed()" *ngIf="isShowCollapsed">
+        {{ isCollapsed ? '展开条件' : '折叠条件' }}
+        <span nz-icon [nzType]="isCollapsed ? 'down' : 'up'"></span>
+      </a>
+    </div>
+  </div>
+</div>

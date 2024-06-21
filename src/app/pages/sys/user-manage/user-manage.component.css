@@ -12,13 +12,7 @@
   padding-left: 24px;
 }
 
-.dept-tree-toolbar {
-  text-align: right;
+nz-table [nz-button] {
+  margin-right: 8px;
 }
 
-.dept-tree-toolbar [nz-button] {
-  margin-left: 8px;
-}
-.file-name, .folder-name {
-  margin-left: 4px;
-}

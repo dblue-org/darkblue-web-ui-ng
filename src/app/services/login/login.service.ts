@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { LoginForm, User } from '../../define/user';
+import { LoginForm, LoginUser } from '../../define/user';
 import { ResponseBean } from '../../define/response';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../auth/authentication.service';
-import { ACLService } from '@delon/acl';
-
 
 
 @Injectable({
@@ -19,7 +17,7 @@ export class LoginService {
     const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
     const loginData = `username=${data.username}&password=${data.password}&remember=${data.remember}`
 
-    this.http.post<ResponseBean<User>>('/api/login', loginData, {
+    this.http.post<ResponseBean<LoginUser>>('/api/login', loginData, {
       headers: headers
     }).subscribe(res => {
       if (res.success && res.data) {

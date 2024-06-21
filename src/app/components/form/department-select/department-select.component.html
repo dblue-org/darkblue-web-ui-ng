@@ -1,0 +1,7 @@
+<nz-tree-select
+  [nzNodes]="nodes"
+  nzShowSearch
+  nzPlaceHolder="请选择部门"
+  [(ngModel)]="value"
+  (ngModelChange)="onModalValueChange($event)"
+></nz-tree-select>

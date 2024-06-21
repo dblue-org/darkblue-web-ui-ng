@@ -1,0 +1,10 @@
+.dept-tree-toolbar {
+  text-align: right;
+}
+
+.dept-tree-toolbar [nz-button] {
+  margin-left: 8px;
+}
+.file-name, .folder-name {
+  margin-left: 4px;
+}

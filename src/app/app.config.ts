@@ -1,5 +1,5 @@
-import { ApplicationConfig, provideZoneChangeDetection, importProvidersFrom, Injectable } from '@angular/core';
-import { provideRouter, RouteReuseStrategy, RouterStateSnapshot, TitleStrategy } from '@angular/router';
+import { ApplicationConfig, provideZoneChangeDetection, importProvidersFrom } from '@angular/core';
+import { provideRouter, TitleStrategy } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideNzIcons } from './icons-provider';
@@ -12,7 +12,7 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { baseUrlInterceptor } from './http/base-url.interceptor';
 import {responseInterceptor} from "./http/response.interceptor";
 import { TemplatePageTitleStrategy } from './platform/template-page-title-strategy';
-import { UrlMatcherRouteReuseStrategy } from './platform/url-matcher-route-reuse-strategy';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 registerLocaleData(zh);
 
@@ -22,6 +22,7 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideNzIcons(),
+    provideAnimations(),
     provideNzI18n(zh_CN),
     importProvidersFrom(FormsModule),
     provideAnimationsAsync(),

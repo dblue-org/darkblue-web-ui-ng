@@ -1,0 +1,40 @@
+<nz-card [nzBordered]="false" nzTitle="部门列表" [nzExtra]="extraTemplate">
+  <nz-tree
+    [nzData]="departments"
+    nzShowLine
+    [nzTreeTemplate]="nzTreeTemplate"
+    (nzClick)="onTreeNodeSelected($event)"
+  />
+
+  <ng-template #nzTreeTemplate let-node let-origin="origin">
+      <span class="custom-node">
+        <span *ngIf="!node.isLeaf">
+          <span nz-icon [nzType]="node.isExpanded ? 'folder-open' : 'folder'"></span>
+          <span class="folder-name">{{ node.title }}</span>
+        </span>
+        <span *ngIf="node.isLeaf">
+          <span nz-icon nzType="file"></span>
+          <span class="file-name">{{ node.title }}</span>
+        </span>
+      </span>
+  </ng-template>
+</nz-card>
+<ng-template #extraTemplate>
+  <div class="dept-tree-toolbar">
+    <button nz-button nzType="default" nzShape="circle" (click)="showAddModal()">
+      <span nz-icon nzType="plus"></span>
+    </button>
+    <button nz-button nzType="default" nzShape="circle"
+            (click)="showEditModal()"
+            [disabled]="!(selectedDepartment && selectedDepartment.key)">
+      <span nz-icon nzType="edit"></span>
+    </button>
+    <button nz-button nzType="default" nzShape="circle"
+            (click)="doDelete()"
+            [disabled]="!(selectedDepartment && selectedDepartment.key && !(selectedDepartment.children && selectedDepartment.children.length > 0))">
+      <span nz-icon nzType="delete"></span>
+    </button>
+  </div>
+</ng-template>
+
+<app-department-edit-modal #editModalComponent (onSuccess)="loadDepartments()"/>

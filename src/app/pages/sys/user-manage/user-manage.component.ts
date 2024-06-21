@@ -1,111 +1,161 @@
-import { Component, OnInit } from '@angular/core';
-import { Department } from '../../../define/user';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NzGridModule } from 'ng-zorro-antd/grid';
-import { NzFormatEmitEvent, NzTreeModule, NzTreeNodeOptions, NzTreeNode } from 'ng-zorro-antd/tree';
+import { NzTreeNode } from 'ng-zorro-antd/tree';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzCardModule } from 'ng-zorro-antd/card';
-import { DepartmentService } from '../../../services/dept/department.service';
-import { NgIf } from '@angular/common';
-import { environment } from '../../../../environments/environment';
-import { FormSearchBarComponent } from '../../../components/form-search-bar/form-search-bar.component';
+import { NgForOf, NgIf } from '@angular/common';
 import { FormControl, FormGroup, NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
-import {
-  SearchFormItemComponent
-} from '../../../components/form-search-bar/search-form-item/search-form-item.component';
 import { NzInputDirective } from 'ng-zorro-antd/input';
 import { NzFormControlComponent, NzFormDirective, NzFormItemComponent, NzFormLabelComponent } from 'ng-zorro-antd/form';
+import { TplSearchBarComponent } from '@site/app/components/tpl-search-bar/tpl-search-bar.component';
+import { DepartmentTreeComponent } from './department-tree/department-tree.component';
+import { NzTableModule } from 'ng-zorro-antd/table';
+import { UserService } from '@site/app/services/user/user.service';
+import { User } from '@site/app/define/user';
+import { SimpleRole } from '@site/app/define/role';
+import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
+import { UserAddModalComponent } from './user-add-modal/user-add-modal.component';
 
 @Component({
   selector: 'app-user-manage',
   standalone: true,
   imports: [
     NzGridModule,
-    NzTreeModule,
     NzTabsModule,
     NzButtonModule,
     NzLayoutModule,
     NzIconModule,
-    NzCardModule,
     NgIf,
-    FormSearchBarComponent,
-    SearchFormItemComponent,
     NzInputDirective,
     ReactiveFormsModule,
     NzFormDirective,
     NzFormControlComponent,
     NzFormItemComponent,
-    NzFormLabelComponent
+    NzFormLabelComponent,
+    TplSearchBarComponent,
+    DepartmentTreeComponent,
+    NzTableModule,
+    NgForOf,
+    NzPopconfirmModule,
+    UserAddModalComponent
   ],
   templateUrl: './user-manage.component.html',
   styleUrl: './user-manage.component.css'
 })
-export class UserManageComponent implements OnInit{
+export class UserManageComponent implements OnInit {
 
-  departments: NzTreeNodeOptions[] = [];
+  @ViewChild('userAddModalComponent') userAddModalComponent?: UserAddModalComponent;
+
   selectedDepartment!: NzTreeNode;
   userSearchForm: FormGroup<{
     name: FormControl<string>;
-    department: FormControl<string>;
-    status: FormControl<number>;
+    deptId: FormControl<string>;
+    username: FormControl<string>;
+    phoneNumber: FormControl<string>;
   }> = this.fb.group({
     name: [''],
-    department: [''],
-    status: [0]
-  })
+    deptId: [''],
+    username: [''],
+    phoneNumber: ['']
+  });
+  users: User[] = [];
+  tableOptions = {
+    total: 0,
+    pageIndex: 1,
+    pageSize: 15
+  }
+  tableLoading = false;
+  deleteLoading = false;
+  stateLoading = false;
 
-  constructor(private departmentService: DepartmentService, private fb: NonNullableFormBuilder) {
+
+  constructor(private fb: NonNullableFormBuilder, private userService: UserService) {
 
   }
 
   ngOnInit(): void {
-    this.loadDepartments();
+    this.loadUsers();
   }
 
-  loadDepartments(): void {
-    this.departmentService.getDepartments().subscribe(res => {
-      if (res.success) {
-        this.departments = [{
-          title: environment.rootDepartmentName || '全公司',
-          key: '',
-          isLeft: false,
-          children: this.toTreeNodes(res.data)
-        }]
-      }
+  loadUsers(): void {
+    this.tableLoading = true;
+    this.userService.findAllUsers({
+      ...this.userSearchForm.value,
+      page: this.tableOptions.pageIndex,
+      pageSize: this.tableOptions.pageSize
+    }).subscribe({
+      next: res => {
+        if (res.success) {
+          this.users = res.data || [];
+          this.tableOptions.total = res.total || 0;
+        }
+      },
+      complete: () => this.tableLoading = false
     })
   }
 
-  onTreeNodeSelected(event:NzFormatEmitEvent): void {
-    if (event.node) {
-      this.selectedDepartment = event.node;
-    }
+  onTreeNodeSelected(node: NzTreeNode): void {
+      this.selectedDepartment = node;
+      this.userSearchForm.patchValue({
+        deptId: this.selectedDepartment.key
+      })
   }
 
-  search(formData: any) {
-  }
-
-  reset() {
-    this.userSearchForm.reset();
-  }
-
-  private toTreeNodes(departments: Department[] | undefined): NzTreeNodeOptions[] {
-    if (!departments) {
-      return []
-    }
-
-    let nodes: NzTreeNodeOptions[] = []
-    departments.forEach(dept => {
-      let node: NzTreeNodeOptions = {
-        title: dept.deptName,
-        key: dept.deptId,
-        isLeaf: !dept.children,
-        children: this.toTreeNodes(dept.children)
-      }
-      nodes.push(node)
+  showAddModal() {
+    this.userAddModalComponent?.showAddModal({
+      deptId: this.selectedDepartment.key,
+      deptName: this.selectedDepartment.title
     })
-    return nodes
   }
 
+  showEditModal(user: User) {
+    this.userAddModalComponent?.showUpdateModal(user)
+  }
+
+  deleteUser(userId: string) {
+    this.deleteLoading = true;
+    this.userService.deleteUser(userId).subscribe({
+      next: res => {
+        if (res.success) {
+          this.loadUsers();
+        }
+      },
+      complete: () => this.deleteLoading = false
+    })
+  }
+
+  disable(user: User) {
+    this.stateLoading = true;
+    this.userService.disable(user.userId).subscribe({
+      next:res => {
+        if (res.success) {
+          user.isEnable = false;
+        }
+      },
+      complete: () => this.stateLoading = false
+    })
+  }
+
+  enable(user: User) {
+    this.stateLoading = true;
+    this.userService.enable(user.userId).subscribe({
+      next:res => {
+        if (res.success) {
+          user.isEnable = true;
+        }
+      },
+      complete: () => this.stateLoading = false
+    })
+  }
+
+  search() {
+    this.tableOptions.pageIndex = 1;
+    this.loadUsers();
+  }
+
+  getRolesName(roles?: SimpleRole[]) {
+    return roles ? roles.map(r => r.roleName).join(',') : '';
+  }
 }

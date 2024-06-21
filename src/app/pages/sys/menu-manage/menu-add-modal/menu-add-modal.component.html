@@ -1,4 +1,4 @@
-<nz-modal [(nzVisible)]="isVisible" nzWidth="800px" nzTitle="添加菜单" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()" [nzOkLoading]="loading">
+<nz-modal [(nzVisible)]="isVisible" nzWidth="800px" [nzTitle]="isEdit ? '修改菜单' : '添加菜单'" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()" [nzOkLoading]="loading">
   <ng-container *nzModalContent>
     <form nz-form [formGroup]="menuForm">
       <nz-form-item *ngIf="!isEdit">

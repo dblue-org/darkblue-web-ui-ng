@@ -59,7 +59,7 @@
     </nz-header>
     <nz-content>
       <div class="router-tabs">
-        <nz-tabset nzLinkRouter nzType="editable-card" nzHideAdd (nzClose)="closeTab($event)" [(nzSelectedIndex)]="selectedTabIndex">
+        <nz-tabset nzLinkRouter nzType="editable-card" nzHideAdd [nzAnimated]="true" (nzClose)="closeTab($event)" [(nzSelectedIndex)]="selectedTabIndex">
           <nz-tab *ngFor="let item of tabs" [nzClosable]="item.closable">
             <a *nzTabLink nz-tab-link [routerLink]="[item.routerLink]" [queryParams]="item.queryParams" queryParamsHandling="merge">
               {{ item.name }}

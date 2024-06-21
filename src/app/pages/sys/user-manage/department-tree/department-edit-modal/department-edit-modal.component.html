@@ -1,0 +1,25 @@
+<nz-modal [(nzVisible)]="isVisible" nzWidth="800px" [nzTitle]="isEdit ? '修改部门' : '添加部门'" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()" [nzOkLoading]="loading">
+  <ng-container *nzModalContent>
+    <form nz-form [formGroup]="departmentForm">
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="parentId">上级部门</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <app-department-select [disableDepartment]="disableDepartmentId" formControlName="parentId" id="parentId" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="deptName">部门名称</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="部门名称不能为空">
+          <input nz-input formControlName="deptName" id="deptName"/>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="masterUserId">部门负责人</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <app-user-select formControlName="masterUserId" id="masterUserId" />
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </ng-container>
+</nz-modal>
+

@@ -4,5 +4,9 @@ export interface ResponseBean<T> {
   message?: string,
   extension?: any,
   errorDetails?: any,
-  data?: T
+  data?: T,
+  page?: number,
+  pageSize?: number,
+  totalPage?: number,
+  total?: number,
 }

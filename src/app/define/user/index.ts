@@ -1,10 +1,12 @@
+import { SimpleRole } from '../role';
+
 export interface AccessToken {
   tokenValue: string;
   createTime: number;
   expireTime: number;
 }
 
-export interface User {
+export interface LoginUser {
   userId: string;
   username: string,
   phoneNumber?: string,
@@ -19,10 +21,45 @@ export interface LoginForm {
   remember?: boolean
 }
 
-export interface Department {
+export interface DepartmentNode {
   deptId: string;
   deptName: string;
   parentId?: string;
   expanded?: boolean;
-  children?: Department[]
+  children?: DepartmentNode[]
+}
+
+export interface Department {
+  deptId: string;
+  deptName: string;
+  parentId?: string;
+  masterUserId?: string;
+}
+
+export interface UserSearchForm {
+  name?: string;
+  username?: string,
+  phoneNumber?: string,
+  deptId?: string;
+  page: number,
+  pageSize: number
+}
+
+export interface User {
+  userId: string;
+  name: string;
+  username: string,
+  phoneNumber?: string,
+  deptId: string;
+  deptName: string;
+  isEnable: boolean;
+  lastLoginTime?: string;
+  roles?: SimpleRole[]
+}
+
+export interface SimpleUser {
+  userId: string;
+  name: string;
+  username: string,
+  phoneNumber?: string,
 }
