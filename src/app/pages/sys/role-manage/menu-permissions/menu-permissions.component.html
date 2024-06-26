@@ -1,0 +1,11 @@
+<div class="menu-permissions-container" *ngIf="value">
+  <label class="menu-permissions-header">{{value.menuName}}</label>
+
+  <nz-checkbox-wrapper style="width: 100%;" (nzOnChange)="onModalValueChange($event)">
+    <ng-container *ngFor="let item of value.permissions">
+      <div>
+        <label nz-checkbox [(ngModel)]="item.checked" [nzValue]="item.permissionId">{{ item.permissionName }}</label>
+      </div>
+    </ng-container>
+  </nz-checkbox-wrapper>
+</div>

@@ -16,6 +16,7 @@ import {
 import { UserService } from '@site/app/services/user/user.service';
 import { User } from '@site/app/define/user';
 import { RoleSelectComponent } from '@site/app/components/form/role-select/role-select.component';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-user-add-modal',
@@ -66,7 +67,7 @@ export class UserAddModalComponent {
     roles: [['']]
   });
 
-  constructor(private fb: NonNullableFormBuilder, private userService: UserService) {}
+  constructor(private fb: NonNullableFormBuilder, private userService: UserService, private messageService: NzMessageService) {}
 
   showAddModal(dept: {deptId: string, deptName: string}): void {
     this.isEdit = false;
@@ -118,6 +119,7 @@ export class UserAddModalComponent {
     this.userService.addUser(this.userForm.value as User).subscribe({
       next: res => {
         if (res.success) {
+          this.messageService.success('保存成功');
           this.onSaveSuccess()
         }
       },
@@ -129,6 +131,7 @@ export class UserAddModalComponent {
     this.userService.updateUser(this.userForm.value as User).subscribe({
       next: res => {
         if (res.success) {
+          this.messageService.success('修改成功');
           this.onSaveSuccess()
         }
       },

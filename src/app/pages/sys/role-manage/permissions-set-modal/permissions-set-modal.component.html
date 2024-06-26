@@ -1,0 +1,37 @@
+<nz-modal [(nzVisible)]="isVisible" nzWidth="1200px" nzTitle="设置角色权限" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()" [nzOkLoading]="loading">
+  <ng-container *nzModalContent>
+    <nz-steps [nzCurrent]="current">
+      <nz-step nzTitle="选择菜单"></nz-step>
+      <nz-step nzTitle="配置权限"></nz-step>
+    </nz-steps>
+    <div class="steps-content-0" *ngIf="current == 0">
+      <nz-tree #menuTree
+        [nzData]="menus"
+        nzCheckable
+        nzMultiple
+        nzExpandAll
+        [(nzCheckedKeys)]="checkedMenuIds"
+      ></nz-tree>
+    </div>
+    <div class="steps-content-1" *ngIf="current == 1">
+      <div nz-row [nzGutter]="24">
+        <ng-container *ngFor="let item of menuPermissions; let i = index">
+          <app-menu-permissions nz-col [nzSpan]="8" [(ngModel)]="menuPermissions[i]" />
+        </ng-container>
+      </div>
+
+    </div>
+  </ng-container>
+  <ng-container *nzModalFooter>
+    <button nz-button nzType="primary" (click)="pre()" *ngIf="current > 0">
+      <span>上一步</span>
+    </button>
+    <button nz-button nzType="primary" (click)="next()" *ngIf="current < 1">
+      <span>下一步</span>
+    </button>
+    <button nz-button nzType="primary" [nzLoading]="loading" (click)="handleOk()" *ngIf="current === 1">保存</button>
+    <button nz-button nzType="default" (click)="handleCancel()">取消</button>
+  </ng-container>
+</nz-modal>
+
+

@@ -1,21 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Role } from '@site/app/define/role';
 import { NzTableModule } from 'ng-zorro-antd/table';
-import { FormControl, FormGroup, FormsModule, NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { NzInputDirective } from 'ng-zorro-antd/input';
 import { TplSearchBarComponent } from '@site/app/components/tpl-search-bar/tpl-search-bar.component';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { NzIconDirective } from 'ng-zorro-antd/icon';
-import { NgForOf, NgIf } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { NzPopconfirmDirective } from 'ng-zorro-antd/popconfirm';
 import { NzWaveDirective } from 'ng-zorro-antd/core/wave';
-import { User } from '@site/app/define/user';
 import { RoleService } from '@site/app/services/role/role.service';
+import { RoleEditModalComponent } from '@site/app/pages/sys/role-manage/role-edit-modal/role-edit-modal.component';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import {
+  PermissionsSetModalComponent
+} from '@site/app/pages/sys/role-manage/permissions-set-modal/permissions-set-modal.component';
 
 @Component({
   selector: 'app-role-manage',
   standalone: true,
   imports: [
+    CommonModule,
     NzTableModule,
     FormsModule,
     NzInputDirective,
@@ -23,10 +28,10 @@ import { RoleService } from '@site/app/services/role/role.service';
     TplSearchBarComponent,
     NzButtonComponent,
     NzIconDirective,
-    NgForOf,
-    NgIf,
     NzPopconfirmDirective,
-    NzWaveDirective
+    NzWaveDirective,
+    RoleEditModalComponent,
+    PermissionsSetModalComponent
   ],
   templateUrl: './role-manage.component.html',
   styleUrl: './role-manage.component.css'
@@ -46,8 +51,10 @@ export class RoleManageComponent implements OnInit {
   tableLoading = false;
   deleteLoading = false;
   stateLoading = false;
+  @ViewChild('roleEditModalComponent') roleEditModalComponent!: RoleEditModalComponent;
+  @ViewChild('permissionsSetModalComponent') permissionsSetModalComponent!: PermissionsSetModalComponent;
 
-  constructor(private fb: NonNullableFormBuilder, private roleService: RoleService) {
+  constructor(private fb: NonNullableFormBuilder, private roleService: RoleService, private messageService: NzMessageService) {
   }
 
   ngOnInit(): void {
@@ -78,22 +85,50 @@ export class RoleManageComponent implements OnInit {
   }
 
   showAddModal() {
-
+    this.roleEditModalComponent.showAddModal();
   }
 
   showEditModal(role: Role) {
+    this.roleEditModalComponent.showUpdateModal(role);
   }
 
   delete(roleId: string) {
-
+    this.roleService.delete(roleId).subscribe(res => {
+      if (res.success) {
+        this.messageService.success("角色已删除")
+        this.loadRoles();
+      }
+    })
   }
 
   disable(role: Role) {
-
+    this.stateLoading = true;
+    this.roleService.disable(role.roleId).subscribe({
+      next: res => {
+        if (res.success) {
+          this.messageService.success("角色已禁用")
+          role.isEnable = false;
+        }
+      },
+      complete: () => this.stateLoading = false
+    })
   }
 
   enable(role: Role) {
+    this.stateLoading = true;
+    this.roleService.enable(role.roleId).subscribe({
+      next: res => {
+        if (res.success) {
+          this.messageService.success("角色已启用")
+          role.isEnable = true;
+        }
+      },
+      complete: () => this.stateLoading = false
+    })
+  }
 
+  showPermissionSetModal(roleId: string) {
+    this.permissionsSetModalComponent.showModal(roleId);
   }
 
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { delay, Observable, of } from 'rxjs';
 import { ResponseBean } from '../../define/response';
 import { SimpleUser, User, UserSearchForm } from '../../define/user';
 
@@ -14,32 +14,32 @@ export class UserService {
     console.log(user);
     return of({
       success: true
-    })
+    }).pipe(delay(1000))
   }
 
   updateUser(user: User): Observable<ResponseBean<any>> {
     console.log(user);
     return of({
       success: true
-    })
+    }).pipe(delay(1000))
   }
 
   deleteUser(userId: string): Observable<ResponseBean<any>> {
     return of({
       success: true
-    })
+    }).pipe(delay(1000))
   }
 
   enable(userId: string): Observable<ResponseBean<any>> {
     return of({
       success: true
-    })
+    }).pipe(delay(1000))
   }
 
   disable(userId: string): Observable<ResponseBean<any>> {
     return of({
       success: true
-    })
+    }).pipe(delay(1000))
   }
 
   findAllUsers(searchForm: UserSearchForm): Observable<ResponseBean<User[]>> {
@@ -48,7 +48,7 @@ export class UserService {
       success: true,
       data: this.mockUser(),
       total: 1
-    })
+    }).pipe(delay(1000))
   }
 
   searchUser(keyword?: string, limit: number = 100): Observable<ResponseBean<SimpleUser[]>> {
@@ -56,7 +56,7 @@ export class UserService {
     return of({
       success: true,
       data: this.mockUser(),
-    })
+    }).pipe(delay(500))
   }
 
   private mockUser(): User[] {

@@ -1,6 +1,7 @@
 <app-tpl-search-bar [formGroup]="searchForm"
                     (onSearch)="search()"
                     [buttons]="tableButtons"
+                    [loading]="tableLoading"
                     [items]="[
                           {name: 'roleCode', label: '角色编码', item: roleCode},
                           {name: 'roleName', label: '角色名称', item: roleName},
@@ -36,7 +37,7 @@
     <th>状态</th>
     <th>是否内置</th>
     <th>创建时间</th>
-    <th nzWidth="300px">操作</th>
+    <th nzWidth="320px">操作</th>
   </tr>
   </thead>
   <tbody>
@@ -52,7 +53,7 @@
               nzType="primary"
               [nzLoading]="deleteLoading"
               nz-popconfirm
-              nzPopconfirmTitle="是否确认删除此用户?"
+              nzPopconfirmTitle="是否确认删除此角色?"
               (nzOnConfirm)="delete(data.roleId)"
               nzDanger>删除
       </button>
@@ -66,11 +67,13 @@
               nz-button nzSize="small"
               nzType="default" nzDanger (click)="enable(data)">启用
       </button>
-      <button [nzLoading]="stateLoading"
-              nz-button nzSize="small"
-              nzType="default" (click)="enable(data)">设置权限
+      <button nz-button nzSize="small"
+              nzType="default" (click)="showPermissionSetModal(data.roleId)">设置权限
       </button>
     </td>
   </tr>
   </tbody>
 </nz-table>
+
+<app-role-edit-modal #roleEditModalComponent (onSuccess)="loadRoles()" />
+<app-permissions-set-modal #permissionsSetModalComponent />

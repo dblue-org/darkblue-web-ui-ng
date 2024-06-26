@@ -21,3 +21,31 @@ export interface RoleSearchForm {
   page: number;
   pageSize: number;
 }
+
+export interface RolePermissionsDto {
+  roleId: string;
+  menuIdList: string[];
+  permissionIdList: string[];
+}
+
+export interface MenuVo {
+  menuId: string;
+  menuName: string;
+  parentId?: string;
+  level?: number;
+  checked?: boolean;
+  children?: MenuVo[]
+}
+
+export interface PermissionVo {
+  permissionId: string;
+  permissionCode?: string;
+  permissionName: string;
+  checked: boolean;
+}
+
+export interface MenuPermissionsVo {
+  menuId: string;
+  menuName: string;
+  permissions: PermissionVo[]
+}

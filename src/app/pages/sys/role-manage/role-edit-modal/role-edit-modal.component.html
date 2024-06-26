@@ -1,0 +1,20 @@
+<nz-modal [(nzVisible)]="isVisible" nzWidth="600px" [nzTitle]="isEdit ? '修改角色' : '添加角色'" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()" [nzOkLoading]="loading">
+  <ng-container *nzModalContent>
+    <form nz-form [formGroup]="dataForm">
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="roleCode">角色编码</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="角色编码不能为空">
+          <input nz-input formControlName="roleCode" id="roleCode"/>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="roleName">角色名称</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="角色名称不能为空">
+          <input nz-input formControlName="roleName" id="roleName"/>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </ng-container>
+</nz-modal>
+
+
