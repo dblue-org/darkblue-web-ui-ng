@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { Department, DepartmentNode } from '../../define/user';
-import { ResponseBean } from '../../define/response';
+import { Department, DepartmentNode } from '../../define/sys/user';
+import { ResponseBean } from '../../define/sys/response';
 import { NzTreeNodeOptions } from 'ng-zorro-antd/tree';
 
 @Injectable({

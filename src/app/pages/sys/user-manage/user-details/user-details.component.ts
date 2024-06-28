@@ -3,7 +3,7 @@ import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NgForOf } from '@angular/common';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
-import { SectionComponent } from '@site/app/components/section/section.component';
+import { SectionComponent } from '@site/app/components/layout/section/section.component';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';

@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { BasicEditModalComponent } from '@site/app/components/basic-edit-modal/basic-edit-modal.component';
 import { Observable } from 'rxjs';
-import { ResponseBean } from '@site/app/define/response';
+import { ResponseBean } from '@site/app/define/sys/response';
 import { FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ResourcesService } from '@site/app/services/sys/resources.service';
-import { Mapping, Resource } from '@site/app/define/resource';
+import { Mapping, Resource } from '@site/app/define/sys/resource';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputDirective } from 'ng-zorro-antd/input';

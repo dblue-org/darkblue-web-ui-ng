@@ -1,5 +1,5 @@
 import { Component, EventEmitter, forwardRef, OnInit } from '@angular/core';
-import { SimpleRole } from '../../../define/role';
+import { SimpleRole } from '../../../define/sys/role';
 import { RoleService } from '../../../services/sys/role.service';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { NzSelectModule } from 'ng-zorro-antd/select';

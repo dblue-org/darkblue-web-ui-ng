@@ -1,5 +1,5 @@
 import { Injectable, OnInit } from '@angular/core';
-import { LoginUser } from '../../define/user';
+import { LoginUser } from '../../define/sys/user';
 import { ACLService } from '@delon/acl';
 
 const ROLE_PREFIX = 'ROLE_';

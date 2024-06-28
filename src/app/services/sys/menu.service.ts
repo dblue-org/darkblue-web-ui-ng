@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import {Observable, of, from} from "rxjs";
-import {MenuItem} from "../../define/menu";
-import { ResponseBean } from '../../define/response';
+import { Observable, of, from, delay } from 'rxjs';
+import {MenuItem} from "../../define/sys/menu";
+import { ResponseBean } from '../../define/sys/response';
 
 @Injectable({
   providedIn: 'root'
@@ -10,14 +10,18 @@ export class MenuService {
 
   constructor() { }
 
-  getUserMenu(): Observable<MenuItem[]> {
-    const menus: MenuItem[] = this.mockMenu();
-    return of(menus);
+  getUserMenu(): Observable<ResponseBean<MenuItem[]>> {
+    return of({
+      success: true,
+      data: this.mockMenu()
+    });
   }
 
-  getAllMenu(): Observable<MenuItem[]> {
-    const menus: MenuItem[] = this.mockMenu();
-    return of(menus);
+  getAllMenu(): Observable<ResponseBean<MenuItem[]>> {
+    return of({
+      success: true,
+      data: this.mockMenu()
+    }).pipe(delay(300));
   }
 
   addMenu(menu: MenuItem): Observable<ResponseBean<any>> {

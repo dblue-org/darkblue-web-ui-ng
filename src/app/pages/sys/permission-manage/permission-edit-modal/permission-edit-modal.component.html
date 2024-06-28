@@ -1,0 +1,28 @@
+<nz-modal [(nzVisible)]="isVisible" nzWidth="800px"
+          [nzTitle]="isEdit ? '修改权限' : '添加权限'"
+          (nzOnCancel)="handleCancel()"
+          (nzOnOk)="handleOk()"
+          [nzOkLoading]="loading">
+  <ng-container *nzModalContent>
+    <form nz-form [formGroup]="dataForm">
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24">所属菜单</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" >
+          <input nz-input formControlName="menuName" readonly/>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>权限编码</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="权限编码不能为空">
+          <input nz-input formControlName="permissionCode"/>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>权限名称</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="权限名称不能为空">
+          <input nz-input formControlName="permissionName"/>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </ng-container>
+</nz-modal>

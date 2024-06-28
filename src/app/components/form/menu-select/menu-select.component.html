@@ -1,0 +1,8 @@
+<nz-tree-select
+  [nzNodes]="menus"
+  nzShowSearch
+  nzPlaceHolder="请选择菜单"
+  style="width: 100%"
+  [(ngModel)]="value"
+  (ngModelChange)="onModalValueChange($event)"
+></nz-tree-select>

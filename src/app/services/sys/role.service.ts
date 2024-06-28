@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { delay, Observable, of } from 'rxjs';
-import { ResponseBean } from '../../define/response';
-import { MenuPermissionsVo, MenuVo, Role, RolePermissionsDto, RoleSearchForm, SimpleRole } from '../../define/role';
+import { ResponseBean } from '../../define/sys/response';
+import { MenuPermissionsVo, MenuVo, Role, RolePermissionsDto, RoleSearchForm, SimpleRole } from '../../define/sys/role';
 import { NzTreeNodeOptions } from 'ng-zorro-antd/tree';
 
 @Injectable({

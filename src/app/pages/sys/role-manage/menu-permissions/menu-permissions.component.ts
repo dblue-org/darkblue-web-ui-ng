@@ -1,5 +1,5 @@
 import { Component, EventEmitter, forwardRef, Input, OnInit } from '@angular/core';
-import { MenuPermissionsVo } from '@site/app/define/role';
+import { MenuPermissionsVo } from '@site/app/define/sys/role';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { NgForOf, NgIf } from '@angular/common';

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { LoginForm, LoginUser } from '../../define/user';
-import { ResponseBean } from '../../define/response';
+import { LoginForm, LoginUser } from '../../define/sys/user';
+import { ResponseBean } from '../../define/sys/response';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../auth/authentication.service';
 

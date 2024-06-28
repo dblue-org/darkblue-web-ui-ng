@@ -7,7 +7,7 @@ import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { NzCheckboxComponent } from 'ng-zorro-antd/checkbox';
 import { LoginService } from '../../services/login/login.service';
 import { AuthenticationService } from '../../services/auth/authentication.service';
-import { LoginForm } from '../../define/user';
+import { LoginForm } from '../../define/sys/user';
 
 @Component({
   selector: 'app-login',

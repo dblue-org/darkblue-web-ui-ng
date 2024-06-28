@@ -2,7 +2,7 @@ import { Component, EventEmitter, forwardRef, Input, OnInit } from '@angular/cor
 import { NgForOf } from '@angular/common';
 import { NzOptionComponent, NzSelectComponent } from 'ng-zorro-antd/select';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { SimpleUser } from '@site/app/define/user';
+import { SimpleUser } from 'src/app/define/sys/user';
 import { UserService } from '@site/app/services/sys/user.service';
 import { BehaviorSubject, map, Observable, switchMap, debounceTime } from 'rxjs';
 

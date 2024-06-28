@@ -1,4 +1,4 @@
-import { SimplePermission } from '@site/app/define/permission';
+import { SimplePermission } from '@site/app/define/sys/permission';
 
 export interface ResourceGroup {
   resourceGroupId: string
@@ -32,6 +32,12 @@ export interface Resource extends Mapping{
   permissions: SimplePermission[]
 }
 
+export interface SimpleResource {
+  resourceId: string
+  resourceName: string
+  requestMethod?: string
+  resourceUrl: string
+}
 export interface ResourceSearchForm {
   resourceGroupId?: string
   resourceName?: string

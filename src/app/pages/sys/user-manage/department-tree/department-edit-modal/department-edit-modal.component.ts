@@ -6,7 +6,7 @@ import { NzFormControlComponent, NzFormDirective, NzFormItemComponent, NzFormLab
 import { NzInputDirective } from 'ng-zorro-antd/input';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { RoleSelectComponent } from '@site/app/components/form/role-select/role-select.component';
-import { Department } from '@site/app/define/user';
+import { Department } from 'src/app/define/sys/user';
 import { DepartmentService } from '@site/app/services/sys/department.service';
 import { DepartmentSelectComponent } from '@site/app/components/form/department-select/department-select.component';
 import { UserSelectComponent } from '@site/app/components/form/user-select/user-select.component';

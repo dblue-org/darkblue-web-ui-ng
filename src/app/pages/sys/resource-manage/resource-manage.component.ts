@@ -8,10 +8,10 @@ import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { ResourceGroupComponent } from '@site/app/pages/sys/resource-manage/resource-group/resource-group.component';
-import { FormControl, FormGroup, FormsModule, NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, FormsModule, NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { NzInputDirective } from 'ng-zorro-antd/input';
-import { TplSearchBarComponent } from '@site/app/components/tpl-search-bar/tpl-search-bar.component';
-import { Resource, ResourceGroup } from '@site/app/define/resource';
+import { TplSearchBarComponent } from '@site/app/components/layout/tpl-search-bar/tpl-search-bar.component';
+import { Resource, ResourceGroup } from '@site/app/define/sys/resource';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { ResourcesService } from '@site/app/services/sys/resources.service';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
@@ -19,7 +19,10 @@ import {
   ResourceEditModalComponent
 } from '@site/app/pages/sys/resource-manage/resource-edit-modal/resource-edit-modal.component';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { SearchBarHelpDirective } from '@site/app/components/tpl-search-bar/search-bar-help.directive';
+import { SearchBarHelpDirective } from '@site/app/components/layout/tpl-search-bar/search-bar-help.directive';
+import {
+  ResourcePermissionModalComponent
+} from '@site/app/pages/sys/resource-manage/resource-permission-modal/resource-permission-modal.component';
 
 @Component({
   selector: 'app-resource-manage',
@@ -41,7 +44,8 @@ import { SearchBarHelpDirective } from '@site/app/components/tpl-search-bar/sear
     ReactiveFormsModule,
     TplSearchBarComponent,
     ResourceEditModalComponent,
-    SearchBarHelpDirective
+    SearchBarHelpDirective,
+    ResourcePermissionModalComponent
   ],
   templateUrl: './resource-manage.component.html',
   styleUrl: './resource-manage.component.css'
@@ -49,26 +53,34 @@ import { SearchBarHelpDirective } from '@site/app/components/tpl-search-bar/sear
 export class ResourceManageComponent implements OnInit {
 
   @ViewChild('resourceEditModalComponent') resourceEditModalComponent?: ResourceEditModalComponent;
-  expandSet = new Set<string>();
+  @ViewChild('resourcePermissionModalComponent') resourcePermissionModalComponent?: ResourcePermissionModalComponent;
+
   selectedResourceGroup?: ResourceGroup;
-  deleteLoading = false;
-  resources: any[] = [];
-  tableLoading = false;
-  tableOptions = {
-    total: 0,
-    pageIndex: 1,
-    pageSize: 15
-  }
+
   searchForm: FormGroup = this.fb.group({
     resourceName: [''],
     resourceUrl: [''],
     controller: [''],
     method: [''],
-    isAuthedAccess: [''],
+    isAuthedAccess: ['']
   });
 
-  constructor(private fb: NonNullableFormBuilder, private resourceService: ResourcesService,
-              private messageService: NzMessageService) {
+  // table options
+  resources: any[] = [];
+  expandSet = new Set<string>();
+  tableLoading = false;
+  tableOptions = {
+    total: 0,
+    pageIndex: 1,
+    pageSize: 15
+  };
+
+  // operation properties
+  deleteLoading = false;
+
+  constructor(
+    private fb: NonNullableFormBuilder, private resourceService: ResourcesService,
+    private messageService: NzMessageService) {
   }
 
 
@@ -105,7 +117,7 @@ export class ResourceManageComponent implements OnInit {
         }
       },
       complete: () => this.tableLoading = false
-    })
+    });
   }
 
   doDelete(resourceId: string) {
@@ -117,10 +129,10 @@ export class ResourceManageComponent implements OnInit {
         }
       },
       complete: () => this.deleteLoading = false
-    })
+    });
   }
 
-  onResourceGroupSelect(selected?:ResourceGroup) {
+  onResourceGroupSelect(selected?: ResourceGroup) {
     this.selectedResourceGroup = selected;
     this.tableOptions.pageIndex = 1;
     this.loadData();
@@ -130,9 +142,13 @@ export class ResourceManageComponent implements OnInit {
     this.resourceEditModalComponent?.showAddModal(this.selectedResourceGroup);
   }
 
-  showUpdateModal(item: Resource) {
+  showUpdateModal(resource: Resource) {
     this.resourceEditModalComponent?.showUpdateModal({
-      ...item
+      ...resource
     });
+  }
+
+  showPermissionsModal(resource: Resource) {
+    this.resourcePermissionModalComponent?.showModal(resource);
   }
 }

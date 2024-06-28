@@ -1,7 +1,7 @@
 import { Component, EventEmitter, forwardRef, OnInit, Output } from '@angular/core';
 import { NzTreeNodeOptions } from 'ng-zorro-antd/tree';
 import { NzTreeSelectModule } from 'ng-zorro-antd/tree-select';
-import { Mapping } from '@site/app/define/resource';
+import { Mapping } from '@site/app/define/sys/resource';
 import { MappingsService } from '@site/app/services/sys/mappings.service';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { CommonModule } from '@angular/common';

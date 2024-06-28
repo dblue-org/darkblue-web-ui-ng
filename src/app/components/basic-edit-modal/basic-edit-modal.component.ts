@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { ResponseBean } from '@site/app/define/response';
+import { ResponseBean } from '@site/app/define/sys/response';
 
 @Component({
   template: '',

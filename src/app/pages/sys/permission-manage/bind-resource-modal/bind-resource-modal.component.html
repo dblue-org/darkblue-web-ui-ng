@@ -1,0 +1,120 @@
+<nz-modal [(nzVisible)]="isVisible" nzWidth="1200px" [nzTitle]="modalTitle" (nzOnCancel)="handleCancel()"
+          (nzOnOk)="handleOk()" [nzOkLoading]="loading">
+  <ng-template #modalTitle>
+    {{title}}
+  </ng-template>
+  <ng-container *nzModalContent>
+    <nz-steps [nzCurrent]="current" style="padding-bottom: 24px;">
+      <nz-step nzTitle="选择资源"></nz-step>
+      <nz-step nzTitle="确认资源"></nz-step>
+    </nz-steps>
+    <div *ngIf="current == 0">
+      <app-tpl-search-bar [formGroup]="searchForm"
+                          (onSearch)="search()"
+                          [loading]="tableLoading"
+                          buttonPosition="R"
+                          [showReset]="false"
+                          [items]="[
+                          {name: 'resourceGroupId', label: '所属资源组', item: resourceGroupId},
+                          {name: 'resourceName', label: '资源名称', item: resourceName},
+                          {name: 'resourceUrl', label: '资源地址', item: resourceUrl},
+                        ]">
+        <ng-template #resourceGroupId>
+          <app-resource-group-select formControlName="resourceGroupId"/>
+        </ng-template>
+        <ng-template #resourceName>
+          <input nz-input placeholder="模糊搜索资源名称" formControlName="resourceName"/>
+        </ng-template>
+        <ng-template #resourceUrl>
+          <input nz-input placeholder="模糊搜索资源地址" formControlName="resourceUrl"/>
+        </ng-template>
+      </app-tpl-search-bar>
+      <nz-table #basicTable
+                [nzFrontPagination]="false"
+                nzShowPagination
+                nzBordered
+                nzSize="small"
+                [nzTotal]="tableOptions.total"
+                [(nzPageIndex)]="tableOptions.pageIndex"
+                [(nzPageSize)]="tableOptions.pageSize"
+                nzTableLayout="fixed"
+                [nzData]="resources">
+        <thead>
+        <tr>
+          <th
+            [nzChecked]="checked"
+            [nzIndeterminate]="indeterminate"
+            nzLabel="Select all"
+            (nzCheckedChange)="onAllChecked($event)"
+          ></th>
+          <th>资源名称</th>
+          <th>请求方法</th>
+          <th>资源地址</th>
+        </tr>
+        </thead>
+        <tbody>
+        <ng-container *ngFor="let data of basicTable.data">
+          <tr>
+            <td [nzChecked]="setOfCheckedId.has(data.resourceId)" (nzCheckedChange)="onItemChecked(data, $event)"></td>
+            <td>{{ data.resourceName }}</td>
+            <td>{{ data.requestMethod }}</td>
+            <td>{{ data.resourceUrl }}</td>
+          </tr>
+        </ng-container>
+        </tbody>
+      </nz-table>
+    </div>
+    <div *ngIf="current == 1">
+      <nz-table #basicTable
+                [nzFrontPagination]="false"
+                nzShowPagination="false"
+                nzBordered
+                nzSize="small"
+                nzTableLayout="fixed"
+                [nzData]="getCheckedData()">
+        <thead>
+        <tr>
+          <th>资源名称</th>
+          <th>请求方法</th>
+          <th>资源地址</th>
+          <th nzWidth="80px">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <ng-container *ngFor="let data of basicTable.data">
+          <tr>
+            <td>{{ data.resourceName }}</td>
+            <td>{{ data.requestMethod }}</td>
+            <td>{{ data.resourceUrl }}</td>
+            <td>
+              <button nz-button
+                      nzType="default"
+                      nzSize="small"
+                      (click)="onItemChecked(data, false)"
+                      nzShape="circle">
+                <span nz-icon nzType="minus" nzTheme="outline"></span>
+              </button>
+            </td>
+          </tr>
+        </ng-container>
+        </tbody>
+      </nz-table>
+    </div>
+
+  </ng-container>
+  <div *nzModalFooter>
+    <div nz-row>
+      <div nz-col [nzSpan]="4" style="text-align: left">
+        已选择 {{setOfCheckedId.size}} 个资源
+      </div>
+      <div nz-col [nzSpan]="20">
+        <button nz-button nzType="primary" (click)="next()" *ngIf="current == 0">下一步</button>
+        <button nz-button nzType="primary" (click)="pre()" *ngIf="current == 1">上一步</button>
+        <button nz-button nzType="primary" (click)="handleOk()" *ngIf="current == 0" [nzLoading]="loading" nzDanger>跳过确认，直接提交</button>
+        <button nz-button nzType="primary" (click)="handleOk()" *ngIf="current == 1" [nzLoading]="loading">确认</button>
+        <button nz-button nzType="default" (click)="handleCancel()">取消</button>
+      </div>
+    </div>
+  </div>
+</nz-modal>
+

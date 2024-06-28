@@ -2,6 +2,7 @@
                     (onSearch)="search()"
                     [buttons]="tableButtons"
                     [loading]="tableLoading"
+                    buttonPosition="R"
                     [items]="[
                           {name: 'roleCode', label: '角色编码', item: roleCode},
                           {name: 'roleName', label: '角色名称', item: roleName},
@@ -24,6 +25,7 @@
           [nzFrontPagination]="false"
           nzShowPagination
           nzBordered
+          nzSize="small"
           [nzTotal]="tableOptions.total"
           [(nzPageIndex)]="tableOptions.pageIndex"
           [(nzPageSize)]="tableOptions.pageSize"

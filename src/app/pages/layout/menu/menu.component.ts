@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {NzMenuDirective, NzMenuItemComponent, NzSubMenuComponent} from "ng-zorro-antd/menu";
 import { NavigationStart, Router, RouterLink } from '@angular/router';
-import {MenuItem} from "../../../define/menu";
+import {MenuItem} from "../../../define/sys/menu";
 import {MenuService} from "../../../services/sys/menu.service";
 import {NgForOf, NgIf, NgTemplateOutlet} from "@angular/common";
 import {NzIconModule} from "ng-zorro-antd/icon";
@@ -33,8 +33,10 @@ export class MenuComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.menuService.getUserMenu().subscribe(menus => {
-      this.menuItems = menus;
+    this.menuService.getUserMenu().subscribe(res => {
+      if (res.success) {
+        this.menuItems = res.data || [];
+      }
     })
   }
 

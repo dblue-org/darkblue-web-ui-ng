@@ -1,0 +1,6 @@
+<div [class]="{'sidebar': true, 'sidebar-border': bordered}" [style]="{width: sidebarWidth + 'px'}">
+  <ng-container *ngTemplateOutlet="siderContentChild"/>
+</div>
+<div class="content" [style]="{width: 'calc(100% - ' + sidebarWidth + 'px)'}">
+  <ng-content />
+</div>

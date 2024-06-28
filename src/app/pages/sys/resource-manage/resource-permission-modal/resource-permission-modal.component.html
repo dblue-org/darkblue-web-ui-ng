@@ -1,0 +1,66 @@
+<nz-modal [(nzVisible)]="isVisible" nzWidth="1200px" nzTitle="设置资源权限" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()" [nzOkLoading]="loading">
+  <ng-container *nzModalContent>
+    <div class="permission-table">
+      <app-tpl-search-bar [formGroup]="searchForm"
+                          (onSearch)="search()"
+                          [loading]="tableLoading"
+                          buttonPosition="R"
+                          [showReset]="false"
+                          [items]="[
+                            {name: 'menuId', label: '选择菜单', item: menuId},
+                            {name: 'permissionName', label: '权限名称', item: permissionName},
+                            {name: 'permissionCode', label: '权限编码', item: permissionCode},
+                          ]">
+        <ng-template #menuId>
+          <app-menu-select formControlName="menuId" onlyLeaf/>
+        </ng-template>
+        <ng-template #permissionName>
+          <input nz-input placeholder="模糊搜索权限名称" formControlName="permissionName"/>
+        </ng-template>
+        <ng-template #permissionCode>
+          <input nz-input placeholder="模糊搜索权限编码" formControlName="permissionCode"/>
+        </ng-template>
+      </app-tpl-search-bar>
+    </div>
+    <nz-table #basicTable
+              [nzFrontPagination]="false"
+              nzShowPagination
+              nzBordered
+              nzSize="small"
+              [nzTotal]="tableOptions.total"
+              [(nzPageIndex)]="tableOptions.pageIndex"
+              [(nzPageSize)]="tableOptions.pageSize"
+              nzTableLayout="fixed"
+              [nzData]="permissions">
+      <thead>
+      <tr>
+        <th>所属菜单</th>
+        <th>权限名称</th>
+        <th>权限编码</th>
+        <th nzWidth="80px">操作</th>
+      </tr>
+      </thead>
+      <tbody>
+      <ng-container *ngFor="let data of basicTable.data">
+        <tr>
+          <td>{{ data.menuName }}</td>
+          <td>{{ data.permissionName }}</td>
+          <td>{{ data.permissionCode }}</td>
+
+          <td>
+            <a nz-button nzType="link" nzSize="small" *ngIf="isShowAddAction(data)" (click)="add(data)">
+              添加
+            </a>
+          </td>
+        </tr>
+      </ng-container>
+      </tbody>
+    </nz-table>
+    <div class="selected-permission">
+      <label>已选择权限：</label>
+      @for (item of selectedPermissions; track item) {
+        <nz-tag nzColor="processing" nzMode="closeable" (nzOnClose)="removePermission(item)">{{item.permissionName}}</nz-tag>
+      }
+    </div>
+  </ng-container>
+</nz-modal>

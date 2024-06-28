@@ -1,18 +1,31 @@
 .search-form-bar {
   margin-bottom: 24px;
+
 }
 .search-bar-line {
   border-bottom: 1px solid #dddddd;
   padding-bottom: 18px;
 }
+.searchbar-form-right-layout {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 12px;
+}
 .search-form {
-  width: calc(100% - 120px);
-  min-height: 64px;
+  min-height: 32px;
   margin-right: 24px;
 }
-
+.search-form-bottom-right {
+  width: 100%;
+}
+.search-form-right {
+  width: calc(100% - 120px);
+}
 .single-line {
   padding-top: 18px;
+}
+:host .single-line-compact ::ng-deep nz-form-item {
+  margin-bottom: 0;
 }
 .search-form-button {
   width: 120px;
@@ -33,12 +46,12 @@
 }
 
 .collapsed-btn {
-  border: 1px solid #ddd;
   text-align: center;
   padding: 3px;
   border-radius: 5px;
   cursor: pointer;
   user-select: none;
+  margin-bottom: 24px;
 }
 
 .collapsed {

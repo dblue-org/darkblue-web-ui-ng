@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Role } from '@site/app/define/role';
+import { Role } from '@site/app/define/sys/role';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { FormsModule, NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { NzInputDirective } from 'ng-zorro-antd/input';
-import { TplSearchBarComponent } from '@site/app/components/tpl-search-bar/tpl-search-bar.component';
+import { TplSearchBarComponent } from '@site/app/components/layout/tpl-search-bar/tpl-search-bar.component';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { NzIconDirective } from 'ng-zorro-antd/icon';
 import { CommonModule } from '@angular/common';
@@ -38,21 +38,25 @@ import {
 })
 export class RoleManageComponent implements OnInit {
 
-  roles: Role[] = [];
+  @ViewChild('roleEditModalComponent') roleEditModalComponent!: RoleEditModalComponent;
+  @ViewChild('permissionsSetModalComponent') permissionsSetModalComponent!: PermissionsSetModalComponent;
+
   searchForm = this.fb.group({
     roleName: [''],
     roleCode: ['']
   });
+
+  roles: Role[] = [];
   tableOptions = {
     total: 0,
     pageIndex: 1,
     pageSize: 15
   };
   tableLoading = false;
+
   deleteLoading = false;
   stateLoading = false;
-  @ViewChild('roleEditModalComponent') roleEditModalComponent!: RoleEditModalComponent;
-  @ViewChild('permissionsSetModalComponent') permissionsSetModalComponent!: PermissionsSetModalComponent;
+
 
   constructor(private fb: NonNullableFormBuilder, private roleService: RoleService, private messageService: NzMessageService) {
   }

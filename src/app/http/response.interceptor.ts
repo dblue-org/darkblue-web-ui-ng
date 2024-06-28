@@ -2,7 +2,7 @@ import { HttpInterceptorFn, HttpResponse } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { tap } from 'rxjs';
-import { ResponseBean } from '../define/response';
+import { ResponseBean } from '../define/sys/response';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 export const responseInterceptor: HttpInterceptorFn = (req, next) => {

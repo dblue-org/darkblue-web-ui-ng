@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormsModule, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RoleService } from '@site/app/services/sys/role.service';
-import { SimpleRole } from '@site/app/define/role';
+import { SimpleRole } from '@site/app/define/sys/role';
 import { CommonModule } from '@angular/common';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import {

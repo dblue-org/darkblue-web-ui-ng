@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ResponseBean } from '../../define/response';
+import { ResponseBean } from '../../define/sys/response';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../auth/authentication.service';
 

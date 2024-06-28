@@ -2,7 +2,7 @@ import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/cor
 import { NzListModule } from 'ng-zorro-antd/list';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { CommonModule } from '@angular/common';
-import { ResourceGroup } from '@site/app/define/resource';
+import { ResourceGroup } from '@site/app/define/sys/resource';
 import { ResourcesGroupService } from '@site/app/services/sys/resources-group.service';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzIconDirective } from 'ng-zorro-antd/icon';

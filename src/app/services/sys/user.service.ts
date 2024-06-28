@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { delay, Observable, of } from 'rxjs';
-import { ResponseBean } from '../../define/response';
-import { SimpleUser, User, UserSearchForm } from '../../define/user';
+import { ResponseBean } from '../../define/sys/response';
+import { SimpleUser, User, UserSearchForm } from '../../define/sys/user';
 
 @Injectable({
   providedIn: 'root'

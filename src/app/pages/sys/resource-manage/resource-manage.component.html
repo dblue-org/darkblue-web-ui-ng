@@ -56,6 +56,7 @@
                 [nzFrontPagination]="false"
                 nzShowPagination
                 nzBordered
+                nzSize="small"
                 [nzTotal]="tableOptions.total"
                 [(nzPageIndex)]="tableOptions.pageIndex"
                 [(nzPageSize)]="tableOptions.pageSize"
@@ -89,7 +90,7 @@
               <button nz-button nzSize="small"
                       nzType="default"
                       (click)="showUpdateModal(data)"
-                      >修改
+              >修改
               </button>
               <button nz-button nzSize="small"
                       [nzLoading]="deleteLoading"
@@ -101,8 +102,9 @@
               </button>
               <button nz-button nzSize="small"
                       *ngIf="!data.isAuthedAccess"
+                      (click)="showPermissionsModal(data)"
                       nzType="default">
-              配置权限
+                配置权限
               </button>
             </td>
           </tr>
@@ -119,4 +121,5 @@
   </div>
 </nz-spin>
 
-<app-resource-edit-modal #resourceEditModalComponent (onSuccess)="loadData()" />
+<app-resource-edit-modal #resourceEditModalComponent (onSuccess)="loadData()"/>
+<app-resource-permission-modal #resourcePermissionModalComponent (onSuccess)="loadData()"/>

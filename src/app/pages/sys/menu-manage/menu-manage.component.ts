@@ -1,14 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {NzTableModule} from "ng-zorro-antd/table";
-import {NgForOf, NgIf} from "@angular/common";
-import {NzButtonComponent} from "ng-zorro-antd/button";
-import {MenuService} from "../../../services/sys/menu.service";
-import {MenuItem} from "../../../define/menu";
-import {NzIconDirective} from "ng-zorro-antd/icon";
-import {ToolbarComponent} from "../../../components/toolbar/toolbar.component";
-import {NzGridModule} from "ng-zorro-antd/grid";
+import { NzTableModule } from 'ng-zorro-antd/table';
+import { NgForOf, NgIf } from '@angular/common';
+import { NzButtonComponent } from 'ng-zorro-antd/button';
+import { MenuService } from '../../../services/sys/menu.service';
+import { MenuItem } from '../../../define/sys/menu';
+import { NzIconDirective } from 'ng-zorro-antd/icon';
+import { ToolbarComponent } from '@site/app/components/layout/toolbar/toolbar.component';
+import { NzGridModule } from 'ng-zorro-antd/grid';
 import { MenuAddModalComponent } from './menu-add-modal/menu-add-modal.component';
-import { NzPopconfirmComponent, NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
+import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 
 @Component({
   selector: 'app-menu-manage',
@@ -79,12 +79,15 @@ export class MenuManageComponent implements OnInit {
 
   loadMenu(): void {
     this.loading = true;
-    this.menuService.getUserMenu().subscribe(menus => {
-      this.listOfMapData = menus;
-      this.listOfMapData.forEach(item => {
-        this.mapOfExpandedData[item.menuId] = this.convertTreeToList(item);
-      });
-    }, null, () => this.loading = false);
+    this.menuService.getAllMenu().subscribe({
+      next: res => {
+        this.listOfMapData = res.data || [];
+        this.listOfMapData.forEach(item => {
+          this.mapOfExpandedData[item.menuId] = this.convertTreeToList(item);
+        });
+      },
+      complete: () => this.loading = false
+    });
   }
 
   showAddMenuModal(menu?: MenuItem) {
@@ -94,14 +97,14 @@ export class MenuManageComponent implements OnInit {
           parentId: menu.menuId,
           parentName: menu.menuName
         }
-      )
+      );
     } else {
       this.menuAddModal.showAddModal(
         {
           parentId: '',
           parentName: ''
         }
-      )
+      );
     }
   }
 
@@ -110,7 +113,7 @@ export class MenuManageComponent implements OnInit {
       if (res.success) {
         this.loadMenu();
       }
-    })
+    });
   }
 
   enableMenu(menuId: string) {
@@ -118,7 +121,7 @@ export class MenuManageComponent implements OnInit {
       if (res.success) {
         this.loadMenu();
       }
-    })
+    });
   }
 
   disabledMenu(menuId: string) {
@@ -126,7 +129,7 @@ export class MenuManageComponent implements OnInit {
       if (res.success) {
         this.loadMenu();
       }
-    })
+    });
   }
 
   showEditMenuModal(menu: MenuItem) {

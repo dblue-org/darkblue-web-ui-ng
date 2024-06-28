@@ -18,7 +18,7 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NgIf } from '@angular/common';
 import { MenuService } from '../../../../services/sys/menu.service';
-import { MenuItem } from '../../../../define/menu';
+import { MenuItem } from '../../../../define/sys/menu';
 
 @Component({
   selector: 'app-menu-add-modal',

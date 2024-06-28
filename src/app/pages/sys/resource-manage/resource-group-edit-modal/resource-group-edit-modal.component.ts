@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { BasicEditModalComponent } from '@site/app/components/basic-edit-modal/basic-edit-modal.component';
 import { FormGroup, FormsModule, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ResourceGroup } from '@site/app/define/resource';
+import { ResourceGroup } from '@site/app/define/sys/resource';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputDirective } from 'ng-zorro-antd/input';

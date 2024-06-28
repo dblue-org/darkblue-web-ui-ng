@@ -1,0 +1,10 @@
+<nz-select
+  [nzMaxTagCount]="10"
+  nzMode="default"
+  nzPlaceHolder="请选择资源组"
+  [(ngModel)]="value"
+  [nzDisabled]="isDisabled"
+  (ngModelChange)="onSelectChange()"
+>
+  <nz-option *ngFor="let item of options" [nzLabel]="item.resourceGroupName" [nzValue]="item.resourceGroupId" />
+</nz-select>
