@@ -63,6 +63,15 @@
         {{ isCollapsed ? '展开条件' : '折叠条件' }}
         <span nz-icon [nzType]="isCollapsed ? 'down' : 'up'"></span>
       </a>
+      <span class="help"
+            *ngIf="showHelp"
+            nz-icon
+            nz-tooltip
+            [nzTooltipTitle]="searchBarHelpContentChild"
+            [nzTooltipMouseLeaveDelay]="300"
+            nzTooltipPlacement="bottomRight"
+            nzType="question-circle"
+            nzTheme="outline"></span>
     </div>
   </div>
 </div>

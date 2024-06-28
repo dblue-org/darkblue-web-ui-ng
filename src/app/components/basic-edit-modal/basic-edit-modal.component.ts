@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { ResponseBean } from '@site/app/define/response';
 
 @Component({
   template: '',
@@ -38,9 +40,25 @@ export abstract class BasicEditModalComponent {
     if (this.getFormGroup().valid) {
       this.loading = true;
       if (this.isEdit) {
-        this.doUpdate();
+        this.doUpdate().subscribe({
+          next: res => {
+            if (res.success) {
+              this.isVisible = false;
+              this.onSaveSuccess();
+              this.onSuccess.emit();
+            }
+          },
+          complete: () => this.loading = false
+        });
       } else {
-        this.doSave();
+        this.doSave().subscribe(res => {
+          if (res.success) {
+            this.isVisible = false;
+            this.onSaveSuccess();
+            this.onSuccess.emit();
+          }
+          this.loading = false
+        });
       }
     } else {
       Object.values(this.getFormGroup().controls).forEach(control => {
@@ -51,15 +69,14 @@ export abstract class BasicEditModalComponent {
       });
     }
   }
-  protected abstract doSave(): void;
-  protected abstract doUpdate(): void;
+  protected abstract doSave(): Observable<ResponseBean<void>>;
+  protected abstract doUpdate(): Observable<ResponseBean<void>>;
 
   handleCancel(): void {
     this.isVisible = false;
   }
 
   onSaveSuccess(): void {
-    this.isVisible = false;
-    this.onSuccess.emit();
+
   }
 }

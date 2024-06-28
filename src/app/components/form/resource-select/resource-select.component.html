@@ -1,0 +1,8 @@
+<nz-tree-select
+  [nzNodes]="nodes"
+  nzShowSearch
+  nzPlaceHolder="请选择资源"
+  [disabled]="disabled"
+  [(ngModel)]="value"
+  (ngModelChange)="onSelectChange($event)"
+></nz-tree-select>

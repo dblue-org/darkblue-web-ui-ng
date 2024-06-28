@@ -1,0 +1,13 @@
+<nz-modal [(nzVisible)]="isVisible" nzWidth="600px" [nzTitle]="isEdit ? '修改资源组' : '添加资源组'" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()" [nzOkLoading]="loading">
+  <ng-container *nzModalContent>
+    <form nz-form [formGroup]="dataForm">
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="resourceGroupName">资源组名称</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <input nz-input formControlName="resourceGroupName" id="resourceGroupName" />
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </ng-container>
+</nz-modal>
+

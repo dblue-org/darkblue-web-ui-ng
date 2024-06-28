@@ -1,9 +1,9 @@
-import {HttpInterceptorFn, HttpResponse} from '@angular/common/http';
-import {inject} from "@angular/core";
-import {Router} from "@angular/router";
-import {tap} from "rxjs";
-import {ResponseBean} from "../define/response";
-import {NzMessageService} from "ng-zorro-antd/message";
+import { HttpInterceptorFn, HttpResponse } from '@angular/common/http';
+import { inject } from '@angular/core';
+import { Router } from '@angular/router';
+import { tap } from 'rxjs';
+import { ResponseBean } from '../define/response';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 export const responseInterceptor: HttpInterceptorFn = (req, next) => {
 
@@ -26,8 +26,8 @@ export const responseInterceptor: HttpInterceptorFn = (req, next) => {
 
 function onError(responseBean: ResponseBean<any>, router: Router, msgService: NzMessageService) {
   if (responseBean.errorCode == '403') {
-    router.navigate(['/login'])
-  } else if(responseBean.message){
+    router.navigate(['/login']);
+  } else if (responseBean.message) {
     msgService.error(responseBean.message);
   }
 }

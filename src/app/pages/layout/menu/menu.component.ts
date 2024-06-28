@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {NzMenuDirective, NzMenuItemComponent, NzSubMenuComponent} from "ng-zorro-antd/menu";
 import { NavigationStart, Router, RouterLink } from '@angular/router';
 import {MenuItem} from "../../../define/menu";
-import {MenuService} from "../../../services/menu/menu.service";
+import {MenuService} from "../../../services/sys/menu.service";
 import {NgForOf, NgIf, NgTemplateOutlet} from "@angular/common";
 import {NzIconModule} from "ng-zorro-antd/icon";
 

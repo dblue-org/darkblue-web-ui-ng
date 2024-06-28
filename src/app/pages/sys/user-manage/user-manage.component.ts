@@ -12,7 +12,7 @@ import { NzFormControlComponent, NzFormDirective, NzFormItemComponent, NzFormLab
 import { TplSearchBarComponent } from '@site/app/components/tpl-search-bar/tpl-search-bar.component';
 import { DepartmentTreeComponent } from './department-tree/department-tree.component';
 import { NzTableModule } from 'ng-zorro-antd/table';
-import { UserService } from '@site/app/services/user/user.service';
+import { UserService } from '@site/app/services/sys/user.service';
 import { User } from '@site/app/define/user';
 import { SimpleRole } from '@site/app/define/role';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';

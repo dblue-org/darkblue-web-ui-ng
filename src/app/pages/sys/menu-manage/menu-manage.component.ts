@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import {NzTableModule} from "ng-zorro-antd/table";
 import {NgForOf, NgIf} from "@angular/common";
 import {NzButtonComponent} from "ng-zorro-antd/button";
-import {MenuService} from "../../../services/menu/menu.service";
+import {MenuService} from "../../../services/sys/menu.service";
 import {MenuItem} from "../../../define/menu";
 import {NzIconDirective} from "ng-zorro-antd/icon";
 import {ToolbarComponent} from "../../../components/toolbar/toolbar.component";

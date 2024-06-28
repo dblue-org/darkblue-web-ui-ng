@@ -1,0 +1,36 @@
+.resource-group-header {
+  padding-left: 12px;
+  font-size: 1.1em;
+  font-weight: bold;
+  height: 56px;
+  line-height: 32px;
+}
+.resource-group-actions {
+  text-align: right;
+  padding-right: 8px;
+}
+.resource-group-actions [nz-button] {
+  margin-left: 8px;
+}
+.resource-group-item {
+  cursor: pointer;
+  user-select: none;
+  padding: 8px 16px;
+}
+
+.resource-group-item:hover {
+  background-color: #f0f0f0;
+}
+
+.selected {
+  background-color: #e6f7ff;
+  color: #1890ff;
+}
+
+.selected:hover {
+  background-color: #e6f7ff;
+}
+
+.resource-group-item-clear:hover {
+  color: #1890ff;
+}

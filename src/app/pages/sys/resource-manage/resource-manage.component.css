@@ -1,0 +1,15 @@
+nz-table [nz-button] {
+  margin-right: 8px;
+}
+.resource-container {
+  height: 100%;
+}
+.resource-group-container {
+  height: 100%;
+  overflow: auto;
+  background-color: white;
+  border: 1px solid #f0f0f0;
+}
+:host ::ng-deep .ant-spin-container {
+  height: 100%;
+}

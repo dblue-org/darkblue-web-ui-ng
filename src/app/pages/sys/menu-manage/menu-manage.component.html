@@ -10,7 +10,12 @@
     </div>
   </div>
 </app-toolbar>
-<nz-table #expandTable [nzData]="listOfMapData" nzTableLayout="fixed" [nzLoading]="loading" [nzShowPagination]="false">
+<nz-table #expandTable
+          [nzData]="listOfMapData"
+          nzTableLayout="fixed"
+          nzBordered
+          [nzLoading]="loading"
+          [nzShowPagination]="false">
   <thead>
   <tr>
     <th nzWidth="200px">菜单名称</th>

@@ -1,1 +1,122 @@
-<p>resource-manage works!</p>
+<nz-spin class="resource-container" [nzSpinning]="tableLoading">
+  <div class="resource-container" nz-row>
+    <div nz-col [nzSpan]="4" class="resource-group-container">
+      <app-resource-group (onSelected)="onResourceGroupSelect($event)"/>
+    </div>
+
+    <div nz-col [nzSpan]="20" style="padding-left: 24px;">
+      <app-tpl-search-bar [formGroup]="searchForm"
+                          (onSearch)="search()"
+                          [buttons]="tableButtons"
+                          [loading]="tableLoading"
+                          [showHelp]="true"
+                          [items]="[
+                            {name: 'resourceName', label: '资源名称', item: resourceName},
+                            {name: 'resourceUrl', label: '资源地址', item: resourceUrl},
+                            {name: 'controller', label: '控制层类', item: controller},
+                            {name: 'method', label: '方法名称', item: method},
+                            {name: 'isAuthedAccess', label: '是否受控', item: isAuthedAccess}
+                          ]">
+        <ng-template #resourceName>
+          <input nz-input placeholder="模糊搜索资源名称" formControlName="resourceName"/>
+        </ng-template>
+        <ng-template #resourceUrl>
+          <input nz-input placeholder="模糊搜索资源地址" formControlName="resourceUrl"/>
+        </ng-template>
+        <ng-template #controller>
+          <input nz-input placeholder="模糊搜索控制层类" formControlName="controller"/>
+        </ng-template>
+        <ng-template #method>
+          <input nz-input placeholder="模糊搜索方法名称" formControlName="method"/>
+        </ng-template>
+        <ng-template #isAuthedAccess>
+          <nz-select formControlName="isAuthedAccess" nzAllowClear style="width: 100%">
+            <nz-option [nzValue]="false" nzLabel="受控"></nz-option>
+            <nz-option [nzValue]="true" nzLabel="登录即可访问"></nz-option>
+          </nz-select>
+        </ng-template>
+        <ng-container *searchBarHelp>
+          <ul style="margin-top: 1em;padding-left: 20px">
+            <li>资源即控制层暴露的 HTTP 接口</li>
+            <li>添加资源时必须选择资源组</li>
+            <li>受控的资源可以配置权限，登录即可访问的资源不能配置任何权限</li>
+            <li>展开表格可查看资源关联的权限</li>
+          </ul>
+        </ng-container>
+      </app-tpl-search-bar>
+
+      <ng-template #tableButtons>
+        <button nz-button nzType="primary" (click)="showAddModal()" [disabled]="!this.selectedResourceGroup">
+          <span nz-icon nzType="plus"></span>
+          新增
+        </button>
+      </ng-template>
+
+      <nz-table #basicTable
+                [nzFrontPagination]="false"
+                nzShowPagination
+                nzBordered
+                [nzTotal]="tableOptions.total"
+                [(nzPageIndex)]="tableOptions.pageIndex"
+                [(nzPageSize)]="tableOptions.pageSize"
+                nzTableLayout="fixed"
+                [nzData]="resources">
+        <thead>
+        <tr>
+          <th nzWidth="60px"></th>
+          <th nzWidth="120px">资源名称</th>
+          <th nzWidth="100px">请求方式</th>
+          <th>资源地址</th>
+          <th>控制层类</th>
+          <th nzWidth="120px">方法</th>
+          <th nzWidth="150px">是否受控</th>
+          <th nzWidth="160px">创建时间</th>
+          <th nzWidth="250px">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <ng-container *ngFor="let data of basicTable.data">
+          <tr>
+            <td [nzExpand]="expandSet.has(data.id)" (nzExpandChange)="onExpandChange(data.id, $event)"></td>
+            <td>{{ data.resourceName }}</td>
+            <td>{{ data.requestMethod }}</td>
+            <td [nzEllipsis]="true" [title]="data.resourceUrl">{{ data.resourceUrl }}</td>
+            <td [nzEllipsis]="true" [title]="data.controller">{{ data.controller }}</td>
+            <td>{{ data.method }}</td>
+            <td>{{ data.isAuthedAccess ? '登录即可访问' : '受控' }}</td>
+            <td>{{ data.createTime }}</td>
+            <td>
+              <button nz-button nzSize="small"
+                      nzType="default"
+                      (click)="showUpdateModal(data)"
+                      >修改
+              </button>
+              <button nz-button nzSize="small"
+                      [nzLoading]="deleteLoading"
+                      nzType="primary"
+                      nz-popconfirm
+                      nzPopconfirmTitle="是否确认删除此用户?"
+                      (nzOnConfirm)="doDelete(data.resourceId)"
+                      nzDanger>删除
+              </button>
+              <button nz-button nzSize="small"
+                      *ngIf="!data.isAuthedAccess"
+                      nzType="default">
+              配置权限
+              </button>
+            </td>
+          </tr>
+          <tr [nzExpand]="expandSet.has(data.id)">
+            <label>关联权限：</label>
+            <ng-container *ngFor="let item of data.permissions">
+              <nz-tag nzColor="processing">{{ item.permissionName }} ({{ item.permissionCode }})</nz-tag>
+            </ng-container>
+          </tr>
+        </ng-container>
+        </tbody>
+      </nz-table>
+    </div>
+  </div>
+</nz-spin>
+
+<app-resource-edit-modal #resourceEditModalComponent (onSuccess)="loadData()" />

@@ -9,7 +9,7 @@ import { NzIconDirective } from 'ng-zorro-antd/icon';
 import { CommonModule } from '@angular/common';
 import { NzPopconfirmDirective } from 'ng-zorro-antd/popconfirm';
 import { NzWaveDirective } from 'ng-zorro-antd/core/wave';
-import { RoleService } from '@site/app/services/role/role.service';
+import { RoleService } from '@site/app/services/sys/role.service';
 import { RoleEditModalComponent } from '@site/app/pages/sys/role-manage/role-edit-modal/role-edit-modal.component';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import {

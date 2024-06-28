@@ -5,7 +5,7 @@ import { NzCardComponent } from 'ng-zorro-antd/card';
 import { NzIconDirective } from 'ng-zorro-antd/icon';
 import { NzFormatEmitEvent, NzTreeComponent, NzTreeNode, NzTreeNodeOptions } from 'ng-zorro-antd/tree';
 import { NzWaveDirective } from 'ng-zorro-antd/core/wave';
-import { DepartmentService } from '@site/app/services/dept/department.service';
+import { DepartmentService } from '@site/app/services/sys/department.service';
 import { environment } from '@site/environments/environment';
 import {
   DepartmentEditModalComponent

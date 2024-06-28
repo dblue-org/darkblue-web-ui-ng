@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
-import { RoleService } from '@site/app/services/role/role.service';
+import { RoleService } from '@site/app/services/sys/role.service';
 import { MenuPermissionsVo } from '@site/app/define/role';
 import { NzTreeComponent, NzTreeModule, NzTreeNodeOptions } from 'ng-zorro-antd/tree';
 import { CommonModule } from '@angular/common';

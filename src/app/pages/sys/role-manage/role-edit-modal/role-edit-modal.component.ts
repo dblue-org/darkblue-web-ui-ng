@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormsModule, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RoleService } from '@site/app/services/role/role.service';
+import { RoleService } from '@site/app/services/sys/role.service';
 import { SimpleRole } from '@site/app/define/role';
 import { CommonModule } from '@angular/common';
 import { NzGridModule } from 'ng-zorro-antd/grid';
@@ -51,28 +51,15 @@ export class RoleEditModalComponent extends BasicEditModalComponent {
   }
 
   doSave() {
-    this.roleService.add(this.dataForm.value as SimpleRole).subscribe({
-      next: res => {
-        if (res.success) {
-          this.messageService.success('角色添加成功');
-          this.onSaveSuccess()
-        }
-      },
-      complete: () => this.loading = false
-    })
+    return this.roleService.add(this.dataForm.value as SimpleRole);
   }
 
   doUpdate() {
-    this.roleService.update(this.dataForm.value as SimpleRole).subscribe({
-      next: res => {
-        if (res.success) {
-          this.messageService.success('角色更新成功');
-          this.onSaveSuccess()
-        }
-      },
-      complete: () => this.loading = false
-    })
+    return this.roleService.update(this.dataForm.value as SimpleRole);
   }
 
 
+  override onSaveSuccess() {
+    this.messageService.success(this.isEdit ? '角色更新成功' : '角色创建成功');
+  }
 }

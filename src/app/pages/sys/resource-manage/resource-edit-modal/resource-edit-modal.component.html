@@ -1,0 +1,55 @@
+<nz-modal [(nzVisible)]="isVisible" nzWidth="800px" [nzTitle]="isEdit ? '修改资源' : '添加资源'" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()" [nzOkLoading]="loading">
+  <ng-container *nzModalContent>
+    <form nz-form [formGroup]="dataForm">
+      <nz-form-item *ngIf="!isEdit">
+        <nz-form-label [nzSm]="6" [nzXs]="24">选择资源</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <app-resource-select (onSelectedChange)="onResourceSelect($event)" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item *ngIf="!isEdit">
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="resourceGroupName">资源组名称</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <input nz-input formControlName="resourceGroupName" id="resourceGroupName" readonly/>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="resourceName">资源名称</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="资源名称不能为空">
+          <input nz-input formControlName="resourceName" id="resourceName"/>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="resourceUrl">资源地址</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="资源地址不能为空">
+          <input nz-input formControlName="resourceUrl" id="resourceUrl"/>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="requestMethod">请求方式</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="请求方式不能为空">
+          <input nz-input formControlName="requestMethod" id="requestMethod"/>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="controller">控制层类</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="控制层类不能为空">
+          <input nz-input formControlName="controller" id="controller"/>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="method">控制层方法</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="控制层方法不能为空">
+          <input nz-input formControlName="method" id="method"/>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="isAuthedAccess">登录即可访问</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <nz-switch formControlName="isAuthedAccess" id="isAuthedAccess"/>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </ng-container>
+</nz-modal>
+
