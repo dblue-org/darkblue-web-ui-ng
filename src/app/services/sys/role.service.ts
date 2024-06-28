@@ -3,13 +3,14 @@ import { delay, Observable, of } from 'rxjs';
 import { ResponseBean } from '../../define/sys/response';
 import { MenuPermissionsVo, MenuVo, Role, RolePermissionsDto, RoleSearchForm, SimpleRole } from '../../define/sys/role';
 import { NzTreeNodeOptions } from 'ng-zorro-antd/tree';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RoleService {
 
-  constructor() { }
+  constructor(private httpClient: HttpClient) { }
 
   queryRoles(searchForm: RoleSearchForm): Observable<ResponseBean<Role[]>> {
     return of({
