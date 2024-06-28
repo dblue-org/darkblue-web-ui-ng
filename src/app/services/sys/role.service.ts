@@ -1,7 +1,15 @@
 import { Injectable } from '@angular/core';
 import { delay, Observable, of } from 'rxjs';
 import { ResponseBean } from '../../define/sys/response';
-import { MenuPermissionsVo, MenuVo, Role, RolePermissionsDto, RoleSearchForm, SimpleRole } from '../../define/sys/role';
+import {
+  MenuPermissionsVo,
+  MenuVo,
+  Role,
+  RoleMenusWithPermission,
+  RolePermissionsDto,
+  RoleSearchForm,
+  SimpleRole
+} from '../../define/sys/role';
 import { NzTreeNodeOptions } from 'ng-zorro-antd/tree';
 import { HttpClient } from '@angular/common/http';
 
@@ -17,6 +25,31 @@ export class RoleService {
       success: true,
       data: this.mockRoles()
     }).pipe(delay(1000))
+  }
+
+  getRoleMenusWithPermission(roleId: string): Observable<ResponseBean<RoleMenusWithPermission[]>> {
+    return of({
+      success: true,
+      data: [
+        {
+          menuId: '001',
+          menuName: '系统管理',
+          children: [
+            {
+              menuId: '001001',
+              menuName: '用户管理',
+              permissions: [
+                {
+                  permissionId: '001001001',
+                  permissionCode: 'user_query',
+                  permissionName: '查看用户'
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    })
   }
 
   getRoles():Observable<ResponseBean<SimpleRole[]>> {

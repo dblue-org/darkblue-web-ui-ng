@@ -1,4 +1,4 @@
-import { CheckedPermissionVo } from '@site/app/define/sys/permission';
+import { CheckedPermissionVo, SimplePermission } from '@site/app/define/sys/permission';
 
 export interface Role {
   roleId: string;
@@ -44,4 +44,18 @@ export interface MenuPermissionsVo {
   menuId: string;
   menuName: string;
   permissions: CheckedPermissionVo[]
+}
+
+export interface RoleMenusWithPermission {
+  menuId: string;
+  menuName: string;
+  parentId?: string;
+  menuIcon?: string;
+  menuType?: number;
+  level?: number;
+  checked?: boolean;
+  permissions?: SimplePermission[]
+  expand?: boolean
+  parent?: RoleMenusWithPermission
+  children?: RoleMenusWithPermission[]
 }

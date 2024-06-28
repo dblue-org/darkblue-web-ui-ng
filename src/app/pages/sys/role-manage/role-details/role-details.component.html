@@ -1,9 +1,70 @@
 <app-section dkTitle="角色信息">
-
+  <nz-descriptions nzBordered style="margin-bottom: 24px">
+    <nz-descriptions-item nzTitle="角色名称">超级管理员</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="角色编码">Admin</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="状态">正常</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="创建时间">2024-06-19 15:23:50</nz-descriptions-item>
+  </nz-descriptions>
+  <ng-template #back>
+    <button nz-button nzDanger nzType="default">启用</button>
+    <button nz-button nzDanger nzType="default">禁用</button>
+  </ng-template>
 </app-section>
 
-- 角色基本信息
+<app-section dkTitle="关联权限">
+  <nz-table #expandTable
+            [nzData]="rolePermissions"
+            nzSize="small"
+            nzTableLayout="fixed"
+            nzBordered
+            [nzLoading]="permissionTableLoading"
+            [nzShowPagination]="false">
+    <thead>
+    <tr>
+      <th nzWidth="300px">菜单名称</th>
+      <th nzWidth="180px">类型</th>
+      <th>权限</th>
+    </tr>
+    </thead>
+    <tbody>
+    <ng-container *ngFor="let data of expandTable.data">
+      <ng-container *ngFor="let item of mapOfExpandedData[data.menuId]">
+        <tr *ngIf="(item.parent && item.parent.expand) || !item.parent">
+          <td
+            [nzIndentSize]="item.level! * 20"
+            [nzShowExpand]="!!item.children"
+            [(nzExpand)]="item.expand"
+            (nzExpandChange)="collapse(mapOfExpandedData[data.menuId], item, $event)"
+          >
+            <span nz-icon [nzType]="item.menuIcon" nzTheme="outline" *ngIf="item.menuIcon"></span>
+            {{ item.menuName }}
+          </td>
+          <td>{{ item.menuType == 1 ? '菜单组' : '菜单项' }}</td>
+          <td>
+            @for (p of item.permissions; track p) {
+              <nz-tag nzColor="processing"> {{ p.permissionName }}({{ p.permissionCode }})</nz-tag>
+            }
+          </td>
+        </tr>
+      </ng-container>
+    </ng-container>
+    </tbody>
+  </nz-table>
+</app-section>
 
-- 角色关联权限（分页）
+<app-section dkTitle="关联用户">
+  <nz-table nzSize="small"
+            nzTableLayout="fixed"
+            nzBordered>
+    <thead>
+    <tr>
+      <th>用户名</th>
+      <th>姓名</th>
+      <th>手机号</th>
+      <th>所在部门</th>
+      <th>状态</th>
+    </tr>
+    </thead>
+  </nz-table>
+</app-section>
 
-- 拥有此角色的用户（分页）

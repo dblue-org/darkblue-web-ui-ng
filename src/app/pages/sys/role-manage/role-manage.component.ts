@@ -15,6 +15,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import {
   PermissionsSetModalComponent
 } from '@site/app/pages/sys/role-manage/permissions-set-modal/permissions-set-modal.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-role-manage',
@@ -58,7 +59,9 @@ export class RoleManageComponent implements OnInit {
   stateLoading = false;
 
 
-  constructor(private fb: NonNullableFormBuilder, private roleService: RoleService, private messageService: NzMessageService) {
+  constructor(
+    private fb: NonNullableFormBuilder, private roleService: RoleService,
+    private messageService: NzMessageService, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -133,6 +136,14 @@ export class RoleManageComponent implements OnInit {
 
   showPermissionSetModal(roleId: string) {
     this.permissionsSetModalComponent.showModal(roleId);
+  }
+
+  goDetails(role: Role) {
+    this.router.navigate(['/sys/role/details'], {
+      queryParams: {
+        roleId: role.roleId
+      }
+    })
   }
 
 }

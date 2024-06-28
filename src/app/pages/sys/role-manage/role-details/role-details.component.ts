@@ -1,15 +1,97 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SectionComponent } from '@site/app/components/layout/section/section.component';
+import { CommonModule } from '@angular/common';
+import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
+import { NzTableModule } from 'ng-zorro-antd/table';
+import { NzButtonComponent } from 'ng-zorro-antd/button';
+import { NzTagComponent } from 'ng-zorro-antd/tag';
+import { RoleMenusWithPermission } from '@site/app/define/sys/role';
+import { NzIconDirective } from 'ng-zorro-antd/icon';
+import { NzPopconfirmDirective } from 'ng-zorro-antd/popconfirm';
+import { MenuItem } from '@site/app/define/sys/menu';
+import { RoleService } from '@site/app/services/sys/role.service';
 
 @Component({
   selector: 'app-role-details',
   standalone: true,
   imports: [
-    SectionComponent
+    CommonModule,
+
+    NzDescriptionsModule,
+    NzTableModule,
+
+    SectionComponent,
+    NzButtonComponent,
+    NzTagComponent,
+    NzIconDirective,
+    NzPopconfirmDirective
   ],
   templateUrl: './role-details.component.html',
   styleUrl: './role-details.component.css'
 })
-export class RoleDetailsComponent {
+export class RoleDetailsComponent implements OnInit{
 
+  rolePermissions: RoleMenusWithPermission[] = [];
+  mapOfExpandedData: { [key: string]: RoleMenusWithPermission[] } = {};
+  permissionTableLoading = false;
+
+  constructor(private roleService: RoleService) {
+  }
+
+  collapse(array: RoleMenusWithPermission[], data: RoleMenusWithPermission, $event: boolean): void {
+    if (!$event) {
+      if (data.children) {
+        data.children.forEach(d => {
+          const target = array.find(a => a.menuId === d.menuId)!;
+          target.expand = false;
+          this.collapse(array, target, false);
+        });
+      } else {
+        return;
+      }
+    }
+  }
+
+  convertTreeToList(root: RoleMenusWithPermission): RoleMenusWithPermission[] {
+    const stack: RoleMenusWithPermission[] = [];
+    const array: RoleMenusWithPermission[] = [];
+    const hashMap = {};
+    stack.push({...root, level: 0, expand: true});
+
+    while (stack.length !== 0) {
+      const node = stack.pop()!;
+      this.visitNode(node, hashMap, array);
+      if (node.children) {
+        for (let i = node.children.length - 1; i >= 0; i--) {
+          stack.push({...node.children[i], level: node.level! + 1, expand: true, parent: node});
+        }
+      }
+    }
+
+    return array;
+  }
+
+  visitNode(node: RoleMenusWithPermission, hashMap: { [key: string]: boolean }, array: RoleMenusWithPermission[]): void {
+    if (!hashMap[node.menuId]) {
+      hashMap[node.menuId] = true;
+      array.push(node);
+    }
+  }
+
+  loadRolePermissions(): void {
+    this.permissionTableLoading = true;
+    this.roleService.getRoleMenusWithPermission('').subscribe({
+      next: res => {
+        this.rolePermissions = res.data || [];
+        this.rolePermissions.forEach(item => {
+          this.mapOfExpandedData[item.menuId] = this.convertTreeToList(item);
+        });
+      },
+      complete: () => this.permissionTableLoading = false
+    });
+  }
+
+  ngOnInit(): void {
+    this.loadRolePermissions();
+  }
 }
