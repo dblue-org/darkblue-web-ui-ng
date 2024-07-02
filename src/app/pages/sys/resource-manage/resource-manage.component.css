@@ -1,6 +1,9 @@
 nz-table [nz-button] {
   margin-right: 8px;
 }
+:host ::ng-deep nz-tag {
+  font-size: 13px;
+}
 .resource-container {
   height: 100%;
 }

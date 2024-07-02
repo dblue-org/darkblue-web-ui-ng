@@ -23,6 +23,7 @@ import {
 import {
   BindResourceModalComponent
 } from '@site/app/pages/sys/permission-manage/bind-resource-modal/bind-resource-modal.component';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-permission-manage',
@@ -45,7 +46,8 @@ import {
     TwoColumnSiderDirective,
     TplSearchBarComponent,
     PermissionEditModalComponent,
-    BindResourceModalComponent
+    BindResourceModalComponent,
+    RouterLink
 
   ],
   templateUrl: './permission-manage.component.html',

@@ -1,7 +1,3 @@
-.permission-item {
-  padding: 24px;
-}
-
 :host ::ng-deep nz-tag {
   font-size: 14px;
 }

@@ -54,7 +54,7 @@
       <ng-container *ngFor="let data of basicTable.data">
         <tr>
           <td>{{ data.menuName }}</td>
-          <td>{{ data.permissionName }}</td>
+          <td><a routerLink="/sys/permission/details" [queryParams]="{permissionId: data.permissionId}">{{ data.permissionName }}</a></td>
           <td>{{ data.permissionCode }}</td>
           <td>
             <button nz-button nzSize="small"

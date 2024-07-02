@@ -5,6 +5,7 @@ import {MenuItem} from "../../../define/sys/menu";
 import {MenuService} from "../../../services/sys/menu.service";
 import {NgForOf, NgIf, NgTemplateOutlet} from "@angular/common";
 import {NzIconModule} from "ng-zorro-antd/icon";
+import { MenuIconComponent } from '@site/app/components/icon/menu-icon/menu-icon.component';
 
 @Component({
   selector: 'app-menu',
@@ -18,6 +19,7 @@ import {NzIconModule} from "ng-zorro-antd/icon";
     NgIf,
     NgTemplateOutlet,
     NzIconModule,
+    MenuIconComponent
   ],
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.css'

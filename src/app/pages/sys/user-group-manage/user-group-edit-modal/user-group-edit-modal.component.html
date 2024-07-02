@@ -1,0 +1,14 @@
+<nz-modal [(nzVisible)]="isVisible" nzWidth="600px" [nzTitle]="isEdit ? '修改用户组' : '添加用户组'" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()" [nzOkLoading]="loading">
+  <ng-container *nzModalContent>
+    <form nz-form [formGroup]="dataForm">
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="userGroupName">用户组名称</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="用户组名称不能为空">
+          <input nz-input formControlName="userGroupName" id="userGroupName"/>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </ng-container>
+</nz-modal>
+
+

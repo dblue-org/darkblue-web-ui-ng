@@ -1,0 +1,120 @@
+<app-section dkTitle="用户组基本信息" [dkExtra]="btns">
+  <nz-descriptions nzBordered style="margin-bottom: 24px">
+    <nz-descriptions-item nzTitle="用户组名">Zhou Maomao</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="状态">正常</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="创建时间">2024-06-19 15:23:50</nz-descriptions-item>
+  </nz-descriptions>
+  <ng-template #btns>
+    <button nz-button nzDanger nzType="default" nzSize="small">启用</button>
+    <button nz-button nzDanger nzType="default" nzSize="small">禁用</button>
+  </ng-template>
+</app-section>
+
+
+<app-section dkTitle="拥有角色" [dkExtra]="roleButtons">
+  <ng-template #roleButtons>
+    <button nz-button nzType="primary" nzSize="small" [nzLoading]="roleAddLoading" (click)="addRoles()">添加</button>
+  </ng-template>
+
+  <nz-table #roleTable
+            [nzFrontPagination]="false"
+            nzShowPagination="false"
+            nzBordered
+            nzSize="small"
+            [nzData]="roles">
+    <thead>
+    <tr>
+      <th>角色编码</th>
+      <th>角色名称</th>
+      <th>状态</th>
+      <th>是否内置</th>
+      <th>创建时间</th>
+      <th nzWidth="100px">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of roleTable.data">
+      <td>{{ data.roleCode }}</td>
+      <td>{{ data.roleName }}</td>
+      <td>{{ data.isEnable ? '正常' : '停用' }}</td>
+      <td>{{ data.isBuiltIn ? '是' : '否' }}</td>
+      <td>{{ data.createTime }}</td>
+      <td>
+        <button nz-tooltip
+                nzTooltipTitle="从用户组中移除此角色"
+                nz-popconfirm
+                nzPopconfirmTitle="是否确认移除此角色?"
+                nzPopconfirmPlacement="bottom"
+                nz-button
+                nzSize="small"
+                nzType="default"
+                nzShape="circle"
+                (nzOnConfirm)="removeRole(data)">
+          <span nz-icon nzType="minus" nzTheme="outline"></span>
+        </button>
+
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
+</app-section>
+
+<ng-template #roleSelector>
+  <p>请选择角色，支持多选和筛选</p>
+  <app-role-select [(ngModel)]="selectedRoles" dkWidth="100%"/>
+</ng-template>
+
+<app-section dkTitle="用户列表" [dkExtra]="userButtons">
+  <ng-template #userButtons>
+    <button nz-button nzType="primary" [nzLoading]="userAddLoading" nzSize="small" (click)="addUsers()">添加</button>
+  </ng-template>
+  <nz-table #basicTable
+            [nzFrontPagination]="false"
+            nzShowPagination
+            nzBordered
+            nzSize="small"
+            [nzTotal]="userTableOptions.total"
+            [(nzPageIndex)]="userTableOptions.page"
+            [(nzPageSize)]="userTableOptions.pageSize"
+            [nzLoading]="userTableLoading"
+            [nzData]="users"
+            (nzPageSizeChange)="loadUsers()"
+            (nzPageIndexChange)="loadUsers()">
+    <thead>
+    <tr>
+      <th>用户名</th>
+      <th>姓名</th>
+      <th>手机号</th>
+      <th>状态</th>
+      <th nzWidth="60px">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of basicTable.data">
+      <td><a>{{ data.username }}</a></td>
+      <td>{{ data.name }}</td>
+      <td>{{ data.phoneNumber }}</td>
+      <td>{{ data.isEnable ? '正常' : '停用' }}</td>
+      <td>
+        <button nz-tooltip
+                nzTooltipTitle="从用户组中移除此用户"
+                nz-popconfirm
+                nzPopconfirmTitle="是否确认移除此用户?"
+                nzPopconfirmPlacement="bottom"
+                nz-button
+                nzSize="small"
+                nzType="default"
+                nzShape="circle"
+                (nzOnConfirm)="removeUser(data)">
+          <span nz-icon nzType="minus" nzTheme="outline"></span>
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
+</app-section>
+
+<ng-template #userSelector>
+  <p>请选择用户，支持多选和筛选</p>
+  <app-user-select [(ngModel)]="selectedUsers" dkMode="multiple" dkWidth="100%" />
+</ng-template>

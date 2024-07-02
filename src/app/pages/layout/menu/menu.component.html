@@ -8,7 +8,8 @@
       </ul>
     </li>
     <li nz-menu-item nzMatchRouter [nzPaddingLeft]="(item.level) * 24" *ngIf="item.menuType == 2">
-      <span nz-icon [nzType]="item.menuIcon" nzTheme="outline"></span>&nbsp;&nbsp;
+      <!--<span nz-icon [nzType]="item.menuIcon" nzTheme="outline"></span>&nbsp;&nbsp;-->
+      <app-menu-icon [icon]="item.menuIcon" style="margin-right: 3px" />
       <a [routerLink]="item.menuUrl" *ngIf="item.menuUrl">{{item.menuName}}</a>
       <a *ngIf="!item.menuUrl">{{item.menuName}}</a>
     </li>

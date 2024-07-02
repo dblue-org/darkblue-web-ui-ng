@@ -1,0 +1,68 @@
+<app-tpl-search-bar [formGroup]="searchForm"
+                    (onSearch)="search()"
+                    [buttons]="tableButtons"
+                    [loading]="tableLoading"
+                    buttonPosition="BR"
+                    [items]="[
+                          {name: 'userGroupName', label: '用户组名称', item: userGroupName},
+                        ]">
+  <ng-template #userGroupName>
+    <input nz-input placeholder="模糊搜索用户组名称" formControlName="roleCode"/>
+  </ng-template>
+  <ng-template #tableButtons>
+    <button nz-button nzType="primary" (click)="showAddModal()">
+      <span nz-icon nzType="plus"></span>
+      新增
+    </button>
+  </ng-template>
+</app-tpl-search-bar>
+
+<nz-table #userGroupsTable
+          [nzFrontPagination]="false"
+          nzShowPagination
+          nzBordered
+          nzSize="small"
+          [nzTotal]="tableOptions.total"
+          [(nzPageIndex)]="tableOptions.pageIndex"
+          [(nzPageSize)]="tableOptions.pageSize"
+          [nzLoading]="tableLoading"
+          [nzData]="userGroups"
+          (nzPageSizeChange)="loadUserGroups()"
+          (nzPageIndexChange)="loadUserGroups()">
+  <thead>
+  <tr>
+    <th>用户组名称</th>
+    <th nzWidth="200px">用户数量</th>
+    <th nzWidth="200px">状态</th>
+    <th nzWidth="250px">创建时间</th>
+    <th nzWidth="250px">操作</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let data of userGroupsTable.data">
+    <td>{{ data.userGroupName }}</td>
+    <td>{{ data.userNum || 0 }}</td>
+    <td>正常</td>
+    <td>{{ data.createTime }}</td>
+    <td>
+      <button nz-button nzSize="small" nzType="default" (click)="showEditModal(data)">修改</button>
+      <button nz-button nzSize="small"
+              nzType="primary"
+              [nzLoading]="deleteLoading"
+              nz-popconfirm
+              nzPopconfirmTitle="是否确认删除此用户组?"
+              (nzOnConfirm)="delete(data.userGroupId)"
+              nzDanger>删除
+      </button>
+
+      <button nz-button nzSize="small"
+              routerLink="/sys/user-group/details" [queryParams]="{userGroupId: data.userGroupId}"
+              nzType="default">管理
+      </button>
+    </td>
+  </tr>
+  </tbody>
+</nz-table>
+
+<app-user-group-edit-modal #userGroupEditModalComponent (onSuccess)="loadUserGroups()" />
+

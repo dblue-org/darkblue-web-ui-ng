@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { SectionComponent } from '@site/app/components/layout/section/section.component';
 import { CommonModule } from '@angular/common';
 import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
@@ -8,7 +8,6 @@ import { NzTagComponent } from 'ng-zorro-antd/tag';
 import { RoleMenusWithPermission } from '@site/app/define/sys/role';
 import { NzIconDirective } from 'ng-zorro-antd/icon';
 import { NzPopconfirmDirective } from 'ng-zorro-antd/popconfirm';
-import { MenuItem } from '@site/app/define/sys/menu';
 import { RoleService } from '@site/app/services/sys/role.service';
 
 @Component({
@@ -31,6 +30,7 @@ import { RoleService } from '@site/app/services/sys/role.service';
 })
 export class RoleDetailsComponent implements OnInit{
 
+  @Input('roleId') roleId?: string;
   rolePermissions: RoleMenusWithPermission[] = [];
   mapOfExpandedData: { [key: string]: RoleMenusWithPermission[] } = {};
   permissionTableLoading = false;
@@ -78,7 +78,7 @@ export class RoleDetailsComponent implements OnInit{
     }
   }
 
-  loadRolePermissions(): void {
+  loadRolePermissions(roleId: string): void {
     this.permissionTableLoading = true;
     this.roleService.getRoleMenusWithPermission('').subscribe({
       next: res => {
@@ -92,6 +92,8 @@ export class RoleDetailsComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.loadRolePermissions();
+    if (this.roleId) {
+      this.loadRolePermissions(this.roleId);
+    }
   }
 }

@@ -63,3 +63,11 @@ export interface SimpleUser {
   username: string,
   phoneNumber?: string,
 }
+
+export interface LoginLog {
+  platform: string
+  loginType: string
+  loginTime: string
+  loginIp: string
+  userAgent: string
+}

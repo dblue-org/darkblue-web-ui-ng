@@ -1,7 +1,8 @@
 <nz-select
   [nzMaxTagCount]="10"
   nzMode="multiple"
-  nzPlaceHolder="Please select"
+  nzPlaceHolder="请选择角色"
+  [style]="{minWidth: width}"
   [(ngModel)]="value"
   [nzDisabled]="isDisabled"
   (ngModelChange)="onModalValueChange($event)"

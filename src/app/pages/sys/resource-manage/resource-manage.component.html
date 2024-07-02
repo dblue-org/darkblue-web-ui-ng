@@ -78,7 +78,7 @@
         <tbody>
         <ng-container *ngFor="let data of basicTable.data">
           <tr>
-            <td [nzExpand]="expandSet.has(data.id)" (nzExpandChange)="onExpandChange(data.id, $event)"></td>
+            <td [nzExpand]="expandSet.has(data.resourceId)" (nzExpandChange)="onExpandChange(data.resourceId, $event)"></td>
             <td>{{ data.resourceName }}</td>
             <td>{{ data.requestMethod }}</td>
             <td [nzEllipsis]="true" [title]="data.resourceUrl">{{ data.resourceUrl }}</td>
@@ -108,7 +108,7 @@
               </button>
             </td>
           </tr>
-          <tr [nzExpand]="expandSet.has(data.id)">
+          <tr [nzExpand]="expandSet.has(data.resourceId)">
             <label>关联权限：</label>
             <ng-container *ngFor="let item of data.permissions">
               <nz-tag nzColor="processing">{{ item.permissionName }} ({{ item.permissionCode }})</nz-tag>

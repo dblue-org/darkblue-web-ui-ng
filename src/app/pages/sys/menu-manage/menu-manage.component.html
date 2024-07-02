@@ -23,6 +23,7 @@
     <th nzWidth="80px">类型</th>
     <th >路由</th>
     <th nzWidth="80px">顺序</th>
+    <th nzWidth="250px">图标</th>
     <th nzWidth="120px">是否可用</th>
     <th nzWidth="120px">是否可见</th>
     <th nzWidth="120px">生产环境可见</th>
@@ -39,12 +40,13 @@
           [(nzExpand)]="item.expand"
           (nzExpandChange)="collapse(mapOfExpandedData[data.menuId], item, $event)"
         >
-          <span nz-icon [nzType]="item.menuIcon" nzTheme="outline"></span>
+          <app-menu-icon [icon]="item.menuIcon" />
           {{ item.menuName }}
         </td>
         <td>{{ item.menuType == 1 ? '菜单组' : '菜单项' }}</td>
         <td>{{ item.menuUrl }}</td>
         <td>{{ item.sort || '-' }}</td>
+        <td>{{ item.menuIcon }}</td>
         <td>{{ item.isEnable ? '是' : '否' }}</td>
         <td>{{ item.isVisible ? '是' : '否' }}</td>
         <td>{{ item.isProductionVisible ? '是' : '否' }}</td>

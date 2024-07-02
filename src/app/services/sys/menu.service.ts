@@ -82,12 +82,21 @@ export class MenuService {
             menuUrl: '/sys/user'
           },
           {
+            menuId: '00000106',
+            menuName: '用户组管理',
+            menuType: 2,
+            level: 2,
+            isEnable: true,
+            menuIcon: 'iconify#mingcute:group-line',
+            menuUrl: '/sys/user-group'
+          },
+          {
             menuId: '00000102',
             menuName: '角色管理',
             menuType: 2,
             level: 2,
             isEnable: true,
-            menuIcon: 'usergroup-add',
+            menuIcon: 'iconify#carbon:user-role',
             menuUrl: '/sys/role'
           },
           {

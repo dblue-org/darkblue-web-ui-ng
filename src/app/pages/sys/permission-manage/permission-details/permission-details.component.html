@@ -1,7 +1,74 @@
-<p>permission-details works!</p>
+<app-section dkTitle="权限信息">
+  <nz-descriptions nzBordered style="margin-bottom: 24px">
+    <nz-descriptions-item nzTitle="权限名称">超级管理员</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="权限编码">Admin</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="创建时间">2024-06-19 15:23:50</nz-descriptions-item>
+  </nz-descriptions>
+</app-section>
 
-权限基础信息
+<app-section dkTitle="关联资源">
+  <nz-table #resourceTable
+            [nzFrontPagination]="false"
+            [nzShowPagination]="false"
+            nzBordered
+            nzSize="small"
+            nzTableLayout="fixed"
+            [nzData]="resources">
+    <thead>
+    <tr>
+      <th nzWidth="120px">资源名称</th>
+      <th nzWidth="100px">请求方式</th>
+      <th>资源地址</th>
+      <th>控制层类</th>
+      <th nzWidth="120px">方法</th>
+      <th nzWidth="160px">创建时间</th>
+    </tr>
+    </thead>
+    <tbody>
+    <ng-container *ngFor="let resItem of resourceTable.data">
+      <tr>
+        <td>{{ resItem.resourceName }}</td>
+        <td>{{ resItem.requestMethod }}</td>
+        <td [nzEllipsis]="true" [title]="resItem.resourceUrl">{{ resItem.resourceUrl }}</td>
+        <td [nzEllipsis]="true" [title]="resItem.controller">{{ resItem.controller }}</td>
+        <td>{{ resItem.method }}</td>
+        <td>{{ resItem.createTime }}</td>
+      </tr>
+    </ng-container>
+    </tbody>
+  </nz-table>
+</app-section>
 
-权限关联资源
-
-使用此权限的角色
+<app-section dkTitle="包含此权限的角色">
+  <nz-table #roleTable
+            [nzFrontPagination]="false"
+            nzShowPagination
+            nzBordered
+            nzSize="small"
+            [nzTotal]="roleTableOptions.total"
+            [(nzPageIndex)]="roleTableOptions.pageIndex"
+            [(nzPageSize)]="roleTableOptions.pageSize"
+            [nzLoading]="roleTableLoading"
+            [nzData]="roles"
+            (nzPageSizeChange)="loadRoles()"
+            (nzPageIndexChange)="loadRoles()">
+    <thead>
+    <tr>
+      <th>角色编码</th>
+      <th>角色名称</th>
+      <th>状态</th>
+      <th>是否内置</th>
+      <th>创建时间</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of roleTable.data">
+      <td>{{ data.roleCode }}</td>
+      <td><a>{{ data.roleName }}</a></td>
+      <td>{{ data.isEnable ? '正常' : '停用' }}</td>
+      <td>{{ data.isBuiltIn ? '是' : '否' }}</td>
+      <td>{{ data.createTime }}</td>
+    </tr>
+    </tbody>
+  </nz-table>
+</app-section>

@@ -9,6 +9,7 @@ import { ToolbarComponent } from '@site/app/components/layout/toolbar/toolbar.co
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { MenuAddModalComponent } from './menu-add-modal/menu-add-modal.component';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
+import { MenuIconComponent } from '@site/app/components/icon/menu-icon/menu-icon.component';
 
 @Component({
   selector: 'app-menu-manage',
@@ -22,7 +23,8 @@ import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
     ToolbarComponent,
     NzGridModule,
     MenuAddModalComponent,
-    NzPopconfirmModule
+    NzPopconfirmModule,
+    MenuIconComponent
   ],
   templateUrl: './menu-manage.component.html',
   styleUrl: './menu-manage.component.css'

@@ -5,3 +5,11 @@
 nz-table [nz-button] {
   margin-right: 8px;
 }
+
+.big-font-size {
+
+}
+
+.big-font-size .ant-table {
+  font-size: 16px;
+}

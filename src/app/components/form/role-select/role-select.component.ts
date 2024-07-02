@@ -1,4 +1,4 @@
-import { Component, EventEmitter, forwardRef, OnInit } from '@angular/core';
+import { Component, EventEmitter, forwardRef, Input, OnInit } from '@angular/core';
 import { SimpleRole } from '../../../define/sys/role';
 import { RoleService } from '../../../services/sys/role.service';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -24,6 +24,7 @@ import { NgForOf } from '@angular/common';
   ]
 })
 export class RoleSelectComponent implements OnInit, ControlValueAccessor {
+  @Input('dkWidth') width: string = 'auto';
   value?: string[];
   options?: SimpleRole[] = [];
   isDisabled = false

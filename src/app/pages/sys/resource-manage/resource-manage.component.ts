@@ -66,7 +66,7 @@ export class ResourceManageComponent implements OnInit {
   });
 
   // table options
-  resources: any[] = [];
+  resources: Resource[] = [];
   expandSet = new Set<string>();
   tableLoading = false;
   tableOptions = {

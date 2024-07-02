@@ -26,7 +26,7 @@ import { BehaviorSubject, map, Observable, switchMap, debounceTime } from 'rxjs'
   ]
 })
 export class UserSelectComponent implements ControlValueAccessor, OnInit {
-
+  @Input('dkWidth') width: string = 'auto';
   @Input('dkMode') mode: 'multiple' | 'tags' | 'default' = 'default';
   value?: string[] | string;
   options?: SimpleUser[] = [];
