@@ -1,14 +1,14 @@
 import { Component, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
-import { NzDrawerComponent, NzDrawerContentDirective } from 'ng-zorro-antd/drawer';
-import { NzTabComponent, NzTabSetComponent } from 'ng-zorro-antd/tabs';
-import { NzListModule } from 'ng-zorro-antd/list';
-import { NzDescriptionsComponent, NzDescriptionsItemComponent } from 'ng-zorro-antd/descriptions';
-import { NzTagComponent } from 'ng-zorro-antd/tag';
-import { NzColDirective, NzRowDirective } from 'ng-zorro-antd/grid';
-import { NzButtonComponent } from 'ng-zorro-antd/button';
-import { NzCardComponent } from 'ng-zorro-antd/card';
-import { NgForOf, NgIf } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { NzDrawerModule } from 'ng-zorro-antd/drawer';
+import { NzTabsModule } from 'ng-zorro-antd/tabs';
+import { NzListModule } from 'ng-zorro-antd/list';
+import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
+import { NzTagModule } from 'ng-zorro-antd/tag';
+import { NzGridModule } from 'ng-zorro-antd/grid';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzCardModule } from 'ng-zorro-antd/card';
 import { ActionComponent } from './action/action.component';
 
 export interface Action {
@@ -29,21 +29,18 @@ export interface TodoItem {
   selector: 'app-messaging',
   standalone: true,
   imports: [
-    NzDrawerComponent,
-    NzDrawerContentDirective,
-    NzTabSetComponent,
-    NzTabComponent,
-    NzListModule,
-    NzDescriptionsComponent,
-    NzDescriptionsItemComponent,
-    NzTagComponent,
-    NzRowDirective,
-    NzColDirective,
-    NzButtonComponent,
-    NzCardComponent,
-    NgForOf,
-    NgIf,
+    CommonModule,
     RouterLink,
+
+    NzDrawerModule,
+    NzTabsModule,
+    NzListModule,
+    NzDescriptionsModule,
+    NzTagModule,
+    NzGridModule,
+    NzButtonModule,
+    NzCardModule,
+
     ActionComponent
   ],
   templateUrl: './messaging.component.html',

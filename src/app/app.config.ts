@@ -9,7 +9,7 @@ import zh from '@angular/common/locales/zh';
 import { FormsModule } from '@angular/forms';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { baseUrlInterceptor } from './http/base-url.interceptor';
+import { requestInterceptor } from './http/request.interceptor';
 import {responseInterceptor} from "./http/response.interceptor";
 import { TemplatePageTitleStrategy } from './platform/template-page-title-strategy';
 import { provideAnimations } from '@angular/platform-browser/animations';
@@ -26,7 +26,7 @@ export const appConfig: ApplicationConfig = {
     provideNzI18n(zh_CN),
     importProvidersFrom(FormsModule),
     provideAnimationsAsync(),
-    provideHttpClient(withInterceptors([baseUrlInterceptor, responseInterceptor])),
+    provideHttpClient(withInterceptors([requestInterceptor, responseInterceptor])),
     {provide: TitleStrategy, useClass: TemplatePageTitleStrategy},
     /*{provide: RouteReuseStrategy, useClass: UrlMatcherRouteReuseStrategy},*/
   ]

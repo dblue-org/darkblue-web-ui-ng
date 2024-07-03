@@ -6,8 +6,8 @@ import { PermissionService } from '@site/app/services/sys/permission.service';
 import { SimplePermission } from '@site/app/define/sys/permission';
 import { MenuSelectComponent } from '@site/app/components/form/menu-select/menu-select.component';
 import { CommonModule } from '@angular/common';
-import { NzButtonComponent } from 'ng-zorro-antd/button';
-import { NzInputDirective } from 'ng-zorro-antd/input';
+import { NzButtonComponent, NzButtonModule } from 'ng-zorro-antd/button';
+import { NzInputDirective, NzInputModule } from 'ng-zorro-antd/input';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { TplSearchBarComponent } from '@site/app/components/layout/tpl-search-bar/tpl-search-bar.component';
@@ -27,8 +27,8 @@ import { NzMessageService } from 'ng-zorro-antd/message';
     FormsModule,
     ReactiveFormsModule,
 
-    NzButtonComponent,
-    NzInputDirective,
+    NzButtonModule,
+    NzInputModule,
     NzModalModule,
     NzTableModule,
     NzIconModule,

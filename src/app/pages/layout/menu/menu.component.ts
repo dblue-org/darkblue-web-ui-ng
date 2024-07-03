@@ -1,24 +1,22 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import {NzMenuDirective, NzMenuItemComponent, NzSubMenuComponent} from "ng-zorro-antd/menu";
-import { NavigationStart, Router, RouterLink } from '@angular/router';
-import {MenuItem} from "../../../define/sys/menu";
-import {MenuService} from "../../../services/sys/menu.service";
-import {NgForOf, NgIf, NgTemplateOutlet} from "@angular/common";
-import {NzIconModule} from "ng-zorro-antd/icon";
+import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { RouterLink } from '@angular/router';
+import { MenuItem } from '../../../define/sys/menu';
+import { MenuService } from '../../../services/sys/menu.service';
+import { CommonModule } from '@angular/common';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 import { MenuIconComponent } from '@site/app/components/icon/menu-icon/menu-icon.component';
 
 @Component({
   selector: 'app-menu',
   standalone: true,
   imports: [
-    NzMenuDirective,
-    NzMenuItemComponent,
-    NzSubMenuComponent,
+    CommonModule,
     RouterLink,
-    NgForOf,
-    NgIf,
-    NgTemplateOutlet,
+
+    NzMenuModule,
     NzIconModule,
+
     MenuIconComponent
   ],
   templateUrl: './menu.component.html',
@@ -39,7 +37,7 @@ export class MenuComponent implements OnInit {
       if (res.success) {
         this.menuItems = res.data || [];
       }
-    })
+    });
   }
 
 }

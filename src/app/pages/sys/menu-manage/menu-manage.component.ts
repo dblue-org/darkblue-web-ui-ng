@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NgForOf, NgIf } from '@angular/common';
-import { NzButtonComponent } from 'ng-zorro-antd/button';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 import { MenuService } from '../../../services/sys/menu.service';
 import { MenuItem } from '../../../define/sys/menu';
-import { NzIconDirective } from 'ng-zorro-antd/icon';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 import { ToolbarComponent } from '@site/app/components/layout/toolbar/toolbar.component';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { MenuAddModalComponent } from './menu-add-modal/menu-add-modal.component';
@@ -23,8 +23,8 @@ import { ResponseBean } from '@site/app/define/sys/response';
     NgIf,
 
     NzTableModule,
-    NzButtonComponent,
-    NzIconDirective,
+    NzButtonModule,
+    NzIconModule,
     NzGridModule,
     NzRadioModule,
     NzPopconfirmModule,

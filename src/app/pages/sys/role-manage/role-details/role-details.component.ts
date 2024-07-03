@@ -3,11 +3,11 @@ import { SectionComponent } from '@site/app/components/layout/section/section.co
 import { CommonModule } from '@angular/common';
 import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
 import { NzTableModule } from 'ng-zorro-antd/table';
-import { NzButtonComponent } from 'ng-zorro-antd/button';
-import { NzTagComponent } from 'ng-zorro-antd/tag';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzTagModule } from 'ng-zorro-antd/tag';
 import { RoleMenusWithPermission } from '@site/app/define/sys/role';
-import { NzIconDirective } from 'ng-zorro-antd/icon';
-import { NzPopconfirmDirective } from 'ng-zorro-antd/popconfirm';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { RoleService } from '@site/app/services/sys/role.service';
 
 @Component({
@@ -18,12 +18,12 @@ import { RoleService } from '@site/app/services/sys/role.service';
 
     NzDescriptionsModule,
     NzTableModule,
+    NzButtonModule,
+    NzTagModule,
+    NzIconModule,
+    NzPopconfirmModule,
 
     SectionComponent,
-    NzButtonComponent,
-    NzTagComponent,
-    NzIconDirective,
-    NzPopconfirmDirective
   ],
   templateUrl: './role-details.component.html',
   styleUrl: './role-details.component.css'

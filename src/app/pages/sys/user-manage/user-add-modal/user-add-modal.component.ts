@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { NgIf } from '@angular/common';
-import { NzColDirective, NzRowDirective } from 'ng-zorro-antd/grid';
-import { NzFormControlComponent, NzFormDirective, NzFormItemComponent, NzFormLabelComponent } from 'ng-zorro-antd/form';
-import { NzIconDirective } from 'ng-zorro-antd/icon';
-import { NzInputDirective } from 'ng-zorro-antd/input';
+import { CommonModule } from '@angular/common';
+import { NzGridModule } from 'ng-zorro-antd/grid';
+import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzModalModule } from 'ng-zorro-antd/modal';
-import { NzOptionComponent, NzSelectComponent } from 'ng-zorro-antd/select';
-import { NzSwitchComponent } from 'ng-zorro-antd/switch';
+import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import {
   FormControl,
   FormGroup, NonNullableFormBuilder,
@@ -22,20 +22,17 @@ import { NzMessageService } from 'ng-zorro-antd/message';
   selector: 'app-user-add-modal',
   standalone: true,
   imports: [
-    NgIf,
-    NzColDirective,
-    NzFormControlComponent,
-    NzFormDirective,
-    NzFormItemComponent,
-    NzFormLabelComponent,
-    NzIconDirective,
-    NzInputDirective,
-    NzModalModule,
-    NzOptionComponent,
-    NzRowDirective,
-    NzSelectComponent,
-    NzSwitchComponent,
+    CommonModule,
     ReactiveFormsModule,
+
+    NzGridModule,
+    NzFormModule,
+    NzIconModule,
+    NzInputModule,
+    NzModalModule,
+    NzSelectModule,
+    NzSwitchModule,
+
     RoleSelectComponent
   ],
   templateUrl: './user-add-modal.component.html',

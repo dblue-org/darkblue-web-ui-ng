@@ -2,12 +2,12 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Role } from '@site/app/define/sys/role';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { FormsModule, NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { NzInputDirective } from 'ng-zorro-antd/input';
+import { NzInputDirective, NzInputModule } from 'ng-zorro-antd/input';
 import { TplSearchBarComponent } from '@site/app/components/layout/tpl-search-bar/tpl-search-bar.component';
-import { NzButtonComponent } from 'ng-zorro-antd/button';
-import { NzIconDirective } from 'ng-zorro-antd/icon';
+import { NzButtonComponent, NzButtonModule } from 'ng-zorro-antd/button';
+import { NzIconDirective, NzIconModule } from 'ng-zorro-antd/icon';
 import { CommonModule } from '@angular/common';
-import { NzPopconfirmDirective } from 'ng-zorro-antd/popconfirm';
+import { NzPopconfirmDirective, NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzWaveDirective } from 'ng-zorro-antd/core/wave';
 import { RoleService } from '@site/app/services/sys/role.service';
 import { RoleEditModalComponent } from '@site/app/pages/sys/role-manage/role-edit-modal/role-edit-modal.component';
@@ -22,15 +22,16 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [
     CommonModule,
-    NzTableModule,
-    FormsModule,
-    NzInputDirective,
     ReactiveFormsModule,
+    FormsModule,
+
+    NzTableModule,
+    NzInputModule,
+    NzButtonModule,
+    NzIconModule,
+    NzPopconfirmModule,
+
     TplSearchBarComponent,
-    NzButtonComponent,
-    NzIconDirective,
-    NzPopconfirmDirective,
-    NzWaveDirective,
     RoleEditModalComponent,
     PermissionsSetModalComponent
   ],

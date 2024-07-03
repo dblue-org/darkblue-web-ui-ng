@@ -5,14 +5,13 @@ import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { FormGroup, FormsModule, NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { NzFormModule } from 'ng-zorro-antd/form';
-import { CheckedPermissionVo, PermissionVo, SimplePermission } from '@site/app/define/sys/permission';
+import { PermissionVo, SimplePermission } from '@site/app/define/sys/permission';
 import { CommonModule } from '@angular/common';
-import { NzInputDirective } from 'ng-zorro-antd/input';
-import { NzOptionComponent, NzSelectComponent } from 'ng-zorro-antd/select';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzSelectModule } from 'ng-zorro-antd/select';
 import { TplSearchBarComponent } from '@site/app/components/layout/tpl-search-bar/tpl-search-bar.component';
-import { NzButtonComponent } from 'ng-zorro-antd/button';
-import { NzPopconfirmDirective } from 'ng-zorro-antd/popconfirm';
-import { NzWaveDirective } from 'ng-zorro-antd/core/wave';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { PermissionService } from '@site/app/services/sys/permission.service';
 import { MenuSelectComponent } from '@site/app/components/form/menu-select/menu-select.component';
@@ -26,17 +25,17 @@ import { NzMessageService } from 'ng-zorro-antd/message';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+
     NzModalModule,
     NzTableModule,
     NzTagModule,
     NzFormModule,
-    NzInputDirective,
-    NzOptionComponent,
-    NzSelectComponent,
-    NzButtonComponent,
-    NzPopconfirmDirective,
-    NzWaveDirective,
+    NzInputModule,
+    NzSelectModule,
+    NzButtonModule,
+    NzPopconfirmModule,
     NzIconModule,
+
     TplSearchBarComponent,
     MenuSelectComponent
   ],

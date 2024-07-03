@@ -1,47 +1,44 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { NzModalModule } from 'ng-zorro-antd/modal';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import {
-  FormControl,
   FormGroup,
   FormsModule,
   NonNullableFormBuilder,
   ReactiveFormsModule,
   Validators
 } from '@angular/forms';
-import { NzButtonComponent } from 'ng-zorro-antd/button';
-import { NzCheckboxComponent } from 'ng-zorro-antd/checkbox';
-import { NzColDirective, NzRowDirective } from 'ng-zorro-antd/grid';
-import { NzFormControlComponent, NzFormDirective, NzFormItemComponent, NzFormLabelComponent } from 'ng-zorro-antd/form';
-import { NzInputDirective, NzInputGroupComponent } from 'ng-zorro-antd/input';
+
+import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
+import { NzGridModule } from 'ng-zorro-antd/grid';
+import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NgIf } from '@angular/common';
-import { MenuService } from '../../../../services/sys/menu.service';
-import { MenuItem, MenuItemDto } from '../../../../define/sys/menu';
+
+import { MenuService } from '@site/app/services/sys/menu.service';
+import { MenuItemDto } from '@site/app/define/sys/menu';
 import { BasicEditModalComponent } from '@site/app/components/basic-edit-modal/basic-edit-modal.component';
 
 @Component({
   selector: 'app-menu-add-modal',
   standalone: true,
   imports: [
-    NzModalModule,
+    CommonModule,
     FormsModule,
-    NzButtonComponent,
-    NzCheckboxComponent,
-    NzColDirective,
-    NzFormControlComponent,
-    NzFormDirective,
-    NzFormItemComponent,
-    NzInputDirective,
-    NzInputGroupComponent,
-    NzRowDirective,
     ReactiveFormsModule,
-    NzFormLabelComponent,
+
+    NzModalModule,
+    NzButtonModule,
+    NzCheckboxModule,
+    NzGridModule,
+    NzFormModule,
+    NzInputModule,
     NzSwitchModule,
     NzSelectModule,
     NzIconModule,
-    NgIf
   ],
   templateUrl: './menu-add-modal.component.html',
   styleUrl: './menu-add-modal.component.css'

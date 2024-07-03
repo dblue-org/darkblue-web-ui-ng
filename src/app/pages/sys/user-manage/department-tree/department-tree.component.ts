@@ -1,10 +1,9 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { NgIf } from '@angular/common';
-import { NzButtonComponent } from 'ng-zorro-antd/button';
-import { NzCardComponent } from 'ng-zorro-antd/card';
-import { NzIconDirective } from 'ng-zorro-antd/icon';
-import { NzFormatEmitEvent, NzTreeComponent, NzTreeNode, NzTreeNodeOptions } from 'ng-zorro-antd/tree';
-import { NzWaveDirective } from 'ng-zorro-antd/core/wave';
+import { CommonModule } from '@angular/common';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzCardModule } from 'ng-zorro-antd/card';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzFormatEmitEvent, NzTreeModule, NzTreeNode, NzTreeNodeOptions } from 'ng-zorro-antd/tree';
 import { DepartmentService } from '@site/app/services/sys/department.service';
 import { environment } from '@site/environments/environment';
 import {
@@ -17,12 +16,11 @@ import { NzMessageService } from 'ng-zorro-antd/message';
   selector: 'app-department-tree',
   standalone: true,
   imports: [
-    NgIf,
-    NzButtonComponent,
-    NzCardComponent,
-    NzIconDirective,
-    NzTreeComponent,
-    NzWaveDirective,
+    CommonModule,
+    NzButtonModule,
+    NzCardModule,
+    NzIconModule,
+    NzTreeModule,
     DepartmentEditModalComponent
   ],
   templateUrl: './department-tree.component.html',
@@ -50,6 +48,7 @@ export class DepartmentTreeComponent implements OnInit {
           title: environment.rootDepartmentName || '全公司',
           key: '',
           isLeft: false,
+          expanded: true,
           children: this.departmentService.toTreeNodes(res.data)
         }];
       }

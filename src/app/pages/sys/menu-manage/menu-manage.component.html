@@ -65,7 +65,7 @@
                   (nzOnConfirm)="deleteMenu(item.menuId)"
                   nzDanger>删除</button>
           <button *ngIf="item.isEnable" nz-button nzSize="small" nzType="default" nzDanger (click)="disabledMenu(item.menuId)">禁用</button>
-          <button *ngIf="!item.isEnable" nz-button nzSize="small" nzType="default" nzDanger (click)="enableMenu(item.menuId)">启用</button>
+          <button *ngIf="!item.isEnable" class="ant-btn-success" nz-button nzSize="small" (click)="enableMenu(item.menuId)">启用</button>
         </td>
       </tr>
     </ng-container>

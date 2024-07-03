@@ -3,8 +3,8 @@ import { SectionComponent } from '@site/app/components/layout/section/section.co
 import { CommonModule } from '@angular/common';
 import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
 import { IconifyComponent } from '@site/app/components/icon/iconify/iconify.component';
-import { NzButtonComponent, NzButtonModule } from 'ng-zorro-antd/button';
-import { NzTagComponent, NzTagModule } from 'ng-zorro-antd/tag';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzTagModule } from 'ng-zorro-antd/tag';
 import { Role } from '@site/app/define/sys/role';
 import { User } from '@site/app/define/sys/user';
 import { UserGroupService } from '@site/app/services/sys/user-group.service';

@@ -3,61 +3,56 @@ import { delay, Observable, of } from 'rxjs';
 import { ResponseBean } from '../../define/sys/response';
 import { LoginLog, SimpleUser, User, UserSearchForm } from '../../define/sys/user';
 import { RoleMenusWithPermission } from '@site/app/define/sys/role';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   addUser(user: User): Observable<ResponseBean<any>> {
-    console.log(user);
-    return of({
-      success: true
-    }).pipe(delay(1000))
+    return this.http.post<ResponseBean<any>>('/api/user/add', user);
   }
 
   updateUser(user: User): Observable<ResponseBean<any>> {
-    console.log(user);
-    return of({
-      success: true
-    }).pipe(delay(1000))
+    return this.http.put<ResponseBean<any>>('/api/user/update', user);
   }
 
   deleteUser(userId: string): Observable<ResponseBean<any>> {
-    return of({
-      success: true
-    }).pipe(delay(1000))
+    return this.http.delete<ResponseBean<any>>(`/api/user/delete/${userId}`);
   }
 
   enable(userId: string): Observable<ResponseBean<any>> {
-    return of({
-      success: true
-    }).pipe(delay(1000))
+    return this.http.patch<ResponseBean<any>>('/api/user/enable', {
+      userId,
+      enable: true
+    });
   }
 
   disable(userId: string): Observable<ResponseBean<any>> {
-    return of({
-      success: true
-    }).pipe(delay(1000))
+    return this.http.patch<ResponseBean<any>>('/api/user/enable', {
+      userId,
+      enable: false
+    });
   }
 
   findAllUsers(searchForm: UserSearchForm): Observable<ResponseBean<User[]>> {
-    console.log(searchForm);
-    return of({
-      success: true,
-      data: this.mockUser(),
-      total: 1
-    }).pipe(delay(1000))
+    return this.http.get<ResponseBean<User[]>>('/api/user/page', {
+      params: {
+        ...searchForm
+      }
+    });
   }
 
   searchUser(keyword?: string, limit: number = 100): Observable<ResponseBean<SimpleUser[]>> {
-    console.log('搜索用户：', keyword);
-    return of({
-      success: true,
-      data: this.mockUser(),
-    }).pipe(delay(500))
+    return this.http.get<ResponseBean<SimpleUser[]>>('/api/user/selectByNameOrUserName', {
+      params: {
+        name: keyword || '',
+        limit
+      }
+    })
   }
 
   private mockUser(): User[] {

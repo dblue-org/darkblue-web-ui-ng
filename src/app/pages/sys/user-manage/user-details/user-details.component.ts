@@ -1,10 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
 import { NzTableModule } from 'ng-zorro-antd/table';
-import { NgForOf, NgIf } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { SectionComponent } from '@site/app/components/layout/section/section.component';
-import { NzButtonComponent } from 'ng-zorro-antd/button';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzFlexModule } from 'ng-zorro-antd/flex';
@@ -16,16 +16,17 @@ import { IconifyComponent } from '@site/app/components/icon/iconify/iconify.comp
   selector: 'app-user-details',
   standalone: true,
   imports: [
+    CommonModule,
+
     NzDescriptionsModule,
     NzTableModule,
-    NgForOf,
     NzDividerModule,
-    SectionComponent,
-    NzButtonComponent,
+    NzButtonModule,
     NzIconModule,
     NzTagModule,
     NzFlexModule,
-    NgIf,
+
+    SectionComponent,
     IconifyComponent
   ],
   templateUrl: './user-details.component.html',

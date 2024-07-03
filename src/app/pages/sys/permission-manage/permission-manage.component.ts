@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { FormsModule, NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
+
 import { TwoColumnComponent } from '@site/app/components/layout/two-column/two-column.component';
 import { TwoColumnSiderDirective } from '@site/app/components/layout/two-column/two-column-sider.directive';
 import { NzCardModule } from 'ng-zorro-antd/card';
@@ -8,23 +10,24 @@ import { TplSearchBarComponent } from '@site/app/components/layout/tpl-search-ba
 import { NzFormatEmitEvent, NzTreeModule, NzTreeNodeOptions } from 'ng-zorro-antd/tree';
 import { MenuService } from '@site/app/services/sys/menu.service';
 import { toNzTreeNodeOptions } from '@site/utils/nz-tree-node-utils';
-import { NzInputDirective } from 'ng-zorro-antd/input';
-import { NzButtonComponent } from 'ng-zorro-antd/button';
-import { NzIconDirective } from 'ng-zorro-antd/icon';
-import { NzWaveDirective } from 'ng-zorro-antd/core/wave';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 import { PermissionVo } from '@site/app/define/sys/permission';
 import { PermissionService } from '@site/app/services/sys/permission.service';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzRadioComponent, NzRadioGroupComponent } from 'ng-zorro-antd/radio';
+
 import {
   PermissionEditModalComponent
 } from '@site/app/pages/sys/permission-manage/permission-edit-modal/permission-edit-modal.component';
 import {
   BindResourceModalComponent
 } from '@site/app/pages/sys/permission-manage/bind-resource-modal/bind-resource-modal.component';
-import { RouterLink } from '@angular/router';
-import { NzRadioComponent, NzRadioGroupComponent } from 'ng-zorro-antd/radio';
+
+
 import { MenuIconComponent } from '@site/app/components/icon/menu-icon/menu-icon.component';
 
 @Component({
@@ -38,10 +41,9 @@ import { MenuIconComponent } from '@site/app/components/icon/menu-icon/menu-icon
 
     NzCardModule,
     NzTreeModule,
-    NzInputDirective,
-    NzButtonComponent,
-    NzIconDirective,
-    NzWaveDirective,
+    NzInputModule,
+    NzButtonModule,
+    NzIconModule,
     NzTableModule,
     NzPopconfirmModule,
 
@@ -53,8 +55,6 @@ import { MenuIconComponent } from '@site/app/components/icon/menu-icon/menu-icon
     NzRadioComponent,
     NzRadioGroupComponent,
     MenuIconComponent
-
-
   ],
   templateUrl: './permission-manage.component.html',
   styleUrl: './permission-manage.component.css'

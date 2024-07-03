@@ -1,51 +1,35 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Department, DepartmentNode } from '../../define/sys/user';
 import { ResponseBean } from '../../define/sys/response';
 import { NzTreeNodeOptions } from 'ng-zorro-antd/tree';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DepartmentService {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   getDepartments(): Observable<ResponseBean<DepartmentNode[]>> {
-    return of({
-      success: true,
-      data: this.mock()
-    })
+    return this.http.get<ResponseBean<DepartmentNode[]>>('/api/department/getAll');
   }
 
   get(deptId: string): Observable<ResponseBean<Department>> {
-    return of({
-      success: true,
-      data: {
-        deptId: '001',
-        deptName: '研发部',
-        /*parentId: '001',*/
-        masterUserId: '000001'
-      }
-    })
+    return this.http.get<ResponseBean<Department>>(`/api/department/getOne/${deptId}`);
   }
 
   add(department: Department): Observable<ResponseBean<void>> {
-    return of({
-      success: true,
-    })
+    return this.http.post<ResponseBean<void>>('/api/department/add', department);
   }
 
   update(department: Department): Observable<ResponseBean<void>> {
-    return of({
-      success: true,
-    })
+    return this.http.put<ResponseBean<void>>('/api/department/update', department);
   }
 
   delete(deptId: string): Observable<ResponseBean<void>> {
-    return of({
-      success: true,
-    })
+    return this.http.delete<ResponseBean<void>>(`/api/department/delete/${deptId}`);
   }
 
   private mock():DepartmentNode[] {

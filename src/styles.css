@@ -13,3 +13,29 @@ nz-table [nz-button] {
 .big-font-size .ant-table {
   font-size: 16px;
 }
+
+.ant-btn-success {
+  color: #389e0d;
+  border-color: #389e0d;
+  background: #fff;
+}
+
+.ant-btn-success:hover {
+  color: #52c41a;
+  border-color: #52c41a;
+  background: #fff;
+}
+
+.ant-btn-success.ant-btn-primary {
+  color: #fff;
+  border-color: #389e0d;
+  background: #389e0d;
+}
+
+.ant-btn-success.ant-btn-primary:hover {
+  color: #fff;
+  border-color: #52c41a;
+  background: #52c41a;
+}
+
+

@@ -41,16 +41,13 @@ export class DepartmentSelectComponent implements OnChanges, OnInit, ControlValu
       if (res.success) {
         this.departments = res.data;
         this.nodes = this.departmentService.toTreeNodes(this.departments, this.disableDepartment);
-        console.log('init', this.nodes, this.disableDepartment);
       }
     });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['disableDepartment'] && this.departments) {
-      console.log('处理变更');
       this.nodes = this.departmentService.toTreeNodes(this.departments, this.disableDepartment);
-      console.log('onChanges', this.nodes, this.disableDepartment);
     }
   }
 

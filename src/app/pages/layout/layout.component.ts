@@ -14,12 +14,12 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
-import { NzDividerComponent } from 'ng-zorro-antd/divider';
+import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { LogoutService } from '../../services/login/logout.service';
 import { AuthenticationService } from '../../services/auth/authentication.service';
 import { MenuComponent } from './menu/menu.component';
-import { NzBadgeComponent } from 'ng-zorro-antd/badge';
+import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { MessagingComponent } from './messaging/messaging.component';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 
@@ -29,21 +29,23 @@ import { NzTabsModule } from 'ng-zorro-antd/tabs';
   imports: [
     CommonModule,
     RouterOutlet,
+    NgOptimizedImage,
+    RouterLink,
+
     NzIconModule,
     NzLayoutModule,
     NzMenuModule,
-    RouterLink,
     NzButtonModule,
     NzGridModule,
     NzAvatarModule,
     NzDropDownModule,
-    NzDividerComponent,
+    NzDividerModule,
     NzInputModule,
-    MenuComponent,
-    NzBadgeComponent,
-    MessagingComponent,
     NzTabsModule,
-    NgOptimizedImage
+    NzBadgeModule,
+
+    MenuComponent,
+    MessagingComponent,
   ],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.css'

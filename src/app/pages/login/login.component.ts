@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { NzFormControlComponent, NzFormDirective, NzFormItemComponent } from 'ng-zorro-antd/form';
-import { NzInputDirective, NzInputGroupComponent } from 'ng-zorro-antd/input';
-import { NzColDirective, NzRowDirective } from 'ng-zorro-antd/grid';
-import { NzButtonComponent } from 'ng-zorro-antd/button';
-import { NzCheckboxComponent } from 'ng-zorro-antd/checkbox';
+import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzGridModule } from 'ng-zorro-antd/grid';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { LoginService } from '../../services/login/login.service';
 import { AuthenticationService } from '../../services/auth/authentication.service';
 import { LoginForm } from '../../define/sys/user';
@@ -13,16 +13,14 @@ import { LoginForm } from '../../define/sys/user';
   selector: 'app-login',
   standalone: true,
   imports: [
-    NzFormItemComponent,
     ReactiveFormsModule,
-    NzFormControlComponent,
-    NzInputGroupComponent,
-    NzColDirective,
-    NzButtonComponent,
-    NzInputDirective,
-    NzFormDirective,
-    NzRowDirective,
-    NzCheckboxComponent
+
+    NzFormModule,
+    NzInputModule,
+    NzGridModule,
+    NzButtonModule,
+    NzInputModule,
+    NzCheckboxModule
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'

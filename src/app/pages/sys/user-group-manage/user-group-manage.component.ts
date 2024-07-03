@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { UserGroup } from '@site/app/define/sys/user-group';
-import { NgForOf, NgIf } from '@angular/common';
-import { NzButtonComponent } from 'ng-zorro-antd/button';
-import { NzIconDirective } from 'ng-zorro-antd/icon';
-import { NzInputDirective } from 'ng-zorro-antd/input';
-import { NzPopconfirmDirective } from 'ng-zorro-antd/popconfirm';
+import { CommonModule, NgForOf, NgIf } from '@angular/common';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzIconDirective, NzIconModule } from 'ng-zorro-antd/icon';
+import { NzInputDirective, NzInputModule } from 'ng-zorro-antd/input';
+import { NzPopconfirmDirective, NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import {
   PermissionsSetModalComponent
@@ -23,18 +23,19 @@ import {
   selector: 'app-user-group-manage',
   standalone: true,
   imports: [
-    NgForOf,
-    NgIf,
-    NzButtonComponent,
-    NzIconDirective,
-    NzInputDirective,
-    NzPopconfirmDirective,
-    NzTableModule,
-    PermissionsSetModalComponent,
+    CommonModule,
     ReactiveFormsModule,
+    RouterLink,
+
+    NzButtonModule,
+    NzIconModule,
+    NzInputModule,
+    NzPopconfirmModule,
+    NzTableModule,
+
+    PermissionsSetModalComponent,
     RoleEditModalComponent,
     TplSearchBarComponent,
-    RouterLink,
     UserGroupEditModalComponent
   ],
   templateUrl: './user-group-manage.component.html',

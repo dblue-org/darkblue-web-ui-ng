@@ -5,10 +5,10 @@ import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NgForOf, NgIf } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { NzInputDirective } from 'ng-zorro-antd/input';
-import { NzFormControlComponent, NzFormDirective, NzFormItemComponent, NzFormLabelComponent } from 'ng-zorro-antd/form';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzFormModule } from 'ng-zorro-antd/form';
 import { TplSearchBarComponent } from '@site/app/components/layout/tpl-search-bar/tpl-search-bar.component';
 import { DepartmentTreeComponent } from './department-tree/department-tree.component';
 import { NzTableModule } from 'ng-zorro-antd/table';
@@ -23,23 +23,21 @@ import { Router } from '@angular/router';
   selector: 'app-user-manage',
   standalone: true,
   imports: [
+    CommonModule,
+    ReactiveFormsModule,
+
     NzGridModule,
     NzTabsModule,
     NzButtonModule,
     NzLayoutModule,
     NzIconModule,
-    NgIf,
-    NzInputDirective,
-    ReactiveFormsModule,
-    NzFormDirective,
-    NzFormControlComponent,
-    NzFormItemComponent,
-    NzFormLabelComponent,
+    NzInputModule,
+    NzFormModule,
+    NzTableModule,
+    NzPopconfirmModule,
+
     TplSearchBarComponent,
     DepartmentTreeComponent,
-    NzTableModule,
-    NgForOf,
-    NzPopconfirmModule,
     UserAddModalComponent
   ],
   templateUrl: './user-manage.component.html',
@@ -66,7 +64,7 @@ export class UserManageComponent implements OnInit {
     total: 0,
     pageIndex: 1,
     pageSize: 15
-  }
+  };
   tableLoading = false;
   deleteLoading = false;
   stateLoading = false;
@@ -94,25 +92,25 @@ export class UserManageComponent implements OnInit {
         }
       },
       complete: () => this.tableLoading = false
-    })
+    });
   }
 
   onTreeNodeSelected(node: NzTreeNode): void {
-      this.selectedDepartment = node;
-      this.userSearchForm.patchValue({
-        deptId: this.selectedDepartment.key
-      })
+    this.selectedDepartment = node;
+    this.userSearchForm.patchValue({
+      deptId: this.selectedDepartment.key
+    });
   }
 
   showAddModal() {
     this.userAddModalComponent?.showAddModal({
       deptId: this.selectedDepartment.key,
       deptName: this.selectedDepartment.title
-    })
+    });
   }
 
   showEditModal(user: User) {
-    this.userAddModalComponent?.showUpdateModal(user)
+    this.userAddModalComponent?.showUpdateModal(user);
   }
 
   deleteUser(userId: string) {
@@ -124,31 +122,31 @@ export class UserManageComponent implements OnInit {
         }
       },
       complete: () => this.deleteLoading = false
-    })
+    });
   }
 
   disable(user: User) {
     this.stateLoading = true;
     this.userService.disable(user.userId).subscribe({
-      next:res => {
+      next: res => {
         if (res.success) {
           user.isEnable = false;
         }
       },
       complete: () => this.stateLoading = false
-    })
+    });
   }
 
   enable(user: User) {
     this.stateLoading = true;
     this.userService.enable(user.userId).subscribe({
-      next:res => {
+      next: res => {
         if (res.success) {
           user.isEnable = true;
         }
       },
       complete: () => this.stateLoading = false
-    })
+    });
   }
 
   gotoDetails(user: User): void {
@@ -156,7 +154,7 @@ export class UserManageComponent implements OnInit {
       queryParams: {
         userId: user.userId
       }
-    }).then()
+    }).then();
   }
 
   search() {
