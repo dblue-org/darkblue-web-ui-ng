@@ -45,6 +45,7 @@ export interface ResourceSearchForm {
   controller?: string
   method?: string
   isAuthedAccess?: boolean
+  platform?: number
   page: number
   pageSize: number
 }

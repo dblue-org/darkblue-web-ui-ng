@@ -1,45 +1,58 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, from, delay } from 'rxjs';
-import {MenuItem} from "../../define/sys/menu";
+import { Observable } from 'rxjs';
+import { MenuItem, MenuItemDto } from '../../define/sys/menu';
 import { ResponseBean } from '../../define/sys/response';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MenuService {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   getUserMenu(): Observable<ResponseBean<MenuItem[]>> {
-    return of({
-      success: true,
-      data: this.mockMenu()
-    });
+    return this.findAllPcMenus();
   }
 
-  getAllMenu(): Observable<ResponseBean<MenuItem[]>> {
-    return of({
-      success: true,
-      data: this.mockMenu()
-    }).pipe(delay(300));
+  getAllMenu(platform: number): Observable<ResponseBean<MenuItem[]>> {
+    if (platform == 1) {
+      return this.findAllPcMenus();
+    } else {
+      return this.findAllAppMenus();
+    }
   }
 
-  addMenu(menu: MenuItem): Observable<ResponseBean<any>> {
-    return of({success: true})
+  findAllPcMenus(): Observable<ResponseBean<MenuItem[]>> {
+    return this.http.get<ResponseBean<MenuItem[]>>('/api/menu/findAllPcMenus');
   }
 
-  updateMenu(menu: MenuItem): Observable<ResponseBean<any>> {
-    return of({success: true})
+  findAllAppMenus(): Observable<ResponseBean<MenuItem[]>> {
+    return this.http.get<ResponseBean<MenuItem[]>>('/api/menu/findAllAppMenus');
+  }
+
+  addMenu(menu: MenuItemDto): Observable<ResponseBean<void>> {
+    return this.http.post<ResponseBean<void>>('/api/menu/add', menu)
+  }
+
+  updateMenu(menu: MenuItemDto): Observable<ResponseBean<any>> {
+    return this.http.put<ResponseBean<void>>('/api/menu/update', menu)
   }
 
   deleteMenu(menuId: string): Observable<ResponseBean<any>> {
-    return of({success: true})
+    return this.http.delete<ResponseBean<void>>(`/api/menu/delete/${menuId}`)
   }
   enableMenu(menuId: string): Observable<ResponseBean<any>> {
-    return of({success: true})
+    return this.http.patch<ResponseBean<void>>('/api/menu/enable', {
+      menuId,
+      enable: true
+    })
   }
   disabledMenu(menuId: string): Observable<ResponseBean<any>> {
-    return of({success: true})
+    return this.http.patch<ResponseBean<void>>('/api/menu/enable', {
+      menuId,
+      enable: false
+    })
   }
 
   private mockMenu(): MenuItem[] {
@@ -89,6 +102,15 @@ export class MenuService {
             isEnable: true,
             menuIcon: 'iconify#mingcute:group-line',
             menuUrl: '/sys/user-group'
+          },
+          {
+            menuId: '00000107',
+            menuName: '职位管理',
+            menuType: 2,
+            level: 2,
+            isEnable: true,
+            menuIcon: 'iconify#healthicons:city-worker-outline',
+            menuUrl: '/sys/position'
           },
           {
             menuId: '00000102',

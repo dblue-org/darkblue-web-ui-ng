@@ -1,1 +1,41 @@
-<p>caching-manage works!</p>
+<app-toolbar style="text-align: right">
+  <button nz-button
+          nzType="primary"
+          [nzLoading]="tableLoading"
+          (click)="loadCacheList()">
+    <span nz-icon nzType="reload"></span>重新加载
+  </button>
+</app-toolbar>
+<nz-table #basicTable
+          [nzFrontPagination]="true"
+          nzBordered
+          nzSize="small"
+          [nzTotal]="tableOptions.total"
+          [(nzPageIndex)]="tableOptions.page"
+          [(nzPageSize)]="tableOptions.pageSize"
+          [nzLoading]="tableLoading"
+          [nzData]="cacheList">
+  <thead>
+  <tr>
+    <th>缓存编码</th>
+    <th>缓存名称</th>
+    <th>缓存 key 前缀</th>
+    <th>缓存数量</th>
+    <th nzWidth="120px">操作</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let data of basicTable.data">
+    <td>{{ data.cacheCode }}</td>
+    <td>{{ data.cacheName }}</td>
+    <td>{{ data.keyPrefix }}</td>
+    <td>{{ data.keyNum }}</td>
+    <td>
+      <button nz-button
+              nzSize="small" nzType="default"
+              [nzLoading]="refreshLoading"
+              (click)="refreshCache(data.cacheCode)">刷新缓存</button>
+    </td>
+  </tr>
+  </tbody>
+</nz-table>

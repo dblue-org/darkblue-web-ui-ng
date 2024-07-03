@@ -1,0 +1,70 @@
+<app-section dkTitle="职位信息" [dkExtra]="buttons">
+  <nz-skeleton [nzLoading]="detailsLoading">
+    <nz-descriptions nzBordered style="margin-bottom: 24px" *ngIf="position">
+      <nz-descriptions-item nzTitle="职位名称">{{ position.positionName }}</nz-descriptions-item>
+      <nz-descriptions-item nzTitle="职位编码">{{ position.positionCode }}</nz-descriptions-item>
+      <nz-descriptions-item nzTitle="状态">{{ position.isEnable ? '正常' : '停用' }}</nz-descriptions-item>
+      <nz-descriptions-item nzTitle="是否内置">{{ position.isBuiltIn ? '是' : '否' }}</nz-descriptions-item>
+      <nz-descriptions-item nzTitle="用户数量">{{ position.userNum }}</nz-descriptions-item>
+      <nz-descriptions-item nzTitle="创建时间">{{ position.createTime }}</nz-descriptions-item>
+    </nz-descriptions>
+  </nz-skeleton>
+  <ng-template #buttons>
+    <ng-container *ngIf="position && !position.isBuiltIn">
+      <button *ngIf="!position?.isEnable"
+              nzSize="small"
+              nz-button nzDanger nzType="default"
+              [nzLoading]="stateLoading"
+              (click)="enable()">启用</button>
+      <button *ngIf="position?.isEnable"
+              nzSize="small"
+              nz-button nzDanger nzType="default"
+              [nzLoading]="stateLoading"
+              (click)="disable()">禁用</button>
+    </ng-container>
+    <button nz-button nzType="default" nzSize="small" [nzLoading]="detailsLoading" (click)="getDetails()">
+      <span nz-icon nzType="reload"></span> 刷新
+    </button>
+
+  </ng-template>
+</app-section>
+
+<app-section dkTitle="用户列表" [dkExtra]="userButtons">
+  <nz-table #userTable
+            [nzFrontPagination]="false"
+            nzShowPagination
+            nzBordered
+            nzSize="small"
+            [nzTotal]="userTableOptions.total"
+            [(nzPageIndex)]="userTableOptions.page"
+            [(nzPageSize)]="userTableOptions.pageSize"
+            [nzLoading]="userTableLoading"
+            [nzData]="users"
+            (nzPageSizeChange)="loadUsers()"
+            (nzPageIndexChange)="loadUsers()">
+    <thead>
+    <tr>
+      <th>用户名</th>
+      <th>姓名</th>
+      <th>所在部门</th>
+      <th>手机号</th>
+      <th>状态</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of userTable.data">
+      <td><a routerLink="/sys/user/details" [queryParams]="{userId: data.userId}">{{ data.username }}</a></td>
+      <td>{{ data.name }}</td>
+      <td>{{ data.deptName }}</td>
+      <td>{{ data.phoneNumber }}</td>
+      <td>{{ data.isEnable ? '正常' : '停用' }}</td>
+    </tr>
+    </tbody>
+  </nz-table>
+</app-section>
+
+<ng-template #userButtons>
+  <button nz-button nzType="default" nzSize="small" [nzLoading]="userTableLoading" (click)="loadUsers()">
+    <span nz-icon nzType="reload"></span> 重新加载
+  </button>
+</ng-template>

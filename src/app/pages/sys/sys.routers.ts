@@ -13,6 +13,10 @@ import { UserGroupManageComponent } from '@site/app/pages/sys/user-group-manage/
 import {
   UserGroupDetailsComponent
 } from '@site/app/pages/sys/user-group-manage/user-group-details/user-group-details.component';
+import { PositionManageComponent } from '@site/app/pages/sys/position-manage/position-manage.component';
+import {
+  PositionDetailsManageComponent
+} from '@site/app/pages/sys/position-manage/position-details-manage/position-details-manage.component';
 
 export const SYS_ROUTES: Routes = [
   { path: 'menu', component: MenuManageComponent, title: '菜单管理'},
@@ -20,6 +24,8 @@ export const SYS_ROUTES: Routes = [
   { path: 'user/details', component: UserDetailsComponent, title: '用户详情'},
   { path: 'user-group', component: UserGroupManageComponent, title: '用户组管理'},
   { path: 'user-group/details', component: UserGroupDetailsComponent, title: '用户组详情'},
+  { path: 'position', component: PositionManageComponent, title: '职位管理'},
+  { path: 'position/details', component: PositionDetailsManageComponent, title: '职位详情'},
   { path: 'role', component: RoleManageComponent, title: '角色管理'},
   { path: 'role/details', component: RoleDetailsComponent, title: '角色详情'},
   { path: 'permission', component: PermissionManageComponent, title: '权限管理'},

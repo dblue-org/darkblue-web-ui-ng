@@ -1,0 +1,20 @@
+<nz-modal [(nzVisible)]="isVisible" nzWidth="600px" [nzTitle]="isEdit ? '修改职位' : '添加职位'" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()" [nzOkLoading]="loading">
+  <ng-container *nzModalContent>
+    <form nz-form [formGroup]="dataForm">
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="positionCode">职位编码</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="职位编码不能为空">
+          <input nz-input formControlName="positionCode" id="positionCode"/>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="positionName">职位名称</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="职位名称不能为空">
+          <input nz-input formControlName="positionName" id="positionName"/>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </ng-container>
+</nz-modal>
+
+

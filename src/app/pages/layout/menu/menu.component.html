@@ -1,6 +1,10 @@
 <ul nz-menu nzTheme="light" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
   <ng-template #menuItem let-item="item">
-    <li nz-submenu [nzTitle]="item.menuName" [nzIcon]="item.menuIcon" *ngIf="item.menuType == 1" [nzOpen]="true">
+    <ng-template #menuTitle>
+      <app-menu-icon [icon]="item.menuIcon" style="margin-right: 3px" />
+      <span>{{item.menuName}}</span>
+    </ng-template>
+    <li nz-submenu [nzTitle]="menuTitle" *ngIf="item.menuType == 1" [nzOpen]="true">
       <ul *ngIf="item.children && item.children.length > 0">
         <ng-container *ngFor="let childItem of item.children; let i = index">
           <ng-container *ngTemplateOutlet="menuItem; context: { item: childItem }"></ng-container>
@@ -19,3 +23,5 @@
     <ng-container *ngTemplateOutlet="menuItem; context: { item: item }"></ng-container>
   </ng-container>
 </ul>
+
+

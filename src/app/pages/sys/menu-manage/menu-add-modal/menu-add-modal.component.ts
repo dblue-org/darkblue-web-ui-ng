@@ -18,7 +18,8 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NgIf } from '@angular/common';
 import { MenuService } from '../../../../services/sys/menu.service';
-import { MenuItem } from '../../../../define/sys/menu';
+import { MenuItem, MenuItemDto } from '../../../../define/sys/menu';
+import { BasicEditModalComponent } from '@site/app/components/basic-edit-modal/basic-edit-modal.component';
 
 @Component({
   selector: 'app-menu-add-modal',
@@ -45,96 +46,45 @@ import { MenuItem } from '../../../../define/sys/menu';
   templateUrl: './menu-add-modal.component.html',
   styleUrl: './menu-add-modal.component.css'
 })
-export class MenuAddModalComponent implements OnInit {
-  isVisible = false;
-  @Output() onSuccess: EventEmitter<void> = new EventEmitter<void>();
-  loading = false;
-  isEdit = false;
+export class MenuAddModalComponent extends BasicEditModalComponent implements OnInit  {
 
-  menuForm: FormGroup<{
-    menuId: FormControl<string>;
-    parentId: FormControl<string>;
-    parentName: FormControl<string>;
-    menuName: FormControl<string>;
-    menuType: FormControl<number>;
-    menuUrl: FormControl<string>;
-    menuIcon: FormControl<string>;
-    sort: FormControl<number>;
-    isVisible: FormControl<boolean>;
-    isProductionVisible: FormControl<boolean>;
-  }> = this.fb.group({
+  menuForm = this.fb.group({
     menuId: [''],
     parentId: [''],
     parentName: [''],
     menuName: ['', [Validators.required]],
     menuType: [2, [Validators.required]],
+    platform: [1],
     menuUrl: [''],
     menuIcon: [''],
-    sort: [1, [Validators.required]],
+    sortNum: [1, [Validators.required]],
     isVisible: [true],
     isProductionVisible: [true]
   });
 
-  constructor(private fb: NonNullableFormBuilder, private menuService: MenuService) {}
+  constructor(private fb: NonNullableFormBuilder, private menuService: MenuService) {
+    super();
+  }
 
-  showAddModal(parent: {parentId: string, parentName: string}): void {
-    this.isEdit = false;
-    this.menuForm.reset();
+
+  protected override beforeAddShowProcessor(parent: {platform: number, parentId: string, parentName: string}) {
     this.menuForm.patchValue(parent);
-    this.isVisible = true;
   }
 
-  showUpdateModal(menu: MenuItem): void {
-    this.isEdit = true;
-    this.menuForm.reset();
-    this.menuForm.patchValue(menu);
-    this.isVisible = true;
-  }
-
-  handleOk(): void {
-    if (this.menuForm.valid) {
-      this.loading = true;
-      if (this.isEdit) {
-        this.doUpdate();
-      } else {
-        this.doSave();
-      }
-    } else {
-      Object.values(this.menuForm.controls).forEach(control => {
-        if (control.invalid) {
-          control.markAsDirty();
-          control.updateValueAndValidity({onlySelf: true});
-        }
-      });
-    }
-
+  protected override beforeUpdateShowProcessor(data: any) {
+    this.menuForm.patchValue(data);
   }
 
   doSave() {
-    this.menuService.addMenu(this.menuForm.value as MenuItem).subscribe(res => {
-      if (res.success) {
-        this.onSaveSuccess()
-      }
-    }, null, this.onComplete)
+    return this.menuService.addMenu(this.menuForm.value as MenuItemDto)
   }
 
   doUpdate() {
-    this.menuService.updateMenu(this.menuForm.value as MenuItem).subscribe(res => {
-      if (res.success) {
-        this.onSaveSuccess()
-      }
-    }, null, this.onComplete)
+    return this.menuService.updateMenu(this.menuForm.value as MenuItemDto);
   }
 
-  handleCancel(): void {
-    this.isVisible = false;
-  }
 
-  onComplete() {
-    this.loading = false;
-  }
-
-  onSaveSuccess(): void {
+  override onSaveSuccess(): void {
     this.isVisible = false;
     this.onSuccess.emit();
   }
@@ -163,5 +113,9 @@ export class MenuAddModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.onMenuTypeChange(this.menuForm.controls.menuType.value);
+  }
+
+  getFormGroup(): FormGroup {
+    return this.menuForm;
   }
 }

@@ -1,0 +1,7 @@
+.ant-menu-item-selected > :host {
+  color: #1890ff;
+}
+
+.ant-menu-submenu-active > :host {
+  color: #1890ff;
+}

@@ -1,11 +1,12 @@
 export interface MenuItem {
   menuId: string;
   parentId?: string;
+  platform?: number;
   menuType?: number;
   menuName: string;
   menuUrl?: string;
   level: number;
-  sort?: number;
+  sortNum?: number;
   isEnable?: boolean;
   isVisible?: boolean;
   isProductionVisible?: boolean;
@@ -13,4 +14,18 @@ export interface MenuItem {
   children?: MenuItem[];
   expand?: boolean;
   parent?: MenuItem;
+}
+
+export interface MenuItemDto {
+  menuId: string;
+  parentId?: string;
+  platform: number;
+  menuType: number;
+  menuName: string;
+  menuUrl?: string;
+  sortNum?: number;
+  menuIcon?: string;
+  remark?: string;
+  isVisible?: boolean;
+  isProductionVisible?: boolean;
 }

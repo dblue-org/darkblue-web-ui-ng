@@ -12,7 +12,7 @@
                             {name: 'permissionCode', label: '权限编码', item: permissionCode},
                           ]">
         <ng-template #menuId>
-          <app-menu-select formControlName="menuId" onlyLeaf/>
+          <app-menu-select formControlName="menuId" [platform]="platform" onlyLeaf/>
         </ng-template>
         <ng-template #permissionName>
           <input nz-input placeholder="模糊搜索权限名称" formControlName="permissionName"/>

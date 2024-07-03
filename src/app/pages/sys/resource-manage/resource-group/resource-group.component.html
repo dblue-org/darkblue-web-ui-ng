@@ -1,42 +1,50 @@
-<ul nz-list [nzDataSource]="resourceGroups" nzSize="default">
-  <nz-list-header class="resource-group-header">
-    <div nz-row>
-      <div nz-col [nzSpan]="6">
-        资源组
+<div class="resource-group-list">
+  <ul nz-list [nzDataSource]="resourceGroups" nzSize="default">
+    <nz-list-header class="resource-group-header">
+      <div nz-row>
+        <div nz-col [nzSpan]="6">
+          资源组
+        </div>
+        <div nz-col [nzSpan]="18" class="resource-group-actions">
+          <button nz-button nzType="default" nzShape="circle" (click)="showAddModal()">
+            <span nz-icon nzType="plus"></span>
+          </button>
+          <button nz-button nzType="default" nzShape="circle"
+                  (click)="showEditModal()"
+                  [disabled]="!selected">
+            <span nz-icon nzType="edit"></span>
+          </button>
+          <button nz-button nzType="default" nzShape="circle"
+                  (click)="doDelete()"
+                  [disabled]="!selected">
+            <span nz-icon nzType="delete"></span>
+          </button>
+        </div>
       </div>
-      <div nz-col [nzSpan]="18" class="resource-group-actions">
-        <button nz-button nzType="default" nzShape="circle" (click)="showAddModal()">
-          <span nz-icon nzType="plus"></span>
-        </button>
-        <button nz-button nzType="default" nzShape="circle"
-                (click)="showEditModal()"
-                [disabled]="!selected">
-          <span nz-icon nzType="edit"></span>
-        </button>
-        <button nz-button nzType="default" nzShape="circle"
-                (click)="doDelete()"
-                [disabled]="!selected">
-          <span nz-icon nzType="delete"></span>
-        </button>
-      </div>
-    </div>
 
-  </nz-list-header>
-  @for (item of resourceGroups; track item) {
-    <nz-list-item [class]="{'resource-group-item': true, 'selected': selected?.resourceGroupId == item.resourceGroupId}"
-                  (click)="selectResourceGroup(item)"
-    >
-      <div nz-row style="width: 100%">
-        <div nz-col [nzSpan]="20">
-          <span nz-icon nzType="folder" nzTheme="outline"></span>
-          {{ item.resourceGroupName }}
+    </nz-list-header>
+    @for (item of resourceGroups; track item) {
+      <nz-list-item [class]="{'resource-group-item': true, 'selected': selected?.resourceGroupId == item.resourceGroupId}"
+                    (click)="selectResourceGroup(item)"
+      >
+        <div nz-row style="width: 100%">
+          <div nz-col [nzSpan]="20">
+            <span nz-icon nzType="folder" nzTheme="outline"></span>
+            {{ item.resourceGroupName }}
+          </div>
+          <div nz-col [nzSpan]="4" style="text-align: right;padding-right: 8px;" *ngIf="selected?.resourceGroupId == item.resourceGroupId">
+            <span class="resource-group-item-clear" nz-icon nzType="close" nzTheme="outline" title="清除选中状态" (click)="clearSelected($event)"></span>
+          </div>
         </div>
-        <div nz-col [nzSpan]="4" style="text-align: right;padding-right: 8px;" *ngIf="selected?.resourceGroupId == item.resourceGroupId">
-          <span class="resource-group-item-clear" nz-icon nzType="close" nzTheme="outline" title="清除选中状态" (click)="clearSelected($event)"></span>
-        </div>
-      </div>
-    </nz-list-item>
-  }
-</ul>
+      </nz-list-item>
+    }
+  </ul>
+</div>
+<div class="resource-group-footer">
+  <nz-radio-group [(ngModel)]="platform" nzSize="large" (ngModelChange)="onPlatformChange()">
+    <label nz-radio-button [nzValue]="1">PC端</label>
+    <label nz-radio-button [nzValue]="2">移动端</label>
+  </nz-radio-group>
+</div>
 
 <app-resource-group-edit-modal #resourceGroupEditModalComponent />

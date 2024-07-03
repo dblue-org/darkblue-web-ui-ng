@@ -1,6 +1,6 @@
-import { Component, EventEmitter, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormsModule, NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { TwoColumnComponent } from '@site/app/components/layout/two-column/two-column.component';
 import { TwoColumnSiderDirective } from '@site/app/components/layout/two-column/two-column-sider.directive';
 import { NzCardModule } from 'ng-zorro-antd/card';
@@ -24,6 +24,8 @@ import {
   BindResourceModalComponent
 } from '@site/app/pages/sys/permission-manage/bind-resource-modal/bind-resource-modal.component';
 import { RouterLink } from '@angular/router';
+import { NzRadioComponent, NzRadioGroupComponent } from 'ng-zorro-antd/radio';
+import { MenuIconComponent } from '@site/app/components/icon/menu-icon/menu-icon.component';
 
 @Component({
   selector: 'app-permission-manage',
@@ -32,6 +34,7 @@ import { RouterLink } from '@angular/router';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    RouterLink,
 
     NzCardModule,
     NzTreeModule,
@@ -47,7 +50,10 @@ import { RouterLink } from '@angular/router';
     TplSearchBarComponent,
     PermissionEditModalComponent,
     BindResourceModalComponent,
-    RouterLink
+    NzRadioComponent,
+    NzRadioGroupComponent,
+    MenuIconComponent
+
 
   ],
   templateUrl: './permission-manage.component.html',
@@ -61,6 +67,7 @@ export class PermissionManageComponent implements OnInit {
   menus: NzTreeNodeOptions[] = [];
   selectedMenu?: { menuId: string, menuName: string };
   menuLoading = false;
+  platform = 1;
 
   searchForm = this.formBuilder.group({
     permissionCode: [''],
@@ -125,6 +132,7 @@ export class PermissionManageComponent implements OnInit {
 
     this.permissionService.findByPage({
       ...this.searchForm.value,
+      platform: this.platform,
       menuId: this.selectedMenu?.menuId || '',
       page: this.tableOptions.pageIndex,
       pageSize: this.tableOptions.pageSize
@@ -141,7 +149,7 @@ export class PermissionManageComponent implements OnInit {
 
   protected loadMenus() {
     this.menuLoading = true;
-    this.menuService.getAllMenu().subscribe({
+    this.menuService.getAllMenu(this.platform).subscribe({
       next: res => {
         if (res.success) {
           this.menus = toNzTreeNodeOptions(res.data || [], menu => {
@@ -149,7 +157,8 @@ export class PermissionManageComponent implements OnInit {
               title: menu.menuName,
               key: menu.menuId,
               icon: menu.menuIcon,
-              selectable: menu.menuType === 2
+              selectable: menu.menuType === 2,
+              expanded: true
             };
           });
           this.selectedMenu = undefined;

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Resource } from '@site/app/define/sys/resource';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzTableModule } from 'ng-zorro-antd/table';
@@ -45,9 +45,10 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 })
 export class ResourcePermissionModalComponent implements OnInit {
 
-  isVisible = false;
+  @Input() platform: number = 1;
   @Output() onSuccess: EventEmitter<void> = new EventEmitter<void>();
 
+  isVisible = false;
   resource?: Resource;
 
   searchForm: FormGroup = this.fb.group({
@@ -74,6 +75,7 @@ export class ResourcePermissionModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     this.loadPermissions();
   }
 
@@ -81,6 +83,7 @@ export class ResourcePermissionModalComponent implements OnInit {
     this.resource = resource;
     this.selectedPermissions = [...resource.permissions] || [];
     this.isVisible = true;
+    console.log(this.platform);
   }
 
   handleOk(): void {
@@ -128,6 +131,7 @@ export class ResourcePermissionModalComponent implements OnInit {
     this.tableLoading = true
     this.permissionService.findByPage({
       ...this.searchForm.value,
+      platform: this.platform,
       page: this.tableOptions.pageIndex,
       pageSize: this.tableOptions.pageSize
     }).subscribe({

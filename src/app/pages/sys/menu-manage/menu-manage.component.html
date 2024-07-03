@@ -1,6 +1,10 @@
 <app-toolbar>
   <div nz-row>
     <div nz-col nzSpan="12">
+      <nz-radio-group [(ngModel)]="platform" style="margin-right: 8px;" (ngModelChange)="loadMenu()">
+        <label nz-radio-button [nzValue]="1">PC端</label>
+        <label nz-radio-button [nzValue]="2">移动端</label>
+      </nz-radio-group>
       <button nz-button nzType="primary" (click)="showAddMenuModal()">新增</button>
     </div>
     <div nz-col nzSpan="12" class="right">
@@ -23,7 +27,7 @@
     <th nzWidth="80px">类型</th>
     <th >路由</th>
     <th nzWidth="80px">顺序</th>
-    <th nzWidth="250px">图标</th>
+    <th nzWidth="350px">图标</th>
     <th nzWidth="120px">是否可用</th>
     <th nzWidth="120px">是否可见</th>
     <th nzWidth="120px">生产环境可见</th>
@@ -45,7 +49,7 @@
         </td>
         <td>{{ item.menuType == 1 ? '菜单组' : '菜单项' }}</td>
         <td>{{ item.menuUrl }}</td>
-        <td>{{ item.sort || '-' }}</td>
+        <td>{{ item.sortNum || '-' }}</td>
         <td>{{ item.menuIcon }}</td>
         <td>{{ item.isEnable ? '是' : '否' }}</td>
         <td>{{ item.isVisible ? '是' : '否' }}</td>

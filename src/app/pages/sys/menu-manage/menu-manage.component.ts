@@ -10,21 +10,29 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
 import { MenuAddModalComponent } from './menu-add-modal/menu-add-modal.component';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { MenuIconComponent } from '@site/app/components/icon/menu-icon/menu-icon.component';
+import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { FormsModule } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { ResponseBean } from '@site/app/define/sys/response';
 
 @Component({
   selector: 'app-menu-manage',
   standalone: true,
   imports: [
-    NzTableModule,
     NgForOf,
     NgIf,
+
+    NzTableModule,
     NzButtonComponent,
     NzIconDirective,
-    ToolbarComponent,
     NzGridModule,
-    MenuAddModalComponent,
+    NzRadioModule,
     NzPopconfirmModule,
-    MenuIconComponent
+
+    ToolbarComponent,
+    MenuIconComponent,
+    MenuAddModalComponent,
+    FormsModule
   ],
   templateUrl: './menu-manage.component.html',
   styleUrl: './menu-manage.component.css'
@@ -34,6 +42,7 @@ export class MenuManageComponent implements OnInit {
   mapOfExpandedData: { [key: string]: MenuItem[] } = {};
   @ViewChild('menuAddModal') menuAddModal!: MenuAddModalComponent;
   loading = false;
+  platform = 1;
 
   constructor(private menuService: MenuService) {
   }
@@ -44,7 +53,7 @@ export class MenuManageComponent implements OnInit {
       if (data.children) {
         data.children.forEach(d => {
           const target = array.find(a => a.menuId === d.menuId)!;
-          target.expand = false;
+          target.expand = true;
           this.collapse(array, target, false);
         });
       } else {
@@ -57,7 +66,7 @@ export class MenuManageComponent implements OnInit {
     const stack: MenuItem[] = [];
     const array: MenuItem[] = [];
     const hashMap = {};
-    stack.push({...root, level: 0, expand: false});
+    stack.push({...root, level: 0, expand: true});
 
     while (stack.length !== 0) {
       const node = stack.pop()!;
@@ -81,7 +90,7 @@ export class MenuManageComponent implements OnInit {
 
   loadMenu(): void {
     this.loading = true;
-    this.menuService.getAllMenu().subscribe({
+    this.doLoadMenu().subscribe({
       next: res => {
         this.listOfMapData = res.data || [];
         this.listOfMapData.forEach(item => {
@@ -92,19 +101,29 @@ export class MenuManageComponent implements OnInit {
     });
   }
 
+  private doLoadMenu(): Observable<ResponseBean<MenuItem[]>> {
+    if (this.platform == 1) {
+      return this.menuService.findAllPcMenus();
+    } else {
+      return this.menuService.findAllAppMenus();
+    }
+  }
+
   showAddMenuModal(menu?: MenuItem) {
     if (menu) {
       this.menuAddModal.showAddModal(
         {
           parentId: menu.menuId,
-          parentName: menu.menuName
+          parentName: menu.menuName,
+          platform: this.platform
         }
       );
     } else {
       this.menuAddModal.showAddModal(
         {
           parentId: '',
-          parentName: ''
+          parentName: '',
+          platform: this.platform
         }
       );
     }

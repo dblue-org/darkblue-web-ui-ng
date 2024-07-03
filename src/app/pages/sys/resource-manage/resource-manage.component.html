@@ -1,7 +1,7 @@
 <nz-spin class="resource-container" [nzSpinning]="tableLoading">
   <div class="resource-container" nz-row>
     <div nz-col [nzSpan]="4" class="resource-group-container">
-      <app-resource-group (onSelected)="onResourceGroupSelect($event)"/>
+      <app-resource-group (onSelected)="onResourceGroupSelect($event)" [(platform)]="platform"/>
     </div>
 
     <div nz-col [nzSpan]="20" style="padding-left: 24px;">
@@ -122,4 +122,4 @@
 </nz-spin>
 
 <app-resource-edit-modal #resourceEditModalComponent (onSuccess)="loadData()"/>
-<app-resource-permission-modal #resourcePermissionModalComponent (onSuccess)="loadData()"/>
+<app-resource-permission-modal #resourcePermissionModalComponent [platform]="platform" (onSuccess)="loadData()"/>

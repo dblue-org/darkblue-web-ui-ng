@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { CommonModule } from '@angular/common';
 import { NzListModule } from 'ng-zorro-antd/list';
@@ -50,10 +50,12 @@ import {
   templateUrl: './resource-manage.component.html',
   styleUrl: './resource-manage.component.css'
 })
-export class ResourceManageComponent implements OnInit {
+export class ResourceManageComponent implements OnInit, OnChanges {
 
   @ViewChild('resourceEditModalComponent') resourceEditModalComponent?: ResourceEditModalComponent;
   @ViewChild('resourcePermissionModalComponent') resourcePermissionModalComponent?: ResourcePermissionModalComponent;
+
+  platform = 1;
 
   selectedResourceGroup?: ResourceGroup;
 
@@ -106,6 +108,7 @@ export class ResourceManageComponent implements OnInit {
     this.tableLoading = true;
     this.resourceService.findByPage({
       ...this.searchForm.value,
+      platform: this.platform,
       resourceGroupId: this.selectedResourceGroup?.resourceGroupId,
       page: this.tableOptions.pageIndex,
       pageSize: this.tableOptions.pageSize
@@ -150,5 +153,11 @@ export class ResourceManageComponent implements OnInit {
 
   showPermissionsModal(resource: Resource) {
     this.resourcePermissionModalComponent?.showModal(resource);
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['platform']) {
+      this.loadData();
+    }
   }
 }

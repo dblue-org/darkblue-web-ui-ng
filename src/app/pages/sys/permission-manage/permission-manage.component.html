@@ -1,12 +1,24 @@
 <app-tow-column>
   <ng-container *twoColumnSider>
-    <nz-card [nzBordered]="false" nzTitle="系统菜单" [nzExtra]="extraTemplate">
-      <nz-tree [nzData]="menus" nzShowIcon (nzClick)="onTreeNodeClick($event)"></nz-tree>
+    <nz-card [nzBordered]="false" [nzTitle]="menuTitle" [nzExtra]="extraTemplate">
+      <nz-tree [nzData]="menus" [nzTreeTemplate]="nzTreeTemplate" (nzClick)="onTreeNodeClick($event)">
+        <ng-template #nzTreeTemplate let-node let-origin="origin">
+          <app-menu-icon [icon]="node.icon" />
+          <span>{{node.title}}</span>
+        </ng-template>
+
+      </nz-tree>
     </nz-card>
     <ng-template #extraTemplate>
       <button nz-button nzType="default" nzShape="circle" (click)="loadMenus()" [nzLoading]="menuLoading">
         <span nz-icon nzType="reload" nzTheme="outline"></span>
       </button>
+    </ng-template>
+    <ng-template #menuTitle>
+      <nz-radio-group [(ngModel)]="platform" style="margin-right: 8px;" (ngModelChange)="loadMenus()">
+        <label nz-radio-button [nzValue]="1">PC端</label>
+        <label nz-radio-button [nzValue]="2">移动端</label>
+      </nz-radio-group>
     </ng-template>
   </ng-container>
   <div>

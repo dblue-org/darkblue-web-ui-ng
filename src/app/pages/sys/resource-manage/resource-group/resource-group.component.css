@@ -1,3 +1,17 @@
+:host {
+  height: 100%;
+}
+
+.resource-group-list {
+  height: calc(100% - 41px);
+  overflow-y: auto;
+}
+
+.resource-group-footer {
+  height: 41px;
+  border-top: 1px solid rgba(240, 240, 240, 0.9);
+}
+
 .resource-group-header {
   padding-left: 12px;
   font-size: 1.1em;

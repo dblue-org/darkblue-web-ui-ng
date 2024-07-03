@@ -21,7 +21,7 @@ export class IconifyComponent implements OnInit {
     }
   }
 
-  @Input('color') color: string = 'black';
+  @Input('color') color!: string;
   raw?: string
   prefix?: string;
   name?: string;
@@ -34,13 +34,15 @@ export class IconifyComponent implements OnInit {
   }
 
   loadSvgRaw() {
-    const url = `https://api.iconify.design/${this.prefix}/${this.name}.svg?color=${this.color}&width=${this.size}`
+    const url = `https://api.iconify.design/${this.prefix}/${this.name}.svg?&width=${this.size}`
 
     this.http.get(url, {responseType: 'text'}).subscribe(text => {
       this.raw = text;
       const hostElement = this.el.nativeElement;
       this.render.setProperty(hostElement, 'innerHTML', this.raw);
-      this.render.setStyle(hostElement, 'color', this.color);
+      if (this.color) {
+        this.render.setStyle(hostElement, 'color', this.color);
+      }
       this.render.setStyle(hostElement, 'height', this.size + 'px' );
       this.render.setStyle(hostElement, 'width', this.size + 'px' );
     })

@@ -1,4 +1,13 @@
-import { booleanAttribute, Component, EventEmitter, forwardRef, Input, OnInit } from '@angular/core';
+import {
+  booleanAttribute,
+  Component,
+  EventEmitter,
+  forwardRef,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges
+} from '@angular/core';
 import { MenuService } from '@site/app/services/sys/menu.service';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { NzTreeNodeOptions } from 'ng-zorro-antd/tree';
@@ -22,10 +31,11 @@ import { NzTreeSelectModule } from 'ng-zorro-antd/tree-select';
     }
   ]
 })
-export class MenuSelectComponent implements ControlValueAccessor, OnInit {
+export class MenuSelectComponent implements ControlValueAccessor, OnInit, OnChanges {
 
   @Input({transform: booleanAttribute}) onlyLeaf = false;
   @Input() mode: 'multiple' | 'tags' | 'default' = 'default';
+  @Input() platform = 1;
   value?: string[] | string;
   isDisabled = false
   onChange = (value: any) => {
@@ -38,7 +48,11 @@ export class MenuSelectComponent implements ControlValueAccessor, OnInit {
   }
 
   ngOnInit(): void {
-    this.menuService.getAllMenu().subscribe(res => {
+    this.loadMenus();
+  }
+
+  loadMenus() {
+    this.menuService.getAllMenu(this.platform).subscribe(res => {
       if (res.success) {
         this.menus = toNzTreeNodeOptions(res.data || [], menu => {
           return {
@@ -69,6 +83,12 @@ export class MenuSelectComponent implements ControlValueAccessor, OnInit {
 
   writeValue(obj: any): void {
     this.value = obj;
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['platform']) {
+      this.loadMenus();
+    }
   }
 
 

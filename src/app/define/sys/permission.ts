@@ -31,6 +31,7 @@ export interface PermissionSearchForm {
   menuId?: string;
   permissionCode?: string;
   permissionName?: string;
+  platform?: number;
   page: number;
   pageSize: number;
 }

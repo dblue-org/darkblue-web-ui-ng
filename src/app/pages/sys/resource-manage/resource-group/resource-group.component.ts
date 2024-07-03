@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { NzListModule } from 'ng-zorro-antd/list';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { CommonModule } from '@angular/common';
@@ -9,6 +9,8 @@ import { NzIconDirective } from 'ng-zorro-antd/icon';
 import { ResourceGroupEditModalComponent } from '@site/app/pages/sys/resource-manage/resource-group-edit-modal/resource-group-edit-modal.component';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
+import { NzRadioComponent, NzRadioGroupComponent } from 'ng-zorro-antd/radio';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-resource-group',
@@ -19,12 +21,17 @@ import { NzModalService } from 'ng-zorro-antd/modal';
     NzButtonModule,
     NzGridModule,
     NzIconDirective,
-    ResourceGroupEditModalComponent
+    ResourceGroupEditModalComponent,
+    NzRadioComponent,
+    NzRadioGroupComponent,
+    FormsModule
   ],
   templateUrl: './resource-group.component.html',
   styleUrl: './resource-group.component.css'
 })
 export class ResourceGroupComponent implements OnInit {
+  @Input() platform = 1;
+  @Output() platformChange: EventEmitter<number> = new EventEmitter<number>();
   @Output() onSelected = new EventEmitter<ResourceGroup>();
   @ViewChild('resourceGroupEditModalComponent') resourceGroupEditModalComponent?: ResourceGroupEditModalComponent;
 
@@ -59,6 +66,7 @@ export class ResourceGroupComponent implements OnInit {
   }
 
   showAddModal() {
+    console.log(this.platform);
     this.resourceGroupEditModalComponent?.showAddModal();
   }
 
@@ -81,6 +89,10 @@ export class ResourceGroupComponent implements OnInit {
         }
       })
     }
+  }
+
+  onPlatformChange() {
+    this.platformChange.emit(this.platform)
   }
 
 }

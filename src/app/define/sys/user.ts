@@ -1,4 +1,4 @@
-import { SimpleRole } from '../role';
+import { SimpleRole } from './role';
 
 export interface AccessToken {
   tokenValue: string;
