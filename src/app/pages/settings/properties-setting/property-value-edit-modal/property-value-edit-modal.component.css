@@ -1,0 +1,19 @@
+.text-label {
+  text-align: right;
+  font-weight: bold;
+  line-height: 32px;
+}
+
+.text-label:after {
+  content: ': ';
+  line-height: 32px;
+}
+
+.text-value {
+  color: #626161;
+  line-height: 32px;
+}
+
+.text-unit {
+  line-height: 32px;
+}

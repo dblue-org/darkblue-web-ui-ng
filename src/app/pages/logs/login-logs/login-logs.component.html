@@ -1,0 +1,73 @@
+<app-tpl-search-bar [formGroup]="searchForm"
+                    (onSearch)="search()"
+                    [loading]="logTableLoading"
+                    buttonPosition="R"
+                    [items]="[
+                          {name: 'userId', label: '用户', item: userId},
+                          {name: 'loginIp', label: '登录IP', item: loginIp},
+                          {name: 'loginTime', label: '登录日期', item: loginTimeRef},
+                          {name: 'loginPlatform', label: '登录平台', item: loginPlatform},
+                          {name: 'loginType', label: '登录方式', item: loginType},
+                        ]">
+  <ng-template #userId>
+    <app-user-select formControlName="userId" dkWidth="100%" />
+  </ng-template>
+  <ng-template #loginIp>
+    <input nz-input formControlName="loginIp"/>
+  </ng-template>
+  <ng-template #loginTimeRef>
+    <nz-range-picker style="width: 100%" [(ngModel)]="loginTime"
+                     [ngModelOptions]="{standalone: true}"
+                     (nzOnCalendarChange)="onLoginTimeChange($event)"></nz-range-picker>
+  </ng-template>
+  <ng-template #loginPlatform>
+    <nz-select formControlName="loginPlatform" style="width: 100%">
+      <nz-option [nzValue]="1" nzLabel="PC" />
+      <nz-option [nzValue]="2" nzLabel="Android" />
+      <nz-option [nzValue]="3" nzLabel="IOS" />
+      <nz-option [nzValue]="4" nzLabel="小程序" />
+    </nz-select>
+  </ng-template>
+  <ng-template #loginType>
+    <nz-select formControlName="loginType" style="width: 100%">
+      <nz-option [nzValue]="1" nzLabel="密码登录" />
+      <nz-option [nzValue]="2" nzLabel="微信登录" />
+      <nz-option [nzValue]="3" nzLabel="支付宝登录" />
+      <nz-option [nzValue]="9" nzLabel="其他" />
+    </nz-select>
+  </ng-template>
+</app-tpl-search-bar>
+
+<nz-table #basicTable
+          [nzFrontPagination]="false"
+          nzShowPagination
+          nzBordered
+          nzSize="small"
+          nzTableLayout="fixed"
+          [nzTotal]="logTableOptions.total"
+          [(nzPageIndex)]="logTableOptions.page"
+          [(nzPageSize)]="logTableOptions.pageSize"
+          [nzLoading]="logTableLoading"
+          [nzData]="logs"
+          (nzPageSizeChange)="loadLogs()"
+          (nzPageIndexChange)="loadLogs()">
+  <thead>
+  <tr>
+    <th nzWidth="150px">用户</th>
+    <th nzWidth="150px">登录平台</th>
+    <th nzWidth="200px">登录方式</th>
+    <th nzWidth="200px">登录时间</th>
+    <th nzWidth="200px">登录IP</th>
+    <th>UserAgent</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let data of basicTable.data">
+    <td>{{ data.name }}</td>
+    <td>{{ data.loginPlatform }}</td>
+    <td>{{ data.loginType }}</td>
+    <td>{{ data.loginTime }}</td>
+    <td>{{ data.loginIp }}</td>
+    <td nzEllipsis>{{ data.userAgent }}</td>
+  </tbody>
+</nz-table>

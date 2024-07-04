@@ -1,23 +1,25 @@
-import { ActivatedRouteSnapshot, DetachedRouteHandle, RouteReuseStrategy } from '@angular/router';
+import { ActivatedRouteSnapshot, DetachedRouteHandle, Route, RouteReuseStrategy } from '@angular/router';
 
 export class UrlMatcherRouteReuseStrategy implements RouteReuseStrategy {
 
-  public static routeSnapshots: { [key: string]: DetachedRouteHandle } = {};
+  private routeSnapshots: Map<Route, DetachedRouteHandle> = new Map();
 
   shouldDetach(route: ActivatedRouteSnapshot): boolean {
-    return true;
+    if (!route.routeConfig || !route.data) {
+      return false;
+    }
+    return route.data['shouldReuse'];
   }
 
   retrieve(route: ActivatedRouteSnapshot): DetachedRouteHandle | null {
-    const url = this.getFullPath(route);
-    return route.routeConfig ? UrlMatcherRouteReuseStrategy.routeSnapshots[url] : null;
+    if (!route.routeConfig || !this.routeSnapshots.has(route.routeConfig)) return null;
+    const handle = this.routeSnapshots.get(route.routeConfig);
+    return handle ? handle : null;
   }
 
   shouldAttach(route: ActivatedRouteSnapshot): boolean {
-    const url = this.getFullPath(route);
-    return !!UrlMatcherRouteReuseStrategy.routeSnapshots[url];
+    return !!route.routeConfig && !!this.routeSnapshots.get(route.routeConfig);
   }
-
 
   shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
     return future.routeConfig === curr.routeConfig &&
@@ -25,35 +27,11 @@ export class UrlMatcherRouteReuseStrategy implements RouteReuseStrategy {
   }
 
   store(route: ActivatedRouteSnapshot, detachedTree: DetachedRouteHandle): void {
-    const url = this.getFullPath(route);
-    if (url) {
-      UrlMatcherRouteReuseStrategy.routeSnapshots[url] = detachedTree;
+    if (!route.routeConfig) {
+      return;
     }
+
+    this.routeSnapshots.set(route.routeConfig, detachedTree);
   }
-
-  private getFullPath(route: ActivatedRouteSnapshot): string {
-    return this.getFullPaths(route).filter(Boolean).join('/');
-  }
-
-  private getFullPaths(route: ActivatedRouteSnapshot): string[] {
-    const urls: string[] = [];
-    let currentRoute: ActivatedRouteSnapshot | null = route;
-    let i = 0;
-    while (currentRoute && i < 100) {
-      const routeUrls = currentRoute.url.map(segment => segment.path);
-      urls.unshift(...routeUrls)
-      currentRoute = currentRoute.parent;
-      i++;
-    }
-    return urls;
-  }
-
-  private getRouterUrls(route: ActivatedRouteSnapshot): string[] {
-    return route.url.map(urlSegment => urlSegment.path);
-  }
-
-
-
-
 
 }

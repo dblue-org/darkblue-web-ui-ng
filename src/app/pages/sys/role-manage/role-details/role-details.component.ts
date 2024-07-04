@@ -5,7 +5,7 @@ import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzTagModule } from 'ng-zorro-antd/tag';
-import { RoleMenusWithPermission } from '@site/app/define/sys/role';
+import { Role, RoleMenusWithPermission } from '@site/app/define/sys/role';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { RoleService } from '@site/app/services/sys/role.service';
@@ -34,6 +34,8 @@ export class RoleDetailsComponent implements OnInit{
   rolePermissions: RoleMenusWithPermission[] = [];
   mapOfExpandedData: { [key: string]: RoleMenusWithPermission[] } = {};
   permissionTableLoading = false;
+
+  role?: Role;
 
   constructor(private roleService: RoleService) {
   }
@@ -89,6 +91,16 @@ export class RoleDetailsComponent implements OnInit{
       },
       complete: () => this.permissionTableLoading = false
     });
+  }
+
+  getRole() {
+    if (this.roleId) {
+      this.roleService.getRole(this.roleId).subscribe(res => {
+        if (res.success) {
+          this.role = res.data;
+        }
+      })
+    }
   }
 
   ngOnInit(): void {

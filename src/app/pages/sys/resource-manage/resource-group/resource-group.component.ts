@@ -6,7 +6,9 @@ import { ResourceGroup } from '@site/app/define/sys/resource';
 import { ResourcesGroupService } from '@site/app/services/sys/resources-group.service';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzIconDirective } from 'ng-zorro-antd/icon';
-import { ResourceGroupEditModalComponent } from '@site/app/pages/sys/resource-manage/resource-group-edit-modal/resource-group-edit-modal.component';
+import {
+  ResourceGroupEditModalComponent
+} from '@site/app/pages/sys/resource-manage/resource-group-edit-modal/resource-group-edit-modal.component';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzRadioComponent, NzRadioGroupComponent } from 'ng-zorro-antd/radio';
@@ -37,9 +39,11 @@ export class ResourceGroupComponent implements OnInit {
 
   resourceGroups: ResourceGroup[] = [];
   selected?: ResourceGroup;
+  loading = false;
 
-  constructor(private resourceGroupService: ResourcesGroupService, private modalService: NzModalService,
-              private messageService: NzMessageService) {
+  constructor(
+    private resourceGroupService: ResourcesGroupService, private modalService: NzModalService,
+    private messageService: NzMessageService) {
   }
 
   selectResourceGroup(resourceGroup: ResourceGroup) {
@@ -52,11 +56,15 @@ export class ResourceGroupComponent implements OnInit {
   }
 
   loadAll() {
-    this.resourceGroupService.getAll().subscribe(res => {
-      if (res.success && res.data) {
-        this.resourceGroups = res.data;
-      }
-    })
+    this.loading = true;
+    this.resourceGroupService.getAll().subscribe({
+      next: res => {
+        if (res.success && res.data) {
+          this.resourceGroups = res.data;
+        }
+      },
+      complete: () => this.loading = false
+    });
   }
 
   clearSelected(event: MouseEvent) {
@@ -71,7 +79,7 @@ export class ResourceGroupComponent implements OnInit {
   }
 
   showEditModal() {
-    this.resourceGroupEditModalComponent?.showUpdateModal(this.selected)
+    this.resourceGroupEditModalComponent?.showUpdateModal(this.selected);
   }
 
   doDelete() {
@@ -83,16 +91,17 @@ export class ResourceGroupComponent implements OnInit {
         nzOnOk: () => {
           this.resourceGroupService.delete(resourceGroupId).subscribe(res => {
             if (res.success) {
-              this.messageService.success('资源组已删除')
+              this.messageService.success('资源组已删除');
+              this.loadAll();
             }
-          })
+          });
         }
-      })
+      });
     }
   }
 
   onPlatformChange() {
-    this.platformChange.emit(this.platform)
+    this.platformChange.emit(this.platform);
   }
 
 }

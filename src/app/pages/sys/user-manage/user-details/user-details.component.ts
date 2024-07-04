@@ -11,6 +11,8 @@ import { NzFlexModule } from 'ng-zorro-antd/flex';
 import { RoleMenusWithPermission } from '@site/app/define/sys/role';
 import { UserService } from '@site/app/services/sys/user.service';
 import { IconifyComponent } from '@site/app/components/icon/iconify/iconify.component';
+import { LoginLog } from '@site/app/define/logs/login-log';
+import { LoginLogService } from '@site/app/services/logs/login-log.service';
 
 @Component({
   selector: 'app-user-details',
@@ -36,7 +38,7 @@ export class UserDetailsComponent implements OnInit {
 
   @Input('userId') userId?: string; // inject from router
 
-  loginLogs: any[] = []
+  loginLogs: LoginLog[] = []
   loginLogTableLoading = false;
   loginLogTableOptions = {
     total: 0,
@@ -49,7 +51,7 @@ export class UserDetailsComponent implements OnInit {
   permissionTableLoading = false;
 
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService, private loginLogService: LoginLogService) {
   }
 
   collapse(array: RoleMenusWithPermission[], data: RoleMenusWithPermission, $event: boolean): void {
@@ -110,7 +112,7 @@ export class UserDetailsComponent implements OnInit {
 
   loadLoginLogs() {
     this.loginLogTableLoading = true;
-    this.userService.getLoginLogs({
+    this.loginLogService.getLoginLogs({
       userId: this.userId || '',
       page: this.loginLogTableOptions.pageIndex,
       pageSize: this.loginLogTableOptions.pageSize

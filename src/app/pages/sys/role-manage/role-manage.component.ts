@@ -44,8 +44,8 @@ export class RoleManageComponent implements OnInit {
   @ViewChild('permissionsSetModalComponent') permissionsSetModalComponent!: PermissionsSetModalComponent;
 
   searchForm = this.fb.group({
+    roleCode: [''],
     roleName: [''],
-    roleCode: ['']
   });
 
   roles: Role[] = [];

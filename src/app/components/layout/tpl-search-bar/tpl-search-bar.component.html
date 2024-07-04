@@ -7,9 +7,11 @@
             <div nz-col [nzSpan]="24 / columnNum" *ngIf="!isCollapsed || (isCollapsed && i < columnNum * 2)">
               <nz-form-item>
                 <nz-form-label [nzSm]="6" [nzXs]="24" [nzFor]="formItem.name">{{ formItem.label }}</nz-form-label>
-                <nz-form-control [nzSm]="18" [nzXs]="24" *ngIf="formItem.item">
-                  <ng-container *ngTemplateOutlet="formItem.item"/>
-                </nz-form-control>
+                <ng-container *ngIf="formItem.item">
+                  <nz-form-control [nzSm]="18" [nzXs]="24">
+                    <ng-container *ngTemplateOutlet="formItem.item"/>
+                  </nz-form-control>
+                </ng-container>
               </nz-form-item>
             </div>
           </ng-container>

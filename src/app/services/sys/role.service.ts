@@ -18,13 +18,14 @@ import { HttpClient } from '@angular/common/http';
 })
 export class RoleService {
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
   queryRoles(searchForm: RoleSearchForm): Observable<ResponseBean<Role[]>> {
-    return of({
-      success: true,
-      data: this.mockRoles()
-    }).pipe(delay(1000))
+    return this.http.get<ResponseBean<Role[]>>('/api/role/page', {
+      params: {
+        ...searchForm
+      }
+    })
   }
 
   getRoleMenusWithPermission(roleId: string): Observable<ResponseBean<RoleMenusWithPermission[]>> {
@@ -52,6 +53,10 @@ export class RoleService {
     })
   }
 
+  getRole(roleId: string): Observable<ResponseBean<Role>> {
+    return this.http.get<ResponseBean<Role>>(`/api/role/getOne/${roleId}`)
+  }
+
   getRoles():Observable<ResponseBean<SimpleRole[]>> {
     return of({
       success: true,
@@ -60,15 +65,11 @@ export class RoleService {
   }
 
   add(role: SimpleRole): Observable<ResponseBean<void>> {
-    return of({
-      success: true
-    }).pipe(delay(1000))
+    return this.http.post<ResponseBean<void>>('/api/role/add', role)
   }
 
   update(role: SimpleRole): Observable<ResponseBean<void>> {
-    return of({
-      success: true
-    }).pipe(delay(1000))
+    return this.http.put<ResponseBean<void>>('/api/role/update', role)
   }
 
   enable(roleId: string): Observable<ResponseBean<void>> {
@@ -84,9 +85,7 @@ export class RoleService {
   }
 
   delete(roleId: string): Observable<ResponseBean<void>> {
-    return of({
-      success: true
-    })
+    return this.http.delete<ResponseBean<void>>(`/api/role/delete/${roleId}`)
   }
 
   checkMenus(roleId: string): Observable<ResponseBean<MenuVo[]>> {

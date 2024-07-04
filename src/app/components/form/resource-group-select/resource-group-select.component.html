@@ -6,5 +6,5 @@
   [nzDisabled]="isDisabled"
   (ngModelChange)="onSelectChange()"
 >
-  <nz-option *ngFor="let item of options" [nzLabel]="item.resourceGroupName" [nzValue]="item.resourceGroupId" />
+  <nz-option *ngFor="let item of options" [nzLabel]="item.groupName" [nzValue]="item.resourceGroupId" />
 </nz-select>

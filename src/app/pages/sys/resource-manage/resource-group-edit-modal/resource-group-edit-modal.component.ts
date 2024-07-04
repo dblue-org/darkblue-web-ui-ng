@@ -27,14 +27,13 @@ export class ResourceGroupEditModalComponent extends BasicEditModalComponent {
 
   dataForm: FormGroup = this.formBuilder.group({
     resourceGroupId: [''],
-    resourceGroupName: ['', [Validators.required]]
+    groupName: ['', [Validators.required]]
   });
 
   constructor(private formBuilder: NonNullableFormBuilder, private resourceGroupService: ResourcesGroupService,
               private messageService: NzMessageService) {
     super();
   }
-
 
   protected override beforeUpdateShowProcessor(data: ResourceGroup) {
     this.dataForm.patchValue(data);
@@ -45,7 +44,7 @@ export class ResourceGroupEditModalComponent extends BasicEditModalComponent {
   }
 
   protected doUpdate() {
-    return this.resourceGroupService.add(this.dataForm.value);
+    return this.resourceGroupService.update(this.dataForm.value);
   }
 
   getFormGroup(): FormGroup {

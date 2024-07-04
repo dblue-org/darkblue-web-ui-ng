@@ -1,0 +1,55 @@
+<nz-modal [(nzVisible)]="isVisible" nzWidth="700px" nzTitle="修改参数值" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()" [nzOkLoading]="loading">
+  <ng-container *nzModalContent>
+    <div nz-row *ngIf="property" [nzGutter]="[12, 12]">
+      <div nz-col [nzSpan]="6" class="text-label">参数名称</div>
+      <div nz-col [nzSpan]="18" class="text-value">{{property.propertyName}}</div>
+
+      <div nz-col [nzSpan]="6" class="text-label">值</div>
+      <div nz-col [nzSpan]="13" class="text-value">
+        <ng-container *ngIf="property.type == 1">
+          <input nz-input [(ngModel)]="value">
+        </ng-container>
+        <ng-container *ngIf="property.type == 2">
+          <nz-input-number style="width: 100%" [(ngModel)]="value" [nzMin]="min" [nzMax]="max"/>
+        </ng-container>
+        <ng-container *ngIf="property.type == 3">
+          <nz-date-picker style="width: 100%" [(ngModel)]="value"/>
+        </ng-container>
+        <ng-container *ngIf="property.type == 4">
+          <nz-date-picker nzShowTime style="width: 100%" [(ngModel)]="value"/>
+        </ng-container>
+        <ng-container *ngIf="property.type == 5">
+          <nz-switch [(ngModel)]="value" />
+        </ng-container>
+        <ng-container *ngIf="property.type == 6">
+          <nz-color-picker [(ngModel)]="value" />
+        </ng-container>
+        <ng-container *ngIf="property.type == 7">
+          <nz-select [(ngModel)]="value" style="width: 100%">
+            <ng-container *ngIf="list">
+              <nz-option *ngFor="let item of list" [nzValue]="item" [nzLabel]="item" />
+            </ng-container>
+          </nz-select>
+        </ng-container>
+        <ng-container *ngIf="property.type == 8">
+          <nz-select [(ngModel)]="value" style="width: 100%">
+            <nz-option *ngFor="let item of options" [nzValue]="item.value" [nzLabel]="item.label" />
+          </nz-select>
+        </ng-container>
+      </div>
+      <div nz-col [nzSpan]="1" class="text-unit ">{{ property.unit }}</div>
+      <div nz-col [nzSpan]="4" style="text-align: right;line-height: 32px">
+        <button nz-button nzType="primary" nzSize="small" (click)="setToDefaultValue()">设为默认</button>
+      </div>
+
+      <div nz-col [nzSpan]="6" class="text-label">描述</div>
+      <div nz-col [nzSpan]="18" class="text-value">{{property.remark}}</div>
+
+      <div nz-col [nzSpan]="6" class="text-label">默认值</div>
+      <div nz-col [nzSpan]="18" class="text-value">{{property.defaultValue}}</div>
+
+      <div nz-col [nzSpan]="6" class="text-label">当前值</div>
+      <div nz-col [nzSpan]="18" class="text-value">{{property.value}}</div>
+    </div>
+  </ng-container>
+</nz-modal>

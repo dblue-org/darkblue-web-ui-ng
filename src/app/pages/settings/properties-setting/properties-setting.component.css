@@ -1,0 +1,7 @@
+.table-value-edit-btn {
+  cursor: pointer;
+}
+
+.table-value-edit-btn:hover {
+  color: #1890ff;
+}

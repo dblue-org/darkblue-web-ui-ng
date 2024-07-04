@@ -91,8 +91,9 @@ export class UserManageComponent implements OnInit {
           this.tableOptions.total = res.total || 0;
         }
       },
+      error: () => this.tableLoading = false,
       complete: () => this.tableLoading = false
-    });
+    })
   }
 
   onTreeNodeSelected(node: NzTreeNode): void {
@@ -100,6 +101,7 @@ export class UserManageComponent implements OnInit {
     this.userSearchForm.patchValue({
       deptId: this.selectedDepartment.key
     });
+    this.loadUsers();
   }
 
   showAddModal() {

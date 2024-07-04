@@ -2,13 +2,13 @@ import { SimplePermission } from '@site/app/define/sys/permission';
 
 export interface ResourceGroup {
   resourceGroupId: string
-  resourceGroupName: string
+  groupName: string
   createTime?: string
 }
 
 export interface ResourceGroupForm {
   resourceGroupId?: string
-  resourceGroupName: string
+  groupName: string
 }
 
 export interface Controller {

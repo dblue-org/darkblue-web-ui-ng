@@ -39,6 +39,6 @@ function removeEmptyField(obj: any): any {
     })
     return obj;
   } else {
-    return {}
+    return null
   }
 }

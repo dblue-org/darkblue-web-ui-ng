@@ -1,5 +1,5 @@
 import { ApplicationConfig, provideZoneChangeDetection, importProvidersFrom } from '@angular/core';
-import { provideRouter, TitleStrategy, withComponentInputBinding } from '@angular/router';
+import { provideRouter, RouteReuseStrategy, TitleStrategy, withComponentInputBinding } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideNzIcons } from './icons-provider';
@@ -13,6 +13,7 @@ import { requestInterceptor } from './http/request.interceptor';
 import {responseInterceptor} from "./http/response.interceptor";
 import { TemplatePageTitleStrategy } from './platform/template-page-title-strategy';
 import { provideAnimations } from '@angular/platform-browser/animations';
+import { UrlMatcherRouteReuseStrategy } from '@site/app/platform/url-matcher-route-reuse-strategy';
 
 registerLocaleData(zh);
 
@@ -28,7 +29,7 @@ export const appConfig: ApplicationConfig = {
     provideAnimationsAsync(),
     provideHttpClient(withInterceptors([requestInterceptor, responseInterceptor])),
     {provide: TitleStrategy, useClass: TemplatePageTitleStrategy},
-    /*{provide: RouteReuseStrategy, useClass: UrlMatcherRouteReuseStrategy},*/
+    {provide: RouteReuseStrategy, useClass: UrlMatcherRouteReuseStrategy},
   ]
 };
 

@@ -1,1 +1,78 @@
-<p>properties-setting works!</p>
+<app-tpl-search-bar [formGroup]="searchForm"
+                    (onSearch)="search()"
+                    [loading]="tableLoading"
+                    buttonPosition="BR"
+                    [buttons]="tableButtons"
+                    [items]="[
+                          {name: 'propertyCode', label: '参数编码', item: propertyCode},
+                          {name: 'propertyName', label: '参数名称', item: propertyName},
+                        ]">
+
+  <ng-template #propertyCode>
+    <input nz-input formControlName="propertyCode"/>
+  </ng-template>
+  <ng-template #propertyName>
+    <input nz-input formControlName="propertyName"/>
+  </ng-template>
+  <ng-template #tableButtons>
+    <button nz-button nzType="primary">
+      <span nz-icon nzType="plus"></span>
+      添加新参数
+    </button>
+  </ng-template>
+</app-tpl-search-bar>
+
+<nz-table #editRowTable
+          [nzScroll]="{x: '1600px'}"
+          nzSize="small"
+          [nzFrontPagination]="false"
+          nzShowPagination
+          nzBordered
+          [nzTotal]="tableOptions.total"
+          [(nzPageIndex)]="tableOptions.page"
+          [(nzPageSize)]="tableOptions.pageSize"
+          [nzLoading]="tableLoading"
+          [nzData]="properties">
+  <thead>
+  <tr>
+    <th nzWidth="200px">参数编码</th>
+    <th nzWidth="200px">参数名称</th>
+    <th nzWidth="500px">描述</th>
+    <th nzWidth="100px">参数类型</th>
+    <th nzWidth="300px">取值范围</th>
+    <th nzWidth="200px">默认值</th>
+    <th nzWidth="200px" nzRight>值</th>
+    <th nzWidth="100px" nzRight>单位</th>
+    <th nzWidth="200px" nzRight>操作</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let data of editRowTable.data" class="editable-row">
+    <td>{{ data.propertyCode }}</td>
+    <td>{{ data.propertyName }}</td>
+    <td nzEllipsis [title]="data.remark">{{ data.remark }}</td>
+    <td>{{ getPropertyType(data.type) }}</td>
+    <td nzEllipsis>{{ toScopeString(data) }}</td>
+    <td>
+      {{ data.type != 8 ? data.defaultValue : getEnumValue(data.defaultValue, data) }}
+    </td>
+    <td nzRight>
+      <div nz-row>
+        <div nz-col [nzSpan]="20">
+          {{ data.type != 8 ? data.value : getEnumValue(data.value, data) }}
+        </div>
+        <div nz-col [nzSpan]="4">
+          <span class="table-value-edit-btn" nz-icon nzType="edit" nzTheme="outline" (click)="showValueEditModal(data)"></span>
+        </div>
+      </div>
+    </td>
+    <td nzRight>{{ data.unit }}</td>
+    <td nzRight>
+      <button nz-button nzSize="small">修改</button>
+      <button nz-button nzSize="small" nzType="primary" nzDanger>删除</button>
+    </td>
+  </tr>
+  </tbody>
+</nz-table>
+
+<app-property-value-edit-modal #propertyValueEditModalComponent/>

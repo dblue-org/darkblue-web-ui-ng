@@ -29,6 +29,11 @@ export const routes: Routes = [
         canActivate: [unAuthGuard]
       },
       {
+        path: 'logs',
+        loadChildren: () => import('./pages/logs/logs.routers').then(m => m.LOGS_ROUTES),
+        canActivate: [unAuthGuard]
+      },
+      {
         path: 'setting',
         loadChildren: () => import('./pages/settings/settings.routers').then(m => m.SETTINGS_ROUTES),
         canActivate: [unAuthGuard]

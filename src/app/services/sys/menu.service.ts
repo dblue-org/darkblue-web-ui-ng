@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { MenuItem, MenuItemDto } from '../../define/sys/menu';
 import { ResponseBean } from '../../define/sys/response';
 import { HttpClient } from '@angular/common/http';
@@ -12,7 +12,10 @@ export class MenuService {
   constructor(private http: HttpClient) { }
 
   getUserMenu(): Observable<ResponseBean<MenuItem[]>> {
-    return this.findAllPcMenus();
+    return of({
+      success: true,
+      data: this.mockMenu()
+    });
   }
 
   getAllMenu(platform: number): Observable<ResponseBean<MenuItem[]>> {
@@ -166,7 +169,7 @@ export class MenuService {
             level: 2,
             isEnable: true,
             menuIcon: 'login',
-            menuUrl: ''
+            menuUrl: '/logs/login'
           },
           {
             menuId: '00000202',
@@ -175,7 +178,7 @@ export class MenuService {
             level: 2,
             isEnable: true,
             menuIcon: 'edit',
-            menuUrl: ''
+            menuUrl: '/logs/operation'
           },
         ]
       },

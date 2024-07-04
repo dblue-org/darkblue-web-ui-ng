@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { delay, Observable, of } from 'rxjs';
 import { ResponseBean } from '../../define/sys/response';
-import { LoginLog, SimpleUser, User, UserSearchForm } from '../../define/sys/user';
+import { SimpleUser, User, UserSearchForm } from '../../define/sys/user';
 import { RoleMenusWithPermission } from '@site/app/define/sys/role';
 import { HttpClient } from '@angular/common/http';
 
@@ -95,19 +95,4 @@ export class UserService {
     }).pipe(delay(1500))
   }
 
-  getLoginLogs(params: {userId: string, page: number, pageSize: number}): Observable<ResponseBean<LoginLog[]>> {
-    return of({
-      success: true,
-      data: [
-        {
-          platform: 'PC',
-          loginType: '密码登录',
-          loginTime: '2024-05-06 12:40:12',
-          loginIp: '123.154.155.36',
-          userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36'
-        }
-      ],
-      total: 10
-    }).pipe(delay(500))
-  }
 }

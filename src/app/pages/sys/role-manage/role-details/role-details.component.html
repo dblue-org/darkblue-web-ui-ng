@@ -1,12 +1,12 @@
-<app-section dkTitle="角色信息">
-  <nz-descriptions nzBordered style="margin-bottom: 24px">
-    <nz-descriptions-item nzTitle="角色名称">超级管理员</nz-descriptions-item>
-    <nz-descriptions-item nzTitle="角色编码">Admin</nz-descriptions-item>
-    <nz-descriptions-item nzTitle="状态">正常</nz-descriptions-item>
-    <nz-descriptions-item nzTitle="创建时间">2024-06-19 15:23:50</nz-descriptions-item>
+<app-section dkTitle="角色信息" [dkExtra]="actions">
+  <nz-descriptions nzBordered style="margin-bottom: 24px" *ngIf="role">
+    <nz-descriptions-item nzTitle="角色名称">{{ role.roleName }}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="角色编码">{{ role.roleCode }}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="状态">{{ role.isEnable ? '正常' : '停用' }}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="创建时间">{{role.createTime}}</nz-descriptions-item>
   </nz-descriptions>
-  <ng-template #back>
-    <button nz-button nzDanger nzType="default">启用</button>
+  <ng-template #actions>
+    <button nz-button nzDanger nzType="default" class="ant-btn-success">启用</button>
     <button nz-button nzDanger nzType="default">禁用</button>
   </ng-template>
 </app-section>

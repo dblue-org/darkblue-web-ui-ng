@@ -6,6 +6,7 @@
     <app-tpl-search-bar [formGroup]="userSearchForm"
                         (onSearch)="search()"
                         [buttons]="tableButtons"
+                        [loading]="tableLoading"
                         [items]="[
                           {name: 'name', label: '姓名', item: name},
                           {name: 'username', label: '用户名', item: username},
@@ -89,4 +90,4 @@
   </nz-content>
 </nz-layout>
 
-<app-user-add-modal #userAddModalComponent />
+<app-user-add-modal #userAddModalComponent (onSuccess)="loadUsers()"/>

@@ -49,7 +49,7 @@ export class TplSearchBarComponent implements OnInit {
   @Input('showHelp') showHelp = false;
   @Input('showReset') showReset = true;
   @Input({transform: booleanAttribute, alias: 'showBottomLine'}) showBottomLine = false;
-  @Input('items') items!: TplFormItem[];
+  @Input() items!: TplFormItem[];
   @Input('buttonPosition') buttonPosition: 'BR' | 'R' = 'BR';
 
   @Output() onSearch = new EventEmitter<any>();

@@ -1,0 +1,10 @@
+<nz-select
+  nzMode="default"
+  [style]="{minWidth: width}"
+  [(ngModel)]="value"
+  [nzDisabled]="isDisabled"
+  (ngModelChange)="onModalValueChange()"
+>
+  <nz-option nzLabel="是" [nzValue]="true" />
+  <nz-option nzLabel="否" [nzValue]="false" />
+</nz-select>
