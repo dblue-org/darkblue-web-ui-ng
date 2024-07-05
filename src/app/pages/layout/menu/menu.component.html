@@ -19,9 +19,9 @@
     </li>
   </ng-template>
 
-  <ng-container *ngFor="let item of menuItems; let i = index">
+  @for (item of menuItems; track item.menuId) {
     <ng-container *ngTemplateOutlet="menuItem; context: { item: item }"></ng-container>
-  </ng-container>
+  }
 </ul>
 
 

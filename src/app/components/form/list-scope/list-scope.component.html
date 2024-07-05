@@ -1,0 +1,18 @@
+<div nz-row [nzGutter]="[12, 12]">
+  @for (item of value; let i = $index; track item.key) {
+    <div nz-col [nzSpan]="20">
+      <input nz-input [(ngModel)]="value[i].value" (ngModelChange)="onModalValueChange()" />
+    </div>
+    <div nz-col [nzSpan]="4">
+      <button nz-button nzType="default" nzShape="circle" (click)="removeItem(i)">
+        <span nz-icon nzType="minus"></span>
+      </button>
+    </div>
+  }
+
+  <div nz-col [nzSpan]="24" style="text-align: center">
+    <button nz-button nzType="default" nzShape="circle" (click)="addItem()">
+      <span nz-icon nzType="plus"></span>
+    </button>
+  </div>
+</div>

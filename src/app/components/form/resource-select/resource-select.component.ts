@@ -44,7 +44,7 @@ export class ResourceSelectComponent implements OnInit, ControlValueAccessor {
       if (res.success && res.data) {
         res.data.forEach(ctl => {
           this.nodes.push({
-            key: ctl.controller,
+            key: ctl.tagName,
             title: ctl.tagName,
             selectable: false,
             disabled: true,

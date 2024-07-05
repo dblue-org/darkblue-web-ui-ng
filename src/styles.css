@@ -38,4 +38,10 @@ nz-table [nz-button] {
   background: #52c41a;
 }
 
+.ant-icon-btn {
+  cursor: pointer;
+}
 
+.ant-icon-btn:hover {
+  color: #1890ff;
+}

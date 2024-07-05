@@ -12,6 +12,7 @@ import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzColorPickerModule } from 'ng-zorro-antd/color-picker';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import moment from 'moment';
+import { PropertyValueComponent } from '@site/app/components/form/property-value/property-value.component';
 
 @Component({
   selector: 'app-property-value-edit-modal',
@@ -28,7 +29,8 @@ import moment from 'moment';
     NzSwitchModule,
     NzDatePickerModule,
     NzColorPickerModule,
-    NzButtonModule
+    NzButtonModule,
+    PropertyValueComponent
   ],
   templateUrl: './property-value-edit-modal.component.html',
   styleUrl: './property-value-edit-modal.component.css'

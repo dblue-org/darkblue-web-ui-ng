@@ -22,7 +22,7 @@ export interface NumberScope {
 }
 
 export interface Property {
-  propertyId: string
+  propertyId?: string
   propertyCode: string
   propertyName: string
   remark: string

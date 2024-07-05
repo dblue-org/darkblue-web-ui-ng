@@ -1,0 +1,32 @@
+<div nz-row [nzGutter]="[12, 12]">
+  @for (item of value; let i = $index; track item.key) {
+    <div nz-col [nzSpan]="6">
+      <nz-input-number style="width: 100%" [nzMin]="1"
+                       [nzMax]="999999"
+                       [nzStatus]="!value[i].value ? 'error' : ''"
+                       [(ngModel)]="value[i].value" (ngModelChange)="onModalValueChange()" />
+    </div>
+    <div nz-col [nzSpan]="1" style="text-align: center">:</div>
+    <div nz-col [nzSpan]="10">
+      <input nz-input [(ngModel)]="value[i].label" (ngModelChange)="onModalValueChange()" />
+    </div>
+
+    <div nz-col [nzSpan]="7" style="text-align: right">
+      <button nz-button nzType="default" nzShape="circle" (click)="removeItem(i)">
+        <span nz-icon nzType="minus"></span>
+      </button>
+      <button nz-button nzType="default" nzShape="circle" (click)="moveUp(i)" *ngIf="i > 0">
+        <span nz-icon nzType="arrow-up"></span>
+      </button>
+      <button nz-button nzType="default" nzShape="circle" (click)="moveDown(i)" *ngIf="i < (this.value.length - 1)">
+        <span nz-icon nzType="arrow-down"></span>
+      </button>
+    </div>
+  }
+
+  <div nz-col [nzSpan]="24" style="text-align: center">
+    <button nz-button nzType="default" nzShape="circle" (click)="addItem()">
+      <span nz-icon nzType="plus"></span>
+    </button>
+  </div>
+</div>

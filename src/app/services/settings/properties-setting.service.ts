@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { delay, Observable, of } from 'rxjs';
 import { ResponseBean } from '@site/app/define/sys/response';
-import { Property, PropertySearchForm } from '@site/app/define/settings/property';
+import { Property, PropertySearchForm, propertyType, EnumItem } from '@site/app/define/settings/property';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +10,12 @@ export class PropertiesSettingService {
 
   constructor() { }
 
+  getPropertyTypes(): Observable<ResponseBean<EnumItem[]>> {
+    return of({
+      success: true,
+      data: propertyType
+    })
+  }
 
   getAllProperties(searchFrom: PropertySearchForm): Observable<ResponseBean<Property[]>> {
     return of({
@@ -95,6 +101,24 @@ export class PropertiesSettingService {
         },
       ],
       total: 7
-    })
+    }).pipe(delay(1000))
+  }
+
+  add(property: Property): Observable<ResponseBean<void>> {
+    return of({
+      success: true
+    }).pipe(delay(1000))
+  }
+
+  update(property: Property): Observable<ResponseBean<void>> {
+    return of({
+      success: true
+    }).pipe(delay(1000))
+  }
+
+  delete(propertyId: string): Observable<ResponseBean<void>> {
+    return of({
+      success: true
+    }).pipe(delay(1000))
   }
 }

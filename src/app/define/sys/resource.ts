@@ -12,7 +12,6 @@ export interface ResourceGroupForm {
 }
 
 export interface Controller {
-  controller: string
   tagName: string
   mappings: Mapping[]
 }

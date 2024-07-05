@@ -4,9 +4,6 @@ import { FormsModule, NonNullableFormBuilder, ReactiveFormsModule } from '@angul
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzInputModule } from 'ng-zorro-antd/input';
-import { NzSelectModule } from 'ng-zorro-antd/select';
-import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
-import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { TplSearchBarComponent } from '@site/app/components/layout/tpl-search-bar/tpl-search-bar.component';
 import { NzIconDirective } from 'ng-zorro-antd/icon';
 import { Property, getPropertyType, toScopeString, getEnumLabel, EnumItem } from '@site/app/define/settings/property';
@@ -15,6 +12,11 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
 import {
   PropertyValueEditModalComponent
 } from '@site/app/pages/settings/properties-setting/property-value-edit-modal/property-value-edit-modal.component';
+import {
+  PropertyEditModalComponent
+} from '@site/app/pages/settings/properties-setting/property-edit-modal/property-edit-modal.component';
+import { NzPopconfirmDirective } from 'ng-zorro-antd/popconfirm';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-properties-setting',
@@ -27,16 +29,20 @@ import {
     NzTableModule,
     NzButtonModule,
     NzGridModule,
+    NzInputModule,
 
     TplSearchBarComponent,
     NzIconDirective,
-    PropertyValueEditModalComponent
+    PropertyValueEditModalComponent,
+    PropertyEditModalComponent,
+    NzPopconfirmDirective
   ],
   templateUrl: './properties-setting.component.html',
   styleUrl: './properties-setting.component.css'
 })
 export class PropertiesSettingComponent implements OnInit {
 
+  @ViewChild('propertyEditModalComponent') propertyEditModalComponent?: PropertyEditModalComponent;
   @ViewChild('propertyValueEditModalComponent') propertyValueEditModalComponent?: PropertyValueEditModalComponent;
 
   searchForm = this.formBuilder.group({
@@ -51,13 +57,13 @@ export class PropertiesSettingComponent implements OnInit {
     page: 1,
     pageSize: 15
   };
-  editId?:string;
   getPropertyType = getPropertyType;
   toScopeString = toScopeString;
+  deleteLoading = false;
 
-
-
-  constructor(private formBuilder: NonNullableFormBuilder, private propertyService: PropertiesSettingService) {
+  constructor(
+    private formBuilder: NonNullableFormBuilder, private propertyService: PropertiesSettingService,
+    private messageService: NzMessageService) {
   }
 
   search() {
@@ -93,5 +99,30 @@ export class PropertiesSettingComponent implements OnInit {
 
   getEnumValue(value: any, property: Property ): string {
     return value + '-' + getEnumLabel(value, property.valueScope as EnumItem[]);
+  }
+
+  showAddModal() {
+    this.propertyEditModalComponent?.showAddModal();
+  }
+
+  showUpdateModal(property: Property) {
+    this.propertyEditModalComponent?.showUpdateModal(property);
+  }
+
+  delete(propertyId?: string) {
+    if (!propertyId) {
+      return;
+    }
+    this.deleteLoading = true
+    this.propertyService.delete(propertyId).subscribe({
+      next: res => {
+        if (res.success) {
+          this.loadProperties();
+          this.messageService.success('参数已删除')
+        }
+        this.deleteLoading = false
+      },
+      error: () => this.deleteLoading = false
+    })
   }
 }

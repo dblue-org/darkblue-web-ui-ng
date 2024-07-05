@@ -12,10 +12,7 @@ export class MenuService {
   constructor(private http: HttpClient) { }
 
   getUserMenu(): Observable<ResponseBean<MenuItem[]>> {
-    return of({
-      success: true,
-      data: this.mockMenu()
-    });
+    return this.findAllPcMenus();
   }
 
   getAllMenu(platform: number): Observable<ResponseBean<MenuItem[]>> {

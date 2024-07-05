@@ -1,1 +1,54 @@
-<p>property-edit-modal works!</p>
+<nz-modal [(nzVisible)]="isVisible" nzWidth="800px" [nzTitle]="isEdit ? '修改配置参数' : '添加配置参数'" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()" [nzOkLoading]="loading">
+  <ng-container *nzModalContent>
+    <form nz-form [formGroup]="dataForm">
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>参数编码</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="参数编码不能为空">
+          <input nz-input formControlName="propertyCode"/>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>参数名称</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="参数名称不能为空">
+          <input nz-input formControlName="propertyName"/>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24">备注</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <input nz-input formControlName="remark"/>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>参数类型</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="参数类型不能为空">
+          <nz-select formControlName="type" [nzDisabled]="isEdit">
+            @for (item of propertyTypes; track item.value) {
+              <nz-option [nzLabel]="item.label" [nzValue]="item.value"/>
+            }
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+      <ng-container *ngIf="!isEdit">
+        <nz-form-item *ngIf="dataForm.value.type == 2 || dataForm.value.type == 7 || dataForm.value.type == 8">
+          <nz-form-label [nzSm]="6" [nzXs]="24">取值范围设定</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+            <app-number-scope [(ngModel)]="numberScope" [ngModelOptions]="{standalone: true}" *ngIf="dataForm.value.type == 2" />
+            <app-list-scope [(ngModel)]="list"  [ngModelOptions]="{standalone: true}" *ngIf="dataForm.value.type == 7" />
+            <app-enum-list-scope [(ngModel)]="enumItems" [ngModelOptions]="{standalone: true}" *ngIf="dataForm.value.type == 8" />
+          </nz-form-control>
+        </nz-form-item>
+      </ng-container>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>默认值</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="默认值不能为空">
+          <app-property-value formControlName="defaultValue"
+                              [dkPropertyType]="dataForm.value.type || 1"
+                              [dkNumberScope]="numberScope"
+                              [dkListScope]="list"
+                              [dkEnumScope]="enumItems" />
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </ng-container>
+</nz-modal>

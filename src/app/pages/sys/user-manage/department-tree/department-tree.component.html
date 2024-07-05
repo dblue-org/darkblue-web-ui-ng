@@ -27,13 +27,16 @@
     </button>
     <button nz-button nzType="default" nzShape="circle"
             (click)="showEditModal()"
-            [disabled]="!(selectedDepartment && selectedDepartment.key)">
+            [disabled]="!(selectedDepartment && !!selectedDepartment.key)">
       <span nz-icon nzType="edit"></span>
     </button>
     <button nz-button nzType="default" nzShape="circle"
             (click)="doDelete()"
-            [disabled]="!(selectedDepartment && selectedDepartment.key && !(selectedDepartment.children && selectedDepartment.children.length > 0))">
+            [disabled]="!(selectedDepartment && !!selectedDepartment.key && !(selectedDepartment.children && selectedDepartment.children.length > 0))">
       <span nz-icon nzType="delete"></span>
+    </button>
+    <button nz-button nzType="default" nzShape="circle" (click)="loadDepartments()">
+      <span nz-icon nzType="reload"></span>
     </button>
   </div>
 </ng-template>
