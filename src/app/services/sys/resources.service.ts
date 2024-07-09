@@ -3,16 +3,22 @@ import { delay, Observable, of } from 'rxjs';
 import { ResponseBean } from '@site/app/define/sys/response';
 import { Resource, ResourceSearchForm } from '@site/app/define/sys/resource';
 import { SimplePermission } from '@site/app/define/sys/permission';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ResourcesService {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   findByPage(searchForm: ResourceSearchForm): Observable<ResponseBean<Resource[]>> {
-    return of({
+    return this.http.get<ResponseBean<Resource[]>>('/api/resource/page', {
+      params: {
+        ...searchForm
+      }
+    })
+    /*return of({
       success: true,
       data: [
         {
@@ -46,25 +52,19 @@ export class ResourcesService {
         }
       ],
       total: 1
-    }).pipe(delay(1000))
+    }).pipe(delay(1000))*/
   }
 
   add(resource: Resource): Observable<ResponseBean<void>> {
-    return of({
-      success: true,
-    }).pipe(delay(1000))
+    return this.http.post<ResponseBean<void>>('/api/resource/add', resource)
   }
 
   update(resource: Resource): Observable<ResponseBean<void>> {
-    return of({
-      success: true,
-    }).pipe(delay(1000))
+    return this.http.post<ResponseBean<void>>('/api/resource/update', resource)
   }
 
   delete(resourceId: string): Observable<ResponseBean<void>> {
-    return of({
-      success: true,
-    }).pipe(delay(1000))
+    return this.http.delete<ResponseBean<void>>(`/api/resource/delete/${resourceId}`)
   }
 
   saveResourcePermissions(resourceId: string, permissions: SimplePermission[]): Observable<ResponseBean<void>> {

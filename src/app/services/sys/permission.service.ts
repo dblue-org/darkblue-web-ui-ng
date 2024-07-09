@@ -3,16 +3,22 @@ import { Permission, PermissionSearchForm, PermissionVo, SimplePermission } from
 import { delay, Observable, of } from 'rxjs';
 import { ResponseBean } from '@site/app/define/sys/response';
 import { Resource, SimpleResource } from '@site/app/define/sys/resource';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PermissionService {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   findByPage(searchForm: PermissionSearchForm): Observable<ResponseBean<PermissionVo[]>> {
-    return of({
+    return this.http.get<ResponseBean<PermissionVo[]>>('/api/permission/findByPage', {
+      params: {
+        ...searchForm
+      }
+    })
+    /*return of({
       success: true,
       data: [
         {menuId: '10000', menuName: '用户管理', permissionId: '1', permissionName: '添加用户', permissionCode: 'user:add'},
@@ -20,25 +26,19 @@ export class PermissionService {
         {menuId: '10000', menuName: '用户管理',permissionId: '3', permissionName: '修改用户', permissionCode: 'user:update'},
         {menuId: '10000', menuName: '用户管理',permissionId: '4', permissionName: '查询用户', permissionCode: 'user:query'}
       ]
-    }).pipe(delay(500))
+    }).pipe(delay(500))*/
   }
 
   add(permission: Permission): Observable<ResponseBean<void>> {
-    return of({
-      success: true
-    }).pipe(delay(500))
+    return this.http.post<ResponseBean<void>>('/api/permission/add', permission)
   }
 
   update(permission: Permission): Observable<ResponseBean<void>> {
-    return of({
-      success: true
-    }).pipe(delay(500))
+    return this.http.put<ResponseBean<void>>('/api/permission/update', permission)
   }
 
   delete(permissionId: string): Observable<ResponseBean<void>> {
-    return of({
-      success: true
-    }).pipe(delay(500))
+    return this.http.delete<ResponseBean<void>>(`/api/permission/delete/${permissionId}`)
   }
 
   getResources(permissionId: string): Observable<ResponseBean<SimpleResource[]>> {
@@ -56,8 +56,9 @@ export class PermissionService {
   }
 
   bindResources(permissionId: string, resourceIds: string[]): Observable<ResponseBean<void>> {
-    return of({
-      success: true
-    }).pipe(delay(500))
+    return this.http.post<ResponseBean<void>>('/api/permission/setResource', {
+      permissionId,
+      resourceIdList: resourceIds
+    })
   }
 }

@@ -3,6 +3,7 @@
     [nzData]="departments"
     nzShowLine
     nzExpandAll
+    [nzSelectedKeys]="selectedKeys"
     [nzTreeTemplate]="nzTreeTemplate"
     (nzClick)="onTreeNodeSelected($event)"
   />
@@ -14,7 +15,7 @@
           <span class="folder-name">{{ node.title }}</span>
         </span>
         <span *ngIf="node.isLeaf">
-          <span nz-icon nzType="file"></span>
+          <!--<span nz-icon nzType="file"></span>-->
           <span class="file-name">{{ node.title }}</span>
         </span>
       </span>

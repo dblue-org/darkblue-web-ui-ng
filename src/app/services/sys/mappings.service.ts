@@ -2,16 +2,18 @@ import { Injectable } from '@angular/core';
 import { delay, Observable, of } from 'rxjs';
 import { ResponseBean } from '@site/app/define/sys/response';
 import { Controller } from '@site/app/define/sys/resource';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MappingsService {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   getAll(): Observable<ResponseBean<Controller[]>> {
-    return of({
+    return this.http.get<ResponseBean<Controller[]>>('/api/resource/getResourceController');
+    /*return of({
       success: true,
       data: [
         {
@@ -28,6 +30,6 @@ export class MappingsService {
           ]
         }
       ]
-    }).pipe(delay(1000))
+    }).pipe(delay(1000))*/
   }
 }

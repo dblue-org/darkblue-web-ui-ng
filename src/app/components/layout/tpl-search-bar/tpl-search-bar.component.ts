@@ -19,7 +19,7 @@ import { SearchBarHelpDirective } from '@site/app/components/layout/tpl-search-b
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
 export interface TplFormItem {
-  name: string;
+  name?: string;
   label: string;
   item?: TemplateRef<any>;
 }

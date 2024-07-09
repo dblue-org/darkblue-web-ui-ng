@@ -1,8 +1,5 @@
-<nz-modal [(nzVisible)]="isVisible" nzWidth="1200px" [nzTitle]="modalTitle" (nzOnCancel)="handleCancel()"
+<nz-modal [(nzVisible)]="isVisible" nzWidth="1200px" nzTitle="设置权限资源" (nzOnCancel)="handleCancel()"
           (nzOnOk)="handleOk()" [nzOkLoading]="loading">
-  <ng-template #modalTitle>
-    {{title}}
-  </ng-template>
   <ng-container *nzModalContent>
     <nz-steps [nzCurrent]="current" style="padding-bottom: 24px;">
       <nz-step nzTitle="选择资源"></nz-step>

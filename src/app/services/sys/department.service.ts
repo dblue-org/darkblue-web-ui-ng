@@ -32,43 +32,6 @@ export class DepartmentService {
     return this.http.delete<ResponseBean<void>>(`/api/department/delete/${deptId}`);
   }
 
-  private mock():DepartmentNode[] {
-    return [
-      {
-        deptId: '001',
-        deptName: '研发部',
-        children: [
-          {
-            deptId: '00101',
-            deptName: '开发部',
-            parentId: '001'
-          },
-          {
-            deptId: '00102',
-            deptName: '产品部',
-            parentId: '001'
-          }
-        ]
-      },
-      {
-        deptId: '002',
-        deptName: '财务部',
-        children: [
-          {
-            deptId: '00201',
-            deptName: '财务一部',
-            parentId: '001'
-          },
-          {
-            deptId: '00202',
-            deptName: '财务二部',
-            parentId: '001'
-          }
-        ]
-      }
-    ]
-  }
-
   toTreeNodes(departments: DepartmentNode[] | undefined, disableDepartment?: string): NzTreeNodeOptions[] {
     if (!departments) {
       return [];

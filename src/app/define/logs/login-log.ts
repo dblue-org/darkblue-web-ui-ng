@@ -1,10 +1,13 @@
 import { PageParams } from '@site/app/define/common';
 
 export interface LoginLog {
+  loginLogId?:string
   userId?: string
   name?: string
-  loginPlatform: string
-  loginType: string
+  loginPlatform: number
+  loginPlatformName: string
+  loginType: number
+  loginTypeName: string
   loginTime: string
   loginIp: string
   userAgent: string

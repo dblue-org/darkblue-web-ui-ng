@@ -45,3 +45,7 @@ nz-table [nz-button] {
 .ant-icon-btn:hover {
   color: #1890ff;
 }
+
+.text-align-right {
+  text-align: right;
+}

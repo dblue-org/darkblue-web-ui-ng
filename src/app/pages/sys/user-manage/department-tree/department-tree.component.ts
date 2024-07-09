@@ -11,6 +11,7 @@ import {
 } from '@site/app/pages/sys/user-manage/department-tree/department-edit-modal/department-edit-modal.component';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { toNzTreeNodeOptions } from '@site/utils/nz-tree-node-utils';
 
 @Component({
   selector: 'app-department-tree',
@@ -29,6 +30,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 export class DepartmentTreeComponent implements OnInit {
   departments: NzTreeNodeOptions[] = [];
   selectedDepartment!: NzTreeNode;
+  selectedKeys: string[] = [];
   @Output() onSelect = new EventEmitter<NzTreeNode>();
   @ViewChild('editModalComponent') editModalComponent!: DepartmentEditModalComponent;
 
@@ -49,7 +51,14 @@ export class DepartmentTreeComponent implements OnInit {
           key: '',
           isLeft: false,
           expanded: true,
-          children: this.departmentService.toTreeNodes(res.data)
+          //children: this.departmentService.toTreeNodes(res.data)
+          children: toNzTreeNodeOptions(res.data || [], d => {
+            return {
+              key: d.deptId,
+              title: d.deptName,
+              //selected: this.selectedDepartment != null && this.selectedDepartment.key == d.deptId
+            }
+          })
         }];
       }
     });
@@ -85,6 +94,7 @@ export class DepartmentTreeComponent implements OnInit {
   onTreeNodeSelected(event: NzFormatEmitEvent): void {
     if (event.node) {
       this.selectedDepartment = event.node;
+      this.selectedKeys = [event.node.key];
       this.onSelect.emit(this.selectedDepartment);
     }
   }

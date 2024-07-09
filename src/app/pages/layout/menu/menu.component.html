@@ -4,7 +4,7 @@
       <app-menu-icon [icon]="item.menuIcon" style="margin-right: 3px" />
       <span>{{item.menuName}}</span>
     </ng-template>
-    <li nz-submenu [nzTitle]="menuTitle" *ngIf="item.menuType == 1" [nzOpen]="true">
+    <li nz-submenu  [nzPaddingLeft]="(item.level) * 24" [nzTitle]="menuTitle" *ngIf="item.menuType == 1" [nzOpen]="true">
       <ul *ngIf="item.children && item.children.length > 0">
         <ng-container *ngFor="let childItem of item.children; let i = index">
           <ng-container *ngTemplateOutlet="menuItem; context: { item: childItem }"></ng-container>

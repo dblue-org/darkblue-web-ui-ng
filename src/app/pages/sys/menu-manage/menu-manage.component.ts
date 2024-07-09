@@ -48,12 +48,11 @@ export class MenuManageComponent implements OnInit {
   }
 
   collapse(array: MenuItem[], data: MenuItem, $event: boolean): void {
-    console.log(array, data, $event);
     if (!$event) {
       if (data.children) {
         data.children.forEach(d => {
           const target = array.find(a => a.menuId === d.menuId)!;
-          target.expand = true;
+          target.expand = false;
           this.collapse(array, target, false);
         });
       } else {
@@ -66,7 +65,7 @@ export class MenuManageComponent implements OnInit {
     const stack: MenuItem[] = [];
     const array: MenuItem[] = [];
     const hashMap = {};
-    stack.push({...root, level: 0, expand: true});
+    stack.push({...root, level: 0, expand: false});
 
     while (stack.length !== 0) {
       const node = stack.pop()!;

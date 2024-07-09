@@ -1,0 +1,24 @@
+<nz-modal [(nzVisible)]="isVisible" nzWidth="800px" nzTitle="方法信息" (nzOnCancel)="isVisible = false" (nzOnOk)="isVisible = false">
+  <ng-container *nzModalContent>
+    <ng-container  *ngIf="data">
+      <p style="padding-bottom: 12px;">
+        方法： {{data.serviceClass}}#{{data.serviceMethod}}
+      </p>
+      <app-section dkTitle="参数">
+<pre *ngIf="in else resultEmpty">
+{{in}}
+</pre>
+      </app-section>
+      <app-section dkTitle="返回结果">
+<pre *ngIf="out else resultEmpty">
+{{out}}
+</pre>
+
+      </app-section>
+    </ng-container>
+  </ng-container>
+</nz-modal>
+
+<ng-template #resultEmpty>
+  <nz-empty nzNotFoundImage="simple" nzNotFoundContent="无"></nz-empty>
+</ng-template>

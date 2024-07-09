@@ -1,1 +1,101 @@
-<p>operation-logs works!</p>
+<app-tpl-search-bar [formGroup]="searchForm"
+                    (onSearch)="search()"
+                    [loading]="logTableLoading"
+                    buttonPosition="R"
+                    [items]="[
+                          {label: '操作用户', item: userId},
+                          {label: '操作', item: operationName},
+                          {label: '操作日期', item: operationTimeRef},
+                          {label: '业务类', item: serviceClass},
+                          {label: '业务方法', item: serviceMethod},
+                          {label: '执行结果', item: isError},
+                        ]">
+  <ng-template #userId>
+    <app-user-select formControlName="userId" dkWidth="100%" />
+  </ng-template>
+  <ng-template #operationName>
+    <input nz-input formControlName="operationName"/>
+  </ng-template>
+  <ng-template #operationTimeRef>
+    <nz-range-picker style="width: 100%" [(ngModel)]="operationTime"
+                     [ngModelOptions]="{standalone: true}"
+                     (nzOnCalendarChange)="onLoginTimeChange($event)"></nz-range-picker>
+  </ng-template>
+  <ng-template #serviceClass>
+    <input nz-input formControlName="serviceClass"/>
+  </ng-template>
+  <ng-template #serviceMethod>
+    <input nz-input formControlName="serviceMethod"/>
+  </ng-template>
+  <ng-template #isError>
+    <nz-select formControlName="isError" style="width: 100%">
+      <nz-option [nzValue]="true" nzLabel="失败" />
+      <nz-option [nzValue]="false" nzLabel="成功" />
+    </nz-select>
+  </ng-template>
+</app-tpl-search-bar>
+
+<nz-table #basicTable
+          [nzFrontPagination]="false"
+          nzShowPagination
+          nzBordered
+          nzSize="small"
+          nzTableLayout="fixed"
+          [nzTotal]="logTableOptions.total"
+          [(nzPageIndex)]="logTableOptions.page"
+          [(nzPageSize)]="logTableOptions.pageSize"
+          [nzLoading]="logTableLoading"
+          [nzData]="logs"
+          (nzPageSizeChange)="loadLogs()"
+          (nzPageIndexChange)="loadLogs()">
+  <thead>
+  <tr>
+    <th nzWidth="150px">操作用户</th>
+    <th nzWidth="150px">操作</th>
+    <th nzWidth="200px">操作时间</th>
+    <th>业务类</th>
+    <th nzWidth="300px">业务方法</th>
+    <th nzWidth="130px">执行结果</th>
+    <th nzWidth="200px">耗时</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let data of basicTable.data">
+    <td>{{ data.name }}</td>
+    <td>{{ data.operationName }}</td>
+    <td>{{ data.operationTime }}</td>
+    <td nzEllipsis>{{ data.serviceClass }}</td>
+    <td>
+
+      <div nz-row>
+        <div nz-col [nzSpan]="20">{{ data.serviceMethod }}</div>
+        <div nz-col [nzSpan]="4" class="text-align-right">
+          <span nz-icon class="ant-icon-btn" nzType="api"
+                (click)="showParams(data)"
+                nzTheme="outline" title="查看参数详情"></span>
+        </div>
+      </div>
+    </td>
+    <td>
+      <ng-container *ngIf="data.isError">
+        <div nz-row>
+          <div nz-col [nzSpan]="12"><nz-tag [nzColor]="'#f50'">失败</nz-tag></div>
+          <div nz-col [nzSpan]="12" class="text-align-right">
+            <span class="ant-icon-btn"
+                  title="查看异常详情"
+                  (click)="showException(data)"
+                  nz-icon nzType="exclamation-circle" nzTheme="outline"></span>
+          </div>
+        </div>
+      </ng-container>
+      <nz-tag [nzColor]="'#87d068'" *ngIf="!data.isError">成功</nz-tag>
+    </td>
+    <td>
+      <span [style]="{color: getConsumingTimeColor(data)}">{{ data.timeConsuming }}ms</span>
+    </td>
+  </tbody>
+</nz-table>
+
+<app-params-modal #paramsModalComponent />
+<app-exception-modal #exceptionModalComponent />
+

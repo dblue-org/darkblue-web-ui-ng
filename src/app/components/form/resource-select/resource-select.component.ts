@@ -48,17 +48,17 @@ export class ResourceSelectComponent implements OnInit, ControlValueAccessor {
             title: ctl.tagName,
             selectable: false,
             disabled: true,
-            children: ctl.mappings.map(m => {
+            children: ctl.mappings ? ctl.mappings.map(m => {
               return {
                 key: m.resourceUrl,
                 title: m.resourceName + ' (' + m.resourceUrl + ')',
                 isLeaf: true
               }
-            })
+            }) : []
           })
         })
 
-        res.data.flatMap(ctl => ctl.mappings).forEach(m => {
+        res.data.flatMap(ctl => ctl.mappings || []).forEach(m => {
           this.mappings.set(m.resourceUrl, m);
         })
       }

@@ -6,8 +6,8 @@ import { PermissionService } from '@site/app/services/sys/permission.service';
 import { SimplePermission } from '@site/app/define/sys/permission';
 import { MenuSelectComponent } from '@site/app/components/form/menu-select/menu-select.component';
 import { CommonModule } from '@angular/common';
-import { NzButtonComponent, NzButtonModule } from 'ng-zorro-antd/button';
-import { NzInputDirective, NzInputModule } from 'ng-zorro-antd/input';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { TplSearchBarComponent } from '@site/app/components/layout/tpl-search-bar/tpl-search-bar.component';
@@ -46,12 +46,6 @@ export class BindResourceModalComponent implements OnInit {
   isVisible = false;
   permission?: SimplePermission;
   current = 0;
-  title = '设置权限资源 -- 选择资源';
-  titles = [
-    '设置权限资源 -- 选择资源',
-    '设置权限资源 -- 确认资源',
-  ]
-
 
   searchForm: FormGroup = this.formBuilder.group({
     resourceGroupId: [''],
@@ -71,7 +65,6 @@ export class BindResourceModalComponent implements OnInit {
     pageSize: 15
   };
 
-  selectedResources: SimpleResource[] = [];
   selectedResourceMap: Map<String, SimpleResource> = new Map<String, SimpleResource>();
   setOfCheckedId = new Set<string>();
 
@@ -139,11 +132,9 @@ export class BindResourceModalComponent implements OnInit {
 
   next() {
     this.current = this.current + 1;
-    this.title = this.titles[this.current];
   }
   pre() {
     this.current = this.current - 1;
-    this.title = this.titles[this.current]
   }
 
   onItemChecked(resource: Resource | SimpleResource, checked: boolean): void {
@@ -173,7 +164,6 @@ export class BindResourceModalComponent implements OnInit {
         complete: () => this.loading = false
       })
     }
-
   }
 
 }

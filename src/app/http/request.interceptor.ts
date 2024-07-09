@@ -23,7 +23,7 @@ function removeEmptyParams(params: HttpParams) {
   let newParams = new HttpParams();
   params.keys().forEach(key => {
     const value = params.get(key);
-    if (value != null && value != '') {
+    if (value != null && value != '' && value != undefined) {
       newParams = newParams.set(key, value);
     }
   })

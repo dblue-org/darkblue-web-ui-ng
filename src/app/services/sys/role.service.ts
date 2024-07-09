@@ -28,6 +28,7 @@ export class RoleService {
     })
   }
 
+
   getRoleMenusWithPermission(roleId: string): Observable<ResponseBean<RoleMenusWithPermission[]>> {
     return of({
       success: true,
@@ -124,9 +125,7 @@ export class RoleService {
   }
 
   updatePermissions(rolePermissions: RolePermissionsDto): Observable<ResponseBean<void>> {
-    return of({
-      success: true
-    }).pipe(delay(1000))
+    return this.http.post<ResponseBean<void>>('/api/role/setPermission', rolePermissions);
   }
 
   private mockRoles(): SimpleRole[] {

@@ -1,0 +1,9 @@
+<nz-modal [(nzVisible)]="isVisible" nzWidth="1200px" nzTitle="方法信息" (nzOnCancel)="isVisible = false" (nzOnOk)="isVisible = false">
+  <ng-container *nzModalContent>
+    <div class="exception-container">
+<pre>
+{{ data }}
+</pre>
+    </div>
+  </ng-container>
+</nz-modal>
