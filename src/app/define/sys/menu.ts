@@ -50,16 +50,12 @@ export interface MenuPermissionsVo {
   permissions: CheckedPermissionVo[]
 }
 
-export interface MenusWithPermission {
+export interface MenusWithPermission extends BasicTreeTableItem{
   menuId: string;
   menuName: string;
   parentId?: string;
   menuIcon?: string;
   menuType?: number;
-  level?: number;
   checked?: boolean;
   permissions?: SimplePermission[]
-  expand?: boolean
-  parent?: MenusWithPermission
-  children?: MenusWithPermission[]
 }

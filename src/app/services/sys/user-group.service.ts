@@ -1,35 +1,30 @@
 import { Injectable } from '@angular/core';
-import { UserGroup, UserGroupSearchForm } from '@site/app/define/sys/user-group';
+import {
+  UserGroup,
+  UserGroupAddDto,
+  UserGroupPageListVo,
+  UserGroupSearchForm,
+  UserGroupUpdateDto
+} from '@site/app/define/sys/user-group';
 import { delay, Observable, of } from 'rxjs';
 import { ResponseBean } from '@site/app/define/sys/response';
 import { Role } from '@site/app/define/sys/role';
 import { UserPageListVo } from '@site/app/define/sys/user';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserGroupService {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
-
-  findByPage(searchParams: UserGroupSearchForm): Observable<ResponseBean<UserGroup[]>> {
-    return of({
-      success: true,
-      data: [
-        {
-          userGroupId: '1111111',
-          userGroupName: '高层管理',
-          createTime: '2024-07-01 15:45:06'
-        },
-        {
-          userGroupId: '222222',
-          userGroupName: '财务人员',
-          createTime: '2024-07-01 15:45:06'
-        }
-      ],
-      total: 2
-    }).pipe(delay(1000))
+  findByPage(searchParams: UserGroupSearchForm): Observable<ResponseBean<UserGroupPageListVo[]>> {
+    return this.http.get<ResponseBean<UserGroupPageListVo[]>>('/api/user/group/page', {
+      params: {
+        ...searchParams
+      }
+    })
   }
 
   getRoles(userGroupId: string): Observable<ResponseBean<Role[]>> {
@@ -53,41 +48,51 @@ export class UserGroupService {
           phoneNumber: '13888888888',
           deptId: 'd01',
           deptName: '开发部',
-          roles: [{roleId: '0010001', roleName: '管理员'}],
+          roles: [{roleId: '0010001', roleCode: 'aaa', roleName: '管理员'}],
           isEnable: true
         }
       ]
     }).pipe(delay(1000))
   }
 
-  add(userGroup: UserGroup): Observable<ResponseBean<void>> {
-    return of({
-      success: true
-    }).pipe(delay(500))
+  add(userGroup: UserGroupAddDto): Observable<ResponseBean<void>> {
+    return this.http.post<ResponseBean<void>>('/api/user/group/add', userGroup);
   }
 
-  update(userGroup: UserGroup): Observable<ResponseBean<void>> {
-    return of({
-      success: true
-    }).pipe(delay(500))
+  update(userGroup: UserGroupUpdateDto): Observable<ResponseBean<void>> {
+    return this.http.put<ResponseBean<void>>('/api/user/group/update', userGroup);
   }
 
   delete(userGroupId: string): Observable<ResponseBean<void>> {
-    return of({
-      success: true
-    }).pipe(delay(500))
+    return this.http.delete<ResponseBean<void>>(`/api/user/group/delete/${userGroupId}`);
   }
 
   addRoles(userGroupId: string, roleIdList: string[]): Observable<ResponseBean<void>> {
-    return of({
-      success: true
-    }).pipe(delay(500))
+    return this.http.post<ResponseBean<void>>('/api/user/group/addRole', {
+      userGroupId,
+      roleIdList
+    });
   }
 
   addUsers(userGroupId: string, userIdList: string[]): Observable<ResponseBean<void>> {
-    return of({
-      success: true
-    }).pipe(delay(500))
+    return this.http.post<ResponseBean<void>>('/api/user/group/addUser', {
+      userGroupId,
+      userIdList
+    });
+  }
+
+  enable(userGroupId: string): Observable<ResponseBean<void>> {
+    return this.http.patch<ResponseBean<void>>('/api/user/group/enable', {
+      userGroupId,
+      isEnable: true
+    })
+  }
+
+  disable(userGroupId: string): Observable<ResponseBean<void>> {
+    return this.http.patch<ResponseBean<void>>('/api/user/group/enable', {
+      userGroupId,
+      isEnable: false
+    })
   }
 
   removeRole(userGroupId: string, roleId: string): Observable<ResponseBean<void>> {

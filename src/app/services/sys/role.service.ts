@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ResponseBean } from '../../define/sys/response';
 import {
-  Role,
+  Role, RoleDetailsVo,
   RolePermissionsDto,
-  RoleSearchForm,
+  RoleSearchForm, RoleUserQueryDto,
   SimpleRole
 } from '../../define/sys/role';
 import { NzTreeNodeOptions } from 'ng-zorro-antd/tree';
 import { HttpClient } from '@angular/common/http';
-import { MenuPermissionsVo, MenusWithPermission, MenuVo, RoleMenuVo } from '@site/app/define/sys/menu';
+import { MenuPermissionsVo, MenuVo, RoleMenuVo } from '@site/app/define/sys/menu';
+import { RefUserVo } from '@site/app/define/sys/user';
 
 @Injectable({
   providedIn: 'root'
@@ -27,35 +28,8 @@ export class RoleService {
     });
   }
 
-
-  getRoleMenusWithPermission(roleId: string): Observable<ResponseBean<MenusWithPermission[]>> {
-    return of({
-      success: true,
-      data: [
-        {
-          menuId: '001',
-          menuName: '系统管理',
-          children: [
-            {
-              menuId: '001001',
-              menuName: '用户管理',
-              permissions: [
-                {
-                  permissionId: '001001001',
-                  permissionCode: 'user_query',
-                  permissionName: '查看用户',
-                  platform: 1
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    });
-  }
-
-  getRole(roleId: string): Observable<ResponseBean<Role>> {
-    return this.http.get<ResponseBean<Role>>(`/api/role/getOne/${roleId}`);
+  getRole(roleId: string): Observable<ResponseBean<RoleDetailsVo>> {
+    return this.http.get<ResponseBean<RoleDetailsVo>>(`/api/role/getOne/${roleId}`);
   }
 
   getRoles(): Observable<ResponseBean<SimpleRole[]>> {
@@ -71,14 +45,14 @@ export class RoleService {
   }
 
   enable(roleId: string): Observable<ResponseBean<void>> {
-    return this.http.patch<ResponseBean<void>>('/api/role/enable/', {
+    return this.http.patch<ResponseBean<void>>('/api/role/enable', {
       roleId,
       enable: true
     });
   }
 
   disable(roleId: string): Observable<ResponseBean<void>> {
-    return this.http.patch<ResponseBean<void>>('/api/role/enable/', {
+    return this.http.patch<ResponseBean<void>>('/api/role/enable', {
       roleId,
       enable: false
     });
@@ -100,11 +74,19 @@ export class RoleService {
         roleId,
         menuIdList: menuIdList.join(',')
       }
-    })
+    });
   }
 
   updatePermissions(rolePermissions: RolePermissionsDto): Observable<ResponseBean<void>> {
     return this.http.post<ResponseBean<void>>('/api/role/setPermission', rolePermissions);
+  }
+
+  findRefUsers(queryDto: RoleUserQueryDto): Observable<ResponseBean<RefUserVo[]>> {
+    return this.http.get<ResponseBean<RefUserVo[]>>('/api/role/findRefUsers', {
+      params: {
+        ...queryDto
+      }
+    });
   }
 
   toTreeNodes(menus: MenuVo[] | undefined): NzTreeNodeOptions[] {

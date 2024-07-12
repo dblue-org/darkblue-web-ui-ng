@@ -1,9 +1,9 @@
 <app-section dkTitle="角色信息" [dkExtra]="actions">
-  <nz-descriptions nzBordered style="margin-bottom: 24px" *ngIf="role">
-    <nz-descriptions-item nzTitle="角色名称">{{ role.roleName }}</nz-descriptions-item>
-    <nz-descriptions-item nzTitle="角色编码">{{ role.roleCode }}</nz-descriptions-item>
-    <nz-descriptions-item nzTitle="状态">{{ role.isEnable ? '正常' : '停用' }}</nz-descriptions-item>
-    <nz-descriptions-item nzTitle="创建时间">{{role.createTime}}</nz-descriptions-item>
+  <nz-descriptions nzBordered style="margin-bottom: 24px" *ngIf="roleDetails">
+    <nz-descriptions-item nzTitle="角色名称">{{ roleDetails.roleName }}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="角色编码">{{ roleDetails.roleCode }}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="状态">{{ roleDetails.isEnable ? '正常' : '停用' }}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="创建时间">{{ roleDetails.createTime }}</nz-descriptions-item>
   </nz-descriptions>
   <ng-template #actions>
     <button nz-button nzDanger nzSize="small" nzType="default" class="ant-btn-success">启用</button>
@@ -53,8 +53,18 @@
 </app-section>
 
 <app-section dkTitle="关联用户">
-  <nz-table nzSize="small"
+  <nz-table #userTable
+            nzSize="small"
             nzTableLayout="fixed"
+            [nzFrontPagination]="false"
+            nzShowPagination
+            [nzTotal]="userTableOptions.total"
+            [(nzPageIndex)]="userTableOptions.page"
+            [(nzPageSize)]="userTableOptions.pageSize"
+            [nzLoading]="userTableLoading"
+            [nzData]="users"
+            (nzPageSizeChange)="loadUsers()"
+            (nzPageIndexChange)="loadUsers()"
             nzBordered>
     <thead>
     <tr>
@@ -62,9 +72,20 @@
       <th>姓名</th>
       <th>手机号</th>
       <th>所在部门</th>
+      <th>职位</th>
       <th>状态</th>
     </tr>
     </thead>
+    <tbody>
+    <tr *ngFor="let data of userTable.data">
+      <td><a routerLink="/sys/user/details" [queryParams]="{userId: data.userId}" >{{ data.username }}</a></td>
+      <td>{{ data.name }}</td>
+      <td>{{ data.phoneNumber }}</td>
+      <td>{{ data.deptName }}</td>
+      <td>{{ data.positionName }}</td>
+      <td>{{ data.isEnable ? '正常' : '停用' }}</td>
+    </tr>
+    </tbody>
   </nz-table>
 </app-section>
 

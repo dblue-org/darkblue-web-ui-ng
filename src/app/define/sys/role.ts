@@ -1,8 +1,13 @@
+import { MenusWithPermission, MenuVo } from '@site/app/define/sys/menu';
+import { PageParams } from '@site/app/define/common';
 
-export interface Role {
+export interface SimpleRole {
   roleId: string;
-  roleCode?: string;
+  roleCode: string;
   roleName: string;
+}
+
+export interface Role extends SimpleRole {
   remark?: string;
   isEnable?: boolean;
   isBuiltIn?: boolean;
@@ -10,21 +15,13 @@ export interface Role {
   permissions?: string[];
 }
 
-export interface PermissionRoleVo {
-  roleId: string;
-  roleCode?: string;
-  roleName: string;
+export interface PermissionRoleVo extends SimpleRole{
   remark?: string;
   isEnable?: boolean;
   isBuiltIn?: boolean;
   createTime?: string;
 }
 
-export interface SimpleRole {
-  roleId: string;
-  roleCode?: string;
-  roleName: string;
-}
 
 export interface RoleSearchForm {
   roleCode?: string;
@@ -37,5 +34,17 @@ export interface RolePermissionsDto {
   roleId: string;
   menuIdList: string[];
   permissionIdList: string[];
+}
+
+export interface RoleDetailsVo extends SimpleRole {
+  remark?: string;
+  isEnable: boolean;
+  isBuiltIn: boolean;
+  createTime: string;
+  roleMenuVoList: MenusWithPermission[];
+}
+
+export interface RoleUserQueryDto extends PageParams {
+  roleId: string;
 }
 

@@ -106,3 +106,18 @@ export interface UserDetailsVo extends SimpleUser {
   userMenuVoList: MenusWithPermission[]
 }
 
+export interface RefUserVo {
+  userId: string
+  name: string
+  username: string
+  phoneNumber?: string
+  deptId: string
+  deptName: string
+  positionId: string
+  positionName: string
+  identityNo: string
+  isEnable: boolean
+  createTime: string
+}
+
+
