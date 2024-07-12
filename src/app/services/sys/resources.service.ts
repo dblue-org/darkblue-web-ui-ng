@@ -60,7 +60,7 @@ export class ResourcesService {
   }
 
   update(resource: Resource): Observable<ResponseBean<void>> {
-    return this.http.post<ResponseBean<void>>('/api/resource/update', resource)
+    return this.http.put<ResponseBean<void>>('/api/resource/update', resource)
   }
 
   delete(resourceId: string): Observable<ResponseBean<void>> {

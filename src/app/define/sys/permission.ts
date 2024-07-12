@@ -1,3 +1,6 @@
+import { ResourceVo, SimpleResource } from '@site/app/define/sys/resource';
+import { PageParams } from '@site/app/define/common';
+
 export interface Permission {
   permissionId?: string
   menuId?: string;
@@ -9,6 +12,7 @@ export interface SimplePermission {
   permissionId: string
   permissionCode: string
   permissionName: string
+  platform: number;
 }
 
 export interface PermissionVo {
@@ -17,6 +21,7 @@ export interface PermissionVo {
   permissionId: string;
   permissionCode: string;
   permissionName: string;
+  platform: number;
 }
 
 export interface CheckedPermissionVo {
@@ -33,4 +38,17 @@ export interface PermissionSearchForm {
   platform?: number;
   page: number;
   pageSize: number;
+}
+
+export interface PermissionDetailsVo {
+  permissionId: string;
+  permissionCode: string;
+  permissionName: string;
+  platform: number;
+  createTime: string;
+  permissionResourceList: ResourceVo[];
+}
+
+export interface PermissionRoleQueryDto extends PageParams {
+  permissionId: string;
 }

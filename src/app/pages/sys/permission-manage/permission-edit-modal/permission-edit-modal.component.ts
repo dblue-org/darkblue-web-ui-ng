@@ -10,6 +10,7 @@ import { CommonModule } from '@angular/common';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzRadioModule } from 'ng-zorro-antd/radio';
 
 @Component({
   selector: 'app-permission-edit-modal',
@@ -22,6 +23,7 @@ import { NzFormModule } from 'ng-zorro-antd/form';
     NzModalModule,
     NzFormModule,
     NzInputModule,
+    NzRadioModule,
   ],
   templateUrl: './permission-edit-modal.component.html',
   styleUrl: './permission-edit-modal.component.css'
@@ -32,6 +34,7 @@ export class PermissionEditModalComponent extends BasicEditModalComponent {
     menuId: ['', [Validators.required]],
     menuName: [''],
     permissionId: [''],
+    platform: [1],
     permissionCode: ['', [Validators.required]],
     permissionName: ['', [Validators.required]]
   })

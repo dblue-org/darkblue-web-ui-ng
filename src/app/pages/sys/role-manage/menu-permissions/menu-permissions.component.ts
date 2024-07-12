@@ -1,8 +1,8 @@
 import { Component, EventEmitter, forwardRef, Input, OnInit } from '@angular/core';
-import { MenuPermissionsVo } from '@site/app/define/sys/role';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { NgForOf, NgIf } from '@angular/common';
+import { MenuPermissionsVo } from '@site/app/define/sys/menu';
 
 @Component({
   selector: 'app-menu-permissions',
@@ -26,7 +26,9 @@ import { NgForOf, NgIf } from '@angular/common';
 export class MenuPermissionsComponent implements ControlValueAccessor {
 
   value!: MenuPermissionsVo;
-  isDisabled = false
+  isDisabled = false;
+  checkedAll = false;
+  indeterminate = false;
   onChange = (value: any) => {
   };
   onTouched = () => {
@@ -34,6 +36,7 @@ export class MenuPermissionsComponent implements ControlValueAccessor {
 
   onModalValueChange(values: string[]) {
     this.onChange(this.value);
+    this.updateCheckState();
   }
 
   registerOnChange(fn: any): void {
@@ -50,6 +53,30 @@ export class MenuPermissionsComponent implements ControlValueAccessor {
 
   writeValue(val: MenuPermissionsVo): void {
     this.value = val;
+    this.updateCheckState();
+  }
+
+  onCheckedAllClick(val: boolean) {
+    if (val) {
+      this.value.permissions.forEach(item => {
+        item.checked = true;
+      });
+    } else {
+      this.value.permissions.forEach(item => {
+        item.checked = false;
+      });
+    }
+    this.updateCheckState();
+  }
+
+  private updateCheckState() {
+    if (this.value && this.value.permissions) {
+      this.checkedAll = this.value.permissions.every(item => item.checked);
+      this.indeterminate = this.value.permissions.some(item => item.checked) && !this.checkedAll;
+    } else {
+      this.checkedAll = false;
+      this.indeterminate = false;
+    }
   }
 
 }

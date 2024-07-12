@@ -57,10 +57,13 @@ export class ResourceGroupComponent implements OnInit {
 
   loadAll() {
     this.loading = true;
-    this.resourceGroupService.getAll().subscribe({
+    this.resourceGroupService.getAll(this.platform).subscribe({
       next: res => {
         if (res.success && res.data) {
           this.resourceGroups = res.data;
+          if (this.resourceGroups.length > 0 && this.selected === undefined) {
+            this.selectResourceGroup(this.resourceGroups[0])
+          }
         }
       },
       complete: () => this.loading = false
@@ -74,8 +77,9 @@ export class ResourceGroupComponent implements OnInit {
   }
 
   showAddModal() {
-    console.log(this.platform);
-    this.resourceGroupEditModalComponent?.showAddModal();
+    this.resourceGroupEditModalComponent?.showAddModal({
+      platform: this.platform
+    });
   }
 
   showEditModal() {
@@ -101,6 +105,7 @@ export class ResourceGroupComponent implements OnInit {
   }
 
   onPlatformChange() {
+    this.loadAll();
     this.platformChange.emit(this.platform);
   }
 

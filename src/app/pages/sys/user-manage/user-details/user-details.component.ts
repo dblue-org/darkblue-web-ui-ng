@@ -8,11 +8,12 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzFlexModule } from 'ng-zorro-antd/flex';
-import { RoleMenusWithPermission } from '@site/app/define/sys/role';
 import { UserService } from '@site/app/services/sys/user.service';
 import { IconifyComponent } from '@site/app/components/icon/iconify/iconify.component';
 import { LoginLog } from '@site/app/define/logs/login-log';
 import { LoginLogService } from '@site/app/services/logs/login-log.service';
+import { MenusWithPermission } from '@site/app/define/sys/menu';
+import { UserDetailsVo } from '@site/app/define/sys/user';
 
 @Component({
   selector: 'app-user-details',
@@ -38,23 +39,25 @@ export class UserDetailsComponent implements OnInit {
 
   @Input('userId') userId?: string; // inject from router
 
-  loginLogs: LoginLog[] = []
+  userDetails?: UserDetailsVo;
+
+  loginLogs: LoginLog[] = [];
   loginLogTableLoading = false;
   loginLogTableOptions = {
     total: 0,
     pageIndex: 1,
-    pageSize: 10
-  }
+    pageSize: 5
+  };
 
-  rolePermissions: RoleMenusWithPermission[] = [];
-  mapOfExpandedData: { [key: string]: RoleMenusWithPermission[] } = {};
+  rolePermissions: MenusWithPermission[] = [];
+  mapOfExpandedData: { [key: string]: MenusWithPermission[] } = {};
   permissionTableLoading = false;
 
 
   constructor(private userService: UserService, private loginLogService: LoginLogService) {
   }
 
-  collapse(array: RoleMenusWithPermission[], data: RoleMenusWithPermission, $event: boolean): void {
+  collapse(array: MenusWithPermission[], data: MenusWithPermission, $event: boolean): void {
     if (!$event) {
       if (data.children) {
         data.children.forEach(d => {
@@ -68,9 +71,9 @@ export class UserDetailsComponent implements OnInit {
     }
   }
 
-  convertTreeToList(root: RoleMenusWithPermission): RoleMenusWithPermission[] {
-    const stack: RoleMenusWithPermission[] = [];
-    const array: RoleMenusWithPermission[] = [];
+  convertTreeToList(root: MenusWithPermission): MenusWithPermission[] {
+    const stack: MenusWithPermission[] = [];
+    const array: MenusWithPermission[] = [];
     const hashMap = {};
     stack.push({...root, level: 0, expand: true});
 
@@ -87,27 +90,36 @@ export class UserDetailsComponent implements OnInit {
     return array;
   }
 
-  visitNode(node: RoleMenusWithPermission, hashMap: { [key: string]: boolean }, array: RoleMenusWithPermission[]): void {
+  visitNode(node: MenusWithPermission, hashMap: { [key: string]: boolean }, array: MenusWithPermission[]): void {
     if (!hashMap[node.menuId]) {
       hashMap[node.menuId] = true;
       array.push(node);
     }
   }
 
-  loadRolePermissions(): void {
-    this.permissionTableLoading = true;
-    if (this.userId) {
-      this.userService.getMenusWithPermission(this.userId).subscribe({
-        next: res => {
-          this.rolePermissions = res.data || [];
-          this.rolePermissions.forEach(item => {
-            this.mapOfExpandedData[item.menuId] = this.convertTreeToList(item);
-          });
-        },
-        complete: () => this.permissionTableLoading = false
-      });
+  getUserDetails() {
+    if (!this.userId) {
+      return;
     }
 
+    this.rolePermissions = [];
+    this.mapOfExpandedData = {}
+    this.permissionTableLoading = true;
+    this.userService.getDetails(this.userId).subscribe({
+      next: res => {
+        if (res.success) {
+          this.userDetails = res.data;
+          if (res.data && res.data.userMenuVoList) {
+            this.rolePermissions = res.data.userMenuVoList;
+            this.rolePermissions.forEach(item => {
+              this.mapOfExpandedData[item.menuId] = this.convertTreeToList(item);
+            });
+          }
+        }
+        this.permissionTableLoading = false
+      },
+      error: () => this.permissionTableLoading = false
+    })
   }
 
   loadLoginLogs() {
@@ -129,7 +141,7 @@ export class UserDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.userId) {
-      this.loadRolePermissions();
+      this.getUserDetails();
       this.loadLoginLogs();
     }
   }

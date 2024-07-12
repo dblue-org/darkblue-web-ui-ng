@@ -24,10 +24,10 @@ import { NzTreeNodeOptions } from 'ng-zorro-antd/tree';
 })
 export class DepartmentSelectComponent implements OnChanges, OnInit, ControlValueAccessor {
   @Input('disableDepartment') disableDepartment!: string;
+  @Input('dkDisabled') disabled = false;
   nodes: NzTreeNodeOptions[] = [];
   value?: string[] | string;
   departments?: Department[] = [];
-  isDisabled = false
   onChange = (value: any) => {
   };
   onTouched = () => {
@@ -61,10 +61,6 @@ export class DepartmentSelectComponent implements OnChanges, OnInit, ControlValu
 
   registerOnTouched(fn: any): void {
     this.onTouched = fn;
-  }
-
-  setDisabledState(isDisabled: boolean): void {
-    this.isDisabled = isDisabled;
   }
 
   writeValue(value: any): void {

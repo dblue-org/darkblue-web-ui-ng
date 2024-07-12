@@ -54,7 +54,7 @@ export class MessagingComponent {
       type: '合同',
       createTime: '2024-10-05 12:30',
       status: '待审批',
-      title: '合同审批',
+      title: '合同审批，这是一个比较长的待办标题',
       content: [
         '合同名称：太空发射计划',
         '合同编号：HT-2024-000001',

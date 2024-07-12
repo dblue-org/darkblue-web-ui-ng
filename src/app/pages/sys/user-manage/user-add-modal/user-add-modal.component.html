@@ -2,9 +2,10 @@
   <ng-container *nzModalContent>
     <form nz-form [formGroup]="userForm">
       <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="deptName">部门</nz-form-label>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="deptId">部门</nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24">
-          <input nz-input formControlName="deptName" id="deptName" readonly [disabled]="true" />
+          <!--<input nz-input formControlName="deptName" id="deptName" readonly [disabled]="true" />-->
+          <app-department-select formControlName="deptId" [dkDisabled]="!isEdit" />
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
@@ -17,6 +18,12 @@
         <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">姓名</nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="姓名不能为空">
           <input nz-input formControlName="name" id="name" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="positionId">职位</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <app-position-select formControlName="positionId" />
         </nz-form-control>
       </nz-form-item>
       <nz-form-item *ngIf="!isEdit">

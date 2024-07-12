@@ -1,25 +1,57 @@
-<nz-modal [(nzVisible)]="isVisible" nzWidth="1200px" nzTitle="设置角色权限" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()" [nzOkLoading]="loading">
+<nz-modal [(nzVisible)]="isVisible" nzWidth="1200px"
+          [nzBodyStyle]="{maxHeight: '1000px', overflowY: 'auto'}"
+          nzTitle="设置角色权限" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()" [nzOkLoading]="loading">
   <ng-container *nzModalContent>
     <nz-steps [nzCurrent]="current">
       <nz-step nzTitle="选择菜单"></nz-step>
       <nz-step nzTitle="配置权限"></nz-step>
     </nz-steps>
     <div class="steps-content-0" *ngIf="current == 0">
-      <nz-tree #menuTree
-        [nzData]="menus"
-        nzCheckable
-        nzMultiple
-        nzExpandAll
-        [(nzCheckedKeys)]="checkedMenuIds"
-      ></nz-tree>
-    </div>
-    <div class="steps-content-1" *ngIf="current == 1">
       <div nz-row [nzGutter]="24">
-        <ng-container *ngFor="let item of menuPermissions; let i = index">
-          <app-menu-permissions nz-col [nzSpan]="8" [(ngModel)]="menuPermissions[i]" />
-        </ng-container>
+        <div nz-col [nzSpan]="12">
+          <div  class="tree-panel">
+            <h3>PC端菜单</h3>
+            <nz-tree #menuPcTree
+                     [nzData]="pcMenus"
+                     nzCheckable
+                     nzMultiple
+                     nzExpandAll
+                     [(nzCheckedKeys)]="checkedMenuIds"
+            ></nz-tree>
+          </div>
+        </div>
+        <div nz-col [nzSpan]="12">
+          <div  class="tree-panel">
+            <h3>移动端菜单</h3>
+            <nz-tree #menuAppTree
+                     [nzData]="appMenus"
+                     nzCheckable
+                     nzMultiple
+                     nzExpandAll
+                     [(nzCheckedKeys)]="checkedMenuIds"
+            ></nz-tree>
+          </div>
+        </div>
       </div>
 
+    </div>
+    <div class="steps-content-1" *ngIf="current == 1">
+      <div class="permission-panel" *ngIf="pcMenuPermissions && pcMenuPermissions.length > 0">
+        <h3>PC端</h3>
+        <div nz-row [nzGutter]="24">
+          <ng-container *ngFor="let item of pcMenuPermissions; let i = index">
+            <app-menu-permissions nz-col [nzSpan]="8" [(ngModel)]="pcMenuPermissions[i]" />
+          </ng-container>
+        </div>
+      </div>
+      <div class="permission-panel" *ngIf="appMenuPermissions && appMenuPermissions.length > 0">
+        <h3>移动端</h3>
+        <div nz-row [nzGutter]="24">
+          <ng-container *ngFor="let item of appMenuPermissions; let i = index">
+            <app-menu-permissions nz-col [nzSpan]="8" [(ngModel)]="appMenuPermissions[i]" />
+          </ng-container>
+        </div>
+      </div>
     </div>
   </ng-container>
   <ng-container *nzModalFooter>

@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import { RoleService } from '@site/app/services/sys/role.service';
-import { MenuPermissionsVo } from '@site/app/define/sys/role';
 import { NzTreeComponent, NzTreeModule, NzTreeNodeOptions } from 'ng-zorro-antd/tree';
 import { CommonModule } from '@angular/common';
 import { NzStepsModule } from 'ng-zorro-antd/steps';
@@ -11,20 +10,24 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { MenuPermissionsComponent } from '@site/app/pages/sys/role-manage/menu-permissions/menu-permissions.component';
 import { FormsModule } from '@angular/forms';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { MenuPermissionsVo } from '@site/app/define/sys/menu';
+import { bfs } from '@site/utils/nz-tree-node-utils';
 
 @Component({
   selector: 'app-permissions-set-modal',
   standalone: true,
   imports: [
     CommonModule,
+    FormsModule,
+
     NzStepsModule,
     NzModalModule,
     NzGridModule,
     NzButtonModule,
     NzIconModule,
     NzTreeModule,
+
     MenuPermissionsComponent,
-    FormsModule
   ],
   templateUrl: './permissions-set-modal.component.html',
   styleUrl: './permissions-set-modal.component.css'
@@ -32,28 +35,46 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 export class PermissionsSetModalComponent {
   isVisible = false;
   @Output() onSuccess: EventEmitter<void> = new EventEmitter<void>();
-  @ViewChild('menuTree') menuTree?: NzTreeComponent;
+  @ViewChild('menuPcTree') menuPcTree?: NzTreeComponent;
+  @ViewChild('menuAppTree') menuAppTree?: NzTreeComponent;
   loading = false;
-  menus: NzTreeNodeOptions[] = [];
+  pcMenus: NzTreeNodeOptions[] = [];
+  appMenus: NzTreeNodeOptions[] = [];
   current = 0;
-  menuPermissions: MenuPermissionsVo[] = [];
+  pcMenuPermissions: MenuPermissionsVo[] = [];
+  appMenuPermissions: MenuPermissionsVo[] = [];
   checkedMenuIds: string[] = [];
   nextLoading = false;
   roleId: string = '';
+  selectedMenusIdList: string[] = []
 
   constructor(private roleService: RoleService, private messageService: NzMessageService) {
   }
 
   showModal(roleId: string) {
     this.roleId = roleId;
-    this.menus = [];
+    this.reset();
     this.roleService.checkMenus(roleId).subscribe(res => {
-      if (res.success) {
-        this.menus = this.roleService.toTreeNodes(res.data);
-        this.checkedMenuIds = this.roleService.getCheckedMenus(res.data || []);
+      if (res.success && res.data) {
+        this.checkedMenuIds = this.roleService.getCheckedMenus([
+          ...res.data.pcMenus,
+          ...res.data.appMenus
+        ]);
+        this.pcMenus = this.roleService.toTreeNodes(res.data.pcMenus);
+        this.appMenus = this.roleService.toTreeNodes(res.data.appMenus);
       }
     })
     this.isVisible = true;
+  }
+
+  reset() {
+    this.current = 0;
+    this.pcMenus = [];
+    this.appMenus = [];
+    this.pcMenuPermissions = [];
+    this.appMenuPermissions = [];
+    this.checkedMenuIds = [];
+    this.selectedMenusIdList = [];
   }
 
   pre() {
@@ -62,11 +83,13 @@ export class PermissionsSetModalComponent {
 
   next() {
     this.nextLoading = true;
+    this.selectedMenusIdList = this.getCheckedMenus();
     if (this.current == 0) {
       this.roleService.checkMenuPermissions(this.roleId, this.getCheckedMenus()).subscribe({
         next: res => {
-          if (res.success) {
-            this.menuPermissions = res.data || [];
+          if (res.success && res.data) {
+            this.pcMenuPermissions = res.data.filter(o => o.platform == 1);
+            this.appMenuPermissions = res.data.filter(o => o.platform == 2);
             this.current = this.current + 1
           }
         },
@@ -80,16 +103,19 @@ export class PermissionsSetModalComponent {
   handleOk(): void {
     // this.isVisible = true;
     this.loading = true;
-    const menuIdList: string[] = this.getCheckedMenus();
 
     const permissionIdList: string[] = [];
-    this.menuPermissions.flatMap(o => o.permissions).filter(o => o.checked).forEach(item => {
+
+    this.pcMenuPermissions.flatMap(o => o.permissions).filter(o => o.checked).forEach(item => {
+      permissionIdList.push(item.permissionId)
+    })
+    this.appMenuPermissions.flatMap(o => o.permissions).filter(o => o.checked).forEach(item => {
       permissionIdList.push(item.permissionId)
     })
 
     this.roleService.updatePermissions({
       roleId: this.roleId,
-      menuIdList,
+      menuIdList: this.selectedMenusIdList,
       permissionIdList
     }).subscribe({
       next: res => {
@@ -105,10 +131,26 @@ export class PermissionsSetModalComponent {
 
   private getCheckedMenus(): string[]{
     const menuIdList: string[] = [];
-    this.menuTree?.getCheckedNodeList().forEach(item => {
+    this.menuPcTree?.getCheckedNodeList().forEach(item => {
       menuIdList.push(item.key);
+      if (item.children && item.children.length > 0) {
+        bfs(item.children, (node) => {
+          menuIdList.push(node.key)
+        })
+      }
     })
-    this.menuTree?.getHalfCheckedNodeList().forEach(item => {
+    this.menuPcTree?.getHalfCheckedNodeList().forEach(item => {
+      menuIdList.push(item.key)
+    })
+    this.menuAppTree?.getCheckedNodeList().forEach(item => {
+      menuIdList.push(item.key);
+      if (item.children && item.children.length > 0) {
+        bfs(item.children, (node) => {
+          menuIdList.push(node.key)
+        })
+      }
+    })
+    this.menuAppTree?.getHalfCheckedNodeList().forEach(item => {
       menuIdList.push(item.key)
     })
     return menuIdList;

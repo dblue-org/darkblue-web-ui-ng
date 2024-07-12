@@ -1,35 +1,34 @@
 import { Injectable } from '@angular/core';
-import { delay, Observable, of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { ResponseBean } from '../../define/sys/response';
 import {
-  MenuPermissionsVo,
-  MenuVo,
   Role,
-  RoleMenusWithPermission,
   RolePermissionsDto,
   RoleSearchForm,
   SimpleRole
 } from '../../define/sys/role';
 import { NzTreeNodeOptions } from 'ng-zorro-antd/tree';
 import { HttpClient } from '@angular/common/http';
+import { MenuPermissionsVo, MenusWithPermission, MenuVo, RoleMenuVo } from '@site/app/define/sys/menu';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RoleService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   queryRoles(searchForm: RoleSearchForm): Observable<ResponseBean<Role[]>> {
     return this.http.get<ResponseBean<Role[]>>('/api/role/page', {
       params: {
         ...searchForm
       }
-    })
+    });
   }
 
 
-  getRoleMenusWithPermission(roleId: string): Observable<ResponseBean<RoleMenusWithPermission[]>> {
+  getRoleMenusWithPermission(roleId: string): Observable<ResponseBean<MenusWithPermission[]>> {
     return of({
       success: true,
       data: [
@@ -44,142 +43,69 @@ export class RoleService {
                 {
                   permissionId: '001001001',
                   permissionCode: 'user_query',
-                  permissionName: '查看用户'
+                  permissionName: '查看用户',
+                  platform: 1
                 }
               ]
             }
           ]
         }
       ]
-    })
+    });
   }
 
   getRole(roleId: string): Observable<ResponseBean<Role>> {
-    return this.http.get<ResponseBean<Role>>(`/api/role/getOne/${roleId}`)
+    return this.http.get<ResponseBean<Role>>(`/api/role/getOne/${roleId}`);
   }
 
-  getRoles():Observable<ResponseBean<SimpleRole[]>> {
-    return of({
-      success: true,
-      data: this.mockRoles()
-    }).pipe(delay(1000))
+  getRoles(): Observable<ResponseBean<SimpleRole[]>> {
+    return this.http.get<ResponseBean<SimpleRole[]>>(`/api/role/getAllForSelect`);
   }
 
   add(role: SimpleRole): Observable<ResponseBean<void>> {
-    return this.http.post<ResponseBean<void>>('/api/role/add', role)
+    return this.http.post<ResponseBean<void>>('/api/role/add', role);
   }
 
   update(role: SimpleRole): Observable<ResponseBean<void>> {
-    return this.http.put<ResponseBean<void>>('/api/role/update', role)
+    return this.http.put<ResponseBean<void>>('/api/role/update', role);
   }
 
   enable(roleId: string): Observable<ResponseBean<void>> {
-    return of({
-      success: true
-    }).pipe(delay(1000))
+    return this.http.patch<ResponseBean<void>>('/api/role/enable/', {
+      roleId,
+      enable: true
+    });
   }
 
   disable(roleId: string): Observable<ResponseBean<void>> {
-    return of({
-      success: true
-    }).pipe(delay(1000))
+    return this.http.patch<ResponseBean<void>>('/api/role/enable/', {
+      roleId,
+      enable: false
+    });
   }
 
   delete(roleId: string): Observable<ResponseBean<void>> {
-    return this.http.delete<ResponseBean<void>>(`/api/role/delete/${roleId}`)
+    return this.http.delete<ResponseBean<void>>(`/api/role/delete/${roleId}`);
   }
 
-  checkMenus(roleId: string): Observable<ResponseBean<MenuVo[]>> {
-    return of({
-      success: true,
-      data: [
-        ...this.mockMenu()
-      ]
-    })
+  checkMenus(roleId: string): Observable<ResponseBean<RoleMenuVo>> {
+    return this.http.get<ResponseBean<RoleMenuVo>>('/api/menu/getMenuCheckBoxTree', {
+      params: {roleId}
+    });
   }
 
   checkMenuPermissions(roleId: string, menuIdList: string[]): Observable<ResponseBean<MenuPermissionsVo[]>> {
-    return of({
-      success: true,
-      data: [
-        {
-          menuId: '00000101',
-          menuName: '用户管理',
-          permissions: [
-            {
-              permissionId: '123',
-              permissionCode: 'USER_ADD',
-              permissionName: '添加用户',
-              checked: false
-            },
-            {
-              permissionId: '123',
-              permissionCode: 'USER_QUERY',
-              permissionName: '查询用户',
-              checked: true
-            }
-          ]
-        }
-      ]
+    return this.http.get<ResponseBean<MenuPermissionsVo[]>>('/api/permission/getPermissionCheckBox', {
+      params: {
+        roleId,
+        menuIdList: menuIdList.join(',')
+      }
     })
   }
 
   updatePermissions(rolePermissions: RolePermissionsDto): Observable<ResponseBean<void>> {
     return this.http.post<ResponseBean<void>>('/api/role/setPermission', rolePermissions);
   }
-
-  private mockRoles(): SimpleRole[] {
-    return [
-      {roleId: '001', roleCode: 'R1', roleName: '角色1'},
-      {roleId: '002', roleCode: 'R2', roleName: '角色2'},
-    ]
-  }
-
-
-  private mockMenu(): MenuVo[] {
-    return [
-      {
-        menuId: '000001',
-        menuName: '系统管理',
-        level: 1,
-        checked: false,
-        children: [
-          {
-            menuId: '00000101',
-            menuName: '用户管理',
-            level: 2,
-            checked: true,
-          },
-          {
-            menuId: '00000102',
-            menuName: '角色管理',
-            level: 2,
-          },
-          {
-            menuId: '00000103',
-            menuName: '菜单管理',
-            level: 2,
-          }
-        ]
-      },
-      {
-        menuId: '000003',
-        menuName: '系统配置',
-        level: 1,
-        children: [
-          {
-            menuId: '00000301',
-            menuName: '配置参数管理',
-          },
-          {
-            menuId: '00000302',
-            menuName: '字典管理',
-          },
-        ]
-      }
-    ]
-  }
-
 
   toTreeNodes(menus: MenuVo[] | undefined): NzTreeNodeOptions[] {
     if (!menus) {
@@ -192,6 +118,7 @@ export class RoleService {
         title: menu.menuName,
         key: menu.menuId,
         isLeaf: !menu.children,
+        expanded: true,
         children: this.toTreeNodes(menu.children)
       };
       nodes.push(node);
@@ -205,7 +132,7 @@ export class RoleService {
     const nodes: MenuVo[] = [];
     menus.forEach(vo => nodes.push(vo));
 
-    while(nodes.length > 0) {
+    while (nodes.length > 0) {
       const node = nodes.pop();
       if (node) {
         if (node.children && node.children.length > 0) {

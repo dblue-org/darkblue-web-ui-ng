@@ -1,5 +1,7 @@
 <div class="menu-permissions-container" *ngIf="value">
-  <label class="menu-permissions-header">{{value.menuName}}</label>
+  <label class="menu-permissions-header">
+    <label nz-checkbox [(ngModel)]="checkedAll" [nzIndeterminate]="indeterminate" (ngModelChange)="onCheckedAllClick($event)">{{value.menuName}}</label>
+  </label>
 
   <nz-checkbox-wrapper style="width: 100%;" (nzOnChange)="onModalValueChange($event)">
     <ng-container *ngFor="let item of value.permissions">

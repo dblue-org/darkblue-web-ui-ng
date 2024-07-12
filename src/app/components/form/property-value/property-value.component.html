@@ -1,23 +1,23 @@
 <ng-container *ngIf="type == 1">
-  <input nz-input [(ngModel)]="value">
+  <input nz-input [(ngModel)]="value" (ngModelChange)="onValueChange()">
 </ng-container>
 <ng-container *ngIf="type == 2">
-  <nz-input-number style="width: 100%" [(ngModel)]="value" [nzMin]="numberScope.min" [nzMax]="numberScope.max"/>
+  <nz-input-number style="width: 100%" [(ngModel)]="value" [nzMin]="numberScope.min" [nzMax]="numberScope.max" (ngModelChange)="onValueChange()"/>
 </ng-container>
 <ng-container *ngIf="type == 3">
-  <nz-date-picker style="width: 100%" [(ngModel)]="value"/>
+  <nz-date-picker style="width: 100%" [(ngModel)]="value" (ngModelChange)="onValueChange()"/>
 </ng-container>
 <ng-container *ngIf="type == 4">
-  <nz-date-picker nzShowTime style="width: 100%" [(ngModel)]="value"/>
+  <nz-date-picker nzShowTime style="width: 100%" [(ngModel)]="value" (ngModelChange)="onValueChange()"/>
 </ng-container>
 <ng-container *ngIf="type == 5">
-  <nz-switch [(ngModel)]="value" />
+  <nz-switch [(ngModel)]="value" (ngModelChange)="onValueChange()"/>
 </ng-container>
 <ng-container *ngIf="type == 6">
-  <nz-color-picker [(ngModel)]="value" />
+  <nz-color-picker [(ngModel)]="value" (ngModelChange)="onValueChange()"/>
 </ng-container>
 <ng-container *ngIf="type == 7">
-  <nz-select [(ngModel)]="value" style="width: 100%">
+  <nz-select [(ngModel)]="value" style="width: 100%" (ngModelChange)="onValueChange()">
     <ng-container *ngIf="listOptions">
       @for (item of listOptions; track item.key) {
         <nz-option [nzValue]="item.value" [nzLabel]="item.value" />
@@ -26,7 +26,7 @@
   </nz-select>
 </ng-container>
 <ng-container *ngIf="type == 8">
-  <nz-select [(ngModel)]="value" style="width: 100%">
+  <nz-select [(ngModel)]="value" style="width: 100%" (ngModelChange)="onValueChange()">
     <ng-container *ngIf="enumScope">
       @for (enumItem of enumScope; track enumItem.value) {
         <nz-option [nzValue]="enumItem.value" [nzLabel]="enumItem.label" />

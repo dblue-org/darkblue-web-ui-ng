@@ -1,13 +1,13 @@
 <app-section dkTitle="用户基本信息" [dkExtra]="back">
-  <nz-descriptions nzBordered style="margin-bottom: 24px">
-    <nz-descriptions-item nzTitle="用户名">Zhou Maomao</nz-descriptions-item>
-    <nz-descriptions-item nzTitle="姓名">Zhou Maomao</nz-descriptions-item>
-    <nz-descriptions-item nzTitle="手机号">18100000000</nz-descriptions-item>
-    <nz-descriptions-item nzTitle="状态">Hangzhou, Zhejiang</nz-descriptions-item>
-    <nz-descriptions-item nzTitle="部门">总经办</nz-descriptions-item>
-    <nz-descriptions-item nzTitle="创建时间">2024-06-19 15:23:50</nz-descriptions-item>
-    <nz-descriptions-item nzTitle="最后登录时间">2024-06-19 15:23:50</nz-descriptions-item>
-    <nz-descriptions-item nzTitle="职位">财务总监</nz-descriptions-item>
+  <nz-descriptions nzBordered style="margin-bottom: 24px" *ngIf="userDetails">
+    <nz-descriptions-item nzTitle="用户名">{{userDetails.username}}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="姓名">{{userDetails.name}}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="手机号">{{userDetails.phoneNumber}}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="状态">{{userDetails.isEnable ? '正常' : '停用'}}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="部门">{{userDetails.deptName}}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="创建时间">{{userDetails.createTime}}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="最后登录时间">{{userDetails.lastLoginTime}}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="职位">{{userDetails.positionName}}</nz-descriptions-item>
     <nz-descriptions-item ></nz-descriptions-item>
     <nz-descriptions-item nzTitle="用户组" [nzSpan]="3">
       <nz-tag nzColor="cyan">超级管理员</nz-tag>
@@ -91,8 +91,8 @@
     </thead>
     <tbody>
     <tr *ngFor="let data of loginLogTable.data">
-      <td>{{ data.loginPlatform }}</td>
-      <td>{{ data.loginType }}</td>
+      <td>{{ data.loginPlatformName }}</td>
+      <td>{{ data.loginTypeName }}</td>
       <td>{{ data.loginTime }}</td>
       <td>{{ data.loginIp }}</td>
       <td>{{ data.userAgent }}</td>

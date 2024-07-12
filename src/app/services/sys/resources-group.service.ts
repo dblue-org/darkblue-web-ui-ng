@@ -11,7 +11,7 @@ export class ResourcesGroupService {
 
   constructor(private http: HttpClient) { }
 
-  getAll(): Observable<ResponseBean<ResourceGroup[]>> {
+  getAll(platform: number): Observable<ResponseBean<ResourceGroup[]>> {
     /*const resourceGroups : ResourceGroup[] = [
       {resourceGroupId: '111', resourceGroupName: '用户管理', createTime: '2022-11-11 11:11:11'},
       {resourceGroupId: '222', resourceGroupName: '菜单管理', createTime: '2022-11-11 11:11:11'},
@@ -21,7 +21,7 @@ export class ResourcesGroupService {
       success: true,
       data: resourceGroups
     })*/
-    return this.http.get<ResponseBean<ResourceGroup[]>>('/api/resource/group/getAll');
+    return this.http.get<ResponseBean<ResourceGroup[]>>(`/api/resource/group/getAll/${platform}`);
   }
 
   add(resourceGroup: ResourceGroupForm): Observable<ResponseBean<void>> {

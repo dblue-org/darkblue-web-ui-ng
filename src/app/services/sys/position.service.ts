@@ -1,114 +1,62 @@
 import { Injectable } from '@angular/core';
-import { Position, PositionSearchForm } from '@site/app/define/sys/position';
+import { Position, PositionSearchForm, PositionUsersQueryDto, SimplePosition } from '@site/app/define/sys/position';
 import { delay, Observable, of } from 'rxjs';
 import { ResponseBean } from '@site/app/define/sys/response';
-import { User } from '@site/app/define/sys/user';
+import { UserPageListVo } from '@site/app/define/sys/user';
+import { HttpClient } from '@angular/common/http';
+import { UserService } from '@site/app/services/sys/user.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PositionService {
 
-  constructor() { }
+  constructor(private http: HttpClient, private userService: UserService) { }
 
   findByPage(formData: PositionSearchForm): Observable<ResponseBean<Position[]>> {
-    return of({
-      success: true,
-      data: this.mockPositions()
-    }).pipe(delay(1000))
-  }
-
-  findAll(keyword: string): Observable<ResponseBean<Position[]>> {
-    return of({
-      success: true,
-      data: this.mockPositions()
+    return this.http.get<ResponseBean<Position[]>>('/api/position/page', {
+      params: {
+        ...formData
+      }
     })
   }
 
+  findAll(keyword?: string): Observable<ResponseBean<SimplePosition[]>> {
+    return this.http.get<ResponseBean<SimplePosition[]>>('/api/position/findAll')
+  }
+
   add(position: Position): Observable<ResponseBean<void>> {
-    return of({
-      success: true
-    }).pipe(delay(1000))
+    return this.http.post<ResponseBean<void>>('/api/position/add', position)
   }
 
   update(position: Position): Observable<ResponseBean<void>> {
-    return of({
-      success: true
-    }).pipe(delay(1000))
+    return this.http.put<ResponseBean<void>>('/api/position/update', position)
   }
 
   delete(positionId: string): Observable<ResponseBean<void>> {
-    return of({
-      success: true
-    }).pipe(delay(1000))
+    return this.http.delete<ResponseBean<void>>(`/api/position/delete/${positionId}`)
   }
 
   enable(positionId: string): Observable<ResponseBean<void>> {
-    return of({
-      success: true
-    }).pipe(delay(1000))
+    return this.http.patch<ResponseBean<void>>('/api/position/enable', {
+      positionId,
+      enable: true
+    })
   }
 
   disable(positionId: string): Observable<ResponseBean<void>> {
-    return of({
-      success: true
-    }).pipe(delay(1000))
+    return this.http.patch<ResponseBean<void>>('/api/position/enable', {
+      positionId,
+      enable: false
+    })
   }
 
   getDetails(positionId: string): Observable<ResponseBean<Position>> {
-    return of({
-      success: true,
-      data: {
-        positionId: '111111',
-        positionCode: 'AAAAA',
-        positionName: '职位测试',
-        userNum: 10,
-        isEnable: true,
-        isBuiltIn: false,
-        createTime: '2024-05-06 14:20:22'
-      }
-    }).pipe(delay(1000))
+    return this.http.get<ResponseBean<Position>>(`/api/position/getOne/${positionId}`);
   }
 
-  getUsers(positionId: string): Observable<ResponseBean<User[]>> {
-    return of({
-      success: true,
-      data: [
-        {
-          userId: '001',
-          username: 'zhangsan',
-          name: '张三',
-          phoneNumber: '13888888888',
-          deptId: 'd01',
-          deptName: '开发部',
-          roles: [{roleId: '0010001', roleName: '管理员'}],
-          isEnable: true
-        }
-      ],
-      total: 1,
-    }).pipe(delay(1000))
+  getUsers(queryDto: PositionUsersQueryDto): Observable<ResponseBean<UserPageListVo[]>> {
+    return this.userService.findByPage(queryDto);
   }
 
-  mockPositions(): Position[] {
-    return [
-      {
-        positionId: '111111',
-        positionCode: 'AAAAA',
-        positionName: '职位测试',
-        userNum: 10,
-        isEnable: true,
-        isBuiltIn: true,
-        createTime: '2024-05-06 14:20:22'
-      },
-      {
-        positionId: '222222',
-        positionCode: 'BBBBBB',
-        positionName: '职位测试1',
-        userNum: 10,
-        isEnable: true,
-        isBuiltIn: false,
-        createTime: '2024-05-06 14:20:22'
-      },
-    ]
-  }
 }

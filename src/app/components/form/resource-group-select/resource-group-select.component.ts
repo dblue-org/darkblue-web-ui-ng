@@ -1,4 +1,4 @@
-import { Component, forwardRef, OnInit } from '@angular/core';
+import { Component, forwardRef, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -23,7 +23,9 @@ import { ResourcesGroupService } from '@site/app/services/sys/resources-group.se
     }
   ]
 })
-export class ResourceGroupSelectComponent implements OnInit, ControlValueAccessor{
+export class ResourceGroupSelectComponent implements OnInit, ControlValueAccessor, OnChanges {
+
+  @Input() platform: number = 1;
 
   value?: string[];
   options?: ResourceGroup[] = [];
@@ -37,7 +39,11 @@ export class ResourceGroupSelectComponent implements OnInit, ControlValueAccesso
   }
 
   ngOnInit(): void {
-    this.resourceGroupService.getAll().subscribe(res => {
+    this.loadAll();
+  }
+
+  loadAll() {
+    this.resourceGroupService.getAll(this.platform).subscribe(res => {
       if (res.success) {
         this.options = res.data;
       }
@@ -62,6 +68,12 @@ export class ResourceGroupSelectComponent implements OnInit, ControlValueAccesso
 
   writeValue(obj: any): void {
     this.value = obj;
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['platform']) {
+      this.loadAll();
+    }
   }
 
 }

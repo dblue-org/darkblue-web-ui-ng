@@ -5,10 +5,11 @@ import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzTagModule } from 'ng-zorro-antd/tag';
-import { Role, RoleMenusWithPermission } from '@site/app/define/sys/role';
+import { Role } from '@site/app/define/sys/role';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { RoleService } from '@site/app/services/sys/role.service';
+import { MenusWithPermission } from '@site/app/define/sys/menu';
 
 @Component({
   selector: 'app-role-details',
@@ -31,8 +32,8 @@ import { RoleService } from '@site/app/services/sys/role.service';
 export class RoleDetailsComponent implements OnInit{
 
   @Input('roleId') roleId?: string;
-  rolePermissions: RoleMenusWithPermission[] = [];
-  mapOfExpandedData: { [key: string]: RoleMenusWithPermission[] } = {};
+  rolePermissions: MenusWithPermission[] = [];
+  mapOfExpandedData: { [key: string]: MenusWithPermission[] } = {};
   permissionTableLoading = false;
 
   role?: Role;
@@ -40,7 +41,7 @@ export class RoleDetailsComponent implements OnInit{
   constructor(private roleService: RoleService) {
   }
 
-  collapse(array: RoleMenusWithPermission[], data: RoleMenusWithPermission, $event: boolean): void {
+  collapse(array: MenusWithPermission[], data: MenusWithPermission, $event: boolean): void {
     if (!$event) {
       if (data.children) {
         data.children.forEach(d => {
@@ -54,9 +55,9 @@ export class RoleDetailsComponent implements OnInit{
     }
   }
 
-  convertTreeToList(root: RoleMenusWithPermission): RoleMenusWithPermission[] {
-    const stack: RoleMenusWithPermission[] = [];
-    const array: RoleMenusWithPermission[] = [];
+  convertTreeToList(root: MenusWithPermission): MenusWithPermission[] {
+    const stack: MenusWithPermission[] = [];
+    const array: MenusWithPermission[] = [];
     const hashMap = {};
     stack.push({...root, level: 0, expand: true});
 
@@ -73,7 +74,7 @@ export class RoleDetailsComponent implements OnInit{
     return array;
   }
 
-  visitNode(node: RoleMenusWithPermission, hashMap: { [key: string]: boolean }, array: RoleMenusWithPermission[]): void {
+  visitNode(node: MenusWithPermission, hashMap: { [key: string]: boolean }, array: MenusWithPermission[]): void {
     if (!hashMap[node.menuId]) {
       hashMap[node.menuId] = true;
       array.push(node);
@@ -105,6 +106,7 @@ export class RoleDetailsComponent implements OnInit{
 
   ngOnInit(): void {
     if (this.roleId) {
+      this.getRole();
       this.loadRolePermissions(this.roleId);
     }
   }

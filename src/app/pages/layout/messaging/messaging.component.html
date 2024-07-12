@@ -2,6 +2,7 @@
   [nzClosable]="false"
   [nzVisible]="visible"
   nzPlacement="right"
+  nzWrapClassName="message-container"
   (nzOnClose)="close()"
 >
   <ng-container *nzDrawerContent>
@@ -34,13 +35,10 @@
       </nz-tab>
       <nz-tab nzTitle="待办">
         <ng-container *ngFor="let item of todoList">
-          <nz-card [nzTitle]="titleTpl" [nzActions]="createActionTemplates(item.actions)" style="margin-bottom: 20px">
+          <nz-card [nzTitle]="titleTpl" [nzActions]="createActionTemplates(item.actions)" class="message-card">
             <div nz-row style="margin-bottom: 10px;">
-              <div nz-col nzSpan="12">
-                <span class="todo-content-createTime">{{item.createTime}}</span>
-              </div>
-              <div nz-col nzSpan="12" style="text-align: right">
-                <nz-tag [nzColor]="'#108ee9'">{{item.status}}</nz-tag>
+              <div nz-col nzSpan="24">
+                <span class="todo-content-title">{{item.title}}</span>
               </div>
             </div>
             <div *ngFor="let contentItem of item.content">{{contentItem}}</div>
@@ -50,7 +48,15 @@
 
           </nz-card>
           <ng-template #titleTpl>
-            <nz-tag>{{item.type}}</nz-tag> {{item.title}}
+            <div nz-row>
+              <div nz-col [nzSpan]="16">
+                <span class="todo-type">{{item.type}}</span> {{item.createTime}}
+              </div>
+              <div nz-col [nzSpan]="8" class="text-align-right">
+                <nz-tag [nzColor]="'#10239E'">{{item.status}}</nz-tag>
+              </div>
+            </div>
+
           </ng-template>
         </ng-container>
       </nz-tab>

@@ -47,7 +47,7 @@ export class ResourceSelectComponent implements OnInit, ControlValueAccessor {
             key: ctl.tagName,
             title: ctl.tagName,
             selectable: false,
-            disabled: true,
+            /*disabled: true,*/
             children: ctl.mappings ? ctl.mappings.map(m => {
               return {
                 key: m.resourceUrl,

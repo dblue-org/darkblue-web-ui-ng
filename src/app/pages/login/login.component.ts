@@ -26,22 +26,24 @@ import { LoginForm } from '../../define/sys/user';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  validateForm: FormGroup<{
-    username: FormControl<string>;
-    password: FormControl<string>;
-    remember: FormControl<boolean>;
-  }> = this.fb.group({
+  validateForm = this.fb.group({
     username: ['admin', [Validators.required]],
     password: ['123456', [Validators.required]],
     remember: [true]
   });
+  loginLoading = false;
 
   constructor(private fb: NonNullableFormBuilder, private loginService: LoginService, private authService: AuthenticationService) {
   }
 
   submitForm(): void {
     if (this.validateForm.valid) {
-      this.loginService.login(this.validateForm.value as LoginForm);
+      this.loginLoading = true;
+      this.loginService.login(this.validateForm.value as LoginForm).subscribe({
+        next: res => {
+          this.loginLoading = false;
+        }
+      });
     } else {
       Object.values(this.validateForm.controls).forEach(control => {
         if (control.invalid) {

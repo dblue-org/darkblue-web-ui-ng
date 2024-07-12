@@ -99,11 +99,15 @@ export class PermissionManageComponent implements OnInit {
         menuId: event.keys[0],
         menuName: event.node?.title || ''
       };
+      this.loadPermissions();
     }
   }
 
   showAddModal() {
-    this.permissionEditModalComponent?.showAddModal(this.selectedMenu)
+    this.permissionEditModalComponent?.showAddModal({
+      ...this.selectedMenu,
+      platform: this.platform
+    })
   }
 
   showUpdateModal(permission: PermissionVo) {
@@ -127,6 +131,11 @@ export class PermissionManageComponent implements OnInit {
     })
   }
 
+  search() {
+    this.tableOptions.pageIndex = 1;
+    this.loadPermissions();
+  }
+
   loadPermissions() {
     this.tableLoading = true;
 
@@ -145,6 +154,12 @@ export class PermissionManageComponent implements OnInit {
       },
       complete: () => this.tableLoading = false
     });
+  }
+
+  onPlatformChange() {
+    this.selectedMenu = undefined;
+    this.loadMenus();
+    this.loadPermissions();
   }
 
   protected loadMenus() {

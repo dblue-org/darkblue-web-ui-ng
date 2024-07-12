@@ -15,7 +15,7 @@
       </button>
     </ng-template>
     <ng-template #menuTitle>
-      <nz-radio-group [(ngModel)]="platform" style="margin-right: 8px;" (ngModelChange)="loadMenus()">
+      <nz-radio-group [(ngModel)]="platform" style="margin-right: 8px;" (ngModelChange)="onPlatformChange()">
         <label nz-radio-button [nzValue]="1">PC端</label>
         <label nz-radio-button [nzValue]="2">移动端</label>
       </nz-radio-group>
@@ -25,6 +25,7 @@
     <app-tpl-search-bar [formGroup]="searchForm"
                         [buttons]="tableButtons"
                         buttonPosition="R"
+                        (onSearch)="search()"
                         [items]="[
                           {name: 'permissionCode', label: '权限标识', item: permissionCode},
                           {name: 'permissionName', label: '权限名称', item: permissionName}

@@ -52,7 +52,7 @@
         <td>{{ data.propertyCode }}</td>
         <td>{{ data.propertyName }}</td>
         <td nzEllipsis [title]="data.remark">{{ data.remark }}</td>
-        <td>{{ getPropertyType(data.type) }}</td>
+        <td>{{ data.typeName }}</td>
         <td nzEllipsis>{{ toScopeString(data) }}</td>
         <td>
           {{ data.type != 8 ? data.defaultValue : getEnumValue(data.defaultValue, data) }}
@@ -75,6 +75,7 @@
                   nzPopconfirmTitle="是否确认删除此参数?"
                   (nzOnConfirm)="delete(data.propertyId)"
                   nzDanger [nzLoading]="deleteLoading">删除</button>
+          <button nz-button nzSize="small">复制</button>
         </td>
       </tr>
     }
@@ -82,4 +83,4 @@
 </nz-table>
 
 <app-property-edit-modal #propertyEditModalComponent (onSuccess)="loadProperties()" />
-<app-property-value-edit-modal #propertyValueEditModalComponent/>
+<app-property-value-edit-modal #propertyValueEditModalComponent (onSuccess)="loadProperties()"/>

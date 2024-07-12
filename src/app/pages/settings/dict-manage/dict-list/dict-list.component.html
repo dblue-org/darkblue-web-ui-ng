@@ -1,0 +1,45 @@
+<ul nz-list>
+  <nz-list-header>
+    <div nz-row>
+      <div nz-col [nzSpan]="6" class="header-title">字典列表</div>
+      <div nz-col [nzSpan]="18" class="header-buttons">
+        <button nz-button nzType="default" nzShape="circle" (click)="showAddModal()">
+          <span nz-icon nzType="plus"></span>
+        </button>
+        <button nz-button nzType="default" nzShape="circle" *ngIf="selectedDict" (click)="showUpdateModal(selectedDict)">
+          <span nz-icon nzType="edit"></span>
+        </button>
+        <button nz-button nzType="default" nzShape="circle" *ngIf="selectedDict" (click)="doDelete()">
+          <span nz-icon nzType="delete"></span>
+        </button>
+        <button nz-button nzType="default" nzShape="circle" [nzLoading]="loading" (click)="loadDictionaries()">
+          <span nz-icon nzType="reload"></span>
+        </button>
+      </div>
+    </div>
+  </nz-list-header>
+  <nz-spin [nzSpinning]="loading">
+    <div style="height: 400px" *ngIf="loading"></div>
+  </nz-spin>
+  @for (item of dictionaries; track item.dictionaryId) {
+    <nz-list-item [class]="getDictionaryListItemClass(item)" [nzNoFlex]="true" (click)="select(item)">
+      <div nz-row>
+        <div nz-col [nzSpan]="14">
+          <ng-container *ngIf="item.dictionaryType == 1">
+            <span nz-icon nzType="bars" nzTheme="outline"></span>
+          </ng-container>
+          <ng-container *ngIf="item.dictionaryType == 2">
+            <iconify icon="carbon:tree-view-alt" [size]="14"/>
+          </ng-container>
+          {{ item.dictionaryName }}
+        </div>
+        <div nz-col [nzSpan]="10" class="dict-code">
+          {{item.dictionaryCode}}
+        </div>
+      </div>
+
+    </nz-list-item>
+  }
+</ul>
+
+<app-dict-edit-modal #dictEditModalComponent (onSuccess)="loadDictionaries()" />

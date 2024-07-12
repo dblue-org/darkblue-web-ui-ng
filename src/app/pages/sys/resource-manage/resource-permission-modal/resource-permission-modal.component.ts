@@ -80,7 +80,7 @@ export class ResourcePermissionModalComponent implements OnInit {
 
   showModal(resource: Resource) {
     this.resource = resource;
-    this.selectedPermissions = [...resource.permissions] || [];
+    this.selectedPermissions = resource.permissions ? [...resource.permissions] : [];
     this.isVisible = true;
     console.log(this.platform);
   }

@@ -59,7 +59,8 @@ export class CachingManageComponent implements OnInit {
     this.cachingService.refreshCache(cacheCode).subscribe({
       next: res => {
         if (res.success) {
-          this.messageService.success('缓存已刷新')
+          this.messageService.success('缓存已刷新');
+          this.loadCacheList();
         }
       },
       complete: () => this.refreshLoading = false

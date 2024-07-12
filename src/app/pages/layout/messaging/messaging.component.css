@@ -1,7 +1,17 @@
+/*::ng-deep .message-container .ant-drawer-content{
+  background-color: #f0f2f5;
+}*/
 .todo-content-title {
   font-size: 1.1em;
   font-weight: bold;
   margin-bottom: 10px;
+  color: rgb(16, 35, 158);
+}
+
+.todo-type {
+  font-weight: bold;
+  color: gray;
+  margin-right: 24px;
 }
 
 .tags {
@@ -20,3 +30,46 @@
   text-align: right;
   color: gray;
 }
+
+.message-card {
+  margin-bottom: 20px
+}
+
+.ant-list-item {
+  background-color: #f0f2f5;
+  margin-bottom: 12px;
+  padding: 8px;
+  border-radius: 8px;
+}
+
+.ant-card {
+  background-color: #f0f5ff;
+  border-radius: 8px;
+}
+
+.ant-card-bordered {
+  border: 1px solid rgb(47, 84, 235);
+}
+
+.message-card ::ng-deep .ant-card-body {
+  padding: 16px;
+}
+
+.message-card ::ng-deep .ant-card-head {
+  padding: 0 16px;
+}
+
+.message-card ::ng-deep .ant-card-head-title {
+  padding-bottom: 8px;
+}
+
+.message-card ::ng-deep .ant-card-head {
+  border-bottom: 1px solid #f0f5ff;
+}
+
+.message-card ::ng-deep .ant-card-actions {
+  border-top: 1px solid #f0f5ff;
+  background-color: #f0f5ff;
+  border-radius: 8px;
+}
+

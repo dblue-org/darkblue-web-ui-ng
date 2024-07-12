@@ -13,6 +13,8 @@ import { NzColorPickerModule } from 'ng-zorro-antd/color-picker';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import moment from 'moment';
 import { PropertyValueComponent } from '@site/app/components/form/property-value/property-value.component';
+import { PropertiesSettingService } from '@site/app/services/settings/properties-setting.service';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-property-value-edit-modal',
@@ -47,6 +49,9 @@ export class PropertyValueEditModalComponent {
   list: string[] = [];
   options: EnumItem[] = [];
 
+  constructor(private propertySettingService: PropertiesSettingService, private messageService: NzMessageService) {
+  }
+
   showModal(property: Property) {
     this.isVisible = true;
     this.property = property;
@@ -59,7 +64,23 @@ export class PropertyValueEditModalComponent {
   }
 
   handleOk() {
-
+    if (this.property) {
+      this.loading = true;
+      this.propertySettingService.changePropertyValue(this.property?.propertyId, this.value).subscribe({
+        next: res => {
+          if (res.success) {
+            this.messageService.success('参数值已更新');
+            this.isVisible = false;
+            this.onSuccess.emit({
+              propertyId: this.property?.propertyId,
+              value: this.value
+            });
+          }
+          this.loading = false
+        },
+        error: () => this.loading = false
+      })
+    }
   }
 
   setScope(property: Property) {

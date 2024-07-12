@@ -46,6 +46,7 @@ export class PropertyEditModalComponent extends BasicEditModalComponent implemen
   propertyTypes: EnumItem[] = [];
 
   dataForm = this.formBuilder.group({
+    propertyId: [''],
     propertyCode: ['', [Validators.required]],
     propertyName: ['', [Validators.required]],
     remark: [''],
@@ -119,9 +120,9 @@ export class PropertyEditModalComponent extends BasicEditModalComponent implemen
       if (type == 2) {
         property['valueScope'] = {...this.numberScope}
       } else if (type == 7) {
-        property['valueScope'] = {...this.list}
+        property['valueScope'] = [...this.list]
       } else if (type == 8) {
-      property['valueScope'] = {...this.enumItems}
+      property['valueScope'] = [...this.enumItems]
     }
     }
     return  property as Property;

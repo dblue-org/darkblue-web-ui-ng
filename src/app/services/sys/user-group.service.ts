@@ -3,7 +3,7 @@ import { UserGroup, UserGroupSearchForm } from '@site/app/define/sys/user-group'
 import { delay, Observable, of } from 'rxjs';
 import { ResponseBean } from '@site/app/define/sys/response';
 import { Role } from '@site/app/define/sys/role';
-import { User } from '@site/app/define/sys/user';
+import { UserPageListVo } from '@site/app/define/sys/user';
 
 @Injectable({
   providedIn: 'root'
@@ -42,7 +42,7 @@ export class UserGroupService {
     }).pipe(delay(1000))
   }
 
-  getUsers(userGroupId: string): Observable<ResponseBean<User[]>> {
+  getUsers(userGroupId: string): Observable<ResponseBean<UserPageListVo[]>> {
     return of({
       success: true,
       data: [

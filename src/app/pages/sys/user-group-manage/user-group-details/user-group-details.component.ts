@@ -6,7 +6,7 @@ import { IconifyComponent } from '@site/app/components/icon/iconify/iconify.comp
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { Role } from '@site/app/define/sys/role';
-import { User } from '@site/app/define/sys/user';
+import { UserPageListVo } from '@site/app/define/sys/user';
 import { UserGroupService } from '@site/app/services/sys/user-group.service';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzPopconfirmDirective } from 'ng-zorro-antd/popconfirm';
@@ -52,7 +52,7 @@ export class UserGroupDetailsComponent implements OnInit {
   roles: Role[] = []
   roleTableLoading = false;
 
-  users: User[] = [];
+  users: UserPageListVo[] = [];
   userTableLoading = false;
   userTableOptions = {
     total: 0,
@@ -103,7 +103,7 @@ export class UserGroupDetailsComponent implements OnInit {
     this.modalService.create({
       nzTitle: '选择角色以添加到资源组',
       nzContent: this.roleSelector,
-      nzBodyStyle: {minHeight: '300px'},
+      nzBodyStyle: {minHeight: '150px'},
       nzOnOk: () => this.doAddRoles()
     })
   }
@@ -116,6 +116,7 @@ export class UserGroupDetailsComponent implements OnInit {
           if (res.success) {
             this.messageService.success('已添加角色');
             this.selectedRoles = [];
+            this.loadRoles();
           }
         },
         complete: () => this.roleAddLoading = false
@@ -127,7 +128,7 @@ export class UserGroupDetailsComponent implements OnInit {
     this.modalService.create({
       nzTitle: '选择用户以添加到资源组',
       nzContent: this.userSelector,
-      nzBodyStyle: {minHeight: '300px'},
+      nzBodyStyle: {minHeight: '150px'},
       nzOnOk: () => this.doAddUsers()
     })
   }
@@ -140,6 +141,7 @@ export class UserGroupDetailsComponent implements OnInit {
           if (res.success) {
             this.messageService.success('已添加用户');
             this.selectedRoles = [];
+            this.loadUsers();
           }
         },
         complete: () => this.userAddLoading = false
@@ -156,7 +158,7 @@ export class UserGroupDetailsComponent implements OnInit {
     })
   }
 
-  removeUser(user: User) {
+  removeUser(user: UserPageListVo) {
     this.userGroupService.removeUser(this.userGroupId, user.userId).subscribe(res => {
       if (res.success) {
         this.messageService.success('已从用户组中移除用户[' + user.name + ']');

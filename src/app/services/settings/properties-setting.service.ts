@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
-import { delay, Observable, of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { ResponseBean } from '@site/app/define/sys/response';
 import { Property, PropertySearchForm, propertyType, EnumItem } from '@site/app/define/settings/property';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PropertiesSettingService {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   getPropertyTypes(): Observable<ResponseBean<EnumItem[]>> {
     return of({
@@ -18,7 +19,12 @@ export class PropertiesSettingService {
   }
 
   getAllProperties(searchFrom: PropertySearchForm): Observable<ResponseBean<Property[]>> {
-    return of({
+    return this.http.get<ResponseBean<Property[]>>('/api/property-setting/findByPage', {
+      params: {
+        ...searchFrom
+      }
+    })
+    /*return of({
       success: true,
       data: [
         {
@@ -101,24 +107,24 @@ export class PropertiesSettingService {
         },
       ],
       total: 7
-    }).pipe(delay(1000))
+    }).pipe(delay(1000))*/
   }
 
   add(property: Property): Observable<ResponseBean<void>> {
-    return of({
-      success: true
-    }).pipe(delay(1000))
+    return this.http.post<ResponseBean<void>>('/api/property-setting/add', property)
   }
 
   update(property: Property): Observable<ResponseBean<void>> {
-    return of({
-      success: true
-    }).pipe(delay(1000))
+    return this.http.put<ResponseBean<void>>('/api/property-setting/update', property)
   }
 
   delete(propertyId: string): Observable<ResponseBean<void>> {
-    return of({
-      success: true
-    }).pipe(delay(1000))
+    return this.http.delete<ResponseBean<void>>(`/api/property-setting/update/${propertyId}`)
+  }
+
+  changePropertyValue(propertyId: string, value: any): Observable<ResponseBean<void>> {
+    return this.http.patch<ResponseBean<void>>('/api/property-setting/changeValue', {
+      propertyId, value
+    })
   }
 }

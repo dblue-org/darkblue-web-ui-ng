@@ -1,6 +1,7 @@
 .menu-permissions-container {
   padding: 24px;
   border: 1px solid #dddddd;
+  background-color: white;
 }
 
 .menu-permissions-container .menu-permissions-header {

@@ -1,8 +1,8 @@
 <app-section dkTitle="权限信息">
   <nz-descriptions nzBordered style="margin-bottom: 24px">
-    <nz-descriptions-item nzTitle="权限名称">超级管理员</nz-descriptions-item>
-    <nz-descriptions-item nzTitle="权限编码">Admin</nz-descriptions-item>
-    <nz-descriptions-item nzTitle="创建时间">2024-06-19 15:23:50</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="权限名称">{{ permission?.permissionName }}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="权限编码">{{ permission?.permissionCode }}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="创建时间">{{ permission?.createTime }}</nz-descriptions-item>
   </nz-descriptions>
 </app-section>
 
@@ -46,7 +46,7 @@
             nzBordered
             nzSize="small"
             [nzTotal]="roleTableOptions.total"
-            [(nzPageIndex)]="roleTableOptions.pageIndex"
+            [(nzPageIndex)]="roleTableOptions.page"
             [(nzPageSize)]="roleTableOptions.pageSize"
             [nzLoading]="roleTableLoading"
             [nzData]="roles"

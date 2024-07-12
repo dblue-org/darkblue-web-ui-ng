@@ -23,7 +23,7 @@ function removeEmptyParams(params: HttpParams) {
   let newParams = new HttpParams();
   params.keys().forEach(key => {
     const value = params.get(key);
-    if (value != null && value != '' && value != undefined) {
+    if (value !== null && value !== '' && value !== undefined) {
       newParams = newParams.set(key, value);
     }
   })
@@ -33,7 +33,7 @@ function removeEmptyParams(params: HttpParams) {
 function removeEmptyField(obj: any): any {
   if (obj) {
     Object.keys(obj).forEach(key => {
-      if (obj[key] == null || obj[key] == undefined || obj[key] == '') {
+      if (obj[key] === null || obj[key] === undefined || obj[key] === '') {
         delete obj[key];
       }
     })

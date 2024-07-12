@@ -24,6 +24,12 @@ export interface Mapping {
   method?: string
 }
 
+export interface ResourceVo extends Mapping{
+  resourceId: string
+  isAuthedAccess: boolean
+  createTime: string
+}
+
 export interface Resource extends Mapping{
   resourceId: string
   isAuthedAccess: boolean
@@ -37,6 +43,7 @@ export interface SimpleResource {
   requestMethod?: string
   resourceUrl: string
 }
+
 export interface ResourceSearchForm {
   resourceGroupId?: string
   resourceName?: string

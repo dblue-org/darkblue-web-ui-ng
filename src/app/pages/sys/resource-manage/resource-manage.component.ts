@@ -109,7 +109,7 @@ export class ResourceManageComponent implements OnInit, OnChanges {
     this.resourceService.findByPage({
       ...this.searchForm.value,
       platform: this.platform,
-      resourceGroupId: this.selectedResourceGroup?.resourceGroupId,
+      resourceGroupId: this.selectedResourceGroup?.resourceGroupId || '',
       page: this.tableOptions.pageIndex,
       pageSize: this.tableOptions.pageSize
     }).subscribe({

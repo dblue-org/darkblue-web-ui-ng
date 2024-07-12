@@ -22,11 +22,12 @@ export interface NumberScope {
 }
 
 export interface Property {
-  propertyId?: string
+  propertyId: string
   propertyCode: string
   propertyName: string
   remark: string
   type: number
+  typeName: string
   valueScope?: NumberScope | EnumItem [] | string[]
   defaultValue: any
   value: any
@@ -83,7 +84,7 @@ export function toScopeString(property: Property): string {
 
 export function getEnumLabel(value: any, items: EnumItem[]) {
   for (const item of items) {
-    if (item.value === value) {
+    if (item.value == value) {
       return item.label;
     }
   }

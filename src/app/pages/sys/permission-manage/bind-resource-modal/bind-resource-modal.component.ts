@@ -55,14 +55,14 @@ export class BindResourceModalComponent implements OnInit {
 
   // table options
   checked = false;
-  loading = false;
   indeterminate = false;
+  loading = false;
   resources: Resource[] = [];
   tableLoading = false;
   tableOptions = {
     total: 0,
     pageIndex: 1,
-    pageSize: 15
+    pageSize: 10
   };
 
   selectedResourceMap: Map<String, SimpleResource> = new Map<String, SimpleResource>();
@@ -79,7 +79,12 @@ export class BindResourceModalComponent implements OnInit {
 
   loadResources() {
     this.tableLoading = true;
-    this.resourceService.findByPage(this.searchForm.value).subscribe({
+    this.resourceService.findByPage({
+      ...this.searchForm.value,
+      isAuthedAccess: false,
+      page: this.tableOptions.pageIndex,
+      pageSize: this.tableOptions.pageSize
+    }).subscribe({
       next: res => {
         if (res.success) {
           this.resources = res.data || [];
@@ -91,6 +96,8 @@ export class BindResourceModalComponent implements OnInit {
   }
 
   showModal(permission: SimplePermission) {
+    this.checked = false;
+    this.indeterminate = false;
     this.setOfCheckedId.clear();
     this.selectedResourceMap.clear();
     this.permissionService.getResources(permission.permissionId).subscribe(res => {

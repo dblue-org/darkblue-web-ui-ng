@@ -51,9 +51,10 @@ export class TplSearchBarComponent implements OnInit {
   @Input({transform: booleanAttribute, alias: 'showBottomLine'}) showBottomLine = false;
   @Input() items!: TplFormItem[];
   @Input('buttonPosition') buttonPosition: 'BR' | 'R' = 'BR';
+  @Input() buttons?: TemplateRef<any>;
+  @Input('dkDisabled') disabled = false;
 
   @Output() onSearch = new EventEmitter<any>();
-  @Input() buttons?: TemplateRef<any>;
 
   @ContentChild(SearchBarHelpDirective, { static: true, read: TemplateRef })
   searchBarHelpContentChild!: TemplateRef<any>;

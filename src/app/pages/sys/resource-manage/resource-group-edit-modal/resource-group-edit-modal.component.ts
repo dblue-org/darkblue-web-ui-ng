@@ -4,10 +4,12 @@ import { FormGroup, FormsModule, NonNullableFormBuilder, ReactiveFormsModule, Va
 import { ResourceGroup } from '@site/app/define/sys/resource';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzFormModule } from 'ng-zorro-antd/form';
-import { NzInputDirective } from 'ng-zorro-antd/input';
+import { NzInputDirective, NzInputModule } from 'ng-zorro-antd/input';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { ResourcesGroupService } from '@site/app/services/sys/resources-group.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
+import { NzRadioModule } from 'ng-zorro-antd/radio';
 
 @Component({
   selector: 'app-resource-group-edit-modal',
@@ -16,8 +18,10 @@ import { NzMessageService } from 'ng-zorro-antd/message';
     FormsModule,
     NzGridModule,
     NzFormModule,
-    NzInputDirective,
+    NzRadioModule,
+    NzInputModule,
     NzModalModule,
+    NzInputNumberModule,
     ReactiveFormsModule
   ],
   templateUrl: './resource-group-edit-modal.component.html',
@@ -27,12 +31,19 @@ export class ResourceGroupEditModalComponent extends BasicEditModalComponent {
 
   dataForm: FormGroup = this.formBuilder.group({
     resourceGroupId: [''],
-    groupName: ['', [Validators.required]]
+    platform: [1],
+    groupName: ['', [Validators.required]],
+    sortNum: [1, [Validators.required]],
   });
 
   constructor(private formBuilder: NonNullableFormBuilder, private resourceGroupService: ResourcesGroupService,
               private messageService: NzMessageService) {
     super();
+  }
+
+
+  protected override beforeAddShowProcessor(data?: any) {
+    this.dataForm.patchValue(data);
   }
 
   protected override beforeUpdateShowProcessor(data: ResourceGroup) {

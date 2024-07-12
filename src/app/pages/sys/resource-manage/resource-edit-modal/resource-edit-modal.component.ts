@@ -51,9 +51,11 @@ export class ResourceEditModalComponent extends BasicEditModalComponent {
 
 
   protected override beforeAddShowProcessor(data?: any) {
+    console.log(data);
     this.dataForm.patchValue({
       resourceGroupId: data?.resourceGroupId,
-      resourceGroupName: data?.resourceGroupName
+      resourceGroupName: data?.groupName,
+      isAuthedAccess: false
     })
   }
 
@@ -62,11 +64,11 @@ export class ResourceEditModalComponent extends BasicEditModalComponent {
   }
 
   protected doSave(): Observable<ResponseBean<void>> {
-    return this.resourceService.add(this.dataForm.value as Resource);
+    return this.resourceService.add(this.getFormData());
   }
 
   protected doUpdate(): Observable<ResponseBean<void>> {
-    return this.resourceService.update(this.dataForm.value as Resource);
+    return this.resourceService.update(this.getFormData());
   }
 
   getFormGroup(): FormGroup {
@@ -76,6 +78,13 @@ export class ResourceEditModalComponent extends BasicEditModalComponent {
   onResourceSelect(resource: Mapping) {
     this.selectedMapping = resource;
     this.dataForm.patchValue(resource);
+  }
+
+  getFormData(): Resource {
+    return {
+      ...this.dataForm.value,
+      //isAuthedAccess: this.dataForm.value.isAuthedAccess
+    } as Resource
   }
 
 }

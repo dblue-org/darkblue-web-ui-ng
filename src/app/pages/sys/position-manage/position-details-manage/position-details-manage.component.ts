@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
-import { User } from '@site/app/define/sys/user';
+import { UserPageListVo } from '@site/app/define/sys/user';
 import { SectionComponent } from '@site/app/components/layout/section/section.component';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { PositionService } from '@site/app/services/sys/position.service';
@@ -40,7 +40,7 @@ export class PositionDetailsManageComponent implements OnInit {
   detailsLoading = false;
   position?: Position;
 
-  users: User[] = [];
+  users: UserPageListVo[] = [];
   userTableLoading = false;
   userTableOptions = {
     total: 0,
@@ -67,7 +67,11 @@ export class PositionDetailsManageComponent implements OnInit {
 
   loadUsers() {
     this.userTableLoading = true;
-    this.positionService.getUsers(this.positionId).subscribe({
+    this.positionService.getUsers({
+      positionId: this.positionId,
+      page: this.userTableOptions.page,
+      pageSize: this.userTableOptions.pageSize
+    }).subscribe({
       next: res => {
         if (res.success) {
           this.users = res.data || [];

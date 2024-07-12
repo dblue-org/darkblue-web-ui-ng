@@ -1,10 +1,48 @@
 .steps-content-0 {
   padding-top: 24px;
   min-height: 200px;
-  max-height: 600px;
-  overflow-y: auto;
+  max-height: 800px;
+  overflow: hidden;
 }
 
 .steps-content-1 {
   padding-top: 24px;
+}
+
+.tree-panel {
+  max-height: 600px;
+  overflow-y: auto;
+  border: 1px solid #e8e8e8;
+  border-radius: 4px;
+}
+
+.tree-panel h3 {
+  font-size: 16px;
+  margin-bottom: 12px;
+  font-weight: bold;
+  padding: 12px;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.tree-panel nz-tree {
+  padding: 12px;
+}
+
+.permission-panel {
+  border: 1px solid #e8e8e8;
+  padding: 36px 24px 24px 24px;
+  margin-bottom: 24px;
+  border-radius: 4px;
+}
+
+.permission-panel h3 {
+  display: inline-block;
+  position: absolute;
+  height: 36px;
+  line-height: 36px;
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: -54px;
+  padding: 0 10px;
+  background-color: white;
 }

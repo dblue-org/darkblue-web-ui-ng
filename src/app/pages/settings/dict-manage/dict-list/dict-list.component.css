@@ -1,0 +1,46 @@
+.header-title {
+  padding-left: 8px;
+  line-height: 32px;
+  font-size: 16px;
+}
+.header-buttons {
+  text-align: right;
+  padding-right: 8px;
+}
+
+.header-buttons [nz-button] {
+  margin-left: 8px;
+}
+
+.dict-list-item {
+  padding: 0 12px 0 12px;
+  cursor: pointer;
+  height: 40px;
+  line-height: 40px;
+  border-left: 3px solid white;
+}
+
+.dict-list-item [nz-icon] {
+  margin-right: 8px;
+}
+
+.dict-list-item iconify {
+  margin-right: 8px;
+}
+
+.dict-list-item:hover {
+  background: #f5f5f5;
+  border-left: 3px solid #f5f5f5;
+}
+
+.dict-list-item-selected, .dict-list-item-selected:hover {
+  background: #e6f7ff;
+  border-left: 3px solid #40a9ff;
+}
+
+.dict-code {
+  text-align: right;
+  color: #888;
+  font-size: 12px;
+}
+

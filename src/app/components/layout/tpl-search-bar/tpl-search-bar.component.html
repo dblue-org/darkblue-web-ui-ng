@@ -19,7 +19,7 @@
       </form>
     </div>
     <div class="search-form-button" *ngIf="buttonPosition == 'R'">
-      <button nz-button nzType="primary" (click)="search()" [nzLoading]="loading">
+      <button nz-button nzType="primary" (click)="search()" [nzLoading]="loading" [disabled]="disabled">
         <span nz-icon nzType="search"></span>
         查询
       </button>
@@ -41,7 +41,7 @@
     </div>
     <div nz-col [nzSpan]="8" class="buttons-right">
       <ng-container *ngIf="buttonPosition == 'BR'">
-        <button nz-button nzType="primary" (click)="search()" [nzLoading]="loading">
+        <button nz-button nzType="primary" (click)="search()" [nzLoading]="loading" [disabled]="disabled">
           <span nz-icon nzType="search"></span>
           查询
         </button>

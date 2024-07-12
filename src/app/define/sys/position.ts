@@ -4,10 +4,16 @@ export interface Position {
   positionId: string
   positionCode: string
   positionName: string
-  userNum?: number,
+  userNums?: number,
   isEnable: boolean
   isBuiltIn: boolean
   createTime: string
+}
+
+export interface SimplePosition {
+  positionId: string
+  positionCode: string
+  positionName: string
 }
 
 export interface PositionSearchForm extends PageParams {
@@ -15,4 +21,8 @@ export interface PositionSearchForm extends PageParams {
   positionName?: string
   isEnable?: boolean
   isBuiltIn?: boolean
+}
+
+export interface PositionUsersQueryDto extends PageParams {
+  positionId: string
 }

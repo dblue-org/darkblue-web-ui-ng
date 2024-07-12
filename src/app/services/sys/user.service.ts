@@ -1,9 +1,16 @@
 import { Injectable } from '@angular/core';
 import { delay, Observable, of } from 'rxjs';
 import { ResponseBean } from '../../define/sys/response';
-import { SimpleUser, User, UserSearchForm } from '../../define/sys/user';
-import { RoleMenusWithPermission } from '@site/app/define/sys/role';
+import {
+  SimpleUser,
+  UserPageListVo,
+  UserDetailsVo,
+  UserSearchForm,
+  UserAddDto,
+  UserUpdateDto
+} from '../../define/sys/user';
 import { HttpClient } from '@angular/common/http';
+import { MenusWithPermission } from '@site/app/define/sys/menu';
 
 @Injectable({
   providedIn: 'root'
@@ -12,11 +19,11 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  addUser(user: User): Observable<ResponseBean<any>> {
+  addUser(user: UserAddDto): Observable<ResponseBean<any>> {
     return this.http.post<ResponseBean<any>>('/api/user/add', user);
   }
 
-  updateUser(user: User): Observable<ResponseBean<any>> {
+  updateUser(user: UserUpdateDto): Observable<ResponseBean<any>> {
     return this.http.put<ResponseBean<any>>('/api/user/update', user);
   }
 
@@ -38,8 +45,8 @@ export class UserService {
     });
   }
 
-  findAllUsers(searchForm: UserSearchForm): Observable<ResponseBean<User[]>> {
-    return this.http.get<ResponseBean<User[]>>('/api/user/page', {
+  findByPage(searchForm: UserSearchForm): Observable<ResponseBean<UserPageListVo[]>> {
+    return this.http.get<ResponseBean<UserPageListVo[]>>('/api/user/page', {
       params: {
         ...searchForm
       }
@@ -55,22 +62,11 @@ export class UserService {
     })
   }
 
-  private mockUser(): User[] {
-    return [
-      {
-        userId: '001',
-        username: 'zhangsan',
-        name: '张三',
-        phoneNumber: '13888888888',
-        deptId: 'd01',
-        deptName: '开发部',
-        roles: [{roleId: '0010001', roleName: '管理员'}],
-        isEnable: true
-      }
-    ]
+  getDetails(userId: string): Observable<ResponseBean<UserDetailsVo>> {
+    return this.http.get<ResponseBean<UserDetailsVo>>(`/api/user/getOne/${userId}`);
   }
 
-  getMenusWithPermission(userId: string): Observable<ResponseBean<RoleMenusWithPermission[]>> {
+  getMenusWithPermission(userId: string): Observable<ResponseBean<MenusWithPermission[]>> {
     return of({
       success: true,
       data: [
@@ -85,7 +81,8 @@ export class UserService {
                 {
                   permissionId: '001001001',
                   permissionCode: 'user_query',
-                  permissionName: '查看用户'
+                  permissionName: '查看用户',
+                  platform: 1
                 }
               ]
             }

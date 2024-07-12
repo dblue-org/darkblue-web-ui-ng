@@ -14,9 +14,11 @@ import {
   Validators
 } from '@angular/forms';
 import { UserService } from '@site/app/services/sys/user.service';
-import { User } from 'src/app/define/sys/user';
+import { UserAddDto, UserPageListVo, UserUpdateDto } from 'src/app/define/sys/user';
 import { RoleSelectComponent } from '@site/app/components/form/role-select/role-select.component';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { DepartmentSelectComponent } from '@site/app/components/form/department-select/department-select.component';
+import { PositionSelectComponent } from '@site/app/components/form/position-select/position-select.component';
 
 @Component({
   selector: 'app-user-add-modal',
@@ -33,7 +35,9 @@ import { NzMessageService } from 'ng-zorro-antd/message';
     NzSelectModule,
     NzSwitchModule,
 
-    RoleSelectComponent
+    RoleSelectComponent,
+    DepartmentSelectComponent,
+    PositionSelectComponent
   ],
   templateUrl: './user-add-modal.component.html',
   styleUrl: './user-add-modal.component.css'
@@ -44,22 +48,14 @@ export class UserAddModalComponent {
   loading = false;
   isEdit = false;
 
-  userForm: FormGroup<{
-    userId: FormControl<string>;
-    username: FormControl<string>;
-    password: FormControl<string>;
-    name: FormControl<string>;
-    phoneNumber: FormControl<string>;
-    deptId: FormControl<string>;
-    deptName: FormControl<string>;
-    roles: FormControl<string[]>;
-  }> = this.fb.group({
+  userForm = this.fb.group({
     userId: [''],
     username: ['', [Validators.required]],
     password: ['', [Validators.required]],
     name: ['', [Validators.required]],
     phoneNumber: [''],
-    deptId: [''],
+    deptId: ['', [Validators.required]],
+    positionId: [''],
     deptName: [''],
     roles: [['']]
   });
@@ -77,17 +73,12 @@ export class UserAddModalComponent {
     this.isVisible = true;
   }
 
-  showUpdateModal(user: User): void {
+  showUpdateModal(user: UserPageListVo): void {
     this.isEdit = true;
     this.toggleValidations(this.isEdit);
     this.userForm.reset();
     this.userForm.patchValue({
-      userId: user.userId,
-      username: user.username,
-      name: user.name,
-      phoneNumber: user.phoneNumber,
-      deptId: user.deptId,
-      deptName: user.deptName,
+      ...user,
       roles: user.roles?.map(r => r.roleId)
     });
     this.isVisible = true;
@@ -113,7 +104,7 @@ export class UserAddModalComponent {
   }
 
   doSave() {
-    this.userService.addUser(this.userForm.value as User).subscribe({
+    this.userService.addUser(this.userForm.value as UserAddDto).subscribe({
       next: res => {
         if (res.success) {
           this.messageService.success('保存成功');
@@ -125,7 +116,7 @@ export class UserAddModalComponent {
   }
 
   doUpdate() {
-    this.userService.updateUser(this.userForm.value as User).subscribe({
+    this.userService.updateUser(this.userForm.value as UserUpdateDto).subscribe({
       next: res => {
         if (res.success) {
           this.messageService.success('修改成功');

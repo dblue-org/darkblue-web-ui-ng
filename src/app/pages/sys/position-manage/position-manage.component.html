@@ -47,7 +47,7 @@
   <tr *ngFor="let data of basicTable.data">
     <td>{{ data.positionCode }}</td>
     <td><a routerLink="/sys/position/details" [queryParams]="{positionId: data.positionId}">{{ data.positionName }}</a></td>
-    <td>{{ data.userNum || 0 }}</td>
+    <td>{{ data.userNums || 0 }}</td>
     <td>{{ data.isEnable ? '正常' : '停用' }}</td>
     <td>{{ data.isBuiltIn ? '是' : '否' }}</td>
     <td>{{ data.createTime }}</td>

@@ -1,6 +1,5 @@
 import { Component, forwardRef, Input } from '@angular/core';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { ResourceGroup } from '@site/app/define/sys/resource';
 import { EnumItem, NumberScope } from '@site/app/define/settings/property';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzSelectModule } from 'ng-zorro-antd/select';

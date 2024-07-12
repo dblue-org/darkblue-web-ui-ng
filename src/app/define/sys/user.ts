@@ -1,4 +1,5 @@
 import { SimpleRole } from './role';
+import { MenusWithPermission } from '@site/app/define/sys/menu';
 
 export interface AccessToken {
   tokenValue: string;
@@ -45,13 +46,39 @@ export interface UserSearchForm {
   pageSize: number
 }
 
-export interface User {
+export interface UserAddDto {
+  name: string
+  username: string
+  phoneNumber: string
+  password: string
+  deptId: string
+  positionId?: string
+  sex?: number
+  identityNo?: string
+  roles: string[]
+}
+
+export interface UserUpdateDto {
+  userId: string
+  name: string
+  username: string
+  phoneNumber?: string
+  deptId: string
+  positionId?: string
+  sex?: number
+  identityNo?: string
+  roles: string[]
+}
+
+export interface UserPageListVo {
   userId: string;
   name: string;
   username: string,
   phoneNumber?: string,
   deptId: string;
   deptName: string;
+  positionId?: string
+  positionName?: string
   isEnable: boolean;
   lastLoginTime?: string;
   roles?: SimpleRole[]
@@ -62,5 +89,20 @@ export interface SimpleUser {
   name: string;
   username: string,
   phoneNumber?: string,
+}
+
+export interface UserDetailsVo extends SimpleUser {
+  deptId: string
+  deptName: string
+  positionId: string
+  positionName: string
+  identityNo: string
+  isEnable: boolean
+  createTime: string
+  lastLoginTime: string
+  passwordUpdateTime: string
+  isAdmin: boolean
+  roleNameList: string[],
+  userMenuVoList: MenusWithPermission[]
 }
 

@@ -76,28 +76,28 @@ export class PropertiesSettingComponent implements OnInit {
     this.propertyService.getAllProperties({
       ...this.searchForm.value,
       page: this.tableOptions.page,
-      pageSize: this.tableOptions.pageSize,
+      pageSize: this.tableOptions.pageSize
     }).subscribe({
       next: res => {
         if (res.success) {
           this.tableOptions.total = res.total || 0;
           this.properties = res.data || [];
-          this.tableLoading = false
         }
+        this.tableLoading = false;
       },
       error: () => this.tableLoading = false
-    })
+    });
   }
 
   showValueEditModal(property: Property) {
-    this.propertyValueEditModalComponent?.showModal(property)
+    this.propertyValueEditModalComponent?.showModal(property);
   }
 
   ngOnInit(): void {
     this.loadProperties();
   }
 
-  getEnumValue(value: any, property: Property ): string {
+  getEnumValue(value: any, property: Property): string {
     return value + '-' + getEnumLabel(value, property.valueScope as EnumItem[]);
   }
 
@@ -113,16 +113,16 @@ export class PropertiesSettingComponent implements OnInit {
     if (!propertyId) {
       return;
     }
-    this.deleteLoading = true
+    this.deleteLoading = true;
     this.propertyService.delete(propertyId).subscribe({
       next: res => {
         if (res.success) {
           this.loadProperties();
-          this.messageService.success('参数已删除')
+          this.messageService.success('参数已删除');
         }
-        this.deleteLoading = false
+        this.deleteLoading = false;
       },
       error: () => this.deleteLoading = false
-    })
+    });
   }
 }

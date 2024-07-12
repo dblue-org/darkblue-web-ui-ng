@@ -4,6 +4,7 @@ import { LoginForm, LoginUser } from '../../define/sys/user';
 import { ResponseBean } from '../../define/sys/response';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../auth/authentication.service';
+import { Subject } from 'rxjs';
 
 
 @Injectable({
@@ -17,15 +18,25 @@ export class LoginService {
     const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
     const loginData = `username=${data.username}&password=${data.password}&remember=${data.remember}`
 
+    const subject = new Subject<boolean>;
+
     this.http.post<ResponseBean<LoginUser>>('/api/login', loginData, {
       headers: headers
-    }).subscribe(res => {
-      if (res.success && res.data) {
-        this.authService.saveUser(res.data);
-        this.authService.saveAccessToken(res.data.accessToken.tokenValue);
-        this.router.navigate(['/home']);
-      }
+    }).subscribe({
+      next: res => {
+        if (res.success && res.data) {
+          this.authService.saveUser(res.data);
+          this.authService.saveAccessToken(res.data.accessToken.tokenValue);
+          subject.next(true);
+          this.router.navigate(['/home']);
+        } else {
+          subject.next(false);
+        }
+      },
+      error: () => subject.next(false)
     });
+
+    return subject;
   }
 
 

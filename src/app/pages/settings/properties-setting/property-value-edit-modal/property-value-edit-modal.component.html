@@ -5,10 +5,10 @@
       <div nz-col [nzSpan]="18" class="text-value">{{property.propertyName}}</div>
 
       <div nz-col [nzSpan]="6" class="text-label">值</div>
-      <div nz-col [nzSpan]="13" class="text-value">
+      <div nz-col [nzSpan]="12" class="text-value">
         <app-property-value [(ngModel)]="value" [dkPropertyType]="property.type" [dkNumberScope]="{min, max}" [dkListScope]="list" [dkEnumScope]="options" />
       </div>
-      <div nz-col [nzSpan]="1" class="text-unit ">{{ property.unit }}</div>
+      <div nz-col [nzSpan]="2" class="text-unit ">{{ property.unit }}</div>
       <div nz-col [nzSpan]="4" style="text-align: right;line-height: 32px">
         <button nz-button nzType="primary" nzSize="small" (click)="setToDefaultValue()">设为默认</button>
       </div>

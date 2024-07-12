@@ -1,0 +1,10 @@
+<nz-select
+  [nzMaxTagCount]="10"
+  nzPlaceHolder="请选择职位"
+  [style]="{minWidth: width}"
+  [(ngModel)]="value"
+  [nzDisabled]="isDisabled"
+  (ngModelChange)="onModalValueChange($event)"
+>
+  <nz-option *ngFor="let item of options" [nzLabel]="item.positionName" [nzValue]="item.positionId" />
+</nz-select>

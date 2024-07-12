@@ -1,19 +1,18 @@
-export interface MenuItem {
+import { CheckedPermissionVo, SimplePermission } from '@site/app/define/sys/permission';
+import { BasicTreeTableItem } from '@site/app/components/basic-tree-table';
+
+export interface MenuItem extends BasicTreeTableItem{
   menuId: string;
   parentId?: string;
   platform?: number;
   menuType?: number;
   menuName: string;
   menuUrl?: string;
-  level: number;
   sortNum?: number;
   isEnable?: boolean;
   isVisible?: boolean;
   isProductionVisible?: boolean;
   menuIcon: string;
-  children?: MenuItem[];
-  expand?: boolean;
-  parent?: MenuItem;
 }
 
 export interface MenuItemDto {
@@ -28,4 +27,39 @@ export interface MenuItemDto {
   remark?: string;
   isVisible?: boolean;
   isProductionVisible?: boolean;
+}
+
+export interface MenuVo {
+  menuId: string;
+  menuName: string;
+  parentId?: string;
+  level?: number;
+  checked?: boolean;
+  children?: MenuVo[]
+}
+
+export interface RoleMenuVo {
+  pcMenus: MenuVo[]
+  appMenus: MenuVo[]
+}
+
+export interface MenuPermissionsVo {
+  menuId: string;
+  menuName: string;
+  platform: number;
+  permissions: CheckedPermissionVo[]
+}
+
+export interface MenusWithPermission {
+  menuId: string;
+  menuName: string;
+  parentId?: string;
+  menuIcon?: string;
+  menuType?: number;
+  level?: number;
+  checked?: boolean;
+  permissions?: SimplePermission[]
+  expand?: boolean
+  parent?: MenusWithPermission
+  children?: MenusWithPermission[]
 }

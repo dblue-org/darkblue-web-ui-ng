@@ -13,7 +13,7 @@ import { TplSearchBarComponent } from '@site/app/components/layout/tpl-search-ba
 import { DepartmentTreeComponent } from './department-tree/department-tree.component';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { UserService } from '@site/app/services/sys/user.service';
-import { User } from 'src/app/define/sys/user';
+import { UserPageListVo } from 'src/app/define/sys/user';
 import { SimpleRole } from '@site/app/define/sys/role';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { UserAddModalComponent } from './user-add-modal/user-add-modal.component';
@@ -59,7 +59,7 @@ export class UserManageComponent implements OnInit {
     username: [''],
     phoneNumber: ['']
   });
-  users: User[] = [];
+  users: UserPageListVo[] = [];
   tableOptions = {
     total: 0,
     pageIndex: 1,
@@ -80,7 +80,7 @@ export class UserManageComponent implements OnInit {
 
   loadUsers(): void {
     this.tableLoading = true;
-    this.userService.findAllUsers({
+    this.userService.findByPage({
       ...this.userSearchForm.value,
       page: this.tableOptions.pageIndex,
       pageSize: this.tableOptions.pageSize
@@ -111,7 +111,7 @@ export class UserManageComponent implements OnInit {
     });
   }
 
-  showEditModal(user: User) {
+  showEditModal(user: UserPageListVo) {
     this.userAddModalComponent?.showUpdateModal(user);
   }
 
@@ -127,7 +127,7 @@ export class UserManageComponent implements OnInit {
     });
   }
 
-  disable(user: User) {
+  disable(user: UserPageListVo) {
     this.stateLoading = true;
     this.userService.disable(user.userId).subscribe({
       next: res => {
@@ -139,7 +139,7 @@ export class UserManageComponent implements OnInit {
     });
   }
 
-  enable(user: User) {
+  enable(user: UserPageListVo) {
     this.stateLoading = true;
     this.userService.enable(user.userId).subscribe({
       next: res => {
@@ -151,7 +151,7 @@ export class UserManageComponent implements OnInit {
     });
   }
 
-  gotoDetails(user: User): void {
+  gotoDetails(user: UserPageListVo): void {
     this.router.navigate(['/sys/user/details'], {
       queryParams: {
         userId: user.userId

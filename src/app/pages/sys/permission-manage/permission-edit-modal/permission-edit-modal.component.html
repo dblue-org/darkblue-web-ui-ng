@@ -12,15 +12,24 @@
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>权限名称</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="权限名称不能为空">
+          <input nz-input formControlName="permissionName"/>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
         <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>权限编码</nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="权限编码不能为空">
           <input nz-input formControlName="permissionCode"/>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>权限名称</nz-form-label>
-        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="权限名称不能为空">
-          <input nz-input formControlName="permissionName"/>
+        <nz-form-label [nzSm]="6" [nzXs]="24">平台</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <nz-radio-group formControlName="platform" [nzDisabled]="true">
+            <label nz-radio [nzValue]="1">PC端</label>
+            <label nz-radio [nzValue]="2">移动端</label>
+          </nz-radio-group>
         </nz-form-control>
       </nz-form-item>
     </form>

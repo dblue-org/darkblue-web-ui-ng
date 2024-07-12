@@ -2,9 +2,24 @@
   <ng-container *nzModalContent>
     <form nz-form [formGroup]="dataForm">
       <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="groupName">资源组名称</nz-form-label>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="groupName">资源组名称</nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24">
           <input nz-input formControlName="groupName" id="groupName" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="sortNum">排序</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <nz-input-number style="width: 100%;" formControlName="sortNum" id="sortNum" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24">平台</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <nz-radio-group formControlName="platform" [nzDisabled]="true">
+            <label nz-radio [nzValue]="1">PC端</label>
+            <label nz-radio [nzValue]="2">移动端</label>
+          </nz-radio-group>
         </nz-form-control>
       </nz-form-item>
     </form>

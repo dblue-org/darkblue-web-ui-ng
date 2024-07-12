@@ -3,5 +3,6 @@
   nzShowSearch
   nzPlaceHolder="请选择部门"
   [(ngModel)]="value"
+  [nzDisabled]="disabled"
   (ngModelChange)="onModalValueChange($event)"
 ></nz-tree-select>
