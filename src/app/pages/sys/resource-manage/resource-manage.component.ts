@@ -23,6 +23,7 @@ import { SearchBarHelpDirective } from '@site/app/components/layout/tpl-search-b
 import {
   ResourcePermissionModalComponent
 } from '@site/app/pages/sys/resource-manage/resource-permission-modal/resource-permission-modal.component';
+import { BoxContainerComponent } from '@site/app/components/layout/box-container/box-container.component';
 
 @Component({
   selector: 'app-resource-manage',
@@ -45,7 +46,8 @@ import {
     TplSearchBarComponent,
     ResourceEditModalComponent,
     SearchBarHelpDirective,
-    ResourcePermissionModalComponent
+    ResourcePermissionModalComponent,
+    BoxContainerComponent
   ],
   templateUrl: './resource-manage.component.html',
   styleUrl: './resource-manage.component.css'

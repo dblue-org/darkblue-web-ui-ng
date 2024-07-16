@@ -20,7 +20,12 @@ export const routes: Routes = [
     children: [
       {
         path: 'home',
-        loadChildren: () => import('./pages/welcome/welcome.routes').then(m => m.WELCOME_ROUTES),
+        loadChildren: () => import('@site/app/pages/dashboard/welcome/welcome.routes').then(m => m.WELCOME_ROUTES),
+        canActivate: [unAuthGuard]
+      },
+      {
+        path: 'dashboard',
+        loadChildren: () => import('@site/app/pages/dashboard/dashboard.routers').then(m => m.DASHBOARD_ROUTES),
         canActivate: [unAuthGuard]
       },
       {

@@ -14,6 +14,9 @@ import { LoginLog } from '@site/app/define/logs/login-log';
 import { LoginLogService } from '@site/app/services/logs/login-log.service';
 import { MenusWithPermission } from '@site/app/define/sys/menu';
 import { UserDetailsVo } from '@site/app/define/sys/user';
+import { NzBadgeComponent } from 'ng-zorro-antd/badge';
+import { BasicTreeTable } from '@site/app/components/basic-tree-table';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
 @Component({
   selector: 'app-user-details',
@@ -28,14 +31,16 @@ import { UserDetailsVo } from '@site/app/define/sys/user';
     NzIconModule,
     NzTagModule,
     NzFlexModule,
+    NzToolTipModule,
 
     SectionComponent,
-    IconifyComponent
+    IconifyComponent,
+    NzBadgeComponent
   ],
   templateUrl: './user-details.component.html',
   styleUrl: './user-details.component.css'
 })
-export class UserDetailsComponent implements OnInit {
+export class UserDetailsComponent extends BasicTreeTable<MenusWithPermission> implements OnInit {
 
   @Input('userId') userId?: string; // inject from router
 
@@ -50,51 +55,12 @@ export class UserDetailsComponent implements OnInit {
   };
 
   rolePermissions: MenusWithPermission[] = [];
-  mapOfExpandedData: { [key: string]: MenusWithPermission[] } = {};
   permissionTableLoading = false;
+  stateLoading = false;
 
 
   constructor(private userService: UserService, private loginLogService: LoginLogService) {
-  }
-
-  collapse(array: MenusWithPermission[], data: MenusWithPermission, $event: boolean): void {
-    if (!$event) {
-      if (data.children) {
-        data.children.forEach(d => {
-          const target = array.find(a => a.menuId === d.menuId)!;
-          target.expand = false;
-          this.collapse(array, target, false);
-        });
-      } else {
-        return;
-      }
-    }
-  }
-
-  convertTreeToList(root: MenusWithPermission): MenusWithPermission[] {
-    const stack: MenusWithPermission[] = [];
-    const array: MenusWithPermission[] = [];
-    const hashMap = {};
-    stack.push({...root, level: 0, expand: true});
-
-    while (stack.length !== 0) {
-      const node = stack.pop()!;
-      this.visitNode(node, hashMap, array);
-      if (node.children) {
-        for (let i = node.children.length - 1; i >= 0; i--) {
-          stack.push({...node.children[i], level: node.level! + 1, expand: true, parent: node});
-        }
-      }
-    }
-
-    return array;
-  }
-
-  visitNode(node: MenusWithPermission, hashMap: { [key: string]: boolean }, array: MenusWithPermission[]): void {
-    if (!hashMap[node.menuId]) {
-      hashMap[node.menuId] = true;
-      array.push(node);
-    }
+    super();
   }
 
   getUserDetails() {
@@ -103,7 +69,7 @@ export class UserDetailsComponent implements OnInit {
     }
 
     this.rolePermissions = [];
-    this.mapOfExpandedData = {}
+    this.mapOfExpandedData = {};
     this.permissionTableLoading = true;
     this.userService.getDetails(this.userId).subscribe({
       next: res => {
@@ -116,10 +82,10 @@ export class UserDetailsComponent implements OnInit {
             });
           }
         }
-        this.permissionTableLoading = false
+        this.permissionTableLoading = false;
       },
       error: () => this.permissionTableLoading = false
-    })
+    });
   }
 
   loadLoginLogs() {
@@ -136,7 +102,41 @@ export class UserDetailsComponent implements OnInit {
         }
       },
       complete: () => this.loginLogTableLoading = false
-    })
+    });
+  }
+
+  disable() {
+    if (!this.userDetails) {
+      return;
+    }
+    this.stateLoading = true;
+    this.userService.disable(this.userDetails.userId).subscribe({
+      next: res => {
+        if (res.success) {
+          if (this.userDetails) {
+            this.userDetails.isEnable = false;
+          }
+        }
+      },
+      complete: () => this.stateLoading = false
+    });
+  }
+
+  enable() {
+    if (!this.userDetails) {
+      return;
+    }
+    this.stateLoading = true;
+    this.userService.enable(this.userDetails.userId).subscribe({
+      next: res => {
+        if (res.success) {
+          if (this.userDetails) {
+            this.userDetails.isEnable = true;
+          }
+        }
+      },
+      complete: () => this.stateLoading = false
+    });
   }
 
   ngOnInit(): void {
@@ -144,5 +144,9 @@ export class UserDetailsComponent implements OnInit {
       this.getUserDetails();
       this.loadLoginLogs();
     }
+  }
+
+  getKeyName(): string {
+    return 'menuId';
   }
 }

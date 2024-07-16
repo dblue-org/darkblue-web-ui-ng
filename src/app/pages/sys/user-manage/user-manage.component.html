@@ -1,35 +1,37 @@
-<nz-layout class="user-layout">
-  <nz-sider class="dept-sider" nzWidth="300px">
+<app-tow-column>
+  <ng-container *twoColumnSider>
     <app-department-tree (onSelect)="onTreeNodeSelected($event)"/>
-  </nz-sider>
-  <nz-content class="user-content">
-    <app-tpl-search-bar [formGroup]="userSearchForm"
-                        (onSearch)="search()"
-                        [buttons]="tableButtons"
-                        [loading]="tableLoading"
-                        [items]="[
+  </ng-container>
+
+  <app-tpl-search-bar [formGroup]="userSearchForm"
+                      (onSearch)="search()"
+                      [buttons]="tableButtons"
+                      [loading]="tableLoading"
+                      [items]="[
                           {name: 'name', label: '姓名', item: name},
                           {name: 'username', label: '用户名', item: username},
                           {name: 'phoneNumber', label: '手机号码', item: phoneNumber}
                         ]">
-      <ng-template #name>
-        <input nz-input placeholder="模糊搜索姓名" formControlName="name"/>
-      </ng-template>
-      <ng-template #username>
-        <input nz-input placeholder="模糊搜索用户名" formControlName="username"/>
-      </ng-template>
-      <ng-template #phoneNumber>
-        <input nz-input placeholder="搜索手机号" formControlName="phoneNumber"/>
-      </ng-template>
-    </app-tpl-search-bar>
-
-    <ng-template #tableButtons>
-      <button nz-button nzType="primary" (click)="showAddModal()" [disabled]="!(selectedDepartment && selectedDepartment.key)">
-        <span nz-icon nzType="plus"></span>
-        新增
-      </button>
+    <ng-template #name>
+      <input nz-input placeholder="模糊搜索姓名" formControlName="name"/>
     </ng-template>
+    <ng-template #username>
+      <input nz-input placeholder="模糊搜索用户名" formControlName="username"/>
+    </ng-template>
+    <ng-template #phoneNumber>
+      <input nz-input placeholder="搜索手机号" formControlName="phoneNumber"/>
+    </ng-template>
+  </app-tpl-search-bar>
 
+  <ng-template #tableButtons>
+    <button nz-button nzType="primary" (click)="showAddModal()"
+            [disabled]="!(selectedDepartment && selectedDepartment.key)">
+      <span nz-icon nzType="plus"></span>
+      新增
+    </button>
+  </ng-template>
+
+  <app-box-container>
     <nz-table #basicTable
               [nzFrontPagination]="false"
               nzShowPagination
@@ -63,7 +65,10 @@
         <td>{{ data.deptName }}</td>
         <td>{{ data.positionName }}</td>
         <td>{{ getRolesName (data.roles) }}</td>
-        <td>{{ data.isEnable ? '正常' : '停用' }}</td>
+        <td>
+          <nz-badge nzStatus="success" *ngIf="data.isEnable" nzText="正常"></nz-badge>
+          <nz-badge nzStatus="error" *ngIf="!data.isEnable" nzText="停用"></nz-badge>
+        </td>
         <td>{{ data.lastLoginTime }}</td>
         <td>
           <button nz-button nzSize="small" nzType="default" (click)="showEditModal(data)">修改</button>
@@ -83,13 +88,23 @@
           <button *ngIf="!data.isEnable"
                   [nzLoading]="stateLoading"
                   nz-button nzSize="small"
+                  class="ant-btn-success"
                   nzType="default" nzDanger (click)="enable(data)">启用
           </button>
         </td>
       </tr>
       </tbody>
     </nz-table>
+  </app-box-container>
+</app-tow-column>
+
+<!--<nz-layout class="user-layout">
+  <nz-sider class="dept-sider" nzWidth="300px">
+
+  </nz-sider>
+  <nz-content class="user-content">
+
   </nz-content>
-</nz-layout>
+</nz-layout>-->
 
 <app-user-add-modal #userAddModalComponent (onSuccess)="loadUsers()"/>

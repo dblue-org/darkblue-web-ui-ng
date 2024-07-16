@@ -1,0 +1,11 @@
+.home-section {
+  margin-bottom: 36px;
+}
+
+.home-section nz-card {
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.09)
+}
+
+.alert-margin-bottom {
+  margin-bottom: 24px;
+}

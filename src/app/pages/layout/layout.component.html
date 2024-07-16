@@ -7,7 +7,7 @@
             [nzTrigger]="null">
     <div class="sidebar-logo">
       <img ngSrc="/assets/images/component-exchange.svg" alt="logo" height="10" width="10">
-      <h1>DarkBlue Of Angular</h1>
+      <h1 *ngIf="!isCollapsed">DarkBlue Of Angular</h1>
     </div>
     <div class="app-menu">
       <app-menu [isCollapsed]="isCollapsed"></app-menu>
@@ -63,7 +63,7 @@
     <nz-content>
       <div class="router-tabs">
         <nz-tabset nzLinkRouter nzType="editable-card" nzHideAdd [nzAnimated]="true" (nzClose)="closeTab($event)" [(nzSelectedIndex)]="selectedTabIndex">
-          <nz-tab *ngFor="let item of tabs" [nzClosable]="item.closable">
+          <nz-tab *ngFor="let item of tabs" [nzClosable]="item.closeable">
             <a *nzTabLink nz-tab-link [routerLink]="[item.routerLink]" [queryParams]="item.queryParams" queryParamsHandling="merge">
               {{ item.name }}
             </a>
@@ -75,7 +75,7 @@
         <router-outlet></router-outlet>
       </div>
     </nz-content>
-    <nz-footer class="footer" *ngIf="showFooter">Power by <a href="https://dblue.org">DarkBlue</a></nz-footer>
+    <nz-footer class="footer" *ngIf="showFooter">Power by <a href="https://dblue.org" target="_blank">DarkBlue</a></nz-footer>
   </nz-layout>
 </nz-layout>
 

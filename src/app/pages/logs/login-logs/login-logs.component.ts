@@ -14,6 +14,7 @@ import moment from 'moment';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { LoginLog } from '@site/app/define/logs/login-log';
 import { LoginLogService } from '@site/app/services/logs/login-log.service';
+import { BoxContainerComponent } from '@site/app/components/layout/box-container/box-container.component';
 
 @Component({
   selector: 'app-login-logs',
@@ -32,7 +33,8 @@ import { LoginLogService } from '@site/app/services/logs/login-log.service';
     NzSelectModule,
 
     TplSearchBarComponent,
-    UserSelectComponent
+    UserSelectComponent,
+    BoxContainerComponent
 
   ],
   templateUrl: './login-logs.component.html',

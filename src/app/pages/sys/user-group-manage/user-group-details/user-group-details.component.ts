@@ -5,8 +5,8 @@ import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
 import { IconifyComponent } from '@site/app/components/icon/iconify/iconify.component';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzTagModule } from 'ng-zorro-antd/tag';
-import { Role } from '@site/app/define/sys/role';
-import { UserPageListVo } from '@site/app/define/sys/user';
+import { RefRoleVo, Role } from '@site/app/define/sys/role';
+import { RefUserVo, UserPageListVo } from '@site/app/define/sys/user';
 import { UserGroupService } from '@site/app/services/sys/user-group.service';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzPopconfirmDirective } from 'ng-zorro-antd/popconfirm';
@@ -17,6 +17,8 @@ import { NzModalModule, NzModalService } from 'ng-zorro-antd/modal';
 import { UserSelectComponent } from '@site/app/components/form/user-select/user-select.component';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { UserGroupPageListVo } from '@site/app/define/sys/user-group';
+import { NzBadgeModule } from 'ng-zorro-antd/badge';
 
 @Component({
   selector: 'app-user-group-details',
@@ -33,6 +35,7 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
     NzIconModule,
     NzPopconfirmDirective,
     NzToolTipModule,
+    NzBadgeModule,
 
     SectionComponent,
     IconifyComponent,
@@ -44,15 +47,23 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 })
 export class UserGroupDetailsComponent implements OnInit {
 
+  // 必定不为空，等于 '' 可以省去后续空校验
   @Input('userGroupId') userGroupId: string = '';
 
   @ViewChild('roleSelector') roleSelector?: TemplateRef<any>;
   @ViewChild('userSelector') userSelector?: TemplateRef<any>;
 
-  roles: Role[] = []
-  roleTableLoading = false;
+  userGroup?: UserGroupPageListVo;
 
-  users: UserPageListVo[] = [];
+  roles: RefRoleVo[] = []
+  roleTableLoading = false;
+  roleTableOptions = {
+    total: 0,
+    page: 1,
+    pageSize: 10
+  }
+
+  users: RefUserVo[] = [];
   userTableLoading = false;
   userTableOptions = {
     total: 0,
@@ -66,19 +77,36 @@ export class UserGroupDetailsComponent implements OnInit {
   selectedUsers: string[] = [];
   userAddLoading = false;
 
+  stateLoading = false;
+
   constructor(
     private userGroupService: UserGroupService, private messageService: NzMessageService,
     private modalService: NzModalService) {
   }
 
   ngOnInit(): void {
+    this.loadDetails();
     this.loadRoles();
     this.loadUsers();
   }
 
+  loadDetails() {
+    this.userGroupService.get(this.userGroupId).subscribe({
+      next: res => {
+        if (res.success) {
+          this.userGroup = res.data;
+        }
+      }
+    })
+  }
+
   loadRoles() {
     this.roleTableLoading = true;
-    this.userGroupService.getRoles(this.userGroupId).subscribe({
+    this.userGroupService.getRoles({
+      userGroupId: this.userGroupId,
+      page: this.roleTableOptions.page,
+      pageSize: this.roleTableOptions.pageSize
+    }).subscribe({
       next: res => {
         if (res.success) {
           this.roles = res.data || [];
@@ -89,7 +117,11 @@ export class UserGroupDetailsComponent implements OnInit {
   }
   loadUsers() {
     this.userTableLoading = true;
-    this.userGroupService.getUsers(this.userGroupId).subscribe({
+    this.userGroupService.getUsers({
+      userGroupId: this.userGroupId,
+      page: this.userTableOptions.page,
+      pageSize: this.userTableOptions.pageSize
+    }).subscribe({
       next: res => {
         if (res.success) {
           this.users = res.data || [];
@@ -140,7 +172,7 @@ export class UserGroupDetailsComponent implements OnInit {
         next: res => {
           if (res.success) {
             this.messageService.success('已添加用户');
-            this.selectedRoles = [];
+            this.selectedUsers = [];
             this.loadUsers();
           }
         },
@@ -162,8 +194,33 @@ export class UserGroupDetailsComponent implements OnInit {
     this.userGroupService.removeUser(this.userGroupId, user.userId).subscribe(res => {
       if (res.success) {
         this.messageService.success('已从用户组中移除用户[' + user.name + ']');
-        this.loadRoles();
+        this.loadUsers();
       }
+    })
+  }
+
+  enable() {
+    this.stateLoading = true;
+    this.userGroupService.enable(this.userGroupId).subscribe({
+      next: res => {
+        if (res.success) {
+          this.messageService.success('已启用');
+          this.loadDetails();
+        }
+      },
+      complete: () => this.stateLoading = false
+    })
+  }
+  disable() {
+    this.stateLoading = true;
+    this.userGroupService.disable(this.userGroupId).subscribe({
+      next: res => {
+        if (res.success) {
+          this.messageService.success('已禁用');
+          this.loadDetails();
+        }
+      },
+      complete: () => this.stateLoading = false
     })
   }
 }

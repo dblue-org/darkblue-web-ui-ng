@@ -3,25 +3,47 @@
     <nz-descriptions-item nzTitle="用户名">{{userDetails.username}}</nz-descriptions-item>
     <nz-descriptions-item nzTitle="姓名">{{userDetails.name}}</nz-descriptions-item>
     <nz-descriptions-item nzTitle="手机号">{{userDetails.phoneNumber}}</nz-descriptions-item>
-    <nz-descriptions-item nzTitle="状态">{{userDetails.isEnable ? '正常' : '停用'}}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="状态">
+      <nz-badge nzStatus="success" *ngIf="userDetails.isEnable" nzText="正常"></nz-badge>
+      <nz-badge nzStatus="error" *ngIf="!userDetails.isEnable" nzText="停用"></nz-badge>
+    </nz-descriptions-item>
     <nz-descriptions-item nzTitle="部门">{{userDetails.deptName}}</nz-descriptions-item>
     <nz-descriptions-item nzTitle="创建时间">{{userDetails.createTime}}</nz-descriptions-item>
     <nz-descriptions-item nzTitle="最后登录时间">{{userDetails.lastLoginTime}}</nz-descriptions-item>
     <nz-descriptions-item nzTitle="职位">{{userDetails.positionName}}</nz-descriptions-item>
     <nz-descriptions-item ></nz-descriptions-item>
     <nz-descriptions-item nzTitle="用户组" [nzSpan]="3">
-      <nz-tag nzColor="cyan">超级管理员</nz-tag>
-      <nz-tag nzColor="cyan">系统管理员</nz-tag>
+      <ng-container *ngIf="userDetails.userGroups">
+        @for (item of userDetails.userGroups; track item.userGroupId) {
+          <nz-tag nzColor="cyan">{{ item.userGroupName }}</nz-tag>
+        }
+      </ng-container>
     </nz-descriptions-item>
     <nz-descriptions-item nzTitle="角色" [nzSpan]="3">
-      <nz-tag nzColor="blue">超级管理员</nz-tag>
-      <nz-tag nzColor="blue">系统管理员</nz-tag>
-      <nz-tag nzColor="geekblue" title="此角色来源于用户组"><iconify icon="mingcute:group-line" [size]="12"/>财务人员</nz-tag>
+      <ng-container *ngIf="userDetails.roles">
+        @for (item of userDetails.roles;track item.roleId) {
+          <nz-tag nzColor="blue" *ngIf="!item.isUserGroup">{{item.roleName}}</nz-tag>
+          <nz-tag nzColor="geekblue" *ngIf="item.isUserGroup"
+                  nz-tooltip
+                  nzTooltipTitle="此角色来源于用户组">
+            <iconify icon="mingcute:group-line" [size]="12"/>{{item.roleName}}
+          </nz-tag>
+        }
+      </ng-container>
     </nz-descriptions-item>
   </nz-descriptions>
   <ng-template #back>
-    <button nz-button nzDanger nzType="default" nzSize="small">启用</button>
-    <button nz-button nzDanger nzType="default" nzSize="small">禁用</button>
+    <button nz-button class="ant-btn-success"
+            nzDanger
+            nzType="default"
+            nzSize="small"
+            (click)="enable()"
+            *ngIf="!userDetails?.isEnable">启用</button>
+    <button nz-button nzDanger
+            nzType="default"
+            nzSize="small"
+            (click)="disable()"
+            *ngIf="userDetails?.isEnable">禁用</button>
   </ng-template>
 </app-section>
 

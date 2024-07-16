@@ -1,0 +1,59 @@
+<div nz-row [nzGutter]="[24, 24]">
+  <div nz-col [nzSpan]="12">
+    <nz-card nzTitle="字典选择控件">
+      <div style="margin-bottom: 24px;text-align: center">
+        <nz-radio-group [(ngModel)]="dictionaryCode" nzButtonStyle="solid">
+          <label nz-radio-button nzValue="TEST">列表字典</label>
+          <label nz-radio-button nzValue="TREE_DICT">树形字典</label>
+        </nz-radio-group>
+      </div>
+      <div nz-row [nzGutter]="[24, 24]">
+        <div nz-col [nzSpan]="6" class="text-align-right">字典编码：</div>
+        <div nz-col [nzSpan]="18">{{dictionaryCode}}</div>
+        <div nz-col [nzSpan]="6" class="text-align-right">是否多选：</div>
+        <div nz-col [nzSpan]="18">
+          <nz-switch [(ngModel)]="isMultiple"/>
+        </div>
+        <label nz-col [nzSpan]="6" class="text-align-right">字典选择组件：</label>
+        <div  nz-col [nzSpan]="18">
+          <div style="max-width: 300px">
+            <app-dictionary-select [dkMultiple]="isMultiple"
+                                   [dkDictionaryCode]="dictionaryCode"
+                                   [(ngModel)]="listDictValue"/>
+          </div>
+        </div>
+        <div nz-col [nzSpan]="6" class="text-align-right">选择的值：</div>
+        <div nz-col [nzSpan]="18">{{ listDictValue }}</div>
+      </div>
+    </nz-card>
+  </div>
+  <div nz-col [nzSpan]="12">
+    <nz-card nzTitle="用户选择控件">
+
+    </nz-card>
+  </div>
+
+  <div nz-col [nzSpan]="12">
+    <nz-card nzTitle="部门选择控件">
+
+    </nz-card>
+  </div>
+
+  <div nz-col [nzSpan]="12">
+    <nz-card nzTitle="职位选择控件">
+
+    </nz-card>
+  </div>
+
+  <div nz-col [nzSpan]="24">
+    <nz-card nzTitle="表格搜索控件">
+
+    </nz-card>
+  </div>
+
+  <div nz-col [nzSpan]="24">
+    <nz-card nzTitle="分段控件">
+
+    </nz-card>
+  </div>
+</div>

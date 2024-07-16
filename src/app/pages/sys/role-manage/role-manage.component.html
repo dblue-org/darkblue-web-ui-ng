@@ -20,62 +20,67 @@
   </ng-template>
 </app-tpl-search-bar>
 
-<nz-table #basicTable
-          [nzFrontPagination]="false"
-          nzShowPagination
-          nzBordered
-          nzSize="small"
-          [nzTotal]="tableOptions.total"
-          [(nzPageIndex)]="tableOptions.pageIndex"
-          [(nzPageSize)]="tableOptions.pageSize"
-          [nzLoading]="tableLoading"
-          [nzData]="roles"
-          (nzPageSizeChange)="loadRoles()"
-          (nzPageIndexChange)="loadRoles()">
-  <thead>
-  <tr>
-    <th>角色编码</th>
-    <th>角色名称</th>
-    <th>状态</th>
-    <th>是否内置</th>
-    <th>创建时间</th>
-    <th nzWidth="320px">操作</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr *ngFor="let data of basicTable.data">
-    <td>{{ data.roleCode }}</td>
-    <td><a (click)="goDetails(data)">{{ data.roleName }}</a></td>
-    <td>{{ data.isEnable ? '正常' : '停用' }}</td>
-    <td>{{ data.isBuiltIn ? '是' : '否' }}</td>
-    <td>{{ data.createTime }}</td>
-    <td>
-      <button nz-button nzSize="small" nzType="default" (click)="showEditModal(data)">修改</button>
-      <button nz-button nzSize="small"
-              nzType="primary"
-              [nzLoading]="deleteLoading"
-              nz-popconfirm
-              nzPopconfirmTitle="是否确认删除此角色?"
-              (nzOnConfirm)="delete(data.roleId)"
-              nzDanger>删除
-      </button>
-      <button *ngIf="data.isEnable"
-              [nzLoading]="stateLoading"
-              nz-button nzSize="small"
-              nzType="default" nzDanger (click)="disable(data)">禁用
-      </button>
-      <button *ngIf="!data.isEnable"
-              [nzLoading]="stateLoading"
-              nz-button nzSize="small"
-              nzType="default" nzDanger (click)="enable(data)">启用
-      </button>
-      <button nz-button nzSize="small"
-              nzType="default" (click)="showPermissionSetModal(data.roleId)">设置权限
-      </button>
-    </td>
-  </tr>
-  </tbody>
-</nz-table>
+<app-box-container>
+  <nz-table #basicTable
+            [nzFrontPagination]="false"
+            nzShowPagination
+            nzBordered
+            nzSize="small"
+            [nzTotal]="tableOptions.total"
+            [(nzPageIndex)]="tableOptions.pageIndex"
+            [(nzPageSize)]="tableOptions.pageSize"
+            [nzLoading]="tableLoading"
+            [nzData]="roles"
+            (nzPageSizeChange)="loadRoles()"
+            (nzPageIndexChange)="loadRoles()">
+    <thead>
+    <tr>
+      <th nzWidth="300px">角色编码</th>
+      <th>角色名称</th>
+      <th nzWidth="150px">状态</th>
+      <th nzWidth="120px">是否内置</th>
+      <th nzWidth="180px">创建时间</th>
+      <th nzWidth="320px">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of basicTable.data">
+      <td>{{ data.roleCode }}</td>
+      <td><a (click)="goDetails(data)">{{ data.roleName }}</a></td>
+      <td>
+        <nz-badge nzStatus="success" *ngIf="data.isEnable" nzText="正常"></nz-badge>
+        <nz-badge nzStatus="error" *ngIf="!data.isEnable" nzText="停用"></nz-badge>
+      </td>
+      <td>{{ data.isBuiltIn ? '是' : '否' }}</td>
+      <td>{{ data.createTime }}</td>
+      <td>
+        <button nz-button nzSize="small" nzType="default" (click)="showEditModal(data)">修改</button>
+        <button nz-button nzSize="small"
+                nzType="primary"
+                [nzLoading]="deleteLoading"
+                nz-popconfirm
+                nzPopconfirmTitle="是否确认删除此角色?"
+                (nzOnConfirm)="delete(data.roleId)"
+                nzDanger>删除
+        </button>
+        <button *ngIf="data.isEnable"
+                [nzLoading]="stateLoading"
+                nz-button nzSize="small"
+                nzType="default" nzDanger (click)="toggleState(data, false)">禁用
+        </button>
+        <button *ngIf="!data.isEnable"
+                [nzLoading]="stateLoading"
+                nz-button nzSize="small"
+                nzType="default" nzDanger (click)="toggleState(data, true)">启用
+        </button>
+        <button nz-button nzSize="small"
+                nzType="default" (click)="showPermissionSetModal(data.roleId)">设置权限
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
+</app-box-container>
 
-<app-role-edit-modal #roleEditModalComponent (onSuccess)="loadRoles()" />
-<app-permissions-set-modal #permissionsSetModalComponent />
+<app-role-edit-modal #roleEditModalComponent (onSuccess)="loadRoles()"/>
+<app-permissions-set-modal #permissionsSetModalComponent/>

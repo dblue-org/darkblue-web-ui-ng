@@ -22,65 +22,75 @@
   </ng-template>
 </app-tpl-search-bar>
 
-<nz-table #propertyTable
-          [nzScroll]="{x: '2100px'}"
-          nzSize="small"
-          [nzFrontPagination]="false"
-          nzShowPagination
-          nzBordered
-          [nzTotal]="tableOptions.total"
-          [(nzPageIndex)]="tableOptions.page"
-          [(nzPageSize)]="tableOptions.pageSize"
-          [nzLoading]="tableLoading"
-          [nzData]="properties">
-  <thead>
-  <tr>
-    <th nzWidth="210px">参数编码</th>
-    <th nzWidth="200px">参数名称</th>
-    <th >描述</th>
-    <th nzWidth="105px">参数类型</th>
-    <th nzWidth="300px">取值范围</th>
-    <th nzWidth="205px">默认值</th>
-    <th nzWidth="201px" nzRight>值</th>
-    <th nzWidth="100px" nzRight>单位</th>
-    <th nzWidth="207px" nzRight>操作</th>
-  </tr>
-  </thead>
-  <tbody>
-    @for (data of propertyTable.data; track data.propertyCode) {
-      <tr>
-        <td>{{ data.propertyCode }}</td>
-        <td>{{ data.propertyName }}</td>
-        <td nzEllipsis [title]="data.remark">{{ data.remark }}</td>
-        <td>{{ data.typeName }}</td>
-        <td nzEllipsis>{{ toScopeString(data) }}</td>
-        <td>
-          {{ data.type != 8 ? data.defaultValue : getEnumValue(data.defaultValue, data) }}
-        </td>
-        <td nzRight>
-          <div nz-row>
-            <div nz-col [nzSpan]="20">
-              {{ data.type != 8 ? data.value : getEnumValue(data.value, data) }}
+<app-box-container>
+  <nz-table #propertyTable
+            nzSize="small"
+            [nzFrontPagination]="false"
+            nzShowPagination
+            nzBordered
+            [nzTotal]="tableOptions.total"
+            [(nzPageIndex)]="tableOptions.page"
+            [(nzPageSize)]="tableOptions.pageSize"
+            [nzLoading]="tableLoading"
+            [nzData]="properties">
+    <thead>
+    <tr>
+      <th nzWidth="180px">参数编码</th>
+      <th nzWidth="250px">参数名称</th>
+      <th nzWidth="100px">参数类型</th>
+      <th>取值范围</th>
+      <th nzWidth="200px">默认值</th>
+      <th nzWidth="200px">值</th>
+      <th nzWidth="80px">单位</th>
+      <th nzWidth="200px">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+      @for (data of propertyTable.data; track data.propertyCode) {
+        <tr>
+          <td>{{ data.propertyCode }}</td>
+          <td>
+            {{ data.propertyName }}
+            <span *ngIf="data.remark"
+                  class="ant-icon-btn"
+                  nz-icon
+                  nzType="info-circle"
+                  nzTheme="outline"
+                  nz-tooltip
+                  [nzTooltipTitle]="data.remark">
+          </span>
+          </td>
+          <td>{{ data.typeName }}</td>
+          <td nzEllipsis>{{ toScopeString (data) }}</td>
+          <td>
+            {{ data.type != 8 ? data.defaultValue : getEnumValue (data.defaultValue, data) }}
+          </td>
+          <td>
+            <div nz-row>
+              <div nz-col [nzSpan]="20">
+                {{ data.type != 8 ? data.value : getEnumValue (data.value, data) }}
+              </div>
+              <div nz-col [nzSpan]="4">
+                <span class="table-value-edit-btn" nz-icon nzType="edit" nzTheme="outline"
+                      (click)="showValueEditModal(data)"></span>
+              </div>
             </div>
-            <div nz-col [nzSpan]="4">
-              <span class="table-value-edit-btn" nz-icon nzType="edit" nzTheme="outline" (click)="showValueEditModal(data)"></span>
-            </div>
-          </div>
-        </td>
-        <td nzRight>{{ data.unit }}</td>
-        <td nzRight>
-          <button nz-button nzSize="small" (click)="showUpdateModal(data)">修改</button>
-          <button nz-button nzSize="small" nzType="primary"
-                  nz-popconfirm
-                  nzPopconfirmTitle="是否确认删除此参数?"
-                  (nzOnConfirm)="delete(data.propertyId)"
-                  nzDanger [nzLoading]="deleteLoading">删除</button>
-          <button nz-button nzSize="small">复制</button>
-        </td>
-      </tr>
-    }
-  </tbody>
-</nz-table>
-
-<app-property-edit-modal #propertyEditModalComponent (onSuccess)="loadProperties()" />
+          </td>
+          <td>{{ data.unit }}</td>
+          <td>
+            <button nz-button nzSize="small" (click)="showUpdateModal(data)">修改</button>
+            <button nz-button nzSize="small" nzType="primary"
+                    nz-popconfirm
+                    nzPopconfirmTitle="是否确认删除此参数?"
+                    (nzOnConfirm)="delete(data.propertyId)"
+                    nzDanger [nzLoading]="deleteLoading">删除
+            </button>
+            <button nz-button nzSize="small">复制</button>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </nz-table>
+</app-box-container>
+<app-property-edit-modal #propertyEditModalComponent (onSuccess)="loadProperties()"/>
 <app-property-value-edit-modal #propertyValueEditModalComponent (onSuccess)="loadProperties()"/>

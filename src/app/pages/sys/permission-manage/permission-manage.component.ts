@@ -29,6 +29,7 @@ import {
 
 
 import { MenuIconComponent } from '@site/app/components/icon/menu-icon/menu-icon.component';
+import { BoxContainerComponent } from '@site/app/components/layout/box-container/box-container.component';
 
 @Component({
   selector: 'app-permission-manage',
@@ -54,7 +55,8 @@ import { MenuIconComponent } from '@site/app/components/icon/menu-icon/menu-icon
     BindResourceModalComponent,
     NzRadioComponent,
     NzRadioGroupComponent,
-    MenuIconComponent
+    MenuIconComponent,
+    BoxContainerComponent
   ],
   templateUrl: './permission-manage.component.html',
   styleUrl: './permission-manage.component.css'

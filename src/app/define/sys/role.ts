@@ -15,6 +15,13 @@ export interface Role extends SimpleRole {
   permissions?: string[];
 }
 
+export interface RefRoleVo extends SimpleRole {
+  remark?: string;
+  isEnable?: boolean;
+  isBuiltIn?: boolean;
+  createTime?: string;
+}
+
 export interface PermissionRoleVo extends SimpleRole{
   remark?: string;
   isEnable?: boolean;
@@ -41,7 +48,8 @@ export interface RoleDetailsVo extends SimpleRole {
   isEnable: boolean;
   isBuiltIn: boolean;
   createTime: string;
-  roleMenuVoList: MenusWithPermission[];
+  pcMenus: MenusWithPermission[];
+  appMenus: MenusWithPermission[];
 }
 
 export interface RoleUserQueryDto extends PageParams {

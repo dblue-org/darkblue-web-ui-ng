@@ -5,11 +5,12 @@ import { ResponseBean } from '@site/app/define/sys/response';
 import { FormGroup, FormsModule, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserGroupService } from '@site/app/services/sys/user-group.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { UserGroup } from '@site/app/define/sys/user-group';
+import { UserGroup, UserGroupAddDto, UserGroupUpdateDto } from '@site/app/define/sys/user-group';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 
 @Component({
   selector: 'app-user-group-edit-modal',
@@ -20,6 +21,7 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
     NzGridModule,
     NzFormModule,
     NzInputModule,
+    NzInputNumberModule,
     NzModalModule
   ],
   templateUrl: './user-group-edit-modal.component.html',
@@ -29,7 +31,8 @@ export class UserGroupEditModalComponent extends BasicEditModalComponent {
 
   dataForm = this.formBuilder.group({
     userGroupId: [''],
-    userGroupName: ['', Validators.required]
+    userGroupName: ['', Validators.required],
+    sortNum: [1, Validators.required],
   });
 
   constructor(
@@ -44,11 +47,11 @@ export class UserGroupEditModalComponent extends BasicEditModalComponent {
   }
 
   protected doSave(): Observable<ResponseBean<void>> {
-    return this.userGroupService.add(this.dataForm.value as UserGroup);
+    return this.userGroupService.add(this.dataForm.value as UserGroupAddDto);
   }
 
   protected doUpdate(): Observable<ResponseBean<void>> {
-    return this.userGroupService.update(this.dataForm.value as UserGroup);
+    return this.userGroupService.update(this.dataForm.value as UserGroupUpdateDto);
   }
 
   getFormGroup(): FormGroup {

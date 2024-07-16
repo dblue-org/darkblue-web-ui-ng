@@ -14,6 +14,7 @@ import {responseInterceptor} from "./http/response.interceptor";
 import { TemplatePageTitleStrategy } from './platform/template-page-title-strategy';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { UrlMatcherRouteReuseStrategy } from '@site/app/platform/url-matcher-route-reuse-strategy';
+import { CLIPBOARD_OPTIONS, ClipboardButtonComponent, provideMarkdown } from 'ngx-markdown';
 
 registerLocaleData(zh);
 
@@ -30,6 +31,14 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withInterceptors([requestInterceptor, responseInterceptor])),
     {provide: TitleStrategy, useClass: TemplatePageTitleStrategy},
     {provide: RouteReuseStrategy, useClass: UrlMatcherRouteReuseStrategy},
+    provideMarkdown({
+      clipboardOptions: {
+        provide: CLIPBOARD_OPTIONS,
+        useValue: {
+          buttonComponent: ClipboardButtonComponent,
+        }
+      }
+    })
   ]
 };
 

@@ -1,5 +1,6 @@
 import { SimpleRole } from './role';
 import { MenusWithPermission } from '@site/app/define/sys/menu';
+import { UserGroupPageListVo } from '@site/app/define/sys/user-group';
 
 export interface AccessToken {
   tokenValue: string;
@@ -91,6 +92,10 @@ export interface SimpleUser {
   phoneNumber?: string,
 }
 
+export interface UserRoleVo extends SimpleRole {
+  isUserGroup: boolean
+}
+
 export interface UserDetailsVo extends SimpleUser {
   deptId: string
   deptName: string
@@ -102,7 +107,8 @@ export interface UserDetailsVo extends SimpleUser {
   lastLoginTime: string
   passwordUpdateTime: string
   isAdmin: boolean
-  roleNameList: string[],
+  userGroups: UserGroupPageListVo[]
+  roles: UserRoleVo[]
   userMenuVoList: MenusWithPermission[]
 }
 
@@ -115,9 +121,9 @@ export interface RefUserVo {
   deptName: string
   positionId: string
   positionName: string
-  identityNo: string
+  identityNo?: string
   isEnable: boolean
-  createTime: string
+  createTime?: string
 }
 
 

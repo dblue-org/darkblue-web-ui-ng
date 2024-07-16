@@ -1,0 +1,59 @@
+.docs {
+  margin: 24px 0;
+  border: 1px solid #eeeeee;
+  padding: 12px;
+  border-radius: 4px;
+}
+
+:host .markdown ::ng-deep table {
+  width: 100%;
+  border: 1px solid rgba(0, 0, 0, .06);
+  border-collapse: collapse;
+  border-spacing: 0;
+  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier, monospace;
+  line-height: 1.5715;
+}
+
+:host .markdown ::ng-deep table th {
+  padding: 14px 12px 12px 12px;
+  color: #5c6b77;
+  font-weight: 500;
+  white-space: nowrap;
+  background: #00000005;
+  border: 1px solid rgba(0, 0, 0, .06);
+}
+
+:host .markdown ::ng-deep table td {
+  padding: 14px 12px 12px 12px;
+  color: #5c6b77;
+  font-weight: 500;
+  white-space: nowrap;
+  border: 1px solid rgba(0, 0, 0, .06);
+}
+
+:host .markdown ::ng-deep p > code {
+  margin: 0 1px;
+  padding: .2em .4em;
+  font-size: .9em;
+  background: #f2f4f5;
+  border: 1px solid rgba(0, 0, 0, .06);
+  border-radius: 3px;
+}
+
+:host .markdown ::ng-deep ul  code {
+  margin: 0 1px;
+  padding: .2em .4em;
+  font-size: .9em;
+  background: #f2f4f5;
+  border: 1px solid rgba(0, 0, 0, .06);
+  border-radius: 3px;
+}
+
+:host .markdown ::ng-deep table code {
+  margin: 0 1px;
+  padding: .2em .4em;
+  font-size: .9em;
+  background: #f2f4f5;
+  border: 1px solid rgba(0, 0, 0, .06);
+  border-radius: 3px;
+}

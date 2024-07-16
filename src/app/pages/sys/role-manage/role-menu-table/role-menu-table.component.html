@@ -1,0 +1,39 @@
+<nz-table #expandTable
+          [nzData]="roleMenus"
+          nzSize="small"
+          nzTableLayout="fixed"
+          nzBordered
+          [nzTitle]="tableHeader"
+          [nzLoading]="loading"
+          [nzShowPagination]="false">
+  <thead>
+  <tr>
+    <th nzWidth="200px">菜单名称</th>
+    <th nzWidth="100px">类型</th>
+    <th>权限</th>
+  </tr>
+  </thead>
+  <tbody>
+  <ng-container *ngFor="let data of expandTable.data">
+    <ng-container *ngFor="let item of mapOfExpandedData[data.menuId]">
+      <tr *ngIf="(item.parent && item.parent.expand) || !item.parent">
+        <td
+          [nzIndentSize]="item.level! * 20"
+          [nzShowExpand]="!!item.children"
+          [(nzExpand)]="item.expand"
+          (nzExpandChange)="collapse(mapOfExpandedData[data.menuId], item, $event)"
+        >
+          <span nz-icon [nzType]="item.menuIcon" nzTheme="outline" *ngIf="item.menuIcon"></span>
+          {{ item.menuName }}
+        </td>
+        <td>{{ item.menuType == 1 ? '菜单组' : '菜单项' }}</td>
+        <td>
+          @for (p of item.permissions; track p) {
+            <nz-tag nzColor="processing"> {{ p.permissionName }}({{ p.permissionCode }})</nz-tag>
+          }
+        </td>
+      </tr>
+    </ng-container>
+  </ng-container>
+  </tbody>
+</nz-table>

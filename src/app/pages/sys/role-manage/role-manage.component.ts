@@ -15,6 +15,8 @@ import {
   PermissionsSetModalComponent
 } from '@site/app/pages/sys/role-manage/permissions-set-modal/permissions-set-modal.component';
 import { Router } from '@angular/router';
+import { NzBadgeComponent } from 'ng-zorro-antd/badge';
+import { BoxContainerComponent } from '@site/app/components/layout/box-container/box-container.component';
 
 @Component({
   selector: 'app-role-manage',
@@ -32,7 +34,9 @@ import { Router } from '@angular/router';
 
     TplSearchBarComponent,
     RoleEditModalComponent,
-    PermissionsSetModalComponent
+    PermissionsSetModalComponent,
+    NzBadgeComponent,
+    BoxContainerComponent
   ],
   templateUrl: './role-manage.component.html',
   styleUrl: './role-manage.component.css'
@@ -44,7 +48,7 @@ export class RoleManageComponent implements OnInit {
 
   searchForm = this.fb.group({
     roleCode: [''],
-    roleName: [''],
+    roleName: ['']
   });
 
   roles: Role[] = [];
@@ -102,36 +106,23 @@ export class RoleManageComponent implements OnInit {
   delete(roleId: string) {
     this.roleService.delete(roleId).subscribe(res => {
       if (res.success) {
-        this.messageService.success("角色已删除")
+        this.messageService.success('角色已删除');
         this.loadRoles();
       }
-    })
+    });
   }
 
-  disable(role: Role) {
+  toggleState(role: Role, isEnable: boolean) {
     this.stateLoading = true;
-    this.roleService.disable(role.roleId).subscribe({
+    this.roleService.toggleState(role.roleId, isEnable).subscribe({
       next: res => {
         if (res.success) {
-          this.messageService.success("角色已禁用")
-          role.isEnable = false;
+          this.messageService.success(isEnable ? '角色已启用' : '角色已禁用');
+          role.isEnable = isEnable;
         }
       },
       complete: () => this.stateLoading = false
-    })
-  }
-
-  enable(role: Role) {
-    this.stateLoading = true;
-    this.roleService.enable(role.roleId).subscribe({
-      next: res => {
-        if (res.success) {
-          this.messageService.success("角色已启用")
-          role.isEnable = true;
-        }
-      },
-      complete: () => this.stateLoading = false
-    })
+    });
   }
 
   showPermissionSetModal(roleId: string) {
@@ -143,7 +134,7 @@ export class RoleManageComponent implements OnInit {
       queryParams: {
         roleId: role.roleId
       }
-    })
+    });
   }
 
 }

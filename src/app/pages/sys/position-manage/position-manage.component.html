@@ -20,65 +20,68 @@
   </ng-template>
 </app-tpl-search-bar>
 
-<nz-table #basicTable
-          [nzFrontPagination]="false"
-          nzShowPagination
-          nzBordered
-          nzSize="small"
-          [nzTotal]="tableOptions.total"
-          [(nzPageIndex)]="tableOptions.page"
-          [(nzPageSize)]="tableOptions.pageSize"
-          [nzLoading]="tableLoading"
-          [nzData]="positions"
-          (nzPageSizeChange)="loadPositions()"
-          (nzPageIndexChange)="loadPositions()">
-  <thead>
-  <tr>
-    <th>职位编码</th>
-    <th>职位名称</th>
-    <th>用户数量</th>
-    <th>状态</th>
-    <th>是否内置</th>
-    <th>创建时间</th>
-    <th nzWidth="230px">操作</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr *ngFor="let data of basicTable.data">
-    <td>{{ data.positionCode }}</td>
-    <td><a routerLink="/sys/position/details" [queryParams]="{positionId: data.positionId}">{{ data.positionName }}</a></td>
-    <td>{{ data.userNums || 0 }}</td>
-    <td>{{ data.isEnable ? '正常' : '停用' }}</td>
-    <td>{{ data.isBuiltIn ? '是' : '否' }}</td>
-    <td>{{ data.createTime }}</td>
-    <td>
-      <button nz-button
-              *ngIf="!data.isBuiltIn"
-              nzSize="small"
-              nzType="default"
-              (click)="showEditModal(data)">修改</button>
-      <button nz-button nzSize="small"
-              *ngIf="!data.isBuiltIn"
-              nzType="primary"
-              [nzLoading]="deleteLoading"
-              nz-popconfirm
-              nzPopconfirmTitle="是否确认删除此职位?"
-              (nzOnConfirm)="delete(data.positionId)"
-              nzDanger>删除
-      </button>
-      <button *ngIf="data.isEnable && !data.isBuiltIn"
-              [nzLoading]="stateLoading"
-              nz-button nzSize="small"
-              nzType="default" nzDanger (click)="disable(data)">禁用
-      </button>
-      <button *ngIf="!data.isEnable && !data.isBuiltIn"
-              [nzLoading]="stateLoading"
-              nz-button nzSize="small"
-              nzType="default" nzDanger (click)="enable(data)">启用
-      </button>
-    </td>
-  </tr>
-  </tbody>
-</nz-table>
-
-<app-position-edit-modal #positionEditModalComponent (onSuccess)="loadPositions()" />
+<app-box-container>
+  <nz-table #basicTable
+            [nzFrontPagination]="false"
+            nzShowPagination
+            nzBordered
+            nzSize="small"
+            [nzTotal]="tableOptions.total"
+            [(nzPageIndex)]="tableOptions.page"
+            [(nzPageSize)]="tableOptions.pageSize"
+            [nzLoading]="tableLoading"
+            [nzData]="positions"
+            (nzPageSizeChange)="loadPositions()"
+            (nzPageIndexChange)="loadPositions()">
+    <thead>
+    <tr>
+      <th>职位编码</th>
+      <th>职位名称</th>
+      <th>用户数量</th>
+      <th>状态</th>
+      <th>是否内置</th>
+      <th>创建时间</th>
+      <th nzWidth="230px">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of basicTable.data">
+      <td>{{ data.positionCode }}</td>
+      <td><a routerLink="/sys/position/details"
+             [queryParams]="{positionId: data.positionId}">{{ data.positionName }}</a></td>
+      <td>{{ data.userNums || 0 }}</td>
+      <td>{{ data.isEnable ? '正常' : '停用' }}</td>
+      <td>{{ data.isBuiltIn ? '是' : '否' }}</td>
+      <td>{{ data.createTime }}</td>
+      <td>
+        <button nz-button
+                *ngIf="!data.isBuiltIn"
+                nzSize="small"
+                nzType="default"
+                (click)="showEditModal(data)">修改
+        </button>
+        <button nz-button nzSize="small"
+                *ngIf="!data.isBuiltIn"
+                nzType="primary"
+                [nzLoading]="deleteLoading"
+                nz-popconfirm
+                nzPopconfirmTitle="是否确认删除此职位?"
+                (nzOnConfirm)="delete(data.positionId)"
+                nzDanger>删除
+        </button>
+        <button *ngIf="data.isEnable && !data.isBuiltIn"
+                [nzLoading]="stateLoading"
+                nz-button nzSize="small"
+                nzType="default" nzDanger (click)="disable(data)">禁用
+        </button>
+        <button *ngIf="!data.isEnable && !data.isBuiltIn"
+                [nzLoading]="stateLoading"
+                nz-button nzSize="small"
+                nzType="default" nzDanger (click)="enable(data)">启用
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
+</app-box-container>
+<app-position-edit-modal #positionEditModalComponent (onSuccess)="loadPositions()"/>

@@ -44,17 +44,10 @@ export class RoleService {
     return this.http.put<ResponseBean<void>>('/api/role/update', role);
   }
 
-  enable(roleId: string): Observable<ResponseBean<void>> {
+  toggleState(roleId: string, isEnable: boolean): Observable<ResponseBean<void>> {
     return this.http.patch<ResponseBean<void>>('/api/role/enable', {
       roleId,
-      enable: true
-    });
-  }
-
-  disable(roleId: string): Observable<ResponseBean<void>> {
-    return this.http.patch<ResponseBean<void>>('/api/role/enable', {
-      roleId,
-      enable: false
+      enable: isEnable
     });
   }
 

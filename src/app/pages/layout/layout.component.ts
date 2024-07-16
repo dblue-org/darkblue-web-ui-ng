@@ -22,6 +22,8 @@ import { MenuComponent } from './menu/menu.component';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { MessagingComponent } from './messaging/messaging.component';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
+import { RouterLinkTabItem } from '@site/app/define/common';
+import { TabsetStoreService } from '@site/app/services/common/tabset-store.service';
 
 @Component({
   selector: 'app-layout',
@@ -55,17 +57,18 @@ export class LayoutComponent implements OnInit {
   showFooter = true;
   selectedTabIndex = 0;
   @ViewChild('messaging') messagingDrawer: MessagingComponent | undefined;
-  tabs: any[] = [
+  tabs: RouterLinkTabItem[] = [
     {
       name: '首页',
       routerLink: '/home',
       queryParams: {},
-      closable: false
+      closeable: false
     }
   ]
 
   constructor(private logoutService: LogoutService, private authService: AuthenticationService,
-              private router: Router, private activatedRoute: ActivatedRoute) {
+              private router: Router, private activatedRoute: ActivatedRoute,
+              private tabsetStoreService: TabsetStoreService) {
   }
 
   logout() {
@@ -74,6 +77,7 @@ export class LayoutComponent implements OnInit {
 
   ngOnInit(): void {
     this.authService.ngOnInit();
+    this.tabs = this.tabsetStoreService.get();
 
     this.router.events.subscribe(event => {
       if (event instanceof ActivationEnd) {
@@ -124,6 +128,7 @@ export class LayoutComponent implements OnInit {
     } else {
       this.tabs.splice(index, 1);
     }
+    this.tabsetStoreService.store(this.tabs);
   }
 
   addTab(title: string, url: string, params: any) {
@@ -135,12 +140,13 @@ export class LayoutComponent implements OnInit {
         queryParams: {
           ...params
         },
-        closable: true
+        closeable: true
       })
       this.selectedTabIndex = this.tabs.length - 1;
     } else {
       existTab.queryParams = params;
     }
+    this.tabsetStoreService.store(this.tabs);
   }
 
 }

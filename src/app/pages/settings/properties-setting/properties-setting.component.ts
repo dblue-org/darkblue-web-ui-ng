@@ -17,6 +17,8 @@ import {
 } from '@site/app/pages/settings/properties-setting/property-edit-modal/property-edit-modal.component';
 import { NzPopconfirmDirective } from 'ng-zorro-antd/popconfirm';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { BoxContainerComponent } from '@site/app/components/layout/box-container/box-container.component';
 
 @Component({
   selector: 'app-properties-setting',
@@ -30,12 +32,14 @@ import { NzMessageService } from 'ng-zorro-antd/message';
     NzButtonModule,
     NzGridModule,
     NzInputModule,
+    NzToolTipModule,
 
     TplSearchBarComponent,
     NzIconDirective,
     PropertyValueEditModalComponent,
     PropertyEditModalComponent,
-    NzPopconfirmDirective
+    NzPopconfirmDirective,
+    BoxContainerComponent
   ],
   templateUrl: './properties-setting.component.html',
   styleUrl: './properties-setting.component.css'

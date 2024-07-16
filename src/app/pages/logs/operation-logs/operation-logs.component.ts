@@ -18,6 +18,7 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
 import { IconifyComponent } from '@site/app/components/icon/iconify/iconify.component';
 import { ParamsModalComponent } from '@site/app/pages/logs/operation-logs/params-modal/params-modal.component';
 import { ExceptionModalComponent } from '@site/app/pages/logs/operation-logs/exception-modal/exception-modal.component';
+import { BoxContainerComponent } from '@site/app/components/layout/box-container/box-container.component';
 
 @Component({
   selector: 'app-operation-logs',
@@ -41,7 +42,8 @@ import { ExceptionModalComponent } from '@site/app/pages/logs/operation-logs/exc
     UserSelectComponent,
     IconifyComponent,
     ParamsModalComponent,
-    ExceptionModalComponent
+    ExceptionModalComponent,
+    BoxContainerComponent
   ],
   templateUrl: './operation-logs.component.html',
   styleUrl: './operation-logs.component.css'

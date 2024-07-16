@@ -18,6 +18,10 @@ import { SimpleRole } from '@site/app/define/sys/role';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { UserAddModalComponent } from './user-add-modal/user-add-modal.component';
 import { Router } from '@angular/router';
+import { NzBadgeComponent } from 'ng-zorro-antd/badge';
+import { TwoColumnComponent } from '@site/app/components/layout/two-column/two-column.component';
+import { TwoColumnSiderDirective } from '@site/app/components/layout/two-column/two-column-sider.directive';
+import { BoxContainerComponent } from '@site/app/components/layout/box-container/box-container.component';
 
 @Component({
   selector: 'app-user-manage',
@@ -38,7 +42,11 @@ import { Router } from '@angular/router';
 
     TplSearchBarComponent,
     DepartmentTreeComponent,
-    UserAddModalComponent
+    UserAddModalComponent,
+    NzBadgeComponent,
+    TwoColumnComponent,
+    TwoColumnSiderDirective,
+    BoxContainerComponent
   ],
   templateUrl: './user-manage.component.html',
   styleUrl: './user-manage.component.css'

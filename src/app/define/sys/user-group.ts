@@ -4,6 +4,7 @@ export interface UserGroup {
   userGroupId: string
   userGroupName: string
   userNum?: number
+  sortNum: number
   createTime: string
 }
 
@@ -24,6 +25,11 @@ export interface UserGroupPageListVo {
   userGroupId: string
   userGroupName: string
   userNum?: number
+  sortNum: number
   isEnable: boolean
   createTime: string
+}
+
+export interface UserGroupRefQueryDto extends PageParams{
+  userGroupId: string
 }

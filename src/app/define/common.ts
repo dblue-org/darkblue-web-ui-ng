@@ -8,3 +8,10 @@ export interface TableOptions {
   page: number
   pageSize: number
 }
+
+export interface RouterLinkTabItem {
+  name: string
+  routerLink: string
+  queryParams: any,
+  closeable: boolean
+}

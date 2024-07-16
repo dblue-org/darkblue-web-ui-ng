@@ -25,7 +25,8 @@
     ],
     "baseUrl": "./",
     "paths": {
-      "@site/*": ["src/*"]
+      "@site/*": ["src/*"],
+      "@docs/*": ["docs/*"],
     },
     "plugins": [
       {"name": "@angular/language-service"}

@@ -2,54 +2,38 @@
   <nz-descriptions nzBordered style="margin-bottom: 24px" *ngIf="roleDetails">
     <nz-descriptions-item nzTitle="角色名称">{{ roleDetails.roleName }}</nz-descriptions-item>
     <nz-descriptions-item nzTitle="角色编码">{{ roleDetails.roleCode }}</nz-descriptions-item>
-    <nz-descriptions-item nzTitle="状态">{{ roleDetails.isEnable ? '正常' : '停用' }}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="状态">
+      <nz-badge nzStatus="success" *ngIf="roleDetails.isEnable" nzText="正常"></nz-badge>
+      <nz-badge nzStatus="error" *ngIf="!roleDetails.isEnable" nzText="停用"></nz-badge>
+    </nz-descriptions-item>
     <nz-descriptions-item nzTitle="创建时间">{{ roleDetails.createTime }}</nz-descriptions-item>
   </nz-descriptions>
   <ng-template #actions>
-    <button nz-button nzDanger nzSize="small" nzType="default" class="ant-btn-success">启用</button>
-    <button nz-button nzDanger nzSize="small" nzType="default">禁用</button>
+    <button *ngIf="!roleDetails?.isEnable"
+            nz-button nzDanger
+            nzSize="small"
+            nzType="default"
+            class="ant-btn-success"
+            (click)="toggleState(true)">启用</button>
+    <button  *ngIf="roleDetails?.isEnable"
+             nz-button
+             nzDanger
+             nzSize="small"
+             nzType="default"
+             (click)="toggleState(false)">禁用</button>
   </ng-template>
 </app-section>
 
 <app-section dkTitle="关联权限">
-  <nz-table #expandTable
-            [nzData]="rolePermissions"
-            nzSize="small"
-            nzTableLayout="fixed"
-            nzBordered
-            [nzLoading]="permissionTableLoading"
-            [nzShowPagination]="false">
-    <thead>
-    <tr>
-      <th nzWidth="300px">菜单名称</th>
-      <th nzWidth="180px">类型</th>
-      <th>权限</th>
-    </tr>
-    </thead>
-    <tbody>
-    <ng-container *ngFor="let data of expandTable.data">
-      <ng-container *ngFor="let item of mapOfExpandedData[data.menuId]">
-        <tr *ngIf="(item.parent && item.parent.expand) || !item.parent">
-          <td
-            [nzIndentSize]="item.level! * 20"
-            [nzShowExpand]="!!item.children"
-            [(nzExpand)]="item.expand"
-            (nzExpandChange)="collapse(mapOfExpandedData[data.menuId], item, $event)"
-          >
-            <span nz-icon [nzType]="item.menuIcon" nzTheme="outline" *ngIf="item.menuIcon"></span>
-            {{ item.menuName }}
-          </td>
-          <td>{{ item.menuType == 1 ? '菜单组' : '菜单项' }}</td>
-          <td>
-            @for (p of item.permissions; track p) {
-              <nz-tag nzColor="processing"> {{ p.permissionName }}({{ p.permissionCode }})</nz-tag>
-            }
-          </td>
-        </tr>
-      </ng-container>
-    </ng-container>
-    </tbody>
-  </nz-table>
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="hasAppMenuPermission ? 12 : 24">
+      <app-role-menu-table [dkRoleMenus]="pcMenuPermissions" [dkLoading]="permissionTableLoading" dkTitle="PC端" />
+    </div>
+    <div nz-col [nzSpan]="12" *ngIf="hasAppMenuPermission">
+      <app-role-menu-table [dkRoleMenus]="appMenuPermissions" [dkLoading]="permissionTableLoading" dkTitle="移动端" />
+    </div>
+  </div>
+
 </app-section>
 
 <app-section dkTitle="关联用户">

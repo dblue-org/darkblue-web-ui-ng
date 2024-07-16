@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { UserGroup } from '@site/app/define/sys/user-group';
+import { UserGroup, UserGroupPageListVo } from '@site/app/define/sys/user-group';
 import { CommonModule, NgForOf, NgIf } from '@angular/common';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconDirective, NzIconModule } from 'ng-zorro-antd/icon';
@@ -18,6 +18,8 @@ import { RouterLink } from '@angular/router';
 import {
   UserGroupEditModalComponent
 } from '@site/app/pages/sys/user-group-manage/user-group-edit-modal/user-group-edit-modal.component';
+import { NzBadgeComponent } from 'ng-zorro-antd/badge';
+import { BoxContainerComponent } from '@site/app/components/layout/box-container/box-container.component';
 
 @Component({
   selector: 'app-user-group-manage',
@@ -36,7 +38,9 @@ import {
     PermissionsSetModalComponent,
     RoleEditModalComponent,
     TplSearchBarComponent,
-    UserGroupEditModalComponent
+    UserGroupEditModalComponent,
+    NzBadgeComponent,
+    BoxContainerComponent
   ],
   templateUrl: './user-group-manage.component.html',
   styleUrl: './user-group-manage.component.css'
@@ -49,7 +53,7 @@ export class UserGroupManageComponent implements OnInit {
     userGroupName: [''],
   });
 
-  userGroups: UserGroup[] = [];
+  userGroups: UserGroupPageListVo[] = [];
   tableOptions = {
     total: 0,
     pageIndex: 1,
@@ -73,7 +77,7 @@ export class UserGroupManageComponent implements OnInit {
     this.userGroupEditModalComponent?.showAddModal();
   }
 
-  showEditModal(userGroup: UserGroup) {
+  showEditModal(userGroup: UserGroupPageListVo) {
     this.userGroupEditModalComponent?.showUpdateModal(userGroup);
   }
 

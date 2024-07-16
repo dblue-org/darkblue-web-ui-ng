@@ -15,13 +15,13 @@
                             {label: '扩展信息', item: ext},
                           ]">
       <ng-template #dictName>
-        <input nz-input formControlName="name" />
+        <input nz-input formControlName="name"/>
       </ng-template>
       <ng-template #dictCode>
         <nz-input-number formControlName="code" style="width: 100%"></nz-input-number>
       </ng-template>
       <ng-template #ext>
-        <input nz-input formControlName="extension" />
+        <input nz-input formControlName="extension"/>
       </ng-template>
       <ng-template #tableButtons>
         <button nz-button nzType="primary" (click)="showAddModal()">
@@ -33,122 +33,129 @@
       </ng-container>
     </app-tpl-search-bar>
 
-    <ng-container *ngIf="selectedDict && selectedDict.dictionaryType == 1">
-      <nz-table #listTable
-                [nzFrontPagination]="false"
-                nzShowPagination
-                nzBordered
-                nzSize="small"
-                [nzTotal]="tableOptions.total"
-                [(nzPageIndex)]="tableOptions.page"
-                [(nzPageSize)]="tableOptions.pageSize"
-                [nzLoading]="tableLoading"
-                [nzData]="dictionaryItems"
-                (nzPageSizeChange)="loadDictionaryItems()"
-                (nzPageIndexChange)="loadDictionaryItems()">
-        <thead>
-        <tr>
-          <th nzWidth="250px">名称</th>
-          <th nzWidth="150px">编码</th>
-          <th nzWidth="150px">顺序</th>
-          <th nzWidth="150px">状态</th>
-          <th>扩展信息</th>
-          <th nzWidth="220px">操作</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let data of listTable.data">
-          <td>{{ data.name }}</td>
-          <td>{{ data.code }}</td>
-          <td>{{ data.sortNum }}</td>
-          <td>{{ data.isEnable ? '正常' : '停用' }}</td>
-          <td>{{ data.extension }}</td>
-          <td>
-            <button nz-button nzSize="small" nzType="default" (click)="showUpdateModal(data)">修改</button>
-            <button nz-button nzSize="small"
-                    nzType="primary"
-                    [nzLoading]="deleteLoading"
-                    nz-popconfirm
-                    nzPopconfirmTitle="是否确认删除此字典项?"
-                    (nzOnConfirm)="delete(data.dictionaryItemId)"
-                    nzDanger>删除
-            </button>
-            <button *ngIf="data.isEnable"
-                    [nzLoading]="stateLoading"
-                    nz-button nzSize="small"
-                    nzType="default" nzDanger (click)="disable(data)">禁用
-            </button>
-            <button *ngIf="!data.isEnable"
-                    [nzLoading]="stateLoading"
-                    nz-button nzSize="small"
-                    nzType="default" nzDanger (click)="enable(data)">启用
-            </button>
-          </td>
-        </tr>
-        </tbody>
-      </nz-table>
-    </ng-container>
-    <ng-container *ngIf="selectedDict && selectedDict.dictionaryType == 2">
-      <nz-table #expandTable
-                [nzData]="dictionaryItems"
-                nzSize="small"
-                nzTableLayout="fixed"
-                nzBordered
-                [nzLoading]="tableLoading"
-                [nzShowPagination]="false">
-        <thead>
-        <tr>
-          <th nzWidth="250px">名称</th>
-          <th nzWidth="150px">值</th>
-          <th nzWidth="150px">顺序</th>
-          <th nzWidth="150px">状态</th>
-          <th>扩展信息</th>
-          <th nzWidth="280px">操作</th>
-        </tr>
-        </thead>
-        <tbody>
-        <ng-container *ngFor="let data of expandTable.data">
-          <ng-container *ngFor="let item of mapOfExpandedData[data.dictionaryItemId]">
-            <tr *ngIf="(item.parent && item.parent.expand) || !item.parent">
-              <td
-                [nzIndentSize]="item.level! * 20"
-                [nzShowExpand]="!!item.children"
-                [(nzExpand)]="item.expand"
-                (nzExpandChange)="collapse(mapOfExpandedData[data.dictionaryItemId], item, $event)"
-              >
-                {{ item.name }}
-              </td>
-              <td>{{ item.code }}</td>
-              <td>{{ item.sortNum || '-' }}</td>
-              <td>{{ item.isEnable ? '是' : '否' }}</td>
-              <td>{{ item.extension }}</td>
-              <td>
-                <button nz-button nzSize="small" nzType="primary" (click)="showAddSubItemModal(item)">添加</button>
-                <button nz-button nzSize="small" nzType="default" (click)="showUpdateModal(item)">修改</button>
-                <button *ngIf="!item.children || item.children.length == 0"
-                        nz-button nzSize="small"
-                        nzType="primary"
-                        [nzLoading]="deleteLoading"
-                        nz-popconfirm
-                        nzPopconfirmTitle="是否确认删除此字典项?"
-                        (nzOnConfirm)="delete(item.dictionaryItemId)"
-                        nzDanger>删除</button>
-                <button *ngIf="item.isEnable"
-                        [nzLoading]="stateLoading"
-                        nz-button nzSize="small"
-                        nzType="default" nzDanger (click)="disable(item)">禁用</button>
-                <button *ngIf="!item.isEnable"
-                        [nzLoading]="stateLoading"
-                        class="ant-btn-success"
-                        nz-button nzSize="small" (click)="enable(item)">启用</button>
-              </td>
-            </tr>
+    <app-box-container>
+      <ng-container *ngIf="selectedDict && selectedDict.dictionaryType == 1">
+        <nz-table #listTable
+                  [nzFrontPagination]="false"
+                  nzShowPagination
+                  nzBordered
+                  nzSize="small"
+                  [nzTotal]="tableOptions.total"
+                  [(nzPageIndex)]="tableOptions.page"
+                  [(nzPageSize)]="tableOptions.pageSize"
+                  [nzLoading]="tableLoading"
+                  [nzData]="dictionaryItems"
+                  (nzPageSizeChange)="loadDictionaryItems()"
+                  (nzPageIndexChange)="loadDictionaryItems()">
+          <thead>
+          <tr>
+            <th nzWidth="250px">名称</th>
+            <th nzWidth="150px">值</th>
+            <th nzWidth="150px">状态</th>
+            <th>扩展信息</th>
+            <th nzWidth="220px">操作</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let data of listTable.data">
+            <td>{{ data.name }}</td>
+            <td>{{ data.code }}</td>
+            <td>
+              <nz-badge nzStatus="success" *ngIf="data.isEnable" nzText="正常"></nz-badge>
+              <nz-badge nzStatus="error" *ngIf="!data.isEnable" nzText="停用"></nz-badge>
+            </td>
+            <td>{{ data.extension }}</td>
+            <td>
+              <button nz-button nzSize="small" nzType="default" (click)="showUpdateModal(data)">修改</button>
+              <button nz-button nzSize="small"
+                      nzType="primary"
+                      [nzLoading]="deleteLoading"
+                      nz-popconfirm
+                      nzPopconfirmTitle="是否确认删除此字典项?"
+                      (nzOnConfirm)="delete(data.dictionaryItemId)"
+                      nzDanger>删除
+              </button>
+              <button *ngIf="data.isEnable"
+                      [nzLoading]="stateLoading"
+                      nz-button nzSize="small"
+                      nzType="default" nzDanger (click)="toggleDictionaryItemState(data, false)">禁用
+              </button>
+              <button *ngIf="!data.isEnable"
+                      [nzLoading]="stateLoading"
+                      nz-button nzSize="small"
+                      nzType="default" nzDanger (click)="toggleDictionaryItemState(data, true)">启用
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </nz-table>
+      </ng-container>
+      <ng-container *ngIf="selectedDict && selectedDict.dictionaryType == 2">
+        <nz-table #expandTable
+                  [nzData]="dictionaryItems"
+                  nzSize="small"
+                  nzTableLayout="fixed"
+                  nzBordered
+                  [nzLoading]="tableLoading"
+                  [nzShowPagination]="false">
+          <thead>
+          <tr>
+            <th nzWidth="250px">名称</th>
+            <th nzWidth="150px">值</th>
+            <th nzWidth="150px">状态</th>
+            <th>扩展信息</th>
+            <th nzWidth="280px">操作</th>
+          </tr>
+          </thead>
+          <tbody>
+          <ng-container *ngFor="let data of expandTable.data">
+            <ng-container *ngFor="let item of mapOfExpandedData[data.dictionaryItemId]">
+              <tr *ngIf="(item.parent && item.parent.expand) || !item.parent">
+                <td
+                  [nzIndentSize]="item.level! * 20"
+                  [nzShowExpand]="!!item.children"
+                  [(nzExpand)]="item.expand"
+                  (nzExpandChange)="collapse(mapOfExpandedData[data.dictionaryItemId], item, $event)"
+                >
+                  {{ item.name }}
+                </td>
+                <td>{{ item.code }}</td>
+                <td>
+                  <nz-badge nzStatus="success" *ngIf="item.isEnable" nzText="正常"></nz-badge>
+                  <nz-badge nzStatus="error" *ngIf="!item.isEnable" nzText="停用"></nz-badge>
+                </td>
+                <td>{{ item.extension }}</td>
+                <td>
+                  <button nz-button nzSize="small" nzType="primary" (click)="showAddSubItemModal(item)">添加</button>
+                  <button nz-button nzSize="small" nzType="default" (click)="showUpdateModal(item)">修改</button>
+                  <button *ngIf="!item.children || item.children.length == 0"
+                          nz-button nzSize="small"
+                          nzType="primary"
+                          [nzLoading]="deleteLoading"
+                          nz-popconfirm
+                          nzPopconfirmTitle="是否确认删除此字典项?"
+                          (nzOnConfirm)="delete(item.dictionaryItemId)"
+                          nzDanger>删除
+                  </button>
+                  <button *ngIf="item.isEnable"
+                          [nzLoading]="stateLoading"
+                          nz-button nzSize="small"
+                          nzType="default" nzDanger (click)="toggleDictionaryItemState(item, false)">禁用
+                  </button>
+                  <button *ngIf="!item.isEnable"
+                          [nzLoading]="stateLoading"
+                          class="ant-btn-success"
+                          nz-button nzSize="small" (click)="toggleDictionaryItemState(item, true)">启用
+                  </button>
+                </td>
+              </tr>
+            </ng-container>
           </ng-container>
-        </ng-container>
-        </tbody>
-      </nz-table>
-    </ng-container>
+          </tbody>
+        </nz-table>
+      </ng-container>
+    </app-box-container>
   </div>
 </app-tow-column>
 
-<app-dict-item-edit-modal #dictItemEditModalComponent (onSuccess)="loadDictionaryItems()" />
+<app-dict-item-edit-modal #dictItemEditModalComponent (onSuccess)="loadDictionaryItems()"/>

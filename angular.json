@@ -16,6 +16,9 @@
             "outputPath": "dist/darkblue-web-ui",
             "index": "src/index.html",
             "browser": "src/main.ts",
+            "loader": {
+              ".md": "text"
+            },
             "polyfills": [
               "zone.js"
             ],
@@ -33,9 +36,20 @@
             ],
             "styles": [
               "src/theme.less",
-              "src/styles.css"
+              "src/styles.css",
+              "node_modules/prismjs/themes/prism-okaidia.css",
+              "node_modules/prismjs/plugins/line-highlight/prism-line-highlight.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/prismjs/prism.js",
+              "node_modules/prismjs/components/prism-typescript.min.js",
+              "node_modules/prismjs/components/prism-css.min.js",
+              "node_modules/prismjs/components/prism-scss.min.js",
+              "node_modules/prismjs/components/prism-bash.min.js",
+              "node_modules/prismjs/components/prism-json.min.js",
+              "node_modules/prismjs/components/prism-java.min.js",
+              "node_modules/prismjs/plugins/line-highlight/prism-line-highlight.js"
+            ]
           },
           "configurations": {
             "production": {

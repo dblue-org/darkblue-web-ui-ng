@@ -1,0 +1,30 @@
+<ng-container *ngIf="dictionary">
+  <ng-container *ngIf="dictionary.dictionaryType == 1 else treeSelect">
+    <nz-select nzShowSearch
+               style="width: 100%"
+               nzAllowClear
+               [nzMode]="isMultiple ? 'multiple' : 'default'"
+               nzPlaceHolder="请选择"
+               [(ngModel)]="value"
+               (ngModelChange)="onModalValueChange()">
+      @for (item of dictionary.items; track item.dictionaryItemId) {
+        <nz-option [nzLabel]="item.name" [nzValue]="item.code"></nz-option>
+      }
+    </nz-select>
+  </ng-container>
+
+  <ng-template #treeSelect>
+    <nz-tree-select
+      style="width: 100%"
+      nzPlaceHolder="请选择"
+      [(ngModel)]="value"
+      [nzMaxTagCount]="3"
+      [nzNodes]="nodes"
+      [nzDefaultExpandAll]="true"
+      [nzAllowClear]="false"
+      [nzMultiple]="isMultiple"
+      (ngModelChange)="onModalValueChange()"
+    ></nz-tree-select>
+  </ng-template>
+</ng-container>
+

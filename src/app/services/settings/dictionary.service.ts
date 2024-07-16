@@ -6,52 +6,29 @@ import {
   DictionaryItemListVo, DictionaryItemPageQueryDto, DictionaryItemUpdateDto,
   DictionaryListVo, DictionaryMixedVo
 } from '@site/app/define/settings/dictionary';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DictionaryService {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   getDictionaryList(): Observable<ResponseBean<DictionaryListVo[]>> {
-    return of({
-      success: true,
-      data: [
-        {
-          dictionaryId: '001',
-          dictionaryName: '测试字典',
-          dictionaryCode: 'test',
-          dictionaryType: 1,
-          createTime: '2021-01-01 00:00:00'
-        },
-        {
-          dictionaryId: '002',
-          dictionaryName: '测试树形字典',
-          dictionaryCode: 'TEST2',
-          dictionaryType: 2,
-          createTime: '2021-01-01 00:00:00'
-        }
-      ]
-    }).pipe(delay(300))
+    return this.http.get<ResponseBean<DictionaryListVo[]>>('/api/dictionary/getAll');
   }
 
   addDictionary(data: DictionaryAddDto): Observable<ResponseBean<void>> {
-    return of({
-      success: true,
-    }).pipe(delay(1000))
+    return this.http.post<ResponseBean<void>>('/api/dictionary/add', data)
   }
 
   updateDictionary(data: DictionaryAddDto): Observable<ResponseBean<void>> {
-    return of({
-      success: true,
-    }).pipe(delay(1000))
+    return this.http.put<ResponseBean<void>>('/api/dictionary/update', data)
   }
 
   deleteDictionary(dictionaryId: string): Observable<ResponseBean<void>> {
-    return of({
-      success: true,
-    }).pipe(delay(1000))
+    return this.http.delete<ResponseBean<void>>(`/api/dictionary/delete/${dictionaryId}`)
   }
 
   getDictionaryItems(dictionaryType: number, queryDto: any): Observable<ResponseBean<DictionaryItemListVo[]>> {
@@ -63,102 +40,41 @@ export class DictionaryService {
   }
 
   getDictionaryItemList(queryDto: DictionaryItemPageQueryDto): Observable<ResponseBean<DictionaryItemListVo[]>> {
-    return of({
-      success: true,
-      data: [
-        {
-          dictionaryItemId: '001',
-          code: 1,
-          name: '测试字典1',
-          extension: 'test1',
-          parentId: '001',
-          sortNum: 1,
-          itemLevel: 1,
-          isEnable: true,
-          createTime: '2021-01-01 00:00:00'
-        }
-      ]
-    }).pipe(delay(1000))
+    return this.http.get<ResponseBean<DictionaryItemListVo[]>>('/api/dictionary/page', {
+      params: {
+        ...queryDto
+      }
+    })
   }
 
   getDictionaryItemTree(dictionaryId: string): Observable<ResponseBean<DictionaryItemListVo[]>> {
-    return of({
-      success: true,
-      data: [
-        {
-          dictionaryItemId: '001',
-          code: 1,
-          name: '测试字典1',
-          extension: 'test1',
-          parentId: '001',
-          sortNum: 1,
-          itemLevel: 1,
-          isEnable: true,
-          createTime: '2021-01-01 00:00:00',
-          children: [
-            {
-              dictionaryItemId: '002',
-              code: 2,
-              name: '测试字典2',
-              extension: 'test2',
-              parentId: '001',
-              sortNum: 2,
-              itemLevel: 2,
-              isEnable: true,
-              createTime: '2021-01-01 00:00:00',
-            }
-          ]
-        }
-      ]
-    }).pipe(delay(1000))
+    return this.http.get<ResponseBean<DictionaryItemListVo[]>>(`/api/dictionary/getItemTree/${dictionaryId}`);
   }
 
   addDictionaryItem(data: DictionaryItemAddDto): Observable<ResponseBean<void>> {
-    return of({
-      success: true,
-    }).pipe(delay(1000))
+    return this.http.post<ResponseBean<void>>('/api/dictionary/addItem', data)
   }
 
   updateDictionaryItem(data: DictionaryItemUpdateDto): Observable<ResponseBean<void>> {
-    return of({
-      success: true,
-    }).pipe(delay(1000))
+    return this.http.put<ResponseBean<void>>('/api/dictionary/updateItem', data)
   }
 
   deleteDictionaryItem(dictionaryItemId: string): Observable<ResponseBean<void>> {
-    return of({
-      success: true,
-    }).pipe(delay(1000))
+    return this.http.delete<ResponseBean<void>>(`/api/dictionary/deleteItem/${dictionaryItemId}`)
   }
 
-  enableDictionaryItem(dictionaryItemId: string): Observable<ResponseBean<void>> {
-    return of({
-      success: true,
-    }).pipe(delay(1000))
+  toggleDictionaryItemState(dictionaryItemId: string, isEnable: boolean): Observable<ResponseBean<void>> {
+    return this.http.patch<ResponseBean<void>>('/api/dictionary/enableItem', {
+      dictionaryItemId,
+      isEnable
+    })
   }
 
-  disableDictionaryItem(dictionaryItemId: string): Observable<ResponseBean<void>> {
-    return of({
-      success: true,
-    }).pipe(delay(1000))
-  }
-
-  getDictForSelect(dictionaryId: string): Observable<ResponseBean<DictionaryMixedVo>> {
-    return of({
-      success: true,
-      data: {
-        dictionaryId: '001',
-        dictionaryCode: 'test',
-        dictionaryName: '测试字典',
-        dictionaryType: 1,
-        items: [
-          {
-            dictionaryItemId: '001',
-            code: 1,
-            name: '测试字典1',
-          }
-        ]
+  getDictForSelect(dictionaryCode: string): Observable<ResponseBean<DictionaryMixedVo>> {
+    return this.http.get<ResponseBean<DictionaryMixedVo>>('/api/dictionary/getDictionaryForSelect', {
+      params: {
+        dictionaryCode
       }
-    }).pipe(delay(1000))
+    })
   }
 }

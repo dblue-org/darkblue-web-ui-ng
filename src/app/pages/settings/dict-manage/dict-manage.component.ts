@@ -22,6 +22,8 @@ import { SearchBarHelpDirective } from '@site/app/components/layout/tpl-search-b
 import {
   DictItemEditModalComponent
 } from '@site/app/pages/settings/dict-manage/dict-item-edit-modal/dict-item-edit-modal.component';
+import { NzBadgeComponent } from 'ng-zorro-antd/badge';
+import { BoxContainerComponent } from '@site/app/components/layout/box-container/box-container.component';
 
 @Component({
   selector: 'app-dict-manage',
@@ -46,7 +48,9 @@ import {
     NzPopconfirmDirective,
     MenuIconComponent,
     SearchBarHelpDirective,
-    DictItemEditModalComponent
+    DictItemEditModalComponent,
+    NzBadgeComponent,
+    BoxContainerComponent
   ],
   templateUrl: './dict-manage.component.html',
   styleUrl: './dict-manage.component.css'
@@ -163,29 +167,17 @@ export class DictManageComponent extends BasicTreeTable<DictionaryItemListVo>{
     })
   }
 
-  enable(data: DictionaryItemListVo) {
+  toggleDictionaryItemState(data: DictionaryItemListVo, isEnable: boolean) {
     this.stateLoading = true;
-    this.dictionaryService.enableDictionaryItem(data.dictionaryItemId).subscribe({
+    this.dictionaryService.toggleDictionaryItemState(data.dictionaryItemId, isEnable).subscribe({
       next: res => {
         if (res.success) {
-          this.messageService.success('字典项已启用');
-          data.isEnable = true
+          this.messageService.success(isEnable ? '字典项已启用' : '字典项已禁用');
+          data.isEnable = isEnable
         }
       },
       complete: () => this.stateLoading = false
     })
   }
 
-  disable(data: DictionaryItemListVo) {
-    this.stateLoading = true;
-    this.dictionaryService.disableDictionaryItem(data.dictionaryItemId).subscribe({
-      next: res => {
-        if (res.success) {
-          this.messageService.success('字典项已启用');
-          data.isEnable = false
-        }
-      },
-      complete: () => this.stateLoading = false
-    })
-  }
 }

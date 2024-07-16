@@ -18,6 +18,7 @@ import {
   PositionEditModalComponent
 } from '@site/app/pages/sys/position-manage/position-edit-modal/position-edit-modal.component';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { BoxContainerComponent } from '@site/app/components/layout/box-container/box-container.component';
 
 @Component({
   selector: 'app-position-manage',
@@ -36,7 +37,8 @@ import { NzMessageService } from 'ng-zorro-antd/message';
     RoleEditModalComponent,
     TplSearchBarComponent,
     RouterLink,
-    PositionEditModalComponent
+    PositionEditModalComponent,
+    BoxContainerComponent
   ],
   templateUrl: './position-manage.component.html',
   styleUrl: './position-manage.component.css'

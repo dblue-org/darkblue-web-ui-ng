@@ -7,6 +7,12 @@
           <input nz-input formControlName="userGroupName" id="userGroupName"/>
         </nz-form-control>
       </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="sortNum">顺序</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="顺序不能为空">
+          <nz-input-number style="width: 100%" formControlName="sortNum" id="sortNum"/>
+        </nz-form-control>
+      </nz-form-item>
     </form>
   </ng-container>
 </nz-modal>

@@ -3,8 +3,8 @@
     <nz-card [nzBordered]="false" [nzTitle]="menuTitle" [nzExtra]="extraTemplate">
       <nz-tree [nzData]="menus" [nzTreeTemplate]="nzTreeTemplate" (nzClick)="onTreeNodeClick($event)">
         <ng-template #nzTreeTemplate let-node let-origin="origin">
-          <app-menu-icon [icon]="node.icon" />
-          <span>{{node.title}}</span>
+          <app-menu-icon [icon]="node.icon"/>
+          <span>{{ node.title }}</span>
         </ng-template>
 
       </nz-tree>
@@ -24,7 +24,6 @@
   <div>
     <app-tpl-search-bar [formGroup]="searchForm"
                         [buttons]="tableButtons"
-                        buttonPosition="R"
                         (onSearch)="search()"
                         [items]="[
                           {name: 'permissionCode', label: '权限标识', item: permissionCode},
@@ -45,57 +44,60 @@
       </ng-template>
     </app-tpl-search-bar>
 
-    <nz-table #basicTable
-              [nzFrontPagination]="false"
-              nzShowPagination
-              nzBordered
-              nzSize="small"
-              [nzTotal]="tableOptions.total"
-              [(nzPageIndex)]="tableOptions.pageIndex"
-              [(nzPageSize)]="tableOptions.pageSize"
-              nzTableLayout="fixed"
-              [nzData]="permissions">
-      <thead>
-      <tr>
-        <th>所属菜单</th>
-        <th>权限名称</th>
-        <th>权限编码</th>
-        <th nzWidth="230px">操作</th>
-      </tr>
-      </thead>
-      <tbody>
-      <ng-container *ngFor="let data of basicTable.data">
+    <app-box-container>
+      <nz-table #basicTable
+                [nzFrontPagination]="false"
+                nzShowPagination
+                nzBordered
+                nzSize="small"
+                [nzTotal]="tableOptions.total"
+                [(nzPageIndex)]="tableOptions.pageIndex"
+                [(nzPageSize)]="tableOptions.pageSize"
+                nzTableLayout="fixed"
+                [nzData]="permissions">
+        <thead>
         <tr>
-          <td>{{ data.menuName }}</td>
-          <td><a routerLink="/sys/permission/details" [queryParams]="{permissionId: data.permissionId}">{{ data.permissionName }}</a></td>
-          <td>{{ data.permissionCode }}</td>
-          <td>
-            <button nz-button nzSize="small"
-                    nzType="default"
-                    (click)="showUpdateModal(data)">
-            修改
-            </button>
-            <button nz-button nzSize="small"
-                    [nzLoading]="deleteLoading"
-                    nzType="primary"
-                    nz-popconfirm
-                    nzPopconfirmTitle="是否确认删除此用户?"
-                    (nzOnConfirm)="doDelete(data.permissionId)"
-                    nzDanger>删除
-            </button>
-            <button nz-button nzSize="small"
-                    (click)="showBindResourceModal(data)"
-                    nzType="default">
-            绑定资源
-            </button>
-          </td>
+          <th>所属菜单</th>
+          <th>权限名称</th>
+          <th>权限编码</th>
+          <th nzWidth="230px">操作</th>
         </tr>
-      </ng-container>
-      </tbody>
-    </nz-table>
+        </thead>
+        <tbody>
+        <ng-container *ngFor="let data of basicTable.data">
+          <tr>
+            <td>{{ data.menuName }}</td>
+            <td><a routerLink="/sys/permission/details"
+                   [queryParams]="{permissionId: data.permissionId}">{{ data.permissionName }}</a></td>
+            <td>{{ data.permissionCode }}</td>
+            <td>
+              <button nz-button nzSize="small"
+                      nzType="default"
+                      (click)="showUpdateModal(data)">
+                修改
+              </button>
+              <button nz-button nzSize="small"
+                      [nzLoading]="deleteLoading"
+                      nzType="primary"
+                      nz-popconfirm
+                      nzPopconfirmTitle="是否确认删除此用户?"
+                      (nzOnConfirm)="doDelete(data.permissionId)"
+                      nzDanger>删除
+              </button>
+              <button nz-button nzSize="small"
+                      (click)="showBindResourceModal(data)"
+                      nzType="default">
+                绑定资源
+              </button>
+            </td>
+          </tr>
+        </ng-container>
+        </tbody>
+      </nz-table>
+    </app-box-container>
   </div>
 
 </app-tow-column>
 
-<app-permission-edit-modal #permissionEditModalComponent (onSuccess)="loadPermissions()" />
+<app-permission-edit-modal #permissionEditModalComponent (onSuccess)="loadPermissions()"/>
 <app-bind-resource-modal #bindResourceModalComponent/>

@@ -15,6 +15,7 @@ import { FormsModule } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { ResponseBean } from '@site/app/define/sys/response';
 import { BasicTreeTable } from '@site/app/components/basic-tree-table';
+import { BoxContainerComponent } from '@site/app/components/layout/box-container/box-container.component';
 
 @Component({
   selector: 'app-menu-manage',
@@ -33,7 +34,8 @@ import { BasicTreeTable } from '@site/app/components/basic-tree-table';
     ToolbarComponent,
     MenuIconComponent,
     MenuAddModalComponent,
-    FormsModule
+    FormsModule,
+    BoxContainerComponent
   ],
   templateUrl: './menu-manage.component.html',
   styleUrl: './menu-manage.component.css'

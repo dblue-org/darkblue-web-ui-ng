@@ -5,15 +5,18 @@ import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzTagModule } from 'ng-zorro-antd/tag';
-import { RoleDetailsVo } from '@site/app/define/sys/role';
+import { Role, RoleDetailsVo } from '@site/app/define/sys/role';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { RoleService } from '@site/app/services/sys/role.service';
 import { MenusWithPermission } from '@site/app/define/sys/menu';
-import { BasicTreeTable } from '@site/app/components/basic-tree-table';
 import { TableOptions } from '@site/app/define/common';
 import { RouterLink } from '@angular/router';
 import { RefUserVo } from '@site/app/define/sys/user';
+import { NzGridModule } from 'ng-zorro-antd/grid';
+import { RoleMenuTableComponent } from '@site/app/pages/sys/role-manage/role-menu-table/role-menu-table.component';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzBadgeComponent } from 'ng-zorro-antd/badge';
 
 @Component({
   selector: 'app-role-details',
@@ -27,18 +30,23 @@ import { RefUserVo } from '@site/app/define/sys/user';
     NzTagModule,
     NzIconModule,
     NzPopconfirmModule,
+    NzGridModule,
 
     SectionComponent,
-    RouterLink
+    RouterLink,
+    RoleMenuTableComponent,
+    NzBadgeComponent
   ],
   templateUrl: './role-details.component.html',
   styleUrl: './role-details.component.css'
 })
-export class RoleDetailsComponent extends BasicTreeTable<MenusWithPermission> implements OnInit {
+export class RoleDetailsComponent implements OnInit {
 
   @Input('roleId') roleId?: string;
-  rolePermissions: MenusWithPermission[] = [];
+  pcMenuPermissions: MenusWithPermission[] = [];
+  appMenuPermissions: MenusWithPermission[] = [];
   permissionTableLoading = false;
+  hasAppMenuPermission = false;
 
   roleDetails?: RoleDetailsVo;
 
@@ -50,21 +58,24 @@ export class RoleDetailsComponent extends BasicTreeTable<MenusWithPermission> im
     pageSize: 5
   };
 
-  constructor(private roleService: RoleService) {
-    super();
+  stateLoading = false;
+
+  constructor(private roleService: RoleService, private messageService: NzMessageService) {
   }
 
   getRole() {
     if (this.roleId) {
+      this.hasAppMenuPermission = false;
       this.permissionTableLoading = true;
       this.roleService.getRole(this.roleId).subscribe({
         next: res => {
           if (res.success && res.data) {
             this.roleDetails = res.data;
-            this.rolePermissions = res.data.roleMenuVoList || [];
-            this.rolePermissions.forEach(item => {
-              this.mapOfExpandedData[item.menuId] = this.convertTreeToList(item);
-            });
+            this.pcMenuPermissions = res.data.pcMenus || [];
+            this.appMenuPermissions = res.data.appMenus || [];
+            if (this.appMenuPermissions.length > 0) {
+              this.hasAppMenuPermission = true;
+            }
           }
         },
         complete: () => this.permissionTableLoading = false
@@ -92,6 +103,25 @@ export class RoleDetailsComponent extends BasicTreeTable<MenusWithPermission> im
       complete: () => this.userTableLoading = false
     });
   }
+
+  toggleState(isEnable: boolean) {
+    if (!this.roleDetails) {
+      return;
+    }
+    this.stateLoading = true;
+    this.roleService.toggleState(this.roleDetails.roleId, isEnable).subscribe({
+      next: res => {
+        if (res.success) {
+          this.messageService.success(isEnable ? '角色已启用' : '角色已禁用');
+          if (this.roleDetails) {
+            this.roleDetails.isEnable = isEnable
+          }
+        }
+      },
+      complete: () => this.stateLoading = false
+    });
+  }
+
 
   ngOnInit(): void {
     if (this.roleId) {

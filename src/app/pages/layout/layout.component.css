@@ -82,14 +82,23 @@ nz-content {
 }
 
 .router-tabs {
-  background: #fff;
-  padding: 0 0 0 0;
+  /*background: #fff;*/
+  padding: 0 8px 0 0;
 }
+
+.router-tabs ::ng-deep .ant-tabs-nav {
+  background-color: #fff;
+  padding: 8px 8px 2px 8px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
 .inner-content {
-  padding: 8px 24px 24px 24px;
-  background: #fff;
-  height: calc(100% - 58px);
-  overflow: auto;
+  /*padding: 8px 24px 24px 24px;*/
+  /*background: #fff;*/
+  padding-right: 8px;
+  height: calc(100% - 64px);
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .footer {
@@ -124,6 +133,7 @@ nz-content {
   background-color: #40a9ff;
   cursor: pointer;
 }
+
 
 .ant-tabs-dropdown-menu-item a[nz-tab-link] {
   position: relative !important;

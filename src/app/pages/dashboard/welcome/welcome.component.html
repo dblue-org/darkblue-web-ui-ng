@@ -1,0 +1,94 @@
+<nz-alert
+  nzType="warning"
+  [class]="{'alert-margin-bottom': !isAlertClose}"
+  nzCloseable
+  nzMessage="此页面为静态页面，使用本项目作为基础项目进行业务开发时，需要替换此页面中的内容为自己业务需要的内容。"
+  (nzOnClose)="isAlertClose = true"
+></nz-alert>
+
+<app-box-container class="home-section">
+  <nz-row [nzGutter]="24">
+    <nz-col [nzSpan]="4">
+      <nz-statistic [nzValue]="(138674 | number)!" nzTitle="用户数量"></nz-statistic>
+    </nz-col>
+    <nz-col [nzSpan]="4">
+      <nz-statistic [nzValue]="(7850 | number)!" nzTitle="活跃用户量"></nz-statistic>
+    </nz-col>
+    <nz-col [nzSpan]="4">
+      <nz-statistic [nzValue]="(1050 | number)!" nzTitle="在线用户量"></nz-statistic>
+    </nz-col>
+    <nz-col [nzSpan]="4">
+      <nz-statistic [nzValue]="(1800 | number)!" nzTitle="新用户量（月）"></nz-statistic>
+    </nz-col>
+    <nz-col [nzSpan]="4">
+      <nz-statistic [nzValue]="(18089 | number)!" nzTitle="业务操作量（日）"></nz-statistic>
+    </nz-col>
+    <nz-col [nzSpan]="4">
+      <nz-statistic [nzValue]="(8089 | number)!" nzTitle="未完成待办"></nz-statistic>
+    </nz-col>
+  </nz-row>
+</app-box-container>
+
+
+<div nz-row [nzGutter]="[24,24]" class="home-section">
+  <div nz-col [nzSpan]="12">
+    <nz-card nzTitle="最近工作" [nzBodyStyle]="{padding: '0',borderTop: '1px solid #eee'}" [nzBordered]="false">
+      <nz-table #serviceTable
+                [nzFrontPagination]="false"
+                [nzData]="serviceData">
+        <thead>
+        <tr>
+          <th>业务类型</th>
+          <th>业务编码</th>
+          <th>业务描述</th>
+          <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let data of serviceTable.data">
+          <td>{{data.serviceType}}</td>
+          <td>{{data.serviceCode}}</td>
+          <td>{{data.serviceDesc}}</td>
+          <td>
+            <a>查看</a>
+          </td>
+        </tr>
+        </tbody>
+      </nz-table>
+    </nz-card>
+  </div>
+  <div nz-col [nzSpan]="12">
+    <nz-card nzTitle="我的待办" [nzBodyStyle]="{padding: '0',borderTop: '1px solid #eee'}">
+      <nz-table #todoTable
+                [nzFrontPagination]="false"
+                [nzData]="todoList">
+        <thead>
+        <tr>
+          <th>待办类型</th>
+          <th>标题</th>
+          <th>描述</th>
+          <th>创建时间</th>
+          <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let data of todoTable.data">
+          <td>{{data.todoType}}</td>
+          <td>{{data.title}}</td>
+          <td>{{data.desc}}</td>
+          <td>{{data.createTime}}</td>
+          <td>
+            <a>查看</a>
+          </td>
+        </tr>
+        </tbody>
+      </nz-table>
+    </nz-card>
+  </div>
+  <div nz-col [nzSpan]="24">
+    <nz-card nzTitle="业绩提成">
+      <div echarts [options]="option"></div>
+    </nz-card>
+  </div>
+</div>
+
