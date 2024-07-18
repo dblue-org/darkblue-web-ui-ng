@@ -23,16 +23,18 @@
 </nz-card>
 <ng-template #extraTemplate>
   <div class="dept-tree-toolbar">
-    <button nz-button nzType="default" nzShape="circle" (click)="showAddModal()">
+    <button (click)="showAddModal()" *permIf="'DEPARTMENT_ADD'" nz-button nzShape="circle" nzType="default">
       <span nz-icon nzType="plus"></span>
     </button>
     <button nz-button nzType="default" nzShape="circle"
+            *permIf="'DEPARTMENT_UPDATE'"
             (click)="showEditModal()"
             [disabled]="!(selectedDepartment && !!selectedDepartment.key)">
       <span nz-icon nzType="edit"></span>
     </button>
     <button nz-button nzType="default" nzShape="circle"
             (click)="doDelete()"
+            *permIf="'DEPARTMENT_DELETE'"
             [disabled]="!(selectedDepartment && !!selectedDepartment.key && !(selectedDepartment.children && selectedDepartment.children.length > 0))">
       <span nz-icon nzType="delete"></span>
     </button>

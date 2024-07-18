@@ -33,11 +33,15 @@
                     (click)="selectResourceGroup(item)"
       >
         <div nz-row style="width: 100%">
+          <div nz-col [nzSpan]="2" class="sort-num">
+            {{ item.sortNum }}
+          </div>
           <div nz-col [nzSpan]="20">
             <span nz-icon nzType="folder" nzTheme="outline"></span>
             {{ item.groupName }}
           </div>
-          <div nz-col [nzSpan]="4" style="text-align: right;padding-right: 8px;" *ngIf="selected?.resourceGroupId == item.resourceGroupId">
+          <div nz-col [nzSpan]="2" style="text-align: right;padding-right: 8px;"
+               *ngIf="selected?.resourceGroupId == item.resourceGroupId">
             <span class="resource-group-item-clear" nz-icon nzType="close" nzTheme="outline" title="清除选中状态" (click)="clearSelected($event)"></span>
           </div>
         </div>

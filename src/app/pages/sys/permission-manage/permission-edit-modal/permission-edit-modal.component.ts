@@ -11,6 +11,7 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 
 @Component({
   selector: 'app-permission-edit-modal',
@@ -24,6 +25,7 @@ import { NzRadioModule } from 'ng-zorro-antd/radio';
     NzFormModule,
     NzInputModule,
     NzRadioModule,
+    NzButtonModule
   ],
   templateUrl: './permission-edit-modal.component.html',
   styleUrl: './permission-edit-modal.component.css'
@@ -52,6 +54,55 @@ export class PermissionEditModalComponent extends BasicEditModalComponent {
 
   protected override beforeUpdateShowProcessor(data: any) {
     this.dataForm.patchValue(data);
+  }
+
+  doSubmit(isContinue: boolean) {
+    if (this.getFormGroup().valid) {
+      this.loading = true;
+      this.doSubmitRequest().subscribe({
+        next: res => {
+          if (res.success) {
+            this.onSaveSuccess();
+            this.onSuccess.emit();
+            if (isContinue) {
+              this.clearFormOnAdd();
+            } else {
+              this.isVisible = false;
+            }
+          }
+        },
+        complete: () => this.loading = false
+      });
+    } else {
+      Object.values(this.getFormGroup().controls).forEach(control => {
+        if (control.invalid) {
+          control.markAsDirty();
+          control.updateValueAndValidity({onlySelf: true});
+        }
+      });
+    }
+  }
+
+  private doSubmitRequest(): Observable<ResponseBean<void>> {
+    if (this.isEdit) {
+      return this.doUpdate();
+    } else {
+      return this.doSave();
+    }
+  }
+
+  private clearFormOnAdd() {
+    this.dataForm.patchValue({
+      permissionId: '',
+      permissionCode: '',
+      permissionName: ''
+    });
+    Object.values(this.getFormGroup().controls).forEach(control => {
+      if (control.invalid) {
+        control.markAsPristine();
+        control.setErrors(null);
+      }
+    });
   }
 
   protected doSave(): Observable<ResponseBean<void>> {

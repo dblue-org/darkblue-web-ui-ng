@@ -9,10 +9,14 @@ import { NzTagModule } from 'ng-zorro-antd/tag';
 
 import { SectionComponent } from '@site/app/components/layout/section/section.component';
 import { ResourceVo } from '@site/app/define/sys/resource';
-import { PermissionRoleVo, Role } from '@site/app/define/sys/role';
+import { PermissionRoleVo } from '@site/app/define/sys/role';
 import { PermissionService } from '@site/app/services/sys/permission.service';
 import { TableOptions } from '@site/app/define/common';
 import { PermissionDetailsVo } from '@site/app/define/sys/permission';
+import { NzIconDirective } from 'ng-zorro-antd/icon';
+import {
+  DetailsOperationBarComponent
+} from '@site/app/components/layout/details-operation-bar/details-operation-bar.component';
 
 @Component({
   selector: 'app-permission-details',
@@ -26,7 +30,9 @@ import { PermissionDetailsVo } from '@site/app/define/sys/permission';
     NzPopconfirmModule,
     NzTagModule,
 
-    SectionComponent
+    SectionComponent,
+    NzIconDirective,
+    DetailsOperationBarComponent
   ],
   templateUrl: './permission-details.component.html',
   styleUrl: './permission-details.component.css'

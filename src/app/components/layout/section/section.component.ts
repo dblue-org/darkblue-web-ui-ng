@@ -18,6 +18,7 @@ export class SectionComponent {
   @Input('dkTitle') title: string | TemplateRef<any> = '';
   @Input('dkExtra') extra?: TemplateRef<any>;
   @Input('dkBordered') bordered = false;
+  @Input('dkSize') size: 'large' | 'small' = 'small';
 
   isTemplate(value: any): value is TemplateRef<any> {
     return value instanceof TemplateRef;

@@ -5,7 +5,7 @@ import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzTagModule } from 'ng-zorro-antd/tag';
-import { Role, RoleDetailsVo } from '@site/app/define/sys/role';
+import { RoleDetailsVo } from '@site/app/define/sys/role';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { RoleService } from '@site/app/services/sys/role.service';
@@ -17,6 +17,9 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
 import { RoleMenuTableComponent } from '@site/app/pages/sys/role-manage/role-menu-table/role-menu-table.component';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzBadgeComponent } from 'ng-zorro-antd/badge';
+import {
+  DetailsOperationBarComponent
+} from '@site/app/components/layout/details-operation-bar/details-operation-bar.component';
 
 @Component({
   selector: 'app-role-details',
@@ -35,7 +38,8 @@ import { NzBadgeComponent } from 'ng-zorro-antd/badge';
     SectionComponent,
     RouterLink,
     RoleMenuTableComponent,
-    NzBadgeComponent
+    NzBadgeComponent,
+    DetailsOperationBarComponent
   ],
   templateUrl: './role-details.component.html',
   styleUrl: './role-details.component.css'

@@ -12,6 +12,7 @@ import {
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { toNzTreeNodeOptions } from '@site/utils/nz-tree-node-utils';
+import { PermIfDirective } from '@site/app/directives/perm-if.directive';
 
 @Component({
   selector: 'app-department-tree',
@@ -22,7 +23,8 @@ import { toNzTreeNodeOptions } from '@site/utils/nz-tree-node-utils';
     NzCardModule,
     NzIconModule,
     NzTreeModule,
-    DepartmentEditModalComponent
+    DepartmentEditModalComponent,
+    PermIfDirective
   ],
   templateUrl: './department-tree.component.html',
   styleUrl: './department-tree.component.css'

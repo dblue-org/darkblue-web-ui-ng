@@ -1,10 +1,19 @@
 <nz-modal [(nzVisible)]="isVisible" nzWidth="800px" [nzTitle]="isEdit ? '修改资源' : '添加资源'" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()" [nzOkLoading]="loading">
   <ng-container *nzModalContent>
     <form nz-form [formGroup]="dataForm">
-      <nz-form-item *ngIf="!isEdit">
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="resourceGroupName">资源组名称</nz-form-label>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24">平台</nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24">
-          <input nz-input formControlName="resourceGroupName" id="resourceGroupName" readonly/>
+          <nz-radio-group [nzDisabled]="true" formControlName="platform">
+            <label [nzValue]="1" nz-radio>PC端</label>
+            <label [nzValue]="2" nz-radio>移动端</label>
+          </nz-radio-group>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item *ngIf="!isEdit">
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="groupName">资源组名称</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <input formControlName="groupName" id="groupName" nz-input readonly/>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item *ngIf="!isEdit">
@@ -22,25 +31,25 @@
       <nz-form-item>
         <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="resourceUrl">资源地址</nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="资源地址不能为空">
-          <input nz-input formControlName="resourceUrl" id="resourceUrl"/>
+          <input [readOnly]="!isEdit" formControlName="resourceUrl" id="resourceUrl" nz-input/>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
         <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="requestMethod">请求方式</nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="请求方式不能为空">
-          <input nz-input formControlName="requestMethod" id="requestMethod"/>
+          <input [readOnly]="!isEdit" formControlName="requestMethod" id="requestMethod" nz-input/>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
         <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="controller">控制层类</nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="控制层类不能为空">
-          <input nz-input formControlName="controller" id="controller"/>
+          <input [readOnly]="!isEdit" formControlName="controller" id="controller" nz-input/>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
         <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="method">控制层方法</nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="控制层方法不能为空">
-          <input nz-input formControlName="method" id="method"/>
+          <input [readOnly]="!isEdit" formControlName="method" id="method" nz-input/>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>

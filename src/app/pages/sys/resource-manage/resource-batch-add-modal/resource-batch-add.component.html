@@ -1,0 +1,57 @@
+<nz-modal (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()"
+          [(nzVisible)]="isVisible"
+          [nzOkLoading]="loading"
+          [nzTitle]="modalTitle"
+          nzWidth="1600px">
+  <ng-container *nzModalContent>
+    <div [nzGutter]="[24, 24]" nz-row>
+      <div [nzSpan]="24" nz-col>
+        <label>请选择控制层分组：</label>
+        <nz-select (ngModelChange)="onSelectChange($event)" [(ngModel)]="selectedCtl" style="width: 300px">
+          @for (item of controllers; track item.tagName) {
+            <nz-option [nzValue]="item" [nzLabel]="item.tagName"/>
+          }
+        </nz-select>
+      </div>
+      <div [nzSpan]="24" nz-col>
+        <nz-table
+          #mappingTable
+          [nzData]="mappings"
+          [nzFrontPagination]="false">
+          <thead>
+          <tr>
+            <th
+              (nzCheckedChange)="onAllChecked($event)"
+              [nzChecked]="checked"
+              [nzIndeterminate]="indeterminate"
+            ></th>
+            <th>资源名称</th>
+            <th>请求方式</th>
+            <th>资源地址</th>
+            <th>控制层类</th>
+            <th>方法</th>
+            <th>是否登录即可访问</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let data of mappingTable.data">
+            <td (nzCheckedChange)="onItemChecked(data, $event)" [nzChecked]="data.checked"></td>
+            <td>{{ data.resourceName }}</td>
+            <td>{{ data.requestMethod }}</td>
+            <td>{{ data.resourceUrl }}</td>
+            <td>{{ data.controller }}</td>
+            <td>{{ data.method }}</td>
+            <td>
+              <nz-switch [(ngModel)]="data.isAuthedAccess"/>
+            </td>
+          </tr>
+          </tbody>
+        </nz-table>
+      </div>
+    </div>
+  </ng-container>
+</nz-modal>
+
+<ng-template #modalTitle>
+  批量添加资源 - {{ resourceGroup.groupName }}
+</ng-template>

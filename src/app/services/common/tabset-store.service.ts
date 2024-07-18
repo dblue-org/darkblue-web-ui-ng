@@ -6,6 +6,8 @@ import { RouterLinkTabItem } from '@site/app/define/common';
 })
 export class TabsetStoreService {
 
+  private cacheKey = 'router-link-tabset-items';
+
   defaultTab: RouterLinkTabItem = {
     name: '首页',
     routerLink: '/home',
@@ -18,13 +20,12 @@ export class TabsetStoreService {
   store(items: RouterLinkTabItem[]) {
     if (items && items.length > 0) {
       const json = JSON.stringify(items);
-      sessionStorage.setItem('router-link-tabset-items', json)
+      sessionStorage.setItem(this.cacheKey, json);
     }
-
   }
 
   get(): RouterLinkTabItem[] {
-    const json = sessionStorage.getItem('router-link-tabset-items');
+    const json = sessionStorage.getItem(this.cacheKey);
     if (json) {
       return JSON.parse(json);
     }
@@ -32,6 +33,6 @@ export class TabsetStoreService {
   }
 
   clear() {
-    sessionStorage.removeItem('router-link-tabset-items');
+    sessionStorage.clear();
   }
 }

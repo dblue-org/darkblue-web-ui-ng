@@ -1,8 +1,10 @@
-import { ActivatedRouteSnapshot, DetachedRouteHandle, Route, RouteReuseStrategy } from '@angular/router';
+import { ActivatedRouteSnapshot, DetachedRouteHandle, RouteReuseStrategy } from '@angular/router';
+import { inject } from '@angular/core';
+import { RouteStoreService } from '@site/app/services/common/route-store.service';
 
 export class UrlMatcherRouteReuseStrategy implements RouteReuseStrategy {
 
-  private routeSnapshots: Map<Route, DetachedRouteHandle> = new Map();
+  private routeStoreService = inject(RouteStoreService);
 
   shouldDetach(route: ActivatedRouteSnapshot): boolean {
     if (!route.routeConfig || !route.data) {
@@ -12,13 +14,12 @@ export class UrlMatcherRouteReuseStrategy implements RouteReuseStrategy {
   }
 
   retrieve(route: ActivatedRouteSnapshot): DetachedRouteHandle | null {
-    if (!route.routeConfig || !this.routeSnapshots.has(route.routeConfig)) return null;
-    const handle = this.routeSnapshots.get(route.routeConfig);
-    return handle ? handle : null;
+    if (!this.routeStoreService.has(route.routeConfig)) return null;
+    return this.routeStoreService.get(route.routeConfig);
   }
 
   shouldAttach(route: ActivatedRouteSnapshot): boolean {
-    return !!route.routeConfig && !!this.routeSnapshots.get(route.routeConfig);
+    return !!route.routeConfig && !!this.routeStoreService.get(route.routeConfig);
   }
 
   shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
@@ -31,7 +32,7 @@ export class UrlMatcherRouteReuseStrategy implements RouteReuseStrategy {
       return;
     }
 
-    this.routeSnapshots.set(route.routeConfig, detachedTree);
+    this.routeStoreService.store(route.routeConfig, detachedTree);
   }
 
 }

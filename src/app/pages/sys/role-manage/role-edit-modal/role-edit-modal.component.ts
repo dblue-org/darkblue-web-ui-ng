@@ -4,9 +4,7 @@ import { RoleService } from '@site/app/services/sys/role.service';
 import { SimpleRole } from '@site/app/define/sys/role';
 import { CommonModule } from '@angular/common';
 import { NzGridModule } from 'ng-zorro-antd/grid';
-import {
-  NzFormModule
-} from 'ng-zorro-antd/form';
+import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { RoleSelectComponent } from '@site/app/components/form/role-select/role-select.component';
@@ -34,7 +32,8 @@ export class RoleEditModalComponent extends BasicEditModalComponent {
   dataForm = this.fb.group({
     roleId: [''],
     roleCode: ['', [Validators.required]],
-    roleName: ['', [Validators.required]]
+    roleName: ['', [Validators.required]],
+    remark: ['']
   });
 
   constructor(private fb: NonNullableFormBuilder, private roleService: RoleService, private messageService: NzMessageService) {

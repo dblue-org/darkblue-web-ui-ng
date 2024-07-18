@@ -28,7 +28,9 @@
               <a class="login-form-forgot">忘记密码？</a>
             </div>
           </div>
-          <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'">登录</button>
+          <button [nzLoading]="loginLoading" [nzType]="'primary'" class="login-form-button login-form-margin" nz-button>
+            登录
+          </button>
           <a>注册新用户!</a>
         </form>
       </div>

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { delay, Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ResponseBean } from '@site/app/define/sys/response';
 import { ResourceGroup, ResourceGroupForm } from '@site/app/define/sys/resource';
 import { HttpClient } from '@angular/common/http';
@@ -12,15 +12,6 @@ export class ResourcesGroupService {
   constructor(private http: HttpClient) { }
 
   getAll(platform: number): Observable<ResponseBean<ResourceGroup[]>> {
-    /*const resourceGroups : ResourceGroup[] = [
-      {resourceGroupId: '111', resourceGroupName: '用户管理', createTime: '2022-11-11 11:11:11'},
-      {resourceGroupId: '222', resourceGroupName: '菜单管理', createTime: '2022-11-11 11:11:11'},
-      {resourceGroupId: '333', resourceGroupName: '权限管理', createTime: '2022-11-11 11:11:11'}
-    ]*/
-    /*return of({
-      success: true,
-      data: resourceGroups
-    })*/
     return this.http.get<ResponseBean<ResourceGroup[]>>(`/api/resource/group/getAll/${platform}`);
   }
 

@@ -83,7 +83,9 @@
               <button *ngIf="!data.isEnable"
                       [nzLoading]="stateLoading"
                       nz-button nzSize="small"
-                      nzType="default" nzDanger (click)="toggleDictionaryItemState(data, true)">启用
+                      (click)="toggleDictionaryItemState(data, true)"
+                      class="ant-btn-success"
+                      nzType="default">启用
               </button>
             </td>
           </tr>

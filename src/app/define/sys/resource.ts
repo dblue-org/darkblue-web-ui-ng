@@ -3,6 +3,8 @@ import { SimplePermission } from '@site/app/define/sys/permission';
 export interface ResourceGroup {
   resourceGroupId: string
   groupName: string
+  platform: number;
+  sortNum: number;
   createTime?: string
 }
 
@@ -22,6 +24,11 @@ export interface Mapping {
   requestMethod?: string
   controller?: string
   method?: string
+}
+
+export interface CheckedMapping extends Mapping {
+  checked: boolean;
+  isAuthedAccess: boolean;
 }
 
 export interface ResourceVo extends Mapping{
@@ -54,4 +61,14 @@ export interface ResourceSearchForm {
   platform?: number
   page: number
   pageSize: number
+}
+
+export interface ResourceAddDto extends Mapping {
+  isAuthedAccess: boolean;
+}
+
+export interface ResourceBatchAddDto {
+  resourceGroupId: string;
+  platform: number;
+  mappings: ResourceAddDto[];
 }

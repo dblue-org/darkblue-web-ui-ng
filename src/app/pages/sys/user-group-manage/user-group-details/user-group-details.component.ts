@@ -19,6 +19,9 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { UserGroupPageListVo } from '@site/app/define/sys/user-group';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
+import {
+  DetailsOperationBarComponent
+} from '@site/app/components/layout/details-operation-bar/details-operation-bar.component';
 
 @Component({
   selector: 'app-user-group-details',
@@ -40,7 +43,8 @@ import { NzBadgeModule } from 'ng-zorro-antd/badge';
     SectionComponent,
     IconifyComponent,
     RoleSelectComponent,
-    UserSelectComponent
+    UserSelectComponent,
+    DetailsOperationBarComponent
   ],
   templateUrl: './user-group-details.component.html',
   styleUrl: './user-group-details.component.css'

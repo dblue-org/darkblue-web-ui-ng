@@ -9,24 +9,38 @@
 .section-header {
   margin-bottom: 24px;
   background-color: rgba(240,240,240, 0.6);
+  height: 48px;
+  border-left: 5px solid #1890ff;
+}
 
+.section-header-small {
+  height: 40px;
 }
 
 .section-title {
   font-size: 1.25em;
   font-weight: 500;
-  border-left: 5px solid #1890ff;
   padding: 6px 0 6px 12px;
-  height: 40px;
-  line-height: 28px;
+  height: 48px;
+  line-height: 36px;
 }
 
 .section-extra {
   text-align: right;
   padding: 6px 12px;
-  line-height: 28px;
+  line-height: 36px;
 }
 
 .section-extra ::ng-deep [nz-button] {
   margin-left: 8px;
+}
+
+.section-header-small .section-title {
+  height: 40px;
+  line-height: 28px;
+}
+
+.section-header-small .section-extra {
+  height: 40px;
+  line-height: 28px;
 }

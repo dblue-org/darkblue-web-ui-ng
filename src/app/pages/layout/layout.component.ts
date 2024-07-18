@@ -1,19 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
-import {
-  ActivatedRoute,
-  ActivationEnd,
-  Router,
-  RouterLink,
-  RouterOutlet
-} from '@angular/router';
+import { ActivatedRoute, ActivationEnd, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
-import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { NzContextMenuService, NzDropdownMenuComponent, NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { LogoutService } from '../../services/login/logout.service';
@@ -24,6 +18,8 @@ import { MessagingComponent } from './messaging/messaging.component';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { RouterLinkTabItem } from '@site/app/define/common';
 import { TabsetStoreService } from '@site/app/services/common/tabset-store.service';
+import { RouteStoreService } from '@site/app/services/common/route-store.service';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
 
 @Component({
   selector: 'app-layout',
@@ -45,6 +41,7 @@ import { TabsetStoreService } from '@site/app/services/common/tabset-store.servi
     NzInputModule,
     NzTabsModule,
     NzBadgeModule,
+    NzSpinModule,
 
     MenuComponent,
     MessagingComponent,
@@ -53,10 +50,10 @@ import { TabsetStoreService } from '@site/app/services/common/tabset-store.servi
   styleUrl: './layout.component.css'
 })
 export class LayoutComponent implements OnInit {
+  @ViewChild('messaging') messagingDrawer: MessagingComponent | undefined;
   isCollapsed = false;
   showFooter = true;
   selectedTabIndex = 0;
-  @ViewChild('messaging') messagingDrawer: MessagingComponent | undefined;
   tabs: RouterLinkTabItem[] = [
     {
       name: '首页',
@@ -65,13 +62,18 @@ export class LayoutComponent implements OnInit {
       closeable: false
     }
   ]
+  clickTabIndex: number = -1;
+  isLogoutLoading = false;
 
   constructor(private logoutService: LogoutService, private authService: AuthenticationService,
               private router: Router, private activatedRoute: ActivatedRoute,
-              private tabsetStoreService: TabsetStoreService) {
+              private tabsetStoreService: TabsetStoreService, private contextMenuService: NzContextMenuService,
+              private routeStoreService: RouteStoreService) {
   }
 
   logout() {
+    this.isLogoutLoading = true;
+    this.closeAll();
     this.logoutService.logout();
   }
 
@@ -119,19 +121,26 @@ export class LayoutComponent implements OnInit {
 
   closeTab({ index }: { index: number }): void {
     const isActive = this.selectedTabIndex == index;
+    const removedTab = this.tabs[index];
     if (isActive) {
       this.selectedTabIndex = index - 1;
       const selectTab = this.tabs[this.selectedTabIndex];
       this.router.navigateByUrl(selectTab.routerLink).then(() => {
         this.tabs.splice(index, 1);
+        this.tabsetStoreService.store(this.tabs);
+        this.routeStoreService.removeByUrl(removedTab.routerLink, removedTab.name);
       })
     } else {
       this.tabs.splice(index, 1);
+      this.tabsetStoreService.store(this.tabs);
+      this.routeStoreService.removeByUrl(removedTab.routerLink, removedTab.name);
     }
-    this.tabsetStoreService.store(this.tabs);
   }
 
   addTab(title: string, url: string, params: any) {
+    if (url == '/login' || url == '/logout') {
+      return;
+    }
     const existTab = this.tabs.find((val) => val.routerLink == url);
     if (!existTab) {
       this.tabs.push({
@@ -147,6 +156,30 @@ export class LayoutComponent implements OnInit {
       existTab.queryParams = params;
     }
     this.tabsetStoreService.store(this.tabs);
+  }
+
+  showTabContextMenu($event: MouseEvent, menu: NzDropdownMenuComponent, index: number) {
+    $event.preventDefault();
+    this.clickTabIndex = index;
+    setTimeout(() => this.contextMenuService.create($event, menu), 50);
+  }
+
+  closeAll() {
+    this.selectedTabIndex = 0;
+    this.gotoSelectTabRoute().then(() => {
+      const removeTabs = this.tabs.splice(1, this.tabs.length - 1);
+      this.tabsetStoreService.store(this.tabs);
+      if (removeTabs.length > 0) {
+        removeTabs.forEach(tab => {
+          this.routeStoreService.removeByUrl(tab.routerLink, tab.name);
+        });
+      }
+    });
+  }
+
+  gotoSelectTabRoute(): Promise<boolean> {
+    const selectTab = this.tabs[this.selectedTabIndex];
+    return this.router.navigateByUrl(selectTab.routerLink);
   }
 
 }

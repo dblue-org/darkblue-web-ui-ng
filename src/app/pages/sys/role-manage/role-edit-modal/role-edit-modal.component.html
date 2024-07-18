@@ -2,15 +2,21 @@
   <ng-container *nzModalContent>
     <form nz-form [formGroup]="dataForm">
       <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="roleName" nzRequired>角色名称</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="角色名称不能为空">
+          <input formControlName="roleName" id="roleName" nz-input/>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
         <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="roleCode">角色编码</nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="角色编码不能为空">
           <input nz-input formControlName="roleCode" id="roleCode"/>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="roleName">角色名称</nz-form-label>
-        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="角色名称不能为空">
-          <input nz-input formControlName="roleName" id="roleName"/>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="remark">描述</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <textarea formControlName="remark" id="remark" nz-input></textarea>
         </nz-form-control>
       </nz-form-item>
     </form>

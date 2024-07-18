@@ -43,9 +43,9 @@ export abstract class BasicEditModalComponent {
         this.doUpdate().subscribe({
           next: res => {
             if (res.success) {
-              this.isVisible = false;
               this.onSaveSuccess();
               this.onSuccess.emit();
+              this.isVisible = false;
             }
           },
           complete: () => this.loading = false

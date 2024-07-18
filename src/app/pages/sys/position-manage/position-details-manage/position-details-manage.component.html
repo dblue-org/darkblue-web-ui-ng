@@ -1,4 +1,19 @@
-<app-section dkTitle="职位信息" [dkExtra]="buttons">
+<app-details-operation-bar>
+  <ng-container *ngIf="position && !position.isBuiltIn">
+    <button (click)="enable()"
+            *ngIf="!position?.isEnable" [nzLoading]="stateLoading"
+            class="ant-btn-success"
+            nz-button
+            nzType="default">启用
+    </button>
+    <button (click)="disable()"
+            *ngIf="position?.isEnable" [nzLoading]="stateLoading" nz-button
+            nzDanger
+            nzType="default">禁用
+    </button>
+  </ng-container>
+</app-details-operation-bar>
+<app-section dkTitle="职位信息">
   <nz-skeleton [nzLoading]="detailsLoading">
     <nz-descriptions nzBordered style="margin-bottom: 24px" *ngIf="position">
       <nz-descriptions-item nzTitle="职位名称">{{ position.positionName }}</nz-descriptions-item>
@@ -9,27 +24,9 @@
       <nz-descriptions-item nzTitle="创建时间">{{ position.createTime }}</nz-descriptions-item>
     </nz-descriptions>
   </nz-skeleton>
-  <ng-template #buttons>
-    <ng-container *ngIf="position && !position.isBuiltIn">
-      <button *ngIf="!position?.isEnable"
-              nzSize="small"
-              nz-button nzDanger nzType="default"
-              [nzLoading]="stateLoading"
-              (click)="enable()">启用</button>
-      <button *ngIf="position?.isEnable"
-              nzSize="small"
-              nz-button nzDanger nzType="default"
-              [nzLoading]="stateLoading"
-              (click)="disable()">禁用</button>
-    </ng-container>
-    <button nz-button nzType="default" nzSize="small" [nzLoading]="detailsLoading" (click)="getDetails()">
-      <span nz-icon nzType="reload"></span> 重新加载
-    </button>
-
-  </ng-template>
 </app-section>
 
-<app-section dkTitle="用户列表" [dkExtra]="userButtons">
+<app-section [dkExtra]="userButtons" dkSize="large" dkTitle="用户列表">
   <nz-table #userTable
             [nzFrontPagination]="false"
             nzShowPagination
@@ -64,7 +61,7 @@
 </app-section>
 
 <ng-template #userButtons>
-  <button nz-button nzType="default" nzSize="small" [nzLoading]="userTableLoading" (click)="loadUsers()">
+  <button (click)="loadUsers()" [nzLoading]="userTableLoading" nz-button nzType="default">
     <span nz-icon nzType="reload"></span> 重新加载
   </button>
 </ng-template>

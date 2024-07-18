@@ -43,7 +43,8 @@ export class PermissionsSetModalComponent {
   current = 0;
   pcMenuPermissions: MenuPermissionsVo[] = [];
   appMenuPermissions: MenuPermissionsVo[] = [];
-  checkedMenuIds: string[] = [];
+  pcCheckedMenuIds: string[] = [];
+  appCheckedMenuIds: string[] = [];
   nextLoading = false;
   roleId: string = '';
   selectedMenusIdList: string[] = []
@@ -56,10 +57,8 @@ export class PermissionsSetModalComponent {
     this.reset();
     this.roleService.checkMenus(roleId).subscribe(res => {
       if (res.success && res.data) {
-        this.checkedMenuIds = this.roleService.getCheckedMenus([
-          ...res.data.pcMenus,
-          ...res.data.appMenus
-        ]);
+        this.pcCheckedMenuIds = this.roleService.getCheckedMenus(res.data.pcMenus);
+        this.appCheckedMenuIds = this.roleService.getCheckedMenus(res.data.appMenus);
         this.pcMenus = this.roleService.toTreeNodes(res.data.pcMenus);
         this.appMenus = this.roleService.toTreeNodes(res.data.appMenus);
       }
@@ -73,7 +72,8 @@ export class PermissionsSetModalComponent {
     this.appMenus = [];
     this.pcMenuPermissions = [];
     this.appMenuPermissions = [];
-    this.checkedMenuIds = [];
+    this.pcCheckedMenuIds = [];
+    this.appCheckedMenuIds = [];
     this.selectedMenusIdList = [];
   }
 

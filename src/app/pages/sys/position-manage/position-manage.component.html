@@ -77,7 +77,8 @@
         <button *ngIf="!data.isEnable && !data.isBuiltIn"
                 [nzLoading]="stateLoading"
                 nz-button nzSize="small"
-                nzType="default" nzDanger (click)="enable(data)">启用
+                (click)="enable(data)"
+                class="ant-btn-success" nzType="default">启用
         </button>
       </td>
     </tr>

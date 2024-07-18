@@ -1,0 +1,24 @@
+:host {
+  display: block;
+  background: white;
+  margin-bottom: 24px;
+  padding: 6px 24px 6px 24px;
+  border-radius: 5px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.09)
+}
+
+.operation-left-container {
+  height: 48px;
+  line-height: 48px;
+}
+
+.operation-right-container {
+  height: 48px;
+  line-height: 48px;
+  text-align: right;
+}
+
+
+.operation-right-container ::ng-deep [nz-button] {
+  margin-left: 8px;
+}

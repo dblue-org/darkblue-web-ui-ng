@@ -1,0 +1,10 @@
+<div nz-row>
+  <div [nzSpan]="4" class="operation-left-container" nz-col>
+    <button (click)="back()" *ngIf="canGoBack" nz-button nzShape="circle" nzType="default">
+      <span nz-icon nzTheme="outline" nzType="arrow-left"></span>
+    </button>
+  </div>
+  <div [nzSpan]="20" class="operation-right-container" nz-col>
+    <ng-content/>
+  </div>
+</div>

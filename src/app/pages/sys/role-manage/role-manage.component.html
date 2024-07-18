@@ -36,7 +36,8 @@
     <thead>
     <tr>
       <th nzWidth="300px">角色编码</th>
-      <th>角色名称</th>
+      <th nzWidth="300px">角色名称</th>
+      <th>描述</th>
       <th nzWidth="150px">状态</th>
       <th nzWidth="120px">是否内置</th>
       <th nzWidth="180px">创建时间</th>
@@ -47,6 +48,7 @@
     <tr *ngFor="let data of basicTable.data">
       <td>{{ data.roleCode }}</td>
       <td><a (click)="goDetails(data)">{{ data.roleName }}</a></td>
+      <td>{{ data.remark }}</td>
       <td>
         <nz-badge nzStatus="success" *ngIf="data.isEnable" nzText="正常"></nz-badge>
         <nz-badge nzStatus="error" *ngIf="!data.isEnable" nzText="停用"></nz-badge>
@@ -56,6 +58,7 @@
       <td>
         <button nz-button nzSize="small" nzType="default" (click)="showEditModal(data)">修改</button>
         <button nz-button nzSize="small"
+                *ngIf="!data.isBuiltIn"
                 nzType="primary"
                 [nzLoading]="deleteLoading"
                 nz-popconfirm
@@ -71,7 +74,9 @@
         <button *ngIf="!data.isEnable"
                 [nzLoading]="stateLoading"
                 nz-button nzSize="small"
-                nzType="default" nzDanger (click)="toggleState(data, true)">启用
+                (click)="toggleState(data, true)"
+                class="ant-btn-success"
+                nzType="default">启用
         </button>
         <button nz-button nzSize="small"
                 nzType="default" (click)="showPermissionSetModal(data.roleId)">设置权限

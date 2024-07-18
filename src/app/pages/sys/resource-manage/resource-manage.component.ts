@@ -24,6 +24,9 @@ import {
   ResourcePermissionModalComponent
 } from '@site/app/pages/sys/resource-manage/resource-permission-modal/resource-permission-modal.component';
 import { BoxContainerComponent } from '@site/app/components/layout/box-container/box-container.component';
+import {
+  ResourceBatchAddComponent
+} from '@site/app/pages/sys/resource-manage/resource-batch-add-modal/resource-batch-add.component';
 
 @Component({
   selector: 'app-resource-manage',
@@ -47,7 +50,8 @@ import { BoxContainerComponent } from '@site/app/components/layout/box-container
     ResourceEditModalComponent,
     SearchBarHelpDirective,
     ResourcePermissionModalComponent,
-    BoxContainerComponent
+    BoxContainerComponent,
+    ResourceBatchAddComponent
   ],
   templateUrl: './resource-manage.component.html',
   styleUrl: './resource-manage.component.css'
@@ -56,6 +60,7 @@ export class ResourceManageComponent implements OnInit, OnChanges {
 
   @ViewChild('resourceEditModalComponent') resourceEditModalComponent?: ResourceEditModalComponent;
   @ViewChild('resourcePermissionModalComponent') resourcePermissionModalComponent?: ResourcePermissionModalComponent;
+  @ViewChild('resourceBatchAddComponent') resourceBatchAddComponent?: ResourceBatchAddComponent;
 
   platform = 1;
 
@@ -144,12 +149,27 @@ export class ResourceManageComponent implements OnInit, OnChanges {
   }
 
   showAddModal() {
-    this.resourceEditModalComponent?.showAddModal(this.selectedResourceGroup);
+    this.resourceEditModalComponent?.showAddModal(
+      {
+        ...this.selectedResourceGroup,
+        platform: this.platform
+      }
+    );
   }
 
+  showBatchAddModal() {
+    if (!this.selectedResourceGroup) {
+      return;
+    }
+    this.resourceBatchAddComponent?.showModal({
+      ...this.selectedResourceGroup,
+      platform: this.platform
+    });
+  }
   showUpdateModal(resource: Resource) {
     this.resourceEditModalComponent?.showUpdateModal({
-      ...resource
+      ...resource,
+      platform: this.platform
     });
   }
 

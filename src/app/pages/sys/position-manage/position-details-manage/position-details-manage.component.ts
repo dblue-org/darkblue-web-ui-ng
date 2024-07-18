@@ -12,6 +12,9 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 import { NzIconDirective } from 'ng-zorro-antd/icon';
+import {
+  DetailsOperationBarComponent
+} from '@site/app/components/layout/details-operation-bar/details-operation-bar.component';
 
 @Component({
   selector: 'app-position-details-manage',
@@ -28,7 +31,8 @@ import { NzIconDirective } from 'ng-zorro-antd/icon';
 
     SectionComponent,
     RouterLink,
-    NzIconDirective
+    NzIconDirective,
+    DetailsOperationBarComponent
   ],
   templateUrl: './position-details-manage.component.html',
   styleUrl: './position-details-manage.component.css'

@@ -22,6 +22,7 @@ import { NzBadgeComponent } from 'ng-zorro-antd/badge';
 import { TwoColumnComponent } from '@site/app/components/layout/two-column/two-column.component';
 import { TwoColumnSiderDirective } from '@site/app/components/layout/two-column/two-column-sider.directive';
 import { BoxContainerComponent } from '@site/app/components/layout/box-container/box-container.component';
+import { PermIfDirective } from '@site/app/directives/perm-if.directive';
 
 @Component({
   selector: 'app-user-manage',
@@ -46,7 +47,8 @@ import { BoxContainerComponent } from '@site/app/components/layout/box-container
     NzBadgeComponent,
     TwoColumnComponent,
     TwoColumnSiderDirective,
-    BoxContainerComponent
+    BoxContainerComponent,
+    PermIfDirective
   ],
   templateUrl: './user-manage.component.html',
   styleUrl: './user-manage.component.css'

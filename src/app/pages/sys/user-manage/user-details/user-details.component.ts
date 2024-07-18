@@ -15,8 +15,13 @@ import { LoginLogService } from '@site/app/services/logs/login-log.service';
 import { MenusWithPermission } from '@site/app/define/sys/menu';
 import { UserDetailsVo } from '@site/app/define/sys/user';
 import { NzBadgeComponent } from 'ng-zorro-antd/badge';
-import { BasicTreeTable } from '@site/app/components/basic-tree-table';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzColDirective, NzRowDirective } from 'ng-zorro-antd/grid';
+import { RoleMenuTableComponent } from '@site/app/pages/sys/role-manage/role-menu-table/role-menu-table.component';
+import { NzAlertModule } from 'ng-zorro-antd/alert';
+import {
+  DetailsOperationBarComponent
+} from '@site/app/components/layout/details-operation-bar/details-operation-bar.component';
 
 @Component({
   selector: 'app-user-details',
@@ -32,15 +37,20 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
     NzTagModule,
     NzFlexModule,
     NzToolTipModule,
+    NzAlertModule,
 
     SectionComponent,
     IconifyComponent,
-    NzBadgeComponent
+    NzBadgeComponent,
+    NzColDirective,
+    NzRowDirective,
+    RoleMenuTableComponent,
+    DetailsOperationBarComponent
   ],
   templateUrl: './user-details.component.html',
   styleUrl: './user-details.component.css'
 })
-export class UserDetailsComponent extends BasicTreeTable<MenusWithPermission> implements OnInit {
+export class UserDetailsComponent implements OnInit {
 
   @Input('userId') userId?: string; // inject from router
 
@@ -54,13 +64,14 @@ export class UserDetailsComponent extends BasicTreeTable<MenusWithPermission> im
     pageSize: 5
   };
 
-  rolePermissions: MenusWithPermission[] = [];
   permissionTableLoading = false;
   stateLoading = false;
+  hasAppMenuPermission = false;
+  pcMenuPermissions: MenusWithPermission[] = [];
+  appMenuPermissions: MenusWithPermission[] = [];
 
 
   constructor(private userService: UserService, private loginLogService: LoginLogService) {
-    super();
   }
 
   getUserDetails() {
@@ -68,18 +79,20 @@ export class UserDetailsComponent extends BasicTreeTable<MenusWithPermission> im
       return;
     }
 
-    this.rolePermissions = [];
-    this.mapOfExpandedData = {};
+    this.pcMenuPermissions = [];
+    this.appMenuPermissions = [];
     this.permissionTableLoading = true;
+    this.hasAppMenuPermission = false;
     this.userService.getDetails(this.userId).subscribe({
       next: res => {
         if (res.success) {
           this.userDetails = res.data;
-          if (res.data && res.data.userMenuVoList) {
-            this.rolePermissions = res.data.userMenuVoList;
-            this.rolePermissions.forEach(item => {
-              this.mapOfExpandedData[item.menuId] = this.convertTreeToList(item);
-            });
+          if (res.data) {
+            this.pcMenuPermissions = res.data.pcMenus || [];
+            this.appMenuPermissions = res.data.appMenus || [];
+            if (this.appMenuPermissions.length > 0) {
+              this.hasAppMenuPermission = true;
+            }
           }
         }
         this.permissionTableLoading = false;
@@ -144,9 +157,5 @@ export class UserDetailsComponent extends BasicTreeTable<MenusWithPermission> im
       this.getUserDetails();
       this.loadLoginLogs();
     }
-  }
-
-  getKeyName(): string {
-    return 'menuId';
   }
 }

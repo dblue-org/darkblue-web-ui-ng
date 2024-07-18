@@ -12,6 +12,7 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
 import { ResourceSelectComponent } from '@site/app/components/form/resource-select/resource-select.component';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { CommonModule } from '@angular/common';
+import { NzRadioComponent, NzRadioGroupComponent } from 'ng-zorro-antd/radio';
 
 @Component({
   selector: 'app-resource-edit-modal',
@@ -24,7 +25,9 @@ import { CommonModule } from '@angular/common';
     NzGridModule,
     ReactiveFormsModule,
     ResourceSelectComponent,
-    NzSwitchModule
+    NzSwitchModule,
+    NzRadioComponent,
+    NzRadioGroupComponent
   ],
   templateUrl: './resource-edit-modal.component.html',
   styleUrl: './resource-edit-modal.component.css'
@@ -36,7 +39,8 @@ export class ResourceEditModalComponent extends BasicEditModalComponent {
   dataForm = this.formBuilder.group({
     resourceId: [''],
     resourceGroupId: [''],
-    resourceGroupName: [''],
+    groupName: [''],
+    platform: ['', [Validators.required]],
     resourceName: ['', [Validators.required]],
     resourceUrl: ['', [Validators.required]],
     requestMethod: ['', [Validators.required]],
@@ -51,10 +55,8 @@ export class ResourceEditModalComponent extends BasicEditModalComponent {
 
 
   protected override beforeAddShowProcessor(data?: any) {
-    console.log(data);
     this.dataForm.patchValue({
-      resourceGroupId: data?.resourceGroupId,
-      resourceGroupName: data?.groupName,
+      ...data,
       isAuthedAccess: false
     })
   }

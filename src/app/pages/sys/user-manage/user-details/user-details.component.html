@@ -1,17 +1,36 @@
-<app-section dkTitle="用户基本信息" [dkExtra]="back">
+<app-details-operation-bar>
+  <ng-container *ngIf="!userDetails?.isAdmin">
+    <button (click)="enable()" *ngIf="!userDetails?.isEnable"
+            class="ant-btn-success"
+            nz-button
+            nzType="default">启用
+    </button>
+    <button (click)="disable()" *ngIf="userDetails?.isEnable"
+            nz-button
+            nzDanger
+            nzType="default">禁用
+    </button>
+  </ng-container>
+  <button nz-button nzType="primary">重置密码</button>
+</app-details-operation-bar>
+
+<app-section dkTitle="用户基本信息">
   <nz-descriptions nzBordered style="margin-bottom: 24px" *ngIf="userDetails">
-    <nz-descriptions-item nzTitle="用户名">{{userDetails.username}}</nz-descriptions-item>
-    <nz-descriptions-item nzTitle="姓名">{{userDetails.name}}</nz-descriptions-item>
-    <nz-descriptions-item nzTitle="手机号">{{userDetails.phoneNumber}}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="用户名">
+      {{ userDetails.username }}
+      <nz-tag *ngIf="userDetails.isAdmin" nzColor="red">超级管理员</nz-tag>
+    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="姓名">{{ userDetails.name }}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="手机号">{{ userDetails.phoneNumber }}</nz-descriptions-item>
     <nz-descriptions-item nzTitle="状态">
       <nz-badge nzStatus="success" *ngIf="userDetails.isEnable" nzText="正常"></nz-badge>
       <nz-badge nzStatus="error" *ngIf="!userDetails.isEnable" nzText="停用"></nz-badge>
     </nz-descriptions-item>
-    <nz-descriptions-item nzTitle="部门">{{userDetails.deptName}}</nz-descriptions-item>
-    <nz-descriptions-item nzTitle="创建时间">{{userDetails.createTime}}</nz-descriptions-item>
-    <nz-descriptions-item nzTitle="最后登录时间">{{userDetails.lastLoginTime}}</nz-descriptions-item>
-    <nz-descriptions-item nzTitle="职位">{{userDetails.positionName}}</nz-descriptions-item>
-    <nz-descriptions-item ></nz-descriptions-item>
+    <nz-descriptions-item nzTitle="部门">{{ userDetails.deptName }}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="创建时间">{{ userDetails.createTime }}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="最后登录时间">{{ userDetails.lastLoginTime }}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="职位">{{ userDetails.positionName }}</nz-descriptions-item>
+    <nz-descriptions-item></nz-descriptions-item>
     <nz-descriptions-item nzTitle="用户组" [nzSpan]="3">
       <ng-container *ngIf="userDetails.userGroups">
         @for (item of userDetails.userGroups; track item.userGroupId) {
@@ -21,71 +40,37 @@
     </nz-descriptions-item>
     <nz-descriptions-item nzTitle="角色" [nzSpan]="3">
       <ng-container *ngIf="userDetails.roles">
-        @for (item of userDetails.roles;track item.roleId) {
-          <nz-tag nzColor="blue" *ngIf="!item.isUserGroup">{{item.roleName}}</nz-tag>
+        @for (item of userDetails.roles; track item.roleId) {
+          <nz-tag nzColor="blue" *ngIf="!item.isUserGroup">{{ item.roleName }}</nz-tag>
           <nz-tag nzColor="geekblue" *ngIf="item.isUserGroup"
                   nz-tooltip
                   nzTooltipTitle="此角色来源于用户组">
-            <iconify icon="mingcute:group-line" [size]="12"/>{{item.roleName}}
+            <iconify icon="mingcute:group-line" [size]="12"/>
+            {{ item.roleName }}
           </nz-tag>
         }
       </ng-container>
     </nz-descriptions-item>
   </nz-descriptions>
-  <ng-template #back>
-    <button nz-button class="ant-btn-success"
-            nzDanger
-            nzType="default"
-            nzSize="small"
-            (click)="enable()"
-            *ngIf="!userDetails?.isEnable">启用</button>
-    <button nz-button nzDanger
-            nzType="default"
-            nzSize="small"
-            (click)="disable()"
-            *ngIf="userDetails?.isEnable">禁用</button>
-  </ng-template>
 </app-section>
 
 <app-section dkTitle="拥有权限">
-  <nz-table #menuPermissionTable
-            [nzData]="rolePermissions"
-            nzSize="small"
-            nzTableLayout="fixed"
-            nzBordered
-            [nzLoading]="permissionTableLoading"
-            [nzShowPagination]="false">
-    <thead>
-    <tr>
-      <th nzWidth="300px">菜单名称</th>
-      <th nzWidth="180px">类型</th>
-      <th>权限</th>
-    </tr>
-    </thead>
-    <tbody>
-    <ng-container *ngFor="let data of menuPermissionTable.data">
-      <ng-container *ngFor="let item of mapOfExpandedData[data.menuId]">
-        <tr *ngIf="(item.parent && item.parent.expand) || !item.parent">
-          <td
-            [nzIndentSize]="item.level! * 20"
-            [nzShowExpand]="!!item.children"
-            [(nzExpand)]="item.expand"
-            (nzExpandChange)="collapse(mapOfExpandedData[data.menuId], item, $event)"
-          >
-            <span nz-icon [nzType]="item.menuIcon" nzTheme="outline" *ngIf="item.menuIcon"></span>
-            {{ item.menuName }}
-          </td>
-          <td>{{ item.menuType == 1 ? '菜单组' : '菜单项' }}</td>
-          <td>
-            @for (p of item.permissions; track p) {
-              <nz-tag nzColor="processing"> {{ p.permissionName }}({{ p.permissionCode }})</nz-tag>
-            }
-          </td>
-        </tr>
-      </ng-container>
-    </ng-container>
-    </tbody>
-  </nz-table>
+  <nz-alert *ngIf="userDetails?.isAdmin"
+            [nzMessage]="message"
+            nzShowIcon
+            nzType="info"
+            style="margin-bottom: 24px"/>
+  <ng-template #message>
+    此用户是超级管理员，默认拥有系统所有功能权限。为此用户分配角色或设置用户组，均<b>不生效</b>，即无法通过角色和设置用户组来影响此用户的权限。
+  </ng-template>
+  <div [nzGutter]="24" nz-row>
+    <div [nzSpan]="hasAppMenuPermission ? 12 : 24" nz-col>
+      <app-role-menu-table [dkLoading]="permissionTableLoading" [dkRoleMenus]="pcMenuPermissions" dkTitle="PC端"/>
+    </div>
+    <div *ngIf="hasAppMenuPermission" [nzSpan]="12" nz-col>
+      <app-role-menu-table [dkLoading]="permissionTableLoading" [dkRoleMenus]="appMenuPermissions" dkTitle="移动端"/>
+    </div>
+  </div>
 </app-section>
 
 <app-section dkTitle="登录记录">

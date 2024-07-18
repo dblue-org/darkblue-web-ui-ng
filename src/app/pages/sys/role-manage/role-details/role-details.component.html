@@ -1,4 +1,20 @@
-<app-section dkTitle="角色信息" [dkExtra]="actions">
+<app-details-operation-bar>
+  <button (click)="toggleState(true)"
+          *ngIf="!roleDetails?.isEnable"
+          class="ant-btn-success"
+          nz-button
+          nzSize="small"
+          nzType="default">启用
+  </button>
+  <button (click)="toggleState(false)"
+          *ngIf="roleDetails?.isEnable"
+          nz-button
+          nzDanger
+          nzSize="small"
+          nzType="default">禁用
+  </button>
+</app-details-operation-bar>
+<app-section dkTitle="角色信息">
   <nz-descriptions nzBordered style="margin-bottom: 24px" *ngIf="roleDetails">
     <nz-descriptions-item nzTitle="角色名称">{{ roleDetails.roleName }}</nz-descriptions-item>
     <nz-descriptions-item nzTitle="角色编码">{{ roleDetails.roleCode }}</nz-descriptions-item>
@@ -8,20 +24,6 @@
     </nz-descriptions-item>
     <nz-descriptions-item nzTitle="创建时间">{{ roleDetails.createTime }}</nz-descriptions-item>
   </nz-descriptions>
-  <ng-template #actions>
-    <button *ngIf="!roleDetails?.isEnable"
-            nz-button nzDanger
-            nzSize="small"
-            nzType="default"
-            class="ant-btn-success"
-            (click)="toggleState(true)">启用</button>
-    <button  *ngIf="roleDetails?.isEnable"
-             nz-button
-             nzDanger
-             nzSize="small"
-             nzType="default"
-             (click)="toggleState(false)">禁用</button>
-  </ng-template>
 </app-section>
 
 <app-section dkTitle="关联权限">
@@ -33,10 +35,9 @@
       <app-role-menu-table [dkRoleMenus]="appMenuPermissions" [dkLoading]="permissionTableLoading" dkTitle="移动端" />
     </div>
   </div>
-
 </app-section>
 
-<app-section dkTitle="关联用户">
+<app-section [dkExtra]="reloadButton" dkSize="large" dkTitle="关联用户">
   <nz-table #userTable
             nzSize="small"
             nzTableLayout="fixed"
@@ -71,5 +72,11 @@
     </tr>
     </tbody>
   </nz-table>
+  <ng-template #reloadButton>
+    <button (click)="loadUsers()" [nzLoading]="userTableLoading" nz-button nzType="default">
+      <span nz-icon nzType="reload"></span> 重新加载
+    </button>
+  </ng-template>
 </app-section>
+
 

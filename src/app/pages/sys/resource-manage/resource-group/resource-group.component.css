@@ -48,3 +48,9 @@
 .resource-group-item-clear:hover {
   color: #1890ff;
 }
+
+.sort-num {
+  text-align: right;
+  color: #999;
+  padding-right: 8px;
+}

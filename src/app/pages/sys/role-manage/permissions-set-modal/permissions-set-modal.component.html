@@ -16,7 +16,7 @@
                      nzCheckable
                      nzMultiple
                      nzExpandAll
-                     [(nzCheckedKeys)]="checkedMenuIds"
+                     [(nzCheckedKeys)]="pcCheckedMenuIds"
             ></nz-tree>
           </div>
         </div>
@@ -28,7 +28,7 @@
                      nzCheckable
                      nzMultiple
                      nzExpandAll
-                     [(nzCheckedKeys)]="checkedMenuIds"
+                     [(nzCheckedKeys)]="appCheckedMenuIds"
             ></nz-tree>
           </div>
         </div>
@@ -38,7 +38,7 @@
     <div class="steps-content-1" *ngIf="current == 1">
       <div class="permission-panel" *ngIf="pcMenuPermissions && pcMenuPermissions.length > 0">
         <h3>PC端</h3>
-        <div nz-row [nzGutter]="24">
+        <div [nzGutter]="[24, 24]" nz-row>
           <ng-container *ngFor="let item of pcMenuPermissions; let i = index">
             <app-menu-permissions nz-col [nzSpan]="8" [(ngModel)]="pcMenuPermissions[i]" />
           </ng-container>
@@ -46,7 +46,7 @@
       </div>
       <div class="permission-panel" *ngIf="appMenuPermissions && appMenuPermissions.length > 0">
         <h3>移动端</h3>
-        <div nz-row [nzGutter]="24">
+        <div [nzGutter]="[24, 24]" nz-row>
           <ng-container *ngFor="let item of appMenuPermissions; let i = index">
             <app-menu-permissions nz-col [nzSpan]="8" [(ngModel)]="appMenuPermissions[i]" />
           </ng-container>

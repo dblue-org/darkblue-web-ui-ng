@@ -23,7 +23,6 @@
 
 .ant-layout-sider {
   background: #fff;
-
 }
 
 .header-trigger {
@@ -143,3 +142,14 @@ a[nz-tab-link] {
   position: static !important;
 }
 
+:host ::ng-deep .ant-tabs-tab a {
+  color: black;
+}
+
+:host ::ng-deep .ant-tabs-tab a:hover {
+  color: #1890ff;
+}
+
+:host ::ng-deep .ant-tabs-tab-active a {
+  color: #1890ff;
+}

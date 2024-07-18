@@ -109,7 +109,8 @@ export interface UserDetailsVo extends SimpleUser {
   isAdmin: boolean
   userGroups: UserGroupPageListVo[]
   roles: UserRoleVo[]
-  userMenuVoList: MenusWithPermission[]
+  pcMenus: MenusWithPermission[];
+  appMenus: MenusWithPermission[];
 }
 
 export interface RefUserVo {

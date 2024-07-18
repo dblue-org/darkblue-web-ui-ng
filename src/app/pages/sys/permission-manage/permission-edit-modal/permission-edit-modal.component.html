@@ -1,10 +1,12 @@
-<nz-modal [(nzVisible)]="isVisible" nzWidth="800px"
+<nz-modal [(nzVisible)]="isVisible"
+          nzDraggable
+          nzWidth="800px"
           [nzTitle]="isEdit ? '修改权限' : '添加权限'"
           (nzOnCancel)="handleCancel()"
           (nzOnOk)="handleOk()"
           [nzOkLoading]="loading">
   <ng-container *nzModalContent>
-    <form nz-form [formGroup]="dataForm">
+    <form (keydown.enter)="doSubmit(false)" (ngSubmit)="doSubmit(false)" [formGroup]="dataForm" nz-form>
       <nz-form-item>
         <nz-form-label [nzSm]="6" [nzXs]="24">所属菜单</nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24" >
@@ -34,4 +36,9 @@
       </nz-form-item>
     </form>
   </ng-container>
+  <div *nzModalFooter>
+    <button (click)="handleCancel()" nz-button nzType="default">取消</button>
+    <button (click)="doSubmit(false)" [nzLoading]="loading" nz-button nzType="primary">确认</button>
+    <button (click)="doSubmit(true)" [nzLoading]="loading" nz-button nzType="primary">确认并继续</button>
+  </div>
 </nz-modal>

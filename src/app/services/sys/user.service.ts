@@ -1,16 +1,15 @@
 import { Injectable } from '@angular/core';
-import { delay, Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ResponseBean } from '../../define/sys/response';
 import {
   SimpleUser,
-  UserPageListVo,
-  UserDetailsVo,
-  UserSearchForm,
   UserAddDto,
+  UserDetailsVo,
+  UserPageListVo,
+  UserSearchForm,
   UserUpdateDto
 } from '../../define/sys/user';
 import { HttpClient } from '@angular/common/http';
-import { MenusWithPermission } from '@site/app/define/sys/menu';
 
 @Injectable({
   providedIn: 'root'
@@ -64,32 +63,6 @@ export class UserService {
 
   getDetails(userId: string): Observable<ResponseBean<UserDetailsVo>> {
     return this.http.get<ResponseBean<UserDetailsVo>>(`/api/user/getOne/${userId}`);
-  }
-
-  getMenusWithPermission(userId: string): Observable<ResponseBean<MenusWithPermission[]>> {
-    return of({
-      success: true,
-      data: [
-        {
-          menuId: '001',
-          menuName: '系统管理',
-          children: [
-            {
-              menuId: '001001',
-              menuName: '用户管理',
-              permissions: [
-                {
-                  permissionId: '001001001',
-                  permissionCode: 'user_query',
-                  permissionName: '查看用户',
-                  platform: 1
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }).pipe(delay(1500))
   }
 
 }

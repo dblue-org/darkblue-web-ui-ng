@@ -82,7 +82,6 @@ export class ResourcePermissionModalComponent implements OnInit {
     this.resource = resource;
     this.selectedPermissions = resource.permissions ? [...resource.permissions] : [];
     this.isVisible = true;
-    console.log(this.platform);
   }
 
   handleOk(): void {

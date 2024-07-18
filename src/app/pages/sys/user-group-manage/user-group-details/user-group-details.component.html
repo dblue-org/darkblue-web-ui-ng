@@ -1,7 +1,22 @@
-<app-section dkTitle="用户组基本信息" [dkExtra]="btns">
+<app-details-operation-bar>
+  <button (click)="enable()"
+          *ngIf="!userGroup?.isEnable"
+          class="ant-btn-success"
+          nz-button
+          nzType="default">启用
+  </button>
+  <button (click)="disable()"
+          *ngIf="userGroup?.isEnable"
+          nz-button
+          nzDanger
+          nzType="default">禁用
+  </button>
+</app-details-operation-bar>
+
+<app-section dkTitle="用户组基本信息">
   <ng-container *ngIf="userGroup">
     <nz-descriptions nzBordered style="margin-bottom: 24px">
-      <nz-descriptions-item nzTitle="用户组名">{{userGroup.userGroupName}}</nz-descriptions-item>
+      <nz-descriptions-item nzTitle="用户组名">{{ userGroup.userGroupName }}</nz-descriptions-item>
       <nz-descriptions-item nzTitle="状态">
         <nz-badge nzStatus="success" *ngIf="userGroup.isEnable" nzText="正常"></nz-badge>
         <nz-badge nzStatus="error" *ngIf="!userGroup.isEnable" nzText="停用"></nz-badge>
@@ -9,17 +24,14 @@
       <nz-descriptions-item nzTitle="创建时间">{{ userGroup.createTime }}</nz-descriptions-item>
     </nz-descriptions>
   </ng-container>
-  <ng-template #btns>
-    <button nz-button nzDanger nzType="default" nzSize="small" *ngIf="!userGroup?.isEnable" (click)="enable()">启用</button>
-    <button nz-button nzDanger nzType="default" nzSize="small" *ngIf="userGroup?.isEnable" (click)="disable()">禁用</button>
-  </ng-template>
+
 </app-section>
 
 
-<app-section dkTitle="拥有角色" [dkExtra]="roleButtons">
+<app-section [dkExtra]="roleButtons" dkSize="large" dkTitle="拥有角色">
   <ng-template #roleButtons>
-    <button nz-button nzType="primary" nzSize="small" [nzLoading]="roleAddLoading" (click)="addRoles()">添加</button>
-    <button nz-button nzType="default" [nzLoading]="roleTableLoading" nzSize="small" (click)="loadRoles()">
+    <button (click)="addRoles()" [nzLoading]="roleAddLoading" nz-button nzType="primary">添加</button>
+    <button (click)="loadRoles()" [nzLoading]="roleTableLoading" nz-button nzType="default">
       <span nz-icon nzType="reload"></span>重新加载
     </button>
   </ng-template>
@@ -78,10 +90,10 @@
   <app-role-select [(ngModel)]="selectedRoles" dkWidth="100%"/>
 </ng-template>
 
-<app-section dkTitle="用户列表" [dkExtra]="userButtons">
+<app-section [dkExtra]="userButtons" dkSize="large" dkTitle="用户列表">
   <ng-template #userButtons>
-    <button nz-button nzType="primary" [nzLoading]="userAddLoading" nzSize="small" (click)="addUsers()">添加</button>
-    <button nz-button nzType="default" [nzLoading]="userTableLoading" nzSize="small" (click)="loadUsers()">
+    <button (click)="addUsers()" [nzLoading]="userAddLoading" nz-button nzType="primary">添加</button>
+    <button (click)="loadUsers()" [nzLoading]="userTableLoading" nz-button nzType="default">
       <span nz-icon nzType="reload"></span>重新加载
     </button>
   </ng-template>
@@ -133,5 +145,5 @@
 
 <ng-template #userSelector>
   <p>请选择用户，支持多选和筛选</p>
-  <app-user-select [(ngModel)]="selectedUsers" dkMode="multiple" dkWidth="100%" />
+  <app-user-select [(ngModel)]="selectedUsers" dkMode="multiple" dkWidth="100%"/>
 </ng-template>

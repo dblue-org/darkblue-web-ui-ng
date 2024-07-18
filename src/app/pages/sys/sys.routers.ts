@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import {MenuManageComponent} from "./menu-manage/menu-manage.component";
+import { MenuManageComponent } from './menu-manage/menu-manage.component';
 import { UserManageComponent } from './user-manage/user-manage.component';
 import { RoleManageComponent } from '@site/app/pages/sys/role-manage/role-manage.component';
 import { PermissionManageComponent } from '@site/app/pages/sys/permission-manage/permission-manage.component';
@@ -17,6 +17,7 @@ import { PositionManageComponent } from '@site/app/pages/sys/position-manage/pos
 import {
   PositionDetailsManageComponent
 } from '@site/app/pages/sys/position-manage/position-details-manage/position-details-manage.component';
+import { MessagingManageComponent } from '@site/app/pages/sys/message/messaging-manage/messaging-manage.component';
 
 export const SYS_ROUTES: Routes = [
   { path: 'menu', component: MenuManageComponent, title: '菜单管理', data: {shouldReuse: true}},
@@ -31,4 +32,5 @@ export const SYS_ROUTES: Routes = [
   { path: 'permission', component: PermissionManageComponent, title: '权限管理', data: {shouldReuse: true}},
   { path: 'permission/details', component: PermissionDetailsComponent, title: '权限详情'},
   { path: 'resource', component: ResourceManageComponent, title: '资源管理', data: {shouldReuse: true}},
+  {path: 'messaging-template', component: MessagingManageComponent, title: '消息模板管理', data: {shouldReuse: true}}
 ];

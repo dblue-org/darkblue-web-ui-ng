@@ -1,5 +1,5 @@
 <div class="section">
-  <div nz-row class="section-header">
+  <div [class]="{'section-header': true, 'section-header-small': size == 'small'}" nz-row>
     <div nz-col [nzSpan]="12" class="section-title">
       <ng-container *ngIf="isTemplate(title); else text">
         <ng-container *ngTemplateOutlet="title" />

@@ -28,8 +28,6 @@ export const responseInterceptor: HttpInterceptorFn = (req, next) => {
 
 function onError(responseBean: ResponseBean<any>, router: Router, msgService: NzMessageService, authService: AuthenticationService) {
   if (responseBean.errorCode == '401') {
-    console.log(11111111);
-
     authService.deleteSession();
     router.navigate(['/login']);
   } else if (responseBean.message) {
