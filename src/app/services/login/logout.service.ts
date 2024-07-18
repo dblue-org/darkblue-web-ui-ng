@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { delay } from 'rxjs';
 import { ResponseBean } from '../../define/sys/response';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../auth/authentication.service';
@@ -17,7 +16,7 @@ export class LogoutService {
   }
 
   logout() {
-    this.http.get<ResponseBean<void>>('/api/logout').pipe(delay(1000)).subscribe(res => {
+    this.http.get<ResponseBean<void>>('/api/logout').subscribe(res => {
       if (res.success) {
         this.authService.deleteSession();
         this.router.navigate(['/login']).then(() => {
