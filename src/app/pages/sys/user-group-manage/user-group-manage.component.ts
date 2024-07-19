@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { UserGroup, UserGroupPageListVo } from '@site/app/define/sys/user-group';
-import { CommonModule, NgForOf, NgIf } from '@angular/common';
+import { UserGroupPageListVo } from '@site/app/define/sys/user-group';
+import { CommonModule } from '@angular/common';
 import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzIconDirective, NzIconModule } from 'ng-zorro-antd/icon';
-import { NzInputDirective, NzInputModule } from 'ng-zorro-antd/input';
-import { NzPopconfirmDirective, NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import {
   PermissionsSetModalComponent
@@ -20,6 +20,7 @@ import {
 } from '@site/app/pages/sys/user-group-manage/user-group-edit-modal/user-group-edit-modal.component';
 import { NzBadgeComponent } from 'ng-zorro-antd/badge';
 import { BoxContainerComponent } from '@site/app/components/layout/box-container/box-container.component';
+import { PermIfDirective } from '@site/app/directives/perm-if.directive';
 
 @Component({
   selector: 'app-user-group-manage',
@@ -40,7 +41,8 @@ import { BoxContainerComponent } from '@site/app/components/layout/box-container
     TplSearchBarComponent,
     UserGroupEditModalComponent,
     NzBadgeComponent,
-    BoxContainerComponent
+    BoxContainerComponent,
+    PermIfDirective
   ],
   templateUrl: './user-group-manage.component.html',
   styleUrl: './user-group-manage.component.css'

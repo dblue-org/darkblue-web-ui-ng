@@ -22,6 +22,7 @@ import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import {
   DetailsOperationBarComponent
 } from '@site/app/components/layout/details-operation-bar/details-operation-bar.component';
+import { PermIfDirective } from '@site/app/directives/perm-if.directive';
 
 @Component({
   selector: 'app-user-group-details',
@@ -44,7 +45,8 @@ import {
     IconifyComponent,
     RoleSelectComponent,
     UserSelectComponent,
-    DetailsOperationBarComponent
+    DetailsOperationBarComponent,
+    PermIfDirective
   ],
   templateUrl: './user-group-details.component.html',
   styleUrl: './user-group-details.component.css'

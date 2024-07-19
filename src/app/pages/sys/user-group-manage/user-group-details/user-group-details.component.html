@@ -1,16 +1,18 @@
 <app-details-operation-bar>
-  <button (click)="enable()"
-          *ngIf="!userGroup?.isEnable"
-          class="ant-btn-success"
-          nz-button
-          nzType="default">启用
-  </button>
-  <button (click)="disable()"
-          *ngIf="userGroup?.isEnable"
-          nz-button
-          nzDanger
-          nzType="default">禁用
-  </button>
+  <ng-container *permIf="'USER_GROUP_CHANGE_STATE'">
+    <button (click)="enable()"
+            *ngIf="!userGroup?.isEnable"
+            class="ant-btn-success"
+            nz-button
+            nzType="default">启用
+    </button>
+    <button (click)="disable()"
+            *ngIf="userGroup?.isEnable"
+            nz-button
+            nzDanger
+            nzType="default">禁用
+    </button>
+  </ng-container>
 </app-details-operation-bar>
 
 <app-section dkTitle="用户组基本信息">
@@ -30,7 +32,11 @@
 
 <app-section [dkExtra]="roleButtons" dkSize="large" dkTitle="拥有角色">
   <ng-template #roleButtons>
-    <button (click)="addRoles()" [nzLoading]="roleAddLoading" nz-button nzType="primary">添加</button>
+    <button (click)="addRoles()"
+            *permIf="'USER_GROUP_ASSIGN_ROLE'"
+            [nzLoading]="roleAddLoading"
+            nz-button nzType="primary">添加
+    </button>
     <button (click)="loadRoles()" [nzLoading]="roleTableLoading" nz-button nzType="default">
       <span nz-icon nzType="reload"></span>重新加载
     </button>
@@ -92,7 +98,11 @@
 
 <app-section [dkExtra]="userButtons" dkSize="large" dkTitle="用户列表">
   <ng-template #userButtons>
-    <button (click)="addUsers()" [nzLoading]="userAddLoading" nz-button nzType="primary">添加</button>
+    <button (click)="addUsers()"
+            *permIf="'USER_GROUP_ADD_USER'"
+            [nzLoading]="userAddLoading"
+            nz-button nzType="primary">添加
+    </button>
     <button (click)="loadUsers()" [nzLoading]="userTableLoading" nz-button nzType="default">
       <span nz-icon nzType="reload"></span>重新加载
     </button>

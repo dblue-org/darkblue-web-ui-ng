@@ -10,7 +10,7 @@
     <input nz-input placeholder="模糊搜索用户组名称" formControlName="userGroupName"/>
   </ng-template>
   <ng-template #tableButtons>
-    <button nz-button nzType="primary" (click)="showAddModal()">
+    <button (click)="showAddModal()" *permIf="'USER_GROUP_ADD'" nz-button nzType="primary">
       <span nz-icon nzType="plus"></span>
       新增
     </button>
@@ -42,8 +42,15 @@
     </thead>
     <tbody>
     <tr *ngFor="let data of userGroupsTable.data">
-      <td><a routerLink="/sys/user-group/details"
-             [queryParams]="{userGroupId: data.userGroupId}">{{ data.userGroupName }}</a></td>
+      <td>
+        <ng-container *permIf="'USER_GROUP_DETAILS' else textGroupName">
+          <a [queryParams]="{userGroupId: data.userGroupId}"
+             routerLink="/sys/user-group/details">{{ data.userGroupName }}</a>
+        </ng-container>
+        <ng-template #textGroupName>
+          {{ data.userGroupName }}
+        </ng-template>
+      </td>
       <td>{{ data.userNum || 0 }}</td>
       <td>{{ data.sortNum || 0 }}</td>
       <td>
@@ -52,18 +59,23 @@
       </td>
       <td>{{ data.createTime }}</td>
       <td>
-        <button nz-button nzSize="small" nzType="default" (click)="showEditModal(data)">修改</button>
+        <button (click)="showEditModal(data)" *permIf="'USER_GROUP_UPDATE'" nz-button
+                nzSize="small"
+                nzType="default">修改
+        </button>
         <button nz-button nzSize="small"
                 nzType="primary"
                 [nzLoading]="deleteLoading"
                 nz-popconfirm
                 nzPopconfirmTitle="是否确认删除此用户组?"
                 (nzOnConfirm)="delete(data.userGroupId)"
+                *permIf="'USER_GROUP_DELETE'"
                 nzDanger>删除
         </button>
 
         <button nz-button nzSize="small"
                 routerLink="/sys/user-group/details" [queryParams]="{userGroupId: data.userGroupId}"
+                *permIf="'USER_GROUP_DETAILS'"
                 nzType="default">管理
         </button>
       </td>
