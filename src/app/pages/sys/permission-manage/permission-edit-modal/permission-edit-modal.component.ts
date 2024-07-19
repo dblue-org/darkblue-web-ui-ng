@@ -12,6 +12,9 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { NzButtonModule } from 'ng-zorro-antd/button';
+import {
+  permissionCodeValidator
+} from '@site/app/pages/sys/permission-manage/permission-edit-modal/permission-code.directive';
 
 @Component({
   selector: 'app-permission-edit-modal',
@@ -37,7 +40,7 @@ export class PermissionEditModalComponent extends BasicEditModalComponent {
     menuName: [''],
     permissionId: [''],
     platform: [1],
-    permissionCode: ['', [Validators.required]],
+    permissionCode: ['', [Validators.required, permissionCodeValidator()]],
     permissionName: ['', [Validators.required]]
   })
 

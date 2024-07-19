@@ -67,7 +67,14 @@
     <tbody>
     <tr *ngFor="let data of roleTable.data">
       <td>{{ data.roleCode }}</td>
-      <td>{{ data.roleName }}</td>
+      <td>
+        <ng-container *permIf="'PEM_ROLE_DETAILS' else roleNameTpl">
+          <a [queryParams]="{roleId: data.roleId}" routerLink="/sys/role/details">{{ data.roleName }}</a>
+        </ng-container>
+        <ng-template #roleNameTpl>
+          {{ data.roleName }}
+        </ng-template>
+      </td>
       <td>{{ data.isEnable ? '正常' : '停用' }}</td>
       <td>{{ data.isBuiltIn ? '是' : '否' }}</td>
       <td>{{ data.createTime }}</td>
@@ -130,7 +137,14 @@
     </thead>
     <tbody>
     <tr *ngFor="let data of basicTable.data">
-      <td><a>{{ data.username }}</a></td>
+      <td>
+        <ng-container *permIf="'USER_DETAILS' else userName">
+          <a [queryParams]="{userId: data.userId}" routerLink="/sys/user/details">{{ data.username }}</a>
+        </ng-container>
+        <ng-template #userName>
+          {{ data.username }}
+        </ng-template>
+      </td>
       <td>{{ data.name }}</td>
       <td>{{ data.phoneNumber }}</td>
       <td>{{ data.isEnable ? '正常' : '停用' }}</td>

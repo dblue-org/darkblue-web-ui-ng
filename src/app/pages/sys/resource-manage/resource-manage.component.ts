@@ -27,12 +27,16 @@ import { BoxContainerComponent } from '@site/app/components/layout/box-container
 import {
   ResourceBatchAddComponent
 } from '@site/app/pages/sys/resource-manage/resource-batch-add-modal/resource-batch-add.component';
+import { PermIfDirective } from '@site/app/directives/perm-if.directive';
 
 @Component({
   selector: 'app-resource-manage',
   standalone: true,
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+
     NzGridModule,
     NzListModule,
     NzButtonModule,
@@ -40,18 +44,18 @@ import {
     NzTableModule,
     NzPopconfirmModule,
     NzTagModule,
-    ResourceGroupComponent,
-    FormsModule,
     NzInputDirective,
     NzSelectModule,
     NzSpinModule,
-    ReactiveFormsModule,
+
+    ResourceGroupComponent,
     TplSearchBarComponent,
     ResourceEditModalComponent,
     SearchBarHelpDirective,
     ResourcePermissionModalComponent,
     BoxContainerComponent,
-    ResourceBatchAddComponent
+    ResourceBatchAddComponent,
+    PermIfDirective
   ],
   templateUrl: './resource-manage.component.html',
   styleUrl: './resource-manage.component.css'

@@ -13,7 +13,7 @@
     <input nz-input placeholder="模糊搜索角色名称" formControlName="roleName"/>
   </ng-template>
   <ng-template #tableButtons>
-    <button nz-button nzType="primary" (click)="showAddModal()">
+    <button (click)="showAddModal()" *permIf="'PEM_ROLE_ADD'" nz-button nzType="primary">
       <span nz-icon nzType="plus"></span>
       新增
     </button>
@@ -23,6 +23,7 @@
 <app-box-container>
   <nz-table #basicTable
             [nzFrontPagination]="false"
+            nzTableLayout="fixed"
             nzShowPagination
             nzBordered
             nzSize="small"
@@ -35,8 +36,8 @@
             (nzPageIndexChange)="loadRoles()">
     <thead>
     <tr>
-      <th nzWidth="300px">角色编码</th>
-      <th nzWidth="300px">角色名称</th>
+      <th nzWidth="200px">角色编码</th>
+      <th nzWidth="200px">角色名称</th>
       <th>描述</th>
       <th nzWidth="150px">状态</th>
       <th nzWidth="120px">是否内置</th>
@@ -47,8 +48,15 @@
     <tbody>
     <tr *ngFor="let data of basicTable.data">
       <td>{{ data.roleCode }}</td>
-      <td><a (click)="goDetails(data)">{{ data.roleName }}</a></td>
-      <td>{{ data.remark }}</td>
+      <td>
+        <ng-container *permIf="'PEM_ROLE_DETAILS' else roleNameTpl">
+          <a [queryParams]="{roleId: data.roleId}" routerLink="/sys/role/details">{{ data.roleName }}</a>
+        </ng-container>
+        <ng-template #roleNameTpl>
+          {{ data.roleName }}
+        </ng-template>
+      </td>
+      <td [title]="data.remark" nzEllipsis>{{ data.remark }}</td>
       <td>
         <nz-badge nzStatus="success" *ngIf="data.isEnable" nzText="正常"></nz-badge>
         <nz-badge nzStatus="error" *ngIf="!data.isEnable" nzText="停用"></nz-badge>
@@ -56,29 +64,38 @@
       <td>{{ data.isBuiltIn ? '是' : '否' }}</td>
       <td>{{ data.createTime }}</td>
       <td>
-        <button nz-button nzSize="small" nzType="default" (click)="showEditModal(data)">修改</button>
-        <button nz-button nzSize="small"
-                *ngIf="!data.isBuiltIn"
-                nzType="primary"
-                [nzLoading]="deleteLoading"
-                nz-popconfirm
-                nzPopconfirmTitle="是否确认删除此角色?"
-                (nzOnConfirm)="delete(data.roleId)"
-                nzDanger>删除
+        <button (click)="showEditModal(data)"
+                *permIf="'PEM_ROLE_UPDATE'" nz-button
+                nzSize="small"
+                nzType="default">修改
         </button>
-        <button *ngIf="data.isEnable"
-                [nzLoading]="stateLoading"
+        <ng-container *permIf="'PEM_ROLE_DELETE'">
+          <button (nzOnConfirm)="delete(data.roleId)" *ngIf="!data.isBuiltIn"
+                  [nzLoading]="deleteLoading"
+                  nz-button
+                  nz-popconfirm
+                  nzDanger
+                  nzPopconfirmTitle="是否确认删除此角色?"
+                  nzSize="small"
+                  nzType="primary">删除
+          </button>
+        </ng-container>
+        <ng-container *permIf="'PEM_ROLE_CHANGE_STATE'">
+          <button (click)="toggleState(data, false)"
+                  *ngIf="data.isEnable"
+                  [nzLoading]="stateLoading" nz-button
+                  nzDanger nzSize="small" nzType="default">禁用
+          </button>
+          <button (click)="toggleState(data, true)"
+                  *ngIf="!data.isEnable"
+                  [nzLoading]="stateLoading" class="ant-btn-success"
+                  nz-button
+                  nzSize="small"
+                  nzType="default">启用
+          </button>
+        </ng-container>
+        <button *permIf="'PEM_ROLE_ASSIGN_PERMISSIONS'"
                 nz-button nzSize="small"
-                nzType="default" nzDanger (click)="toggleState(data, false)">禁用
-        </button>
-        <button *ngIf="!data.isEnable"
-                [nzLoading]="stateLoading"
-                nz-button nzSize="small"
-                (click)="toggleState(data, true)"
-                class="ant-btn-success"
-                nzType="default">启用
-        </button>
-        <button nz-button nzSize="small"
                 nzType="default" (click)="showPermissionSetModal(data.roleId)">设置权限
         </button>
       </td>

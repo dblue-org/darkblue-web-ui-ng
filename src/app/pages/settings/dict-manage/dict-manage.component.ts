@@ -4,7 +4,7 @@ import { TwoColumnSiderDirective } from '@site/app/components/layout/two-column/
 import { DictListComponent } from '@site/app/pages/settings/dict-manage/dict-list/dict-list.component';
 import { DictionaryItemListVo, DictionaryListVo } from '@site/app/define/settings/dictionary';
 import { ToolbarComponent } from '@site/app/components/layout/toolbar/toolbar.component';
-import { NzGridModule, NzRowDirective } from 'ng-zorro-antd/grid';
+import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { CommonModule } from '@angular/common';
@@ -13,17 +13,18 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { DictionaryService } from '@site/app/services/settings/dictionary.service';
 import { TplSearchBarComponent } from '@site/app/components/layout/tpl-search-bar/tpl-search-bar.component';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
-import { NzIconDirective } from 'ng-zorro-antd/icon';
-import { BasicTreeTable, BasicTreeTableItem } from '@site/app/components/basic-tree-table';
-import { NzPopconfirmDirective } from 'ng-zorro-antd/popconfirm';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { BasicTreeTable } from '@site/app/components/basic-tree-table';
+import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { MenuIconComponent } from '@site/app/components/icon/menu-icon/menu-icon.component';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { SearchBarHelpDirective } from '@site/app/components/layout/tpl-search-bar/search-bar-help.directive';
 import {
   DictItemEditModalComponent
 } from '@site/app/pages/settings/dict-manage/dict-item-edit-modal/dict-item-edit-modal.component';
-import { NzBadgeComponent } from 'ng-zorro-antd/badge';
+import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { BoxContainerComponent } from '@site/app/components/layout/box-container/box-container.component';
+import { PermIfDirective } from '@site/app/directives/perm-if.directive';
 
 @Component({
   selector: 'app-dict-manage',
@@ -38,19 +39,20 @@ import { BoxContainerComponent } from '@site/app/components/layout/box-container
     NzTableModule,
     NzInputModule,
     NzInputNumberModule,
+    NzBadgeModule,
+    NzIconModule,
+    NzPopconfirmModule,
 
     TwoColumnComponent,
     TwoColumnSiderDirective,
     DictListComponent,
     ToolbarComponent,
     TplSearchBarComponent,
-    NzIconDirective,
-    NzPopconfirmDirective,
     MenuIconComponent,
     SearchBarHelpDirective,
     DictItemEditModalComponent,
-    NzBadgeComponent,
-    BoxContainerComponent
+    BoxContainerComponent,
+    PermIfDirective
   ],
   templateUrl: './dict-manage.component.html',
   styleUrl: './dict-manage.component.css'

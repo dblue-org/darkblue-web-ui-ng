@@ -59,7 +59,14 @@
       </thead>
       <tbody>
       <tr *ngFor="let data of basicTable.data">
-        <td><a (click)="gotoDetails(data)">{{ data.username }}</a></td>
+        <td>
+          <ng-container *permIf="'USER_DETAILS' else userName">
+            <a [queryParams]="{userId: data.userId}" routerLink="/sys/user/details">{{ data.username }}</a>
+          </ng-container>
+          <ng-template #userName>
+            {{ data.username }}
+          </ng-template>
+        </td>
         <td>{{ data.name }}</td>
         <td>{{ data.phoneNumber }}</td>
         <td>{{ data.deptName }}</td>

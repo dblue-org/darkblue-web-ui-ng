@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Position } from '@site/app/define/sys/position';
 import { CommonModule } from '@angular/common';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -19,6 +19,7 @@ import {
 } from '@site/app/pages/sys/position-manage/position-edit-modal/position-edit-modal.component';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { BoxContainerComponent } from '@site/app/components/layout/box-container/box-container.component';
+import { PermIfDirective } from '@site/app/directives/perm-if.directive';
 
 @Component({
   selector: 'app-position-manage',
@@ -38,7 +39,8 @@ import { BoxContainerComponent } from '@site/app/components/layout/box-container
     TplSearchBarComponent,
     RouterLink,
     PositionEditModalComponent,
-    BoxContainerComponent
+    BoxContainerComponent,
+    PermIfDirective
   ],
   templateUrl: './position-manage.component.html',
   styleUrl: './position-manage.component.css'

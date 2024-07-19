@@ -1,18 +1,20 @@
 <app-details-operation-bar>
-  <button (click)="toggleState(true)"
-          *ngIf="!roleDetails?.isEnable"
-          class="ant-btn-success"
-          nz-button
-          nzSize="small"
-          nzType="default">启用
-  </button>
-  <button (click)="toggleState(false)"
-          *ngIf="roleDetails?.isEnable"
-          nz-button
-          nzDanger
-          nzSize="small"
-          nzType="default">禁用
-  </button>
+  <ng-container *permIf="'PEM_ROLE_CHANGE_STATE'">
+    <button (click)="toggleState(true)"
+            *ngIf="!roleDetails?.isEnable"
+            class="ant-btn-success"
+            nz-button
+            nzSize="small"
+            nzType="default">启用
+    </button>
+    <button (click)="toggleState(false)"
+            *ngIf="roleDetails?.isEnable"
+            nz-button
+            nzDanger
+            nzSize="small"
+            nzType="default">禁用
+    </button>
+  </ng-container>
 </app-details-operation-bar>
 <app-section dkTitle="角色信息">
   <nz-descriptions nzBordered style="margin-bottom: 24px" *ngIf="roleDetails">
@@ -29,10 +31,10 @@
 <app-section dkTitle="关联权限">
   <div nz-row [nzGutter]="24">
     <div nz-col [nzSpan]="hasAppMenuPermission ? 12 : 24">
-      <app-role-menu-table [dkRoleMenus]="pcMenuPermissions" [dkLoading]="permissionTableLoading" dkTitle="PC端" />
+      <app-role-menu-table [dkLoading]="permissionTableLoading" [dkRoleMenus]="pcMenuPermissions" dkTitle="PC端"/>
     </div>
     <div nz-col [nzSpan]="12" *ngIf="hasAppMenuPermission">
-      <app-role-menu-table [dkRoleMenus]="appMenuPermissions" [dkLoading]="permissionTableLoading" dkTitle="移动端" />
+      <app-role-menu-table [dkLoading]="permissionTableLoading" [dkRoleMenus]="appMenuPermissions" dkTitle="移动端"/>
     </div>
   </div>
 </app-section>
@@ -63,7 +65,7 @@
     </thead>
     <tbody>
     <tr *ngFor="let data of userTable.data">
-      <td><a routerLink="/sys/user/details" [queryParams]="{userId: data.userId}" >{{ data.username }}</a></td>
+      <td><a [queryParams]="{userId: data.userId}" routerLink="/sys/user/details">{{ data.username }}</a></td>
       <td>{{ data.name }}</td>
       <td>{{ data.phoneNumber }}</td>
       <td>{{ data.deptName }}</td>

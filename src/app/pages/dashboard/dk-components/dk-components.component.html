@@ -9,13 +9,13 @@
       </div>
       <div nz-row [nzGutter]="[24, 24]">
         <div nz-col [nzSpan]="6" class="text-align-right">字典编码：</div>
-        <div nz-col [nzSpan]="18">{{dictionaryCode}}</div>
+        <div [nzSpan]="18" nz-col>{{ dictionaryCode }}</div>
         <div nz-col [nzSpan]="6" class="text-align-right">是否多选：</div>
         <div nz-col [nzSpan]="18">
           <nz-switch [(ngModel)]="isMultiple"/>
         </div>
         <label nz-col [nzSpan]="6" class="text-align-right">字典选择组件：</label>
-        <div  nz-col [nzSpan]="18">
+        <div [nzSpan]="18" nz-col>
           <div style="max-width: 300px">
             <app-dictionary-select [dkMultiple]="isMultiple"
                                    [dkDictionaryCode]="dictionaryCode"
@@ -29,31 +29,158 @@
   </div>
   <div nz-col [nzSpan]="12">
     <nz-card nzTitle="用户选择控件">
-
+      <div [nzGutter]="[24, 24]" nz-row>
+        <div [nzSpan]="6" class="text-align-right" nz-col>组件选择模式：</div>
+        <div [nzSpan]="18" nz-col>
+          <nz-radio-group [(ngModel)]="userSelectMode">
+            <label nz-radio nzValue="multiple">multiple</label>
+            <label nz-radio nzValue="tags">tags</label>
+            <label nz-radio nzValue="default">default</label>
+          </nz-radio-group>
+        </div>
+        <label [nzSpan]="6" class="text-align-right" nz-col>用户选择组件：</label>
+        <div [nzSpan]="18" nz-col>
+          <div style="max-width: 300px">
+            <app-user-select [dkMode]="userSelectMode" dkWidth="100%"/>
+          </div>
+        </div>
+      </div>
     </nz-card>
   </div>
 
   <div nz-col [nzSpan]="12">
     <nz-card nzTitle="部门选择控件">
-
+      <div [nzGutter]="[24, 24]" nz-row>
+        <div [nzSpan]="6" class="text-align-right" nz-col>是否多选：</div>
+        <div [nzSpan]="18" nz-col>
+          <nz-switch [(ngModel)]="isDeptMultiple"/>
+        </div>
+        <label [nzSpan]="6" class="text-align-right" nz-col>部门选择组件：</label>
+        <div [nzSpan]="18" nz-col>
+          <div style="max-width: 300px">
+            <app-department-select [dkMultiple]="isDeptMultiple"/>
+          </div>
+        </div>
+      </div>
     </nz-card>
   </div>
 
   <div nz-col [nzSpan]="12">
     <nz-card nzTitle="职位选择控件">
-
+      <div [nzGutter]="[24, 24]" nz-row>
+        <div [nzSpan]="6" class="text-align-right" nz-col>组件选择模式：</div>
+        <div [nzSpan]="18" nz-col>
+          <nz-radio-group [(ngModel)]="positionSelectMode">
+            <label nz-radio nzValue="multiple">multiple</label>
+            <label nz-radio nzValue="tags">tags</label>
+            <label nz-radio nzValue="default">default</label>
+          </nz-radio-group>
+        </div>
+        <label [nzSpan]="6" class="text-align-right" nz-col>职位选择组件：</label>
+        <div [nzSpan]="18" nz-col>
+          <div style="max-width: 300px">
+            <app-position-select [dkMode]="positionSelectMode"/>
+          </div>
+        </div>
+      </div>
     </nz-card>
   </div>
 
   <div nz-col [nzSpan]="24">
-    <nz-card nzTitle="表格搜索控件">
+    <nz-card [nzBodyStyle]="{'backgroundColor': '#eee'}" [nzExtra]="searchBarProp" nzTitle="表格搜索控件">
 
+      <app-tpl-search-bar [buttonPosition]="layout"
+                          [buttons]="tableButtons"
+                          [formGroup]="searchForm"
+                          [items]="[
+                            {label: 'Name1', item: name1},
+                            {label: 'Name2', item: name2},
+                            {label: 'Name3', item: name3},
+                            {label: 'Name4', item: name4},
+                            {label: 'Name5', item: name5},
+                            {label: 'Name6', item: name6},
+                            {label: 'Name7', item: name7},
+                            {label: 'Name8', item: name8},
+
+                          ]"
+                          [showHelp]="true">
+        <ng-container *searchBarHelp>
+          <ul style="margin-top: 1em;padding-left: 20px">
+            <li>这里可以显示帮助信息</li>
+            <li>当条件小于等于6个时，没有展开条件操作</li>
+          </ul>
+        </ng-container>
+      </app-tpl-search-bar>
+      <ng-template #name1>
+        <input formControlName="name1" nz-input placeholder="模糊搜索名称"/>
+      </ng-template>
+      <ng-template #name2>
+        <input formControlName="name1" nz-input placeholder="模糊搜索名称"/>
+      </ng-template>
+      <ng-template #name3>
+        <input formControlName="name1" nz-input placeholder="模糊搜索名称"/>
+      </ng-template>
+      <ng-template #name4>
+        <input formControlName="name1" nz-input placeholder="模糊搜索名称"/>
+      </ng-template>
+      <ng-template #name5>
+        <input formControlName="name1" nz-input placeholder="模糊搜索名称"/>
+      </ng-template>
+      <ng-template #name6>
+        <input formControlName="name1" nz-input placeholder="模糊搜索名称"/>
+      </ng-template>
+      <ng-template #name7>
+        <input formControlName="name1" nz-input placeholder="模糊搜索名称"/>
+      </ng-template>
+      <ng-template #name8>
+        <input formControlName="name1" nz-input placeholder="模糊搜索名称"/>
+      </ng-template>
+      <ng-template #tableButtons>
+        <button nz-button nzType="primary">
+          <span nz-icon nzType="plus"></span>
+          新增
+        </button>
+      </ng-template>
     </nz-card>
+    <ng-template #searchBarProp>
+      <label>布局：</label>
+      <nz-radio-group [(ngModel)]="layout">
+        <label nz-radio nzValue="R">R</label>
+        <label nz-radio nzValue="BR">BR</label>
+      </nz-radio-group>
+    </ng-template>
   </div>
 
   <div nz-col [nzSpan]="24">
-    <nz-card nzTitle="分段控件">
 
+    <nz-card [nzBodyStyle]="{'backgroundColor': '#eee'}" [nzExtra]="size" nzTitle="分块控件">
+      <app-section [dkSize]="sectionSize" dkTitle="此组件用于详情页面的分块">
+        <p>内容1</p>
+        <p>内容2</p>
+        <p>内容3</p>
+      </app-section>
+
+      <app-section [dkExtra]="sectionButtons" [dkSize]="sectionSize" dkTitle="右侧带按钮的分块组件">
+        <p>内容1</p>
+        <p>内容2</p>
+        <p>内容3</p>
+      </app-section>
+
+      <ng-template #sectionButtons>
+        <button nz-button nzSize="small" nzType="primary">按钮1</button>
+        <button nz-button nzType="default">按钮2</button>
+      </ng-template>
+    </nz-card>
+    <ng-template #size>
+      <nz-radio-group [(ngModel)]="sectionSize">
+        <label nz-radio nzValue="small">small</label>
+        <label nz-radio nzValue="large">large</label>
+      </nz-radio-group>
+    </ng-template>
+  </div>
+  <div [nzSpan]="24" nz-col>
+    <nz-card nzTitle="其他组件">
+      <a href="https://dblue.org/docs/angular/components/" target="_blank">更多组件，请参考组件介绍文档</a>
     </nz-card>
   </div>
 </div>

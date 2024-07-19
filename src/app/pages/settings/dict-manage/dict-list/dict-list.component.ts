@@ -12,6 +12,7 @@ import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 import { DictEditModalComponent } from '@site/app/pages/settings/dict-manage/dict-edit-modal/dict-edit-modal.component';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { PermIfDirective } from '@site/app/directives/perm-if.directive';
 
 @Component({
   selector: 'app-dict-list',
@@ -27,7 +28,8 @@ import { NzMessageService } from 'ng-zorro-antd/message';
     NzSkeletonModule,
 
     IconifyComponent,
-    DictEditModalComponent
+    DictEditModalComponent,
+    PermIfDirective
   ],
   templateUrl: './dict-list.component.html',
   styleUrl: './dict-list.component.css'

@@ -30,6 +30,7 @@ import {
 
 import { MenuIconComponent } from '@site/app/components/icon/menu-icon/menu-icon.component';
 import { BoxContainerComponent } from '@site/app/components/layout/box-container/box-container.component';
+import { PermIfDirective } from '@site/app/directives/perm-if.directive';
 
 @Component({
   selector: 'app-permission-manage',
@@ -56,7 +57,8 @@ import { BoxContainerComponent } from '@site/app/components/layout/box-container
     NzRadioComponent,
     NzRadioGroupComponent,
     MenuIconComponent,
-    BoxContainerComponent
+    BoxContainerComponent,
+    PermIfDirective
   ],
   templateUrl: './permission-manage.component.html',
   styleUrl: './permission-manage.component.css'

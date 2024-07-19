@@ -25,6 +25,7 @@ import { NzTreeNodeOptions } from 'ng-zorro-antd/tree';
 export class DepartmentSelectComponent implements OnChanges, OnInit, ControlValueAccessor {
   @Input('disableDepartment') disableDepartment!: string;
   @Input('dkDisabled') disabled = false;
+  @Input('dkMultiple') isMultiple = false;
   nodes: NzTreeNodeOptions[] = [];
   value?: string[] | string;
   departments?: Department[] = [];

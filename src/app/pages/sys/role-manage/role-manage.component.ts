@@ -14,9 +14,10 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import {
   PermissionsSetModalComponent
 } from '@site/app/pages/sys/role-manage/permissions-set-modal/permissions-set-modal.component';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { NzBadgeComponent } from 'ng-zorro-antd/badge';
 import { BoxContainerComponent } from '@site/app/components/layout/box-container/box-container.component';
+import { PermIfDirective } from '@site/app/directives/perm-if.directive';
 
 @Component({
   selector: 'app-role-manage',
@@ -36,7 +37,9 @@ import { BoxContainerComponent } from '@site/app/components/layout/box-container
     RoleEditModalComponent,
     PermissionsSetModalComponent,
     NzBadgeComponent,
-    BoxContainerComponent
+    BoxContainerComponent,
+    PermIfDirective,
+    RouterLink
   ],
   templateUrl: './role-manage.component.html',
   styleUrl: './role-manage.component.css'

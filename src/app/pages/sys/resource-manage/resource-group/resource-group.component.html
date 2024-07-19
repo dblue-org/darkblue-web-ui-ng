@@ -6,15 +6,19 @@
           资源组
         </div>
         <div nz-col [nzSpan]="18" class="resource-group-actions">
-          <button nz-button nzType="default" nzShape="circle" (click)="showAddModal()">
+          <button (click)="showAddModal()"
+                  *permIf="'RESOURCE_GROUP_ADD'" nz-button
+                  nzShape="circle" nzType="default">
             <span nz-icon nzType="plus"></span>
           </button>
-          <button nz-button nzType="default" nzShape="circle"
+          <button *permIf="'RESOURCE_GROUP_UPDATE'"
+                  nz-button nzShape="circle" nzType="default"
                   (click)="showEditModal()"
                   [disabled]="!selected">
             <span nz-icon nzType="edit"></span>
           </button>
-          <button nz-button nzType="default" nzShape="circle"
+          <button *permIf="'RESOURCE_GROUP_DELETE'"
+                  nz-button nzShape="circle" nzType="default"
                   (click)="doDelete()"
                   [disabled]="!selected">
             <span nz-icon nzType="delete"></span>

@@ -24,7 +24,7 @@
         <input nz-input formControlName="extension"/>
       </ng-template>
       <ng-template #tableButtons>
-        <button nz-button nzType="primary" (click)="showAddModal()">
+        <button (click)="showAddModal()" *permIf="'DICT_ITEM_ADD'" nz-button nzType="primary">
           <span nz-icon nzType="plus"></span>添加字典项
         </button>
       </ng-template>
@@ -66,8 +66,12 @@
             </td>
             <td>{{ data.extension }}</td>
             <td>
-              <button nz-button nzSize="small" nzType="default" (click)="showUpdateModal(data)">修改</button>
-              <button nz-button nzSize="small"
+              <button (click)="showUpdateModal(data)"
+                      *permIf="'DICT_ITEM_UPDATE'" nz-button nzSize="small"
+                      nzType="default">修改
+              </button>
+              <button *permIf="'DICT_ITEM_DELETE'"
+                      nz-button nzSize="small"
                       nzType="primary"
                       [nzLoading]="deleteLoading"
                       nz-popconfirm
@@ -75,18 +79,20 @@
                       (nzOnConfirm)="delete(data.dictionaryItemId)"
                       nzDanger>删除
               </button>
-              <button *ngIf="data.isEnable"
-                      [nzLoading]="stateLoading"
-                      nz-button nzSize="small"
-                      nzType="default" nzDanger (click)="toggleDictionaryItemState(data, false)">禁用
-              </button>
-              <button *ngIf="!data.isEnable"
-                      [nzLoading]="stateLoading"
-                      nz-button nzSize="small"
-                      (click)="toggleDictionaryItemState(data, true)"
-                      class="ant-btn-success"
-                      nzType="default">启用
-              </button>
+              <ng-container *permIf="'DICT_ITEM_CHANGE_STATE'">
+                <button (click)="toggleDictionaryItemState(data, false)"
+                        *ngIf="data.isEnable"
+                        [nzLoading]="stateLoading" nz-button
+                        nzDanger nzSize="small" nzType="default">禁用
+                </button>
+                <button (click)="toggleDictionaryItemState(data, true)"
+                        *ngIf="!data.isEnable"
+                        [nzLoading]="stateLoading" class="ant-btn-success"
+                        nz-button
+                        nzSize="small"
+                        nzType="default">启用
+                </button>
+              </ng-container>
             </td>
           </tr>
           </tbody>
@@ -128,27 +134,37 @@
                 </td>
                 <td>{{ item.extension }}</td>
                 <td>
-                  <button nz-button nzSize="small" nzType="primary" (click)="showAddSubItemModal(item)">添加</button>
-                  <button nz-button nzSize="small" nzType="default" (click)="showUpdateModal(item)">修改</button>
-                  <button *ngIf="!item.children || item.children.length == 0"
-                          nz-button nzSize="small"
-                          nzType="primary"
-                          [nzLoading]="deleteLoading"
-                          nz-popconfirm
-                          nzPopconfirmTitle="是否确认删除此字典项?"
-                          (nzOnConfirm)="delete(item.dictionaryItemId)"
-                          nzDanger>删除
+                  <button (click)="showAddSubItemModal(item)"
+                          *permIf="'DICT_ITEM_ADD'" nz-button nzSize="small"
+                          nzType="primary">添加
                   </button>
-                  <button *ngIf="item.isEnable"
-                          [nzLoading]="stateLoading"
-                          nz-button nzSize="small"
-                          nzType="default" nzDanger (click)="toggleDictionaryItemState(item, false)">禁用
+                  <button (click)="showUpdateModal(item)"
+                          *permIf="'DICT_ITEM_UPDATE'" nz-button nzSize="small"
+                          nzType="default">修改
                   </button>
-                  <button *ngIf="!item.isEnable"
-                          [nzLoading]="stateLoading"
-                          class="ant-btn-success"
-                          nz-button nzSize="small" (click)="toggleDictionaryItemState(item, true)">启用
-                  </button>
+                  <ng-container *permIf="'DICT_ITEM_DELETE'">
+                    <button (nzOnConfirm)="delete(item.dictionaryItemId)"
+                            *ngIf="!item.children || item.children.length == 0" [nzLoading]="deleteLoading"
+                            nz-button
+                            nz-popconfirm
+                            nzDanger
+                            nzPopconfirmTitle="是否确认删除此字典项?"
+                            nzSize="small"
+                            nzType="primary">删除
+                    </button>
+                  </ng-container>
+                  <ng-container *permIf="'DICT_ITEM_CHANGE_STATE'">
+                    <button (click)="toggleDictionaryItemState(item, false)"
+                            *ngIf="item.isEnable"
+                            [nzLoading]="stateLoading" nz-button
+                            nzDanger nzSize="small" nzType="default">禁用
+                    </button>
+                    <button (click)="toggleDictionaryItemState(item, true)"
+                            *ngIf="!item.isEnable"
+                            [nzLoading]="stateLoading"
+                            class="ant-btn-success" nz-button nzSize="small">启用
+                    </button>
+                  </ng-container>
                 </td>
               </tr>
             </ng-container>

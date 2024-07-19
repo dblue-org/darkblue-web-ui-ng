@@ -15,7 +15,7 @@
     <input nz-input formControlName="propertyName"/>
   </ng-template>
   <ng-template #tableButtons>
-    <button nz-button nzType="primary" (click)="showAddModal()">
+    <button (click)="showAddModal()" *permIf="'PROPERTY_ADD'" nz-button nzType="primary">
       <span nz-icon nzType="plus"></span>
       添加新参数
     </button>
@@ -71,21 +71,27 @@
                 {{ data.type != 8 ? data.value : getEnumValue (data.value, data) }}
               </div>
               <div nz-col [nzSpan]="4">
-                <span class="table-value-edit-btn" nz-icon nzType="edit" nzTheme="outline"
+                <span *permIf="'PROPERTY_SET_VALUE'"
+                      class="table-value-edit-btn"
+                      nz-icon nzType="edit" nzTheme="outline"
                       (click)="showValueEditModal(data)"></span>
               </div>
             </div>
           </td>
           <td>{{ data.unit }}</td>
           <td>
-            <button nz-button nzSize="small" (click)="showUpdateModal(data)">修改</button>
-            <button nz-button nzSize="small" nzType="primary"
+            <button *permIf="'PROPERTY_UPDATE'"
+                    nz-button nzSize="small"
+                    (click)="showUpdateModal(data)">修改
+            </button>
+            <button *permIf="'PROPERTY_DELETE'"
+                    nz-button nzSize="small" nzType="primary"
                     nz-popconfirm
                     nzPopconfirmTitle="是否确认删除此参数?"
                     (nzOnConfirm)="delete(data.propertyId)"
                     nzDanger [nzLoading]="deleteLoading">删除
             </button>
-            <button nz-button nzSize="small">复制</button>
+            <!--<button nz-button nzSize="small">复制</button>-->
           </td>
         </tr>
       }

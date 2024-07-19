@@ -35,8 +35,8 @@
       <td>{{ data.keyPrefix }}</td>
       <td>{{ data.keyNum }}</td>
       <td>
-        <button nz-button
-                nzSize="small" nzType="default"
+        <button *permIf="'CACHE_REFRESH'"
+                nz-button nzSize="small" nzType="default"
                 [nzLoading]="refreshLoading"
                 (click)="refreshCache(data.cacheCode)">刷新缓存</button>
       </td>

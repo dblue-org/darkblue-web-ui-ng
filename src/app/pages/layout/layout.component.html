@@ -86,7 +86,9 @@
         <router-outlet></router-outlet>
       </div>
     </nz-content>
-    <nz-footer *ngIf="showFooter" class="footer">Power by <a href="https://dblue.org" target="_blank">DarkBlue</a>
+    <nz-footer *ngIf="showFooter" class="footer">
+      Copyright © 2024 DBLUE.ORG. Power by <a href="https://dblue.org" target="_blank">Dark Blue
+    </a>
     </nz-footer>
   </nz-layout>
 </nz-layout>
@@ -95,9 +97,9 @@
 
 <nz-dropdown-menu #tabMenu="nzDropdownMenu">
   <ul nz-menu>
-    <li *ngIf="tabs.length > 2" nz-menu-item>关闭其他标签页</li>
-    <li *ngIf="clickTabIndex > 1" nz-menu-item>关闭左侧标签页</li>
-    <li *ngIf="clickTabIndex != (tabs.length - 1)" nz-menu-item>关闭右侧标签页</li>
+    <li (click)="closeOthers()" *ngIf="tabs.length > 2" nz-menu-item>关闭其他标签页</li>
+    <li (click)="closeLeft()" *ngIf="clickTabIndex > 1" nz-menu-item>关闭左侧标签页</li>
+    <li (click)="closeRight()" *ngIf="clickTabIndex != (tabs.length - 1)" nz-menu-item>关闭右侧标签页</li>
   </ul>
 </nz-dropdown-menu>
 

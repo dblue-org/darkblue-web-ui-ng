@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { ToolbarComponent } from '@site/app/components/layout/toolbar/toolbar.component';
 import { NzIconDirective } from 'ng-zorro-antd/icon';
 import { BoxContainerComponent } from '@site/app/components/layout/box-container/box-container.component';
+import { PermIfDirective } from '@site/app/directives/perm-if.directive';
 
 @Component({
   selector: 'app-caching-manage',
@@ -17,9 +18,11 @@ import { BoxContainerComponent } from '@site/app/components/layout/box-container
 
     NzTableModule,
     NzButtonModule,
-    ToolbarComponent,
     NzIconDirective,
-    BoxContainerComponent
+
+    ToolbarComponent,
+    BoxContainerComponent,
+    PermIfDirective
   ],
   templateUrl: './caching-manage.component.html',
   styleUrl: './caching-manage.component.css'

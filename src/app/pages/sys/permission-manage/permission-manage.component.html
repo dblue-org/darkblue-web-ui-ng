@@ -37,7 +37,9 @@
         <input nz-input placeholder="模糊搜索权限名称" formControlName="permissionName"/>
       </ng-template>
       <ng-template #tableButtons>
-        <button nz-button nzType="primary" (click)="showAddModal()" [disabled]="!selectedMenu">
+        <button (click)="showAddModal()"
+                *permIf="'PERMISSION_ADD'" [disabled]="!selectedMenu"
+                nz-button nzType="primary">
           <span nz-icon nzType="plus"></span>
           新增
         </button>
@@ -67,16 +69,25 @@
         <ng-container *ngFor="let data of basicTable.data">
           <tr>
             <td>{{ data.menuName }}</td>
-            <td><a routerLink="/sys/permission/details"
-                   [queryParams]="{permissionId: data.permissionId}">{{ data.permissionName }}</a></td>
+            <td>
+              <ng-container *permIf="'PERMISSION_DETAILS' else permissionNameTpl">
+                <a [queryParams]="{permissionId: data.permissionId}"
+                   routerLink="/sys/permission/details">{{ data.permissionName }}</a>
+              </ng-container>
+              <ng-template #permissionNameTpl>
+                {{ data.permissionName }}
+              </ng-template>
+            </td>
             <td>{{ data.permissionCode }}</td>
             <td>
-              <button nz-button nzSize="small"
+              <button *permIf="'PERMISSION_UPDATE'"
+                      nz-button nzSize="small"
                       nzType="default"
                       (click)="showUpdateModal(data)">
                 修改
               </button>
-              <button nz-button nzSize="small"
+              <button *permIf="'PERMISSION_DELETE'"
+                      nz-button nzSize="small"
                       [nzLoading]="deleteLoading"
                       nzType="primary"
                       nz-popconfirm
@@ -84,7 +95,8 @@
                       (nzOnConfirm)="doDelete(data.permissionId)"
                       nzDanger>删除
               </button>
-              <button nz-button nzSize="small"
+              <button *permIf="'PERMISSION_BIND_RESOURCE'"
+                      nz-button nzSize="small"
                       (click)="showBindResourceModal(data)"
                       nzType="default">
                 绑定资源

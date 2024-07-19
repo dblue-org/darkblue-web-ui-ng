@@ -17,7 +17,7 @@ import { UserPageListVo } from 'src/app/define/sys/user';
 import { SimpleRole } from '@site/app/define/sys/role';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { UserAddModalComponent } from './user-add-modal/user-add-modal.component';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { NzBadgeComponent } from 'ng-zorro-antd/badge';
 import { TwoColumnComponent } from '@site/app/components/layout/two-column/two-column.component';
 import { TwoColumnSiderDirective } from '@site/app/components/layout/two-column/two-column-sider.directive';
@@ -48,7 +48,8 @@ import { PermIfDirective } from '@site/app/directives/perm-if.directive';
     TwoColumnComponent,
     TwoColumnSiderDirective,
     BoxContainerComponent,
-    PermIfDirective
+    PermIfDirective,
+    RouterLink
   ],
   templateUrl: './user-manage.component.html',
   styleUrl: './user-manage.component.css'

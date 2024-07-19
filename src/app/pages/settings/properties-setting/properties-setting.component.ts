@@ -6,7 +6,7 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { TplSearchBarComponent } from '@site/app/components/layout/tpl-search-bar/tpl-search-bar.component';
 import { NzIconDirective } from 'ng-zorro-antd/icon';
-import { Property, getPropertyType, toScopeString, getEnumLabel, EnumItem } from '@site/app/define/settings/property';
+import { EnumItem, getEnumLabel, getPropertyType, Property, toScopeString } from '@site/app/define/settings/property';
 import { PropertiesSettingService } from '@site/app/services/settings/properties-setting.service';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import {
@@ -19,6 +19,7 @@ import { NzPopconfirmDirective } from 'ng-zorro-antd/popconfirm';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { BoxContainerComponent } from '@site/app/components/layout/box-container/box-container.component';
+import { PermIfDirective } from '@site/app/directives/perm-if.directive';
 
 @Component({
   selector: 'app-properties-setting',
@@ -39,7 +40,8 @@ import { BoxContainerComponent } from '@site/app/components/layout/box-container
     PropertyValueEditModalComponent,
     PropertyEditModalComponent,
     NzPopconfirmDirective,
-    BoxContainerComponent
+    BoxContainerComponent,
+    PermIfDirective
   ],
   templateUrl: './properties-setting.component.html',
   styleUrl: './properties-setting.component.css'

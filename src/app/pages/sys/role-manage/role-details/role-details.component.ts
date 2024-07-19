@@ -20,6 +20,7 @@ import { NzBadgeComponent } from 'ng-zorro-antd/badge';
 import {
   DetailsOperationBarComponent
 } from '@site/app/components/layout/details-operation-bar/details-operation-bar.component';
+import { PermIfDirective } from '@site/app/directives/perm-if.directive';
 
 @Component({
   selector: 'app-role-details',
@@ -39,7 +40,8 @@ import {
     RouterLink,
     RoleMenuTableComponent,
     NzBadgeComponent,
-    DetailsOperationBarComponent
+    DetailsOperationBarComponent,
+    PermIfDirective
   ],
   templateUrl: './role-details.component.html',
   styleUrl: './role-details.component.css'

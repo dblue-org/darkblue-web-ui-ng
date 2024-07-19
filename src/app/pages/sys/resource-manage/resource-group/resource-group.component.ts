@@ -5,28 +5,31 @@ import { CommonModule } from '@angular/common';
 import { ResourceGroup } from '@site/app/define/sys/resource';
 import { ResourcesGroupService } from '@site/app/services/sys/resources-group.service';
 import { NzGridModule } from 'ng-zorro-antd/grid';
-import { NzIconDirective } from 'ng-zorro-antd/icon';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 import {
   ResourceGroupEditModalComponent
 } from '@site/app/pages/sys/resource-manage/resource-group-edit-modal/resource-group-edit-modal.component';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
-import { NzRadioComponent, NzRadioGroupComponent } from 'ng-zorro-antd/radio';
+import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { FormsModule } from '@angular/forms';
+import { PermIfDirective } from '@site/app/directives/perm-if.directive';
 
 @Component({
   selector: 'app-resource-group',
   standalone: true,
   imports: [
     CommonModule,
+    FormsModule,
+
     NzListModule,
     NzButtonModule,
     NzGridModule,
-    NzIconDirective,
+    NzIconModule,
+    NzRadioModule,
+
     ResourceGroupEditModalComponent,
-    NzRadioComponent,
-    NzRadioGroupComponent,
-    FormsModule
+    PermIfDirective
   ],
   templateUrl: './resource-group.component.html',
   styleUrl: './resource-group.component.css'

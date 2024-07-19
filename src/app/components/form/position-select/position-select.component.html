@@ -1,7 +1,8 @@
 <nz-select
   [nzMaxTagCount]="10"
   nzPlaceHolder="请选择职位"
-  [style]="{minWidth: width}"
+  [nzMode]="mode"
+  style="width: 100%"
   [(ngModel)]="value"
   [nzDisabled]="isDisabled"
   (ngModelChange)="onModalValueChange($event)"

@@ -3,15 +3,22 @@
     <div nz-row>
       <div nz-col [nzSpan]="6" class="header-title">字典列表</div>
       <div nz-col [nzSpan]="18" class="header-buttons">
-        <button nz-button nzType="default" nzShape="circle" (click)="showAddModal()">
+        <button (click)="showAddModal()"
+                *permIf="'DICT_ADD'" nz-button
+                nzShape="circle" nzType="default">
           <span nz-icon nzType="plus"></span>
         </button>
-        <button nz-button nzType="default" nzShape="circle" *ngIf="selectedDict" (click)="showUpdateModal(selectedDict)">
-          <span nz-icon nzType="edit"></span>
-        </button>
-        <button nz-button nzType="default" nzShape="circle" *ngIf="selectedDict" (click)="doDelete()">
-          <span nz-icon nzType="delete"></span>
-        </button>
+        <ng-container *permIf="'DICT_UPDATE'">
+          <button (click)="showUpdateModal(selectedDict)" *ngIf="selectedDict" nz-button
+                  nzShape="circle" nzType="default">
+            <span nz-icon nzType="edit"></span>
+          </button>
+        </ng-container>
+        <ng-container *permIf="'DICT_DELETE'">
+          <button (click)="doDelete()" *ngIf="selectedDict" nz-button nzShape="circle" nzType="default">
+            <span nz-icon nzType="delete"></span>
+          </button>
+        </ng-container>
         <button nz-button nzType="default" nzShape="circle" [nzLoading]="loading" (click)="loadDictionaries()">
           <span nz-icon nzType="reload"></span>
         </button>
@@ -34,7 +41,7 @@
           {{ item.dictionaryName }}
         </div>
         <div nz-col [nzSpan]="10" class="dict-code">
-          {{item.dictionaryCode}}
+          {{ item.dictionaryCode }}
         </div>
       </div>
 
@@ -42,4 +49,4 @@
   }
 </ul>
 
-<app-dict-edit-modal #dictEditModalComponent (onSuccess)="loadDictionaries()" />
+<app-dict-edit-modal #dictEditModalComponent (onSuccess)="loadDictionaries()"/>

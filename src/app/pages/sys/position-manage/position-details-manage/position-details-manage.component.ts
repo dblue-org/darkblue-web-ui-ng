@@ -15,6 +15,7 @@ import { NzIconDirective } from 'ng-zorro-antd/icon';
 import {
   DetailsOperationBarComponent
 } from '@site/app/components/layout/details-operation-bar/details-operation-bar.component';
+import { PermIfDirective } from '@site/app/directives/perm-if.directive';
 
 @Component({
   selector: 'app-position-details-manage',
@@ -32,7 +33,8 @@ import {
     SectionComponent,
     RouterLink,
     NzIconDirective,
-    DetailsOperationBarComponent
+    DetailsOperationBarComponent,
+    PermIfDirective
   ],
   templateUrl: './position-details-manage.component.html',
   styleUrl: './position-details-manage.component.css'

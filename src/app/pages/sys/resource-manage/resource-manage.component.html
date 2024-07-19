@@ -46,11 +46,15 @@
       </app-tpl-search-bar>
 
       <ng-template #tableButtons>
-        <button nz-button nzType="primary" (click)="showAddModal()" [disabled]="!this.selectedResourceGroup">
+        <button (click)="showAddModal()"
+                *permIf="'RESOURCE_ADD'" [disabled]="!this.selectedResourceGroup"
+                nz-button nzType="primary">
           <span nz-icon nzType="plus"></span>
           新增
         </button>
-        <button (click)="showBatchAddModal()" [disabled]="!this.selectedResourceGroup" nz-button nzType="primary">
+        <button (click)="showBatchAddModal()"
+                *permIf="['RESOURCE_ADD', 'RESOURCE_BATCH_ADD']" [disabled]="!this.selectedResourceGroup"
+                nz-button nzType="primary">
           <span nz-icon nzType="plus"></span>
           批量新增
         </button>
@@ -93,12 +97,14 @@
               <td>{{ data.isAuthedAccess ? '登录即可访问' : '受控' }}</td>
               <td>{{ data.createTime }}</td>
               <td>
-                <button nz-button nzSize="small"
+                <button *permIf="'RESOURCE_UPDATE'"
+                        nz-button nzSize="small"
                         nzType="default"
                         (click)="showUpdateModal(data)"
                 >修改
                 </button>
-                <button nz-button nzSize="small"
+                <button *permIf="'RESOURCE_DELETE'"
+                        nz-button nzSize="small"
                         [nzLoading]="deleteLoading"
                         nzType="primary"
                         nz-popconfirm
@@ -106,12 +112,15 @@
                         (nzOnConfirm)="doDelete(data.resourceId)"
                         nzDanger>删除
                 </button>
-                <button nz-button nzSize="small"
-                        *ngIf="!data.isAuthedAccess"
-                        (click)="showPermissionsModal(data)"
-                        nzType="default">
-                  配置权限
-                </button>
+                <ng-container *permIf="'RESOURCE_ASSIGN_PERMISSION'">
+                  <button (click)="showPermissionsModal(data)" *ngIf="!data.isAuthedAccess"
+                          nz-button
+                          nzSize="small"
+                          nzType="default">
+                    配置权限
+                  </button>
+                </ng-container>
+
               </td>
             </tr>
             <tr [nzExpand]="expandSet.has(data.resourceId)">

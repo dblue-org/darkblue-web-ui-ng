@@ -17,6 +17,7 @@ import { ResponseBean } from '@site/app/define/sys/response';
 import { BasicTreeTable } from '@site/app/components/basic-tree-table';
 import { BoxContainerComponent } from '@site/app/components/layout/box-container/box-container.component';
 import { NzBadgeComponent } from 'ng-zorro-antd/badge';
+import { PermIfDirective } from '@site/app/directives/perm-if.directive';
 
 @Component({
   selector: 'app-menu-manage',
@@ -37,7 +38,8 @@ import { NzBadgeComponent } from 'ng-zorro-antd/badge';
     MenuAddModalComponent,
     FormsModule,
     BoxContainerComponent,
-    NzBadgeComponent
+    NzBadgeComponent,
+    PermIfDirective
   ],
   templateUrl: './menu-manage.component.html',
   styleUrl: './menu-manage.component.css'

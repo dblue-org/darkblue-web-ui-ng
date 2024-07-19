@@ -26,7 +26,8 @@ import { CommonModule } from '@angular/common';
 })
 export class PositionSelectComponent implements OnInit, ControlValueAccessor {
   @Input('dkWidth') width: string = 'auto';
-  value?: string[];
+  @Input('dkMode') mode: 'multiple' | 'tags' | 'default' = 'default';
+  value?: string | string[];
   options: SimplePosition[] = [];
   isDisabled = false
   onChange = (value: any) => {
