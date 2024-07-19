@@ -96,6 +96,7 @@ export class BindResourceModalComponent implements OnInit {
   }
 
   showModal(permission: SimplePermission) {
+    this.current = 0;
     this.checked = false;
     this.indeterminate = false;
     this.setOfCheckedId.clear();

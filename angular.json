@@ -49,6 +49,9 @@
               "node_modules/prismjs/components/prism-json.min.js",
               "node_modules/prismjs/components/prism-java.min.js",
               "node_modules/prismjs/plugins/line-highlight/prism-line-highlight.js"
+            ],
+            "allowedCommonJsDependencies": [
+              "moment"
             ]
           },
           "configurations": {

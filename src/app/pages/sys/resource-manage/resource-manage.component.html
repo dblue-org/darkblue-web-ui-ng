@@ -58,6 +58,9 @@
           <span nz-icon nzType="plus"></span>
           批量新增
         </button>
+        <button (click)="checkAllResource()" [nzLoading]="checkResourceLoading" nz-button nzDanger nzType="primary">
+          检验资源有效性
+        </button>
       </ng-template>
 
       <app-box-container>

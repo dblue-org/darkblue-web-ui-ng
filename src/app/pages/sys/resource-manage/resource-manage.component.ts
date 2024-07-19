@@ -28,6 +28,7 @@ import {
   ResourceBatchAddComponent
 } from '@site/app/pages/sys/resource-manage/resource-batch-add-modal/resource-batch-add.component';
 import { PermIfDirective } from '@site/app/directives/perm-if.directive';
+import { NzModalService } from 'ng-zorro-antd/modal';
 
 @Component({
   selector: 'app-resource-manage',
@@ -90,10 +91,11 @@ export class ResourceManageComponent implements OnInit, OnChanges {
 
   // operation properties
   deleteLoading = false;
+  checkResourceLoading = false;
 
   constructor(
     private fb: NonNullableFormBuilder, private resourceService: ResourcesService,
-    private messageService: NzMessageService) {
+    private messageService: NzMessageService, private modalService: NzModalService) {
   }
 
 
@@ -179,6 +181,18 @@ export class ResourceManageComponent implements OnInit, OnChanges {
 
   showPermissionsModal(resource: Resource) {
     this.resourcePermissionModalComponent?.showModal(resource);
+  }
+
+  checkAllResource() {
+    this.modalService.confirm({
+      nzTitle: '校验资源',
+      nzContent: '此操作会校验当前数据库中所有资源是否有效（接口地址变更会导致资源失效），可能需要花费一些时间，是否继续？',
+      nzOnOk: () => this.doResourceCheck()
+    });
+  }
+
+  doResourceCheck() {
+    this.checkResourceLoading = true;
   }
 
   ngOnChanges(changes: SimpleChanges): void {

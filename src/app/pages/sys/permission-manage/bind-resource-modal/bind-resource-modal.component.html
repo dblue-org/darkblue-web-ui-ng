@@ -1,5 +1,8 @@
-<nz-modal [(nzVisible)]="isVisible" nzWidth="1200px" nzTitle="设置权限资源" (nzOnCancel)="handleCancel()"
+<nz-modal (nzOnCancel)="handleCancel()" [(nzVisible)]="isVisible" [nzTitle]="titleTpl" nzWidth="1200px"
           (nzOnOk)="handleOk()" [nzOkLoading]="loading">
+  <ng-template #titleTpl>
+    设置权限资源 - {{ permission?.permissionName }}({{ permission?.permissionCode }})
+  </ng-template>
   <ng-container *nzModalContent>
     <nz-steps [nzCurrent]="current" style="padding-bottom: 24px;">
       <nz-step nzTitle="选择资源"></nz-step>
