@@ -92,7 +92,14 @@
             <tr>
               <td [nzExpand]="expandSet.has(data.resourceId)"
                   (nzExpandChange)="onExpandChange(data.resourceId, $event)"></td>
-              <td>{{ data.resourceName }}</td>
+              <td>
+                <span *ngIf="data.isInvalid"
+                      nz-icon nz-tooltip
+                      nzTheme="twotone"
+                      nzTooltipTitle="此资源已失效，可能是接口地址已被修改"
+                      nzTwotoneColor="#f50" nzType="warning"></span>
+                {{ data.resourceName }}
+              </td>
               <td>{{ data.requestMethod }}</td>
               <td [nzEllipsis]="true" [title]="data.resourceUrl">{{ data.resourceUrl }}</td>
               <td [nzEllipsis]="true" [title]="data.controller">{{ data.controller }}</td>
@@ -143,3 +150,4 @@
 <app-resource-edit-modal #resourceEditModalComponent (onSuccess)="loadData()"/>
 <app-resource-permission-modal #resourcePermissionModalComponent [platform]="platform" (onSuccess)="loadData()"/>
 <app-resource-batch-add #resourceBatchAddComponent (onSuccess)="loadData()"/>
+<app-check-resource-modal #checkResourceModalComponent/>

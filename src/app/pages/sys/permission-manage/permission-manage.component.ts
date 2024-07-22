@@ -27,10 +27,10 @@ import {
   BindResourceModalComponent
 } from '@site/app/pages/sys/permission-manage/bind-resource-modal/bind-resource-modal.component';
 
-
 import { MenuIconComponent } from '@site/app/components/icon/menu-icon/menu-icon.component';
 import { BoxContainerComponent } from '@site/app/components/layout/box-container/box-container.component';
 import { PermIfDirective } from '@site/app/directives/perm-if.directive';
+import { environment } from '@site/environments/environment';
 
 @Component({
   selector: 'app-permission-manage',
@@ -67,6 +67,8 @@ export class PermissionManageComponent implements OnInit {
 
   @ViewChild('permissionEditModalComponent') permissionEditModalComponent?: PermissionEditModalComponent;
   @ViewChild('bindResourceModalComponent') bindResourceModalComponent?: BindResourceModalComponent;
+
+  isAllowAppMenu = environment.isAllowAppMenu;
 
   menus: NzTreeNodeOptions[] = [];
   selectedMenu?: { menuId: string, menuName: string };

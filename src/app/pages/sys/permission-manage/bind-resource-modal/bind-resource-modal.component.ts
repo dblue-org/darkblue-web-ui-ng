@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormsModule, NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { Resource, SimpleResource } from '@site/app/define/sys/resource';
+import { PermissionResourceVo, Resource } from '@site/app/define/sys/resource';
 import { ResourcesService } from '@site/app/services/sys/resources.service';
 import { PermissionService } from '@site/app/services/sys/permission.service';
 import { SimplePermission } from '@site/app/define/sys/permission';
@@ -65,8 +65,10 @@ export class BindResourceModalComponent implements OnInit {
     pageSize: 10
   };
 
-  selectedResourceMap: Map<String, SimpleResource> = new Map<String, SimpleResource>();
+  selectedResourceMap: Map<String, PermissionResourceVo> = new Map<String, PermissionResourceVo>();
   setOfCheckedId = new Set<string>();
+  isResourceGroupChange = false;
+  isFirstLoad = true;
 
   constructor(
     private formBuilder: NonNullableFormBuilder, private resourceService: ResourcesService,
@@ -74,7 +76,7 @@ export class BindResourceModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadResources();
+    // this.loadResources();
   }
 
   loadResources() {
@@ -89,6 +91,7 @@ export class BindResourceModalComponent implements OnInit {
         if (res.success) {
           this.resources = res.data || [];
           this.tableOptions.total = res.total || 0;
+          this.isFirstLoad = false;
         }
       },
       complete: () => this.tableLoading = false
@@ -106,7 +109,16 @@ export class BindResourceModalComponent implements OnInit {
         (res.data || []).forEach(resource => {
           this.selectedResourceMap.set(resource.resourceId, resource);
           this.setOfCheckedId.add(resource.resourceId);
-        })
+          if (resource.resourceGroupId && this.searchForm.value.resourceGroupId != resource.resourceGroupId) {
+            this.searchForm.patchValue({
+              resourceGroupId: resource.resourceGroupId
+            });
+            this.isResourceGroupChange = true;
+          }
+        });
+        if (this.isResourceGroupChange || this.isFirstLoad) {
+          this.loadResources();
+        }
       }
     });
     this.isVisible = true;
@@ -124,7 +136,7 @@ export class BindResourceModalComponent implements OnInit {
     this.indeterminate = this.resources.some(item => this.setOfCheckedId.has(item.resourceId)) && !this.checked;
   }
 
-  updateCheckedSet(resource: Resource | SimpleResource, checked: boolean): void {
+  updateCheckedSet(resource: Resource | PermissionResourceVo, checked: boolean): void {
     if (checked) {
       this.setOfCheckedId.add(resource.resourceId);
       this.selectedResourceMap.set(resource.resourceId, resource);
@@ -134,7 +146,7 @@ export class BindResourceModalComponent implements OnInit {
     }
   }
 
-  getCheckedData(): SimpleResource[] {
+  getCheckedData(): PermissionResourceVo[] {
     return Array.from(this.selectedResourceMap.values());
   }
 
@@ -145,7 +157,7 @@ export class BindResourceModalComponent implements OnInit {
     this.current = this.current - 1;
   }
 
-  onItemChecked(resource: Resource | SimpleResource, checked: boolean): void {
+  onItemChecked(resource: Resource | PermissionResourceVo, checked: boolean): void {
     this.updateCheckedSet(resource, checked);
     this.refreshCheckedStatus();
   }

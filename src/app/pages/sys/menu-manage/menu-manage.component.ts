@@ -18,6 +18,7 @@ import { BasicTreeTable } from '@site/app/components/basic-tree-table';
 import { BoxContainerComponent } from '@site/app/components/layout/box-container/box-container.component';
 import { NzBadgeComponent } from 'ng-zorro-antd/badge';
 import { PermIfDirective } from '@site/app/directives/perm-if.directive';
+import { environment } from '@site/environments/environment';
 
 @Component({
   selector: 'app-menu-manage',
@@ -46,8 +47,11 @@ import { PermIfDirective } from '@site/app/directives/perm-if.directive';
 })
 export class MenuManageComponent extends BasicTreeTable<MenuItem> implements OnInit {
 
-  listOfMapData: MenuItem[] = [];
   @ViewChild('menuAddModal') menuAddModal!: MenuAddModalComponent;
+
+  isAllowAppMenu = environment.isAllowAppMenu;
+
+  listOfMapData: MenuItem[] = [];
   loading = false;
   platform = 1;
 

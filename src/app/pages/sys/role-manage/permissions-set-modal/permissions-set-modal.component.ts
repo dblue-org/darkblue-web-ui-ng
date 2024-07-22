@@ -12,6 +12,7 @@ import { FormsModule } from '@angular/forms';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { MenuPermissionsVo } from '@site/app/define/sys/menu';
 import { bfs } from '@site/utils/nz-tree-node-utils';
+import { environment } from '@site/environments/environment';
 
 @Component({
   selector: 'app-permissions-set-modal',
@@ -33,10 +34,13 @@ import { bfs } from '@site/utils/nz-tree-node-utils';
   styleUrl: './permissions-set-modal.component.css'
 })
 export class PermissionsSetModalComponent {
-  isVisible = false;
   @Output() onSuccess: EventEmitter<void> = new EventEmitter<void>();
   @ViewChild('menuPcTree') menuPcTree?: NzTreeComponent;
   @ViewChild('menuAppTree') menuAppTree?: NzTreeComponent;
+
+  isVisible = false;
+  isAllowAppMenu = environment.isAllowAppMenu;
+
   loading = false;
   pcMenus: NzTreeNodeOptions[] = [];
   appMenus: NzTreeNodeOptions[] = [];
@@ -109,9 +113,11 @@ export class PermissionsSetModalComponent {
     this.pcMenuPermissions.flatMap(o => o.permissions).filter(o => o.checked).forEach(item => {
       permissionIdList.push(item.permissionId)
     })
-    this.appMenuPermissions.flatMap(o => o.permissions).filter(o => o.checked).forEach(item => {
-      permissionIdList.push(item.permissionId)
-    })
+    if (this.isAllowAppMenu) {
+      this.appMenuPermissions.flatMap(o => o.permissions).filter(o => o.checked).forEach(item => {
+        permissionIdList.push(item.permissionId);
+      });
+    }
 
     this.roleService.updatePermissions({
       roleId: this.roleId,
@@ -142,17 +148,21 @@ export class PermissionsSetModalComponent {
     this.menuPcTree?.getHalfCheckedNodeList().forEach(item => {
       menuIdList.push(item.key)
     })
-    this.menuAppTree?.getCheckedNodeList().forEach(item => {
-      menuIdList.push(item.key);
-      if (item.children && item.children.length > 0) {
-        bfs(item.children, (node) => {
-          menuIdList.push(node.key)
-        })
-      }
-    })
-    this.menuAppTree?.getHalfCheckedNodeList().forEach(item => {
-      menuIdList.push(item.key)
-    })
+
+    if (this.isAllowAppMenu) {
+      this.menuAppTree?.getCheckedNodeList().forEach(item => {
+        menuIdList.push(item.key);
+        if (item.children && item.children.length > 0) {
+          bfs(item.children, (node) => {
+            menuIdList.push(node.key);
+          });
+        }
+      });
+      this.menuAppTree?.getHalfCheckedNodeList().forEach(item => {
+        menuIdList.push(item.key);
+      });
+    }
+
     return menuIdList;
   }
 

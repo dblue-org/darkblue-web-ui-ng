@@ -1,4 +1,4 @@
-import { ResourceVo, SimpleResource } from '@site/app/define/sys/resource';
+import { ResourceVo } from '@site/app/define/sys/resource';
 import { PageParams } from '@site/app/define/common';
 
 export interface Permission {
@@ -21,6 +21,7 @@ export interface PermissionVo {
   permissionId: string;
   permissionCode: string;
   permissionName: string;
+  resourceNum?: number;
   platform: number;
 }
 

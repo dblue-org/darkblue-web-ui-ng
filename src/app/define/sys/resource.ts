@@ -41,6 +41,7 @@ export interface Resource extends Mapping{
   resourceId: string
   isAuthedAccess: boolean
   createTime: string
+  isInvalid?: boolean;
   permissions: SimplePermission[]
 }
 
@@ -71,4 +72,15 @@ export interface ResourceBatchAddDto {
   resourceGroupId: string;
   platform: number;
   mappings: ResourceAddDto[];
+}
+
+export interface ResourceCheckVo extends ResourceVo {
+  resourceGroupId: string;
+  resourceGroupName: string;
+}
+
+export interface PermissionResourceVo extends Mapping {
+  resourceId: string;
+  createTime: string;
+  resourceGroupId?: string;
 }

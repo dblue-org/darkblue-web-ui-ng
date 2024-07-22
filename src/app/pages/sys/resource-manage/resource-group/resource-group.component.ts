@@ -14,6 +14,7 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { FormsModule } from '@angular/forms';
 import { PermIfDirective } from '@site/app/directives/perm-if.directive';
+import { environment } from '@site/environments/environment';
 
 @Component({
   selector: 'app-resource-group',
@@ -39,6 +40,8 @@ export class ResourceGroupComponent implements OnInit {
   @Output() platformChange: EventEmitter<number> = new EventEmitter<number>();
   @Output() onSelected = new EventEmitter<ResourceGroup>();
   @ViewChild('resourceGroupEditModalComponent') resourceGroupEditModalComponent?: ResourceGroupEditModalComponent;
+
+  isAllowAppMenu = environment.isAllowAppMenu;
 
   resourceGroups: ResourceGroup[] = [];
   selected?: ResourceGroup;

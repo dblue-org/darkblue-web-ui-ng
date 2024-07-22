@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import {
   Permission,
-  PermissionDetailsVo, PermissionRoleQueryDto,
+  PermissionDetailsVo,
+  PermissionRoleQueryDto,
   PermissionSearchForm,
-  PermissionVo,
-  SimplePermission
+  PermissionVo
 } from '@site/app/define/sys/permission';
-import { delay, Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ResponseBean } from '@site/app/define/sys/response';
-import { Resource, SimpleResource } from '@site/app/define/sys/resource';
+import { PermissionResourceVo } from '@site/app/define/sys/resource';
 import { HttpClient } from '@angular/common/http';
 import { PermissionRoleVo } from '@site/app/define/sys/role';
 
@@ -43,8 +43,8 @@ export class PermissionService {
     return this.http.delete<ResponseBean<void>>(`/api/permission/delete/${permissionId}`)
   }
 
-  getResources(permissionId: string): Observable<ResponseBean<SimpleResource[]>> {
-    return this.http.get<ResponseBean<SimpleResource[]>>(`/api/permission/findPermissionResource/${permissionId}`);
+  getResources(permissionId: string): Observable<ResponseBean<PermissionResourceVo[]>> {
+    return this.http.get<ResponseBean<PermissionResourceVo[]>>(`/api/permission/findPermissionResource/${permissionId}`);
   }
 
   bindResources(permissionId: string, resourceIds: string[]): Observable<ResponseBean<void>> {

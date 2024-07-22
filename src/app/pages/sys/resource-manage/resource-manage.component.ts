@@ -29,6 +29,10 @@ import {
 } from '@site/app/pages/sys/resource-manage/resource-batch-add-modal/resource-batch-add.component';
 import { PermIfDirective } from '@site/app/directives/perm-if.directive';
 import { NzModalService } from 'ng-zorro-antd/modal';
+import {
+  CheckResourceModalComponent
+} from '@site/app/pages/sys/resource-manage/check-resource-modal/check-resource-modal.component';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
 @Component({
   selector: 'app-resource-manage',
@@ -48,6 +52,7 @@ import { NzModalService } from 'ng-zorro-antd/modal';
     NzInputDirective,
     NzSelectModule,
     NzSpinModule,
+    NzToolTipModule,
 
     ResourceGroupComponent,
     TplSearchBarComponent,
@@ -56,7 +61,8 @@ import { NzModalService } from 'ng-zorro-antd/modal';
     ResourcePermissionModalComponent,
     BoxContainerComponent,
     ResourceBatchAddComponent,
-    PermIfDirective
+    PermIfDirective,
+    CheckResourceModalComponent
   ],
   templateUrl: './resource-manage.component.html',
   styleUrl: './resource-manage.component.css'
@@ -66,6 +72,7 @@ export class ResourceManageComponent implements OnInit, OnChanges {
   @ViewChild('resourceEditModalComponent') resourceEditModalComponent?: ResourceEditModalComponent;
   @ViewChild('resourcePermissionModalComponent') resourcePermissionModalComponent?: ResourcePermissionModalComponent;
   @ViewChild('resourceBatchAddComponent') resourceBatchAddComponent?: ResourceBatchAddComponent;
+  @ViewChild('checkResourceModalComponent') checkResourceModalComponent?: CheckResourceModalComponent;
 
   platform = 1;
 
@@ -186,13 +193,14 @@ export class ResourceManageComponent implements OnInit, OnChanges {
   checkAllResource() {
     this.modalService.confirm({
       nzTitle: '校验资源',
-      nzContent: '此操作会校验当前数据库中所有资源是否有效（接口地址变更会导致资源失效），可能需要花费一些时间，是否继续？',
+      nzContent: '此操作会校验当前数据库中所有资源是否有效（接口地址变更会导致资源失效）。检测完成后，会为失效资源会添加失效标识，并且在前端体现，但不会对业务有任何影响。是否继续？',
+      nzWidth: 650,
       nzOnOk: () => this.doResourceCheck()
     });
   }
 
   doResourceCheck() {
-    this.checkResourceLoading = true;
+    this.checkResourceModalComponent?.showModal();
   }
 
   ngOnChanges(changes: SimpleChanges): void {

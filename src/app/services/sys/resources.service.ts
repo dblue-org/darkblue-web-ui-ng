@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { delay, Observable, of } from 'rxjs';
 import { ResponseBean } from '@site/app/define/sys/response';
-import { Resource, ResourceBatchAddDto, ResourceSearchForm } from '@site/app/define/sys/resource';
+import { Resource, ResourceBatchAddDto, ResourceCheckVo, ResourceSearchForm } from '@site/app/define/sys/resource';
 import { SimplePermission } from '@site/app/define/sys/permission';
 import { HttpClient } from '@angular/common/http';
 
@@ -42,5 +42,11 @@ export class ResourcesService {
 
   batchAdd(batchAddDto: ResourceBatchAddDto): Observable<ResponseBean<void>> {
     return this.http.post<ResponseBean<void>>('/api/resource/batchAdd', batchAddDto);
+  }
+
+  checkResource(): Observable<ResponseBean<ResourceCheckVo[]>> {
+    return of({
+      success: true
+    }).pipe(delay(1000));
   }
 }

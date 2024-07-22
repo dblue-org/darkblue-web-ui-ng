@@ -1,0 +1,51 @@
+<nz-modal (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()"
+          [(nzVisible)]="isVisible"
+          [nzOkLoading]="loading"
+          nzTitle="检查资源有效性"
+          nzWidth="1600px">
+  <ng-container *nzModalContent>
+    <nz-spin [nzSpinning]="loading" nzTip="正在检查，此过程可能需要花费一点时间，请耐心等待...">
+      <ng-container *ngIf="loading || (resources && resources.length > 0) else successResult">
+        <nz-table #basicTable
+                  [nzData]="resources"
+                  [nzFrontPagination]="false"
+                  nzBordered
+                  nzShowPagination
+                  nzSize="small"
+                  nzTableLayout="fixed"
+                  nzTitle="失效资源">
+          <thead>
+          <tr>
+            <th nzWidth="150px">所属资源组</th>
+            <th nzWidth="150px">资源名称</th>
+            <th nzWidth="100px">请求方式</th>
+            <th>资源地址</th>
+            <th>控制层类</th>
+            <th nzWidth="200px">方法</th>
+            <th nzWidth="160px">创建时间</th>
+          </tr>
+          </thead>
+          <tbody>
+          <ng-container *ngFor="let data of basicTable.data">
+            <tr>
+              <td>{{ data.resourceName }}</td>
+              <td>{{ data.resourceName }}</td>
+              <td>{{ data.requestMethod }}</td>
+              <td [nzEllipsis]="true" [title]="data.resourceUrl">{{ data.resourceUrl }}</td>
+              <td [nzEllipsis]="true" [title]="data.controller">{{ data.controller }}</td>
+              <td [nzEllipsis]="true">{{ data.method }}</td>
+              <td>{{ data.createTime }}</td>
+            </tr>
+          </ng-container>
+          </tbody>
+        </nz-table>
+      </ng-container>
+      <ng-template #successResult>
+        <nz-result
+          nzStatus="success"
+          nzTitle="您的资源维护的很棒！没有检测到任何失效资源"/>
+      </ng-template>
+
+    </nz-spin>
+  </ng-container>
+</nz-modal>

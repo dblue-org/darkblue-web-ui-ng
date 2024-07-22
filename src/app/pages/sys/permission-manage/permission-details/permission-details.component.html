@@ -17,22 +17,22 @@
             [nzData]="resources">
     <thead>
     <tr>
-      <th nzWidth="120px">资源名称</th>
+      <th nzWidth="180px">资源名称</th>
       <th nzWidth="100px">请求方式</th>
       <th>资源地址</th>
       <th>控制层类</th>
-      <th nzWidth="120px">方法</th>
+      <th nzWidth="180px">方法</th>
       <th nzWidth="160px">创建时间</th>
     </tr>
     </thead>
     <tbody>
     <ng-container *ngFor="let resItem of resourceTable.data">
       <tr>
-        <td>{{ resItem.resourceName }}</td>
+        <td nzEllipsis>{{ resItem.resourceName }}</td>
         <td>{{ resItem.requestMethod }}</td>
         <td [nzEllipsis]="true" [title]="resItem.resourceUrl">{{ resItem.resourceUrl }}</td>
         <td [nzEllipsis]="true" [title]="resItem.controller">{{ resItem.controller }}</td>
-        <td>{{ resItem.method }}</td>
+        <td nzEllipsis>{{ resItem.method }}</td>
         <td>{{ resItem.createTime }}</td>
       </tr>
     </ng-container>

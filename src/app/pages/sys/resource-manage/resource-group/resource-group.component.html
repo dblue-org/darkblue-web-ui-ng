@@ -54,7 +54,7 @@
   </ul>
 </div>
 <div class="resource-group-footer">
-  <nz-radio-group [(ngModel)]="platform" nzSize="large" (ngModelChange)="onPlatformChange()">
+  <nz-radio-group (ngModelChange)="onPlatformChange()" *ngIf="isAllowAppMenu" [(ngModel)]="platform" nzSize="large">
     <label nz-radio-button [nzValue]="1">PC端</label>
     <label nz-radio-button [nzValue]="2">移动端</label>
   </nz-radio-group>

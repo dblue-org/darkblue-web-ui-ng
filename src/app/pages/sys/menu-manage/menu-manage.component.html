@@ -1,7 +1,8 @@
 <app-toolbar>
   <div nz-row>
     <div nz-col nzSpan="12">
-      <nz-radio-group [(ngModel)]="platform" style="margin-right: 8px;" (ngModelChange)="loadMenu()">
+      <nz-radio-group (ngModelChange)="loadMenu()" *ngIf="isAllowAppMenu" [(ngModel)]="platform"
+                      style="margin-right: 8px;">
         <label nz-radio-button [nzValue]="1">PC端</label>
         <label nz-radio-button [nzValue]="2">移动端</label>
       </nz-radio-group>

@@ -8,7 +8,7 @@
     </nz-steps>
     <div class="steps-content-0" *ngIf="current == 0">
       <div nz-row [nzGutter]="24">
-        <div nz-col [nzSpan]="12">
+        <div [nzSpan]="isAllowAppMenu ? 12 : 24" nz-col>
           <div  class="tree-panel">
             <h3>PC端菜单</h3>
             <nz-tree #menuPcTree
@@ -20,7 +20,7 @@
             ></nz-tree>
           </div>
         </div>
-        <div nz-col [nzSpan]="12">
+        <div *ngIf="isAllowAppMenu" [nzSpan]="12" nz-col>
           <div  class="tree-panel">
             <h3>移动端菜单</h3>
             <nz-tree #menuAppTree
@@ -44,7 +44,7 @@
           </ng-container>
         </div>
       </div>
-      <div class="permission-panel" *ngIf="appMenuPermissions && appMenuPermissions.length > 0">
+      <div *ngIf="appMenuPermissions && appMenuPermissions.length > 0 && isAllowAppMenu" class="permission-panel">
         <h3>移动端</h3>
         <div [nzGutter]="[24, 24]" nz-row>
           <ng-container *ngFor="let item of appMenuPermissions; let i = index">

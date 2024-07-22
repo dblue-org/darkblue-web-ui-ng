@@ -38,6 +38,8 @@
                 [(nzPageIndex)]="tableOptions.pageIndex"
                 [(nzPageSize)]="tableOptions.pageSize"
                 nzTableLayout="fixed"
+                (nzPageIndexChange)="loadResources()"
+                (nzPageSizeChange)="loadResources()"
                 [nzData]="resources">
         <thead>
         <tr>

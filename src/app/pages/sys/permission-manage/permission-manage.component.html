@@ -15,10 +15,14 @@
       </button>
     </ng-template>
     <ng-template #menuTitle>
-      <nz-radio-group [(ngModel)]="platform" style="margin-right: 8px;" (ngModelChange)="onPlatformChange()">
+      <nz-radio-group (ngModelChange)="onPlatformChange()" *ngIf="isAllowAppMenu else textTitle" [(ngModel)]="platform"
+                      style="margin-right: 8px;">
         <label nz-radio-button [nzValue]="1">PC端</label>
         <label nz-radio-button [nzValue]="2">移动端</label>
       </nz-radio-group>
+      <ng-template #textTitle>
+        系统菜单
+      </ng-template>
     </ng-template>
   </ng-container>
   <div>
@@ -62,6 +66,7 @@
           <th>所属菜单</th>
           <th>权限名称</th>
           <th>权限编码</th>
+          <th nzWidth="130px">资源数量</th>
           <th nzWidth="230px">操作</th>
         </tr>
         </thead>
@@ -79,6 +84,7 @@
               </ng-template>
             </td>
             <td>{{ data.permissionCode }}</td>
+            <td>{{ data.resourceNum || 0 }}</td>
             <td>
               <button *permIf="'PERMISSION_UPDATE'"
                       nz-button nzSize="small"
