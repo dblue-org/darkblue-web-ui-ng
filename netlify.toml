@@ -3,6 +3,13 @@ base = "/"
 publish = "dist/darkblue-web-ui/browser"
 command = "npm run build"
 [[redirects]]
+from = "/darkblue-api/*"
+to = "https://124.222.32.147:8087/:splat"
+status = 200
+force = true
+headers = { X-From = "Netlify" }
+[[redirects]]
 from = "/*"
 to = "/index.html"
 status = 200
+

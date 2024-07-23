@@ -59,7 +59,6 @@ export class AuthenticationService implements OnInit {
         mode: 'oneOf'
       })
     }
-    console.log('role add acl', this.aclService.canAbility('ROLE_ADD'));
   }
 
   ngOnInit(): void {
