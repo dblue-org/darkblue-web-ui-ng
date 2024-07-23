@@ -9,7 +9,7 @@
     <div class="steps-content-0" *ngIf="current == 0">
       <div nz-row [nzGutter]="24">
         <div [nzSpan]="isAllowAppMenu ? 12 : 24" nz-col>
-          <div  class="tree-panel">
+          <div class="tree-panel">
             <h3>PC端菜单</h3>
             <nz-tree #menuPcTree
                      [nzData]="pcMenus"
@@ -21,7 +21,7 @@
           </div>
         </div>
         <div *ngIf="isAllowAppMenu" [nzSpan]="12" nz-col>
-          <div  class="tree-panel">
+          <div class="tree-panel">
             <h3>移动端菜单</h3>
             <nz-tree #menuAppTree
                      [nzData]="appMenus"
@@ -36,32 +36,36 @@
 
     </div>
     <div class="steps-content-1" *ngIf="current == 1">
-      <div class="permission-panel" *ngIf="pcMenuPermissions && pcMenuPermissions.length > 0">
-        <h3>PC端</h3>
-        <div [nzGutter]="[24, 24]" nz-row>
-          <ng-container *ngFor="let item of pcMenuPermissions; let i = index">
-            <app-menu-permissions nz-col [nzSpan]="8" [(ngModel)]="pcMenuPermissions[i]" />
-          </ng-container>
+      <nz-skeleton [nzActive]="true" [nzLoading]="nextLoading">
+        <div *ngIf="pcMenuPermissions && pcMenuPermissions.length > 0" class="permission-panel">
+          <h3>PC端</h3>
+          <div [nzGutter]="[24, 24]" nz-row>
+            <ng-container *ngFor="let item of pcMenuPermissions; let i = index">
+              <app-menu-permissions [(ngModel)]="pcMenuPermissions[i]" [nzSpan]="8" nz-col/>
+            </ng-container>
+          </div>
         </div>
-      </div>
-      <div *ngIf="appMenuPermissions && appMenuPermissions.length > 0 && isAllowAppMenu" class="permission-panel">
-        <h3>移动端</h3>
-        <div [nzGutter]="[24, 24]" nz-row>
-          <ng-container *ngFor="let item of appMenuPermissions; let i = index">
-            <app-menu-permissions nz-col [nzSpan]="8" [(ngModel)]="appMenuPermissions[i]" />
-          </ng-container>
+        <div *ngIf="appMenuPermissions && appMenuPermissions.length > 0 && isAllowAppMenu" class="permission-panel">
+          <h3>移动端</h3>
+          <div [nzGutter]="[24, 24]" nz-row>
+            <ng-container *ngFor="let item of appMenuPermissions; let i = index">
+              <app-menu-permissions [(ngModel)]="appMenuPermissions[i]" [nzSpan]="8" nz-col/>
+            </ng-container>
+          </div>
         </div>
-      </div>
+      </nz-skeleton>
     </div>
   </ng-container>
   <ng-container *nzModalFooter>
-    <button nz-button nzType="primary" (click)="pre()" *ngIf="current > 0">
+    <button (click)="pre()" *ngIf="current > 0 && !nextLoading" nz-button nzType="primary">
       <span>上一步</span>
     </button>
     <button nz-button nzType="primary" (click)="next()" *ngIf="current < 1">
       <span>下一步</span>
     </button>
-    <button nz-button nzType="primary" [nzLoading]="loading" (click)="handleOk()" *ngIf="current === 1">保存</button>
+    <button (click)="handleOk()" *ngIf="current === 1 && !nextLoading" [nzLoading]="loading" nz-button nzType="primary">
+      保存
+    </button>
     <button nz-button nzType="default" (click)="handleCancel()">取消</button>
   </ng-container>
 </nz-modal>

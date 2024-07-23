@@ -13,6 +13,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { MenuPermissionsVo } from '@site/app/define/sys/menu';
 import { bfs } from '@site/utils/nz-tree-node-utils';
 import { environment } from '@site/environments/environment';
+import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 
 @Component({
   selector: 'app-permissions-set-modal',
@@ -27,6 +28,7 @@ import { environment } from '@site/environments/environment';
     NzButtonModule,
     NzIconModule,
     NzTreeModule,
+    NzSkeletonModule,
 
     MenuPermissionsComponent,
   ],
@@ -86,15 +88,16 @@ export class PermissionsSetModalComponent {
   }
 
   next() {
-    this.nextLoading = true;
+
     this.selectedMenusIdList = this.getCheckedMenus();
     if (this.current == 0) {
+      this.nextLoading = true;
+      this.current = this.current + 1;
       this.roleService.checkMenuPermissions(this.roleId, this.getCheckedMenus()).subscribe({
         next: res => {
           if (res.success && res.data) {
             this.pcMenuPermissions = res.data.filter(o => o.platform == 1);
             this.appMenuPermissions = res.data.filter(o => o.platform == 2);
-            this.current = this.current + 1
           }
         },
         complete: () => this.nextLoading = false

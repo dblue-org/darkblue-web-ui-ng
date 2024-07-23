@@ -56,6 +56,7 @@
                 nzShowPagination
                 nzBordered
                 nzSize="small"
+                [nzLoading]="tableLoading"
                 [nzTotal]="tableOptions.total"
                 [(nzPageIndex)]="tableOptions.pageIndex"
                 [(nzPageSize)]="tableOptions.pageSize"
