@@ -69,6 +69,7 @@ export class LayoutComponent implements OnInit {
   ]
   clickTabIndex: number = -1;
   isLogoutLoading = false;
+  userName = '';
 
   constructor(private logoutService: LogoutService, private authService: AuthenticationService,
               private router: Router, private activatedRoute: ActivatedRoute,
@@ -89,6 +90,7 @@ export class LayoutComponent implements OnInit {
   ngOnInit(): void {
     this.authService.ngOnInit();
     this.tabs = this.tabsetStoreService.get();
+    this.userName = this.authService.getUser()?.name || '';
 
     this.router.events.subscribe(event => {
       if (event instanceof ActivationEnd) {
