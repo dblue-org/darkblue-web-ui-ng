@@ -40,10 +40,10 @@ export class CheckResourceModalComponent {
   resources: ResourceCheckVo[] = [];
   private resourceService = inject(ResourcesService);
 
-  showModal() {
+  showModal(platform: number) {
     this.isVisible = true;
     this.loading = true;
-    this.resourceService.checkResource().subscribe({
+    this.resourceService.checkResource(platform).subscribe({
       next: res => {
         if (res.success) {
           this.resources = res.data || [];

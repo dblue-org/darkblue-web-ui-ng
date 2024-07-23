@@ -94,7 +94,7 @@ export class ResourceBatchAddComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.mappingService.getAll().subscribe(res => {
+    this.mappingService.getAll(this.resourceGroup.platform).subscribe(res => {
       if (res.success && res.data) {
         this.controllers = res.data || [];
       }

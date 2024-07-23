@@ -20,6 +20,9 @@ import { RouterLinkTabItem } from '@site/app/define/common';
 import { TabsetStoreService } from '@site/app/services/common/tabset-store.service';
 import { RouteStoreService } from '@site/app/services/common/route-store.service';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
+import {
+  ChangePasswordModalComponent
+} from '@site/app/pages/user-center/change-password-modal/change-password-modal.component';
 
 @Component({
   selector: 'app-layout',
@@ -45,12 +48,14 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
 
     MenuComponent,
     MessagingComponent,
+    ChangePasswordModalComponent
   ],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.css'
 })
 export class LayoutComponent implements OnInit {
-  @ViewChild('messaging') messagingDrawer: MessagingComponent | undefined;
+  @ViewChild('messaging') messagingDrawer?: MessagingComponent;
+  @ViewChild('changePasswordModalComponent') changePasswordModalComponent?: ChangePasswordModalComponent;
   isCollapsed = false;
   showFooter = true;
   selectedTabIndex = 0;
@@ -75,6 +80,10 @@ export class LayoutComponent implements OnInit {
     this.isLogoutLoading = true;
     this.closeAll();
     this.logoutService.logout();
+  }
+
+  showChangePasswordModal() {
+    this.changePasswordModalComponent?.showModal();
   }
 
   ngOnInit(): void {

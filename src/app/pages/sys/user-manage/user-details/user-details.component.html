@@ -11,7 +11,11 @@
             nzType="default">禁用
     </button>
   </ng-container>
-  <button nz-button nzType="primary">重置密码</button>
+  <button (click)="resetPassword()"
+          [nzLoading]="resetPasswordLoading"
+          nz-button nzDanger
+          nzType="primary">重置密码
+  </button>
 </app-details-operation-bar>
 
 <app-section dkTitle="用户基本信息">

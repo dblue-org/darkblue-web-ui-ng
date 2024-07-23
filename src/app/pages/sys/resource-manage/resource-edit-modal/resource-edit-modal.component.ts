@@ -35,6 +35,7 @@ import { NzRadioComponent, NzRadioGroupComponent } from 'ng-zorro-antd/radio';
 export class ResourceEditModalComponent extends BasicEditModalComponent {
 
   selectedMapping?: Mapping;
+  platform: number = 1;
 
   dataForm = this.formBuilder.group({
     resourceId: [''],
@@ -59,10 +60,12 @@ export class ResourceEditModalComponent extends BasicEditModalComponent {
       ...data,
       isAuthedAccess: false
     })
+    this.platform = data.platform || 1;
   }
 
   protected override beforeUpdateShowProcessor(data: any) {
     this.dataForm.patchValue(data);
+    this.platform = data.platform || 1;
   }
 
   protected doSave(): Observable<ResponseBean<void>> {

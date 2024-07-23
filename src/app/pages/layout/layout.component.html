@@ -1,97 +1,100 @@
 <nz-spin [nzSpinning]="isLogoutLoading" nzTip="正在退出..." style="width: 100%;height: 100%">
-<nz-layout class="app-layout">
-  <nz-sider class="menu-sidebar"
-            nzCollapsible
-            nzWidth="256px"
-            nzBreakpoint="md"
-            [(nzCollapsed)]="isCollapsed"
-            [nzTrigger]="null">
-    <div class="sidebar-logo">
-      <img alt="logo" height="10" ngSrc="/assets/images/logo-white.svg" width="10">
-      <h1 *ngIf="!isCollapsed">Dark Blue Of Angular</h1>
-    </div>
-    <div class="app-menu">
-      <app-menu [isCollapsed]="isCollapsed"></app-menu>
-    </div>
+  <nz-layout class="app-layout">
+    <nz-sider [(nzCollapsed)]="isCollapsed"
+              [nzTrigger]="null"
+              class="menu-sidebar"
+              nzBreakpoint="md"
+              nzCollapsible
+              nzWidth="256px">
+      <div class="sidebar-logo">
+        <img alt="logo" height="10" ngSrc="/assets/images/logo-white.svg" width="10">
+        <h1 *ngIf="!isCollapsed">Dark Blue Of Angular</h1>
+      </div>
+      <div class="app-menu">
+        <app-menu [isCollapsed]="isCollapsed"></app-menu>
+      </div>
 
-  </nz-sider>
-  <nz-layout>
-    <nz-header>
-      <div class="app-header">
-        <div nz-row>
-          <div nz-col class="gutter-row" [nzSpan]="3">
-            <button nz-button nzType="primary" class="header-button" (click)="isCollapsed = !isCollapsed">
+    </nz-sider>
+    <nz-layout>
+      <nz-header>
+        <div class="app-header">
+          <div nz-row>
+            <div [nzSpan]="3" class="gutter-row" nz-col>
+              <button (click)="isCollapsed = !isCollapsed" class="header-button" nz-button nzType="primary">
               <span class="trigger"
                     nz-icon
                     [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
               ></span>
-            </button>
-          </div>
-          <div nz-col class="gutter-row" [nzSpan]="15">
-            <nz-input-group [nzPrefix]="prefixTemplateUser">
-              <input type="text" nz-input placeholder="Enter your username"/>
-            </nz-input-group>
-            <ng-template #prefixTemplateUser><span nz-icon nzType="search" nzTheme="outline"></span></ng-template>
-          </div>
-          <div nz-col class="gutter-row" [nzSpan]="6" style="text-align: right;padding-right:32px;">
-            <button nz-button nzType="primary" class="header-button" (click)="showMessagingDrawer()">
-              <nz-badge [nzCount]="5" nzSize="small">
-                <span nz-icon nzType="bell" style="color: white;font-size: 20px;" nzTheme="outline"></span>
-              </nz-badge>
-            </button>
-            <button nz-button nzType="primary" class="header-button">
-              <span nz-icon nzType="setting" style="font-size: 20px;" nzTheme="outline"></span>
-            </button>
-            <span [nzDropdownMenu]="menu" class="header-avatar" nz-dropdown>
+              </button>
+            </div>
+            <div [nzSpan]="15" class="gutter-row" nz-col>
+              <nz-input-group [nzPrefix]="prefixTemplateUser">
+                <input nz-input placeholder="Enter your username" type="text"/>
+              </nz-input-group>
+              <ng-template #prefixTemplateUser><span nz-icon nzTheme="outline" nzType="search"></span></ng-template>
+            </div>
+            <div [nzSpan]="6" class="gutter-row" nz-col style="text-align: right;padding-right:32px;">
+              <button (click)="showMessagingDrawer()" class="header-button" nz-button nzType="primary">
+                <nz-badge [nzCount]="5" nzSize="small">
+                  <span nz-icon nzTheme="outline" nzType="bell" style="color: white;font-size: 20px;"></span>
+                </nz-badge>
+              </button>
+              <button class="header-button" nz-button nzType="primary">
+                <span nz-icon nzTheme="outline" nzType="setting" style="font-size: 20px;"></span>
+              </button>
+              <span [nzDropdownMenu]="menu" class="header-avatar" nz-dropdown>
               <nz-avatar nzText="Ad"
                          style="margin-top: -6px;"
                          nzShape="square" [nzSize]="32" [nzGap]="16"></nz-avatar>
               超级管理员
             </span>
-            <nz-dropdown-menu #menu="nzDropdownMenu">
-              <ul nz-menu nzSelectable style="min-width: 150px">
-                <li nz-menu-item><span nz-icon nzTheme="outline" nzType="user"></span> 个人设置</li>
-                <li nz-menu-item><span nz-icon nzTheme="outline" nzType="key"></span> 修改密码</li>
-                <li>
-                  <nz-divider style="margin: 5px 0"></nz-divider>
-                </li>
-                <li (click)="logout()" nz-menu-item><span nz-icon nzTheme="outline" nzType="logout"></span> 退出登录
-                </li>
-              </ul>
-            </nz-dropdown-menu>
+              <nz-dropdown-menu #menu="nzDropdownMenu">
+                <ul nz-menu nzSelectable style="min-width: 150px">
+                  <li nz-menu-item><span nz-icon nzTheme="outline" nzType="user"></span> 个人设置</li>
+                  <li (click)="showChangePasswordModal()" nz-menu-item>
+                    <span nz-icon nzTheme="outline" nzType="key"></span> 修改密码
+                  </li>
+                  <li>
+                    <nz-divider style="margin: 5px 0"></nz-divider>
+                  </li>
+                  <li (click)="logout()" nz-menu-item>
+                    <span nz-icon nzTheme="outline" nzType="logout"></span> 退出登录
+                  </li>
+                </ul>
+              </nz-dropdown-menu>
 
+            </div>
           </div>
         </div>
-      </div>
-    </nz-header>
-    <nz-content>
-      <div class="router-tabs">
-        <nz-tabset (nzClose)="closeTab($event)" [(nzSelectedIndex)]="selectedTabIndex" [nzAnimated]="true" [nzTabBarExtraContent]="extraTemplate" nzHideAdd
-                   nzLinkRouter
-                   nzType="editable-card">
-          <nz-tab (nzContextmenu)="showTabContextMenu($event, tabMenu, i)" *ngFor="let item of tabs; let i = index"
-                  [nzClosable]="item.closeable">
-            <a *nzTabLink [queryParams]="item.queryParams" [routerLink]="[item.routerLink]" nz-tab-link
-               queryParamsHandling="merge">
-              {{ item.name }}
-            </a>
-          </nz-tab>
-        </nz-tabset>
-        <ng-template #extraTemplate>
-          <button (click)="closeAll()" [disabled]="tabs.length == 1" nz-button>全部关闭</button>
-        </ng-template>
-      </div>
+      </nz-header>
+      <nz-content>
+        <div class="router-tabs">
+          <nz-tabset (nzClose)="closeTab($event)" [(nzSelectedIndex)]="selectedTabIndex" [nzAnimated]="true"
+                     [nzTabBarExtraContent]="extraTemplate" nzHideAdd
+                     nzLinkRouter
+                     nzType="editable-card">
+            <nz-tab (nzContextmenu)="showTabContextMenu($event, tabMenu, i)" *ngFor="let item of tabs; let i = index"
+                    [nzClosable]="item.closeable">
+              <a *nzTabLink [queryParams]="item.queryParams" [routerLink]="[item.routerLink]" nz-tab-link>
+                {{ item.name }}
+              </a>
+            </nz-tab>
+          </nz-tabset>
+          <ng-template #extraTemplate>
+            <button (click)="closeAll()" [disabled]="tabs.length == 1" nz-button>全部关闭</button>
+          </ng-template>
+        </div>
 
-      <div class="inner-content">
-        <router-outlet></router-outlet>
-      </div>
-    </nz-content>
-    <nz-footer *ngIf="showFooter" class="footer">
-      Copyright © 2024 DBLUE.ORG. Power by <a href="https://dblue.org" target="_blank">Dark Blue
-    </a>
-    </nz-footer>
+        <div class="inner-content">
+          <router-outlet></router-outlet>
+        </div>
+      </nz-content>
+      <nz-footer *ngIf="showFooter" class="footer">
+        Copyright © 2024 DBLUE.ORG. Power by <a href="https://dblue.org" target="_blank">Dark Blue
+      </a>
+      </nz-footer>
+    </nz-layout>
   </nz-layout>
-</nz-layout>
 </nz-spin>
 <app-messaging #messaging></app-messaging>
 
@@ -103,3 +106,4 @@
   </ul>
 </nz-dropdown-menu>
 
+<app-change-password-modal #changePasswordModalComponent/>

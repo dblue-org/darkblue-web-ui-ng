@@ -22,6 +22,7 @@ import { NzAlertModule } from 'ng-zorro-antd/alert';
 import {
   DetailsOperationBarComponent
 } from '@site/app/components/layout/details-operation-bar/details-operation-bar.component';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-user-details',
@@ -66,12 +67,14 @@ export class UserDetailsComponent implements OnInit {
 
   permissionTableLoading = false;
   stateLoading = false;
+  resetPasswordLoading = false;
   hasAppMenuPermission = false;
   pcMenuPermissions: MenusWithPermission[] = [];
   appMenuPermissions: MenusWithPermission[] = [];
 
 
-  constructor(private userService: UserService, private loginLogService: LoginLogService) {
+  constructor(private userService: UserService, private loginLogService: LoginLogService,
+              private messageService: NzMessageService) {
   }
 
   getUserDetails() {
@@ -149,6 +152,21 @@ export class UserDetailsComponent implements OnInit {
         }
       },
       complete: () => this.stateLoading = false
+    });
+  }
+
+  resetPassword() {
+    if (!this.userDetails) {
+      return;
+    }
+    this.resetPasswordLoading = true;
+    this.userService.resetPassword(this.userDetails.userId).subscribe({
+      next: res => {
+        if (res.success) {
+          this.messageService.success('密码已重置');
+        }
+      },
+      complete: () => this.resetPasswordLoading = false
     });
   }
 

@@ -7,12 +7,7 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
-import {
-  FormControl,
-  FormGroup, NonNullableFormBuilder,
-  ReactiveFormsModule,
-  Validators
-} from '@angular/forms';
+import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserService } from '@site/app/services/sys/user.service';
 import { UserAddDto, UserPageListVo, UserUpdateDto } from 'src/app/define/sys/user';
 import { RoleSelectComponent } from '@site/app/components/form/role-select/role-select.component';
@@ -59,6 +54,8 @@ export class UserAddModalComponent {
     deptName: [''],
     roles: [['']]
   });
+
+  passwordVisible = false;
 
   constructor(private fb: NonNullableFormBuilder, private userService: UserService, private messageService: NzMessageService) {}
 

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { delay, Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ResponseBean } from '@site/app/define/sys/response';
 import { Controller } from '@site/app/define/sys/resource';
 import { HttpClient } from '@angular/common/http';
@@ -11,8 +11,12 @@ export class MappingsService {
 
   constructor(private http: HttpClient) { }
 
-  getAll(): Observable<ResponseBean<Controller[]>> {
-    return this.http.get<ResponseBean<Controller[]>>('/api/resource/getResourceController');
+  getAll(platform: number): Observable<ResponseBean<Controller[]>> {
+    return this.http.get<ResponseBean<Controller[]>>('/api/resource/getResourceController', {
+      params: {
+        platform
+      }
+    });
     /*return of({
       success: true,
       data: [

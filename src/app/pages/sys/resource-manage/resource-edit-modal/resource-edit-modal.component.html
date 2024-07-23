@@ -19,7 +19,7 @@
       <nz-form-item *ngIf="!isEdit">
         <nz-form-label [nzSm]="6" [nzXs]="24">选择资源</nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24">
-          <app-resource-select (onSelectedChange)="onResourceSelect($event)" />
+          <app-resource-select (onSelectedChange)="onResourceSelect($event)" [platform]="platform"/>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>

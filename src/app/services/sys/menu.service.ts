@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { MenuItem, MenuItemDto } from '../../define/sys/menu';
+import { MenuItem, MenuItemDto, UserMenuVo } from '../../define/sys/menu';
 import { ResponseBean } from '../../define/sys/response';
 import { HttpClient } from '@angular/common/http';
 
@@ -11,8 +11,8 @@ export class MenuService {
 
   constructor(private http: HttpClient) { }
 
-  getUserMenu(): Observable<ResponseBean<MenuItem[]>> {
-    return this.findAllPcMenus();
+  getUserMenu(): Observable<ResponseBean<UserMenuVo[]>> {
+    return this.http.get<ResponseBean<UserMenuVo[]>>('/api/user/getUserMenu/pc');
   }
 
   getAllMenu(platform: number): Observable<ResponseBean<MenuItem[]>> {

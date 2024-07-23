@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { delay, Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ResponseBean } from '@site/app/define/sys/response';
 import { Resource, ResourceBatchAddDto, ResourceCheckVo, ResourceSearchForm } from '@site/app/define/sys/resource';
 import { SimplePermission } from '@site/app/define/sys/permission';
@@ -44,9 +44,9 @@ export class ResourcesService {
     return this.http.post<ResponseBean<void>>('/api/resource/batchAdd', batchAddDto);
   }
 
-  checkResource(): Observable<ResponseBean<ResourceCheckVo[]>> {
-    return of({
-      success: true
-    }).pipe(delay(1000));
+  checkResource(platform: number): Observable<ResponseBean<ResourceCheckVo[]>> {
+    return this.http.put<ResponseBean<ResourceCheckVo[]>>('/api/resource/checkResourceValidity', {
+      platform
+    });
   }
 }

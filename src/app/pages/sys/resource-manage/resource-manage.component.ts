@@ -200,7 +200,7 @@ export class ResourceManageComponent implements OnInit, OnChanges {
   }
 
   doResourceCheck() {
-    this.checkResourceModalComponent?.showModal();
+    this.checkResourceModalComponent?.showModal(this.platform);
   }
 
   ngOnChanges(changes: SimpleChanges): void {

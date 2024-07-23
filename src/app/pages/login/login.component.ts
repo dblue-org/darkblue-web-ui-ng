@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzGridModule } from 'ng-zorro-antd/grid';
@@ -8,6 +8,7 @@ import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { LoginService } from '../../services/login/login.service';
 import { AuthenticationService } from '../../services/auth/authentication.service';
 import { LoginForm } from '../../define/sys/user';
+import { environment } from '@site/environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -27,8 +28,8 @@ import { LoginForm } from '../../define/sys/user';
 })
 export class LoginComponent {
   validateForm = this.fb.group({
-    username: ['admin', [Validators.required]],
-    password: ['123456', [Validators.required]],
+    username: [environment.defaultLoginUser, [Validators.required]],
+    password: [environment.defaultLoginPassword, [Validators.required]],
     remember: [true]
   });
   loginLoading = false;

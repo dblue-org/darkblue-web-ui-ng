@@ -1,4 +1,4 @@
-import { Component, EventEmitter, forwardRef, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, forwardRef, Input, OnInit, Output } from '@angular/core';
 import { NzTreeNodeOptions } from 'ng-zorro-antd/tree';
 import { NzTreeSelectModule } from 'ng-zorro-antd/tree-select';
 import { Mapping } from '@site/app/define/sys/resource';
@@ -25,6 +25,7 @@ import { CommonModule } from '@angular/common';
   ]
 })
 export class ResourceSelectComponent implements OnInit, ControlValueAccessor {
+  @Input('platform') platform: number = 1;
   @Output('onSelectedChange') onSelectedChange = new EventEmitter<Mapping>();
   nodes: NzTreeNodeOptions[] = [];
   value?: string;
@@ -40,7 +41,7 @@ export class ResourceSelectComponent implements OnInit, ControlValueAccessor {
   }
 
   ngOnInit(): void {
-    this.mappingService.getAll().subscribe(res => {
+    this.mappingService.getAll(this.platform).subscribe(res => {
       if (res.success && res.data) {
         res.data.forEach(ctl => {
           this.nodes.push({

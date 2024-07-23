@@ -1,47 +1,58 @@
-<nz-modal [(nzVisible)]="isVisible" nzWidth="800px" [nzTitle]="isEdit ? '修改用户' : '添加用户'" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()" [nzOkLoading]="loading">
+<nz-modal (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()" [(nzVisible)]="isVisible"
+          [nzOkLoading]="loading" [nzTitle]="isEdit ? '修改用户' : '添加用户'" nzWidth="800px">
   <ng-container *nzModalContent>
     <form nz-form [formGroup]="userForm">
       <nz-form-item>
         <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="deptId">部门</nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24">
           <!--<input nz-input formControlName="deptName" id="deptName" readonly [disabled]="true" />-->
-          <app-department-select formControlName="deptId" [dkDisabled]="!isEdit" />
+          <app-department-select [dkDisabled]="!isEdit" formControlName="deptId"/>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
         <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="username">用户名</nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="用户名不能为空">
-          <input nz-input formControlName="username" id="username" [readOnly]="isEdit" />
+          <input [readOnly]="isEdit" formControlName="username" id="username" nz-input/>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
         <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">姓名</nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="姓名不能为空">
-          <input nz-input formControlName="name" id="name" />
+          <input formControlName="name" id="name" nz-input/>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
         <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="positionId">职位</nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24">
-          <app-position-select formControlName="positionId" />
+          <app-position-select formControlName="positionId"/>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item *ngIf="!isEdit">
         <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="password">密码</nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="密码不能为空">
-          <input nz-input formControlName="password" id="password" />
+          <nz-input-group [nzSuffix]="suffixTemplate">
+            <input [type]="passwordVisible ? 'text' : 'password'"
+                   formControlName="password" id="password" nz-input/>
+          </nz-input-group>
+          <ng-template #suffixTemplate>
+            <span
+              (click)="passwordVisible = !passwordVisible"
+              [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"
+              nz-icon
+            ></span>
+          </ng-template>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
         <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="phoneNumber">手机号码</nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24">
-          <input nz-input formControlName="phoneNumber" id="phoneNumber" />
+          <input formControlName="phoneNumber" id="phoneNumber" nz-input/>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
         <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="roles">角色</nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24">
-          <app-role-select formControlName="roles" id="roles" />
+          <app-role-select formControlName="roles" id="roles"/>
         </nz-form-control>
       </nz-form-item>
     </form>

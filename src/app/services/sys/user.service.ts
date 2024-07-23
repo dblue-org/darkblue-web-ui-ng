@@ -18,8 +18,8 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  addUser(user: UserAddDto): Observable<ResponseBean<any>> {
-    return this.http.post<ResponseBean<any>>('/api/user/add', user);
+  addUser(user: UserAddDto): Observable<ResponseBean<void>> {
+    return this.http.post<ResponseBean<void>>('/api/user/add', user);
   }
 
   updateUser(user: UserUpdateDto): Observable<ResponseBean<any>> {
@@ -63,6 +63,17 @@ export class UserService {
 
   getDetails(userId: string): Observable<ResponseBean<UserDetailsVo>> {
     return this.http.get<ResponseBean<UserDetailsVo>>(`/api/user/getOne/${userId}`);
+  }
+
+  resetPassword(userId: string): Observable<ResponseBean<void>> {
+    return this.http.patch<ResponseBean<void>>(`/api/user/resetPassword/${userId}`, {});
+  }
+
+  changePassword(oldPassword: string, newPassword: string): Observable<ResponseBean<void>> {
+    return this.http.patch<ResponseBean<void>>('/api/user/changePassword', {
+      oldPassword,
+      newPassword
+    });
   }
 
 }
