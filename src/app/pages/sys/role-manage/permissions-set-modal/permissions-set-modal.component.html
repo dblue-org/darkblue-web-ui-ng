@@ -1,5 +1,5 @@
 <nz-modal [(nzVisible)]="isVisible" nzWidth="1200px"
-          [nzBodyStyle]="{maxHeight: '1000px', overflowY: 'auto'}"
+          [nzBodyStyle]="{maxHeight: '800px', overflowY: 'auto'}"
           nzTitle="设置角色权限" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()" [nzOkLoading]="loading">
   <ng-container *nzModalContent>
     <nz-steps [nzCurrent]="current">
@@ -7,32 +7,34 @@
       <nz-step nzTitle="配置权限"></nz-step>
     </nz-steps>
     <div class="steps-content-0" *ngIf="current == 0">
-      <div nz-row [nzGutter]="24">
-        <div [nzSpan]="isAllowAppMenu ? 12 : 24" nz-col>
-          <div class="tree-panel">
-            <h3>PC端菜单</h3>
-            <nz-tree #menuPcTree
-                     [nzData]="pcMenus"
-                     nzCheckable
-                     nzMultiple
-                     nzExpandAll
-                     [(nzCheckedKeys)]="pcCheckedMenuIds"
-            ></nz-tree>
+      <nz-skeleton [nzActive]="true" [nzLoading]="menuLoading">
+        <div [nzGutter]="24" nz-row>
+          <div [nzSpan]="isAllowAppMenu ? 12 : 24" nz-col>
+            <div class="tree-panel">
+              <h3>PC端菜单</h3>
+              <nz-tree #menuPcTree
+                       [(nzCheckedKeys)]="pcCheckedMenuIds"
+                       [nzData]="pcMenus"
+                       nzCheckable
+                       nzExpandAll
+                       nzMultiple
+              ></nz-tree>
+            </div>
+          </div>
+          <div *ngIf="isAllowAppMenu" [nzSpan]="12" nz-col>
+            <div class="tree-panel">
+              <h3>移动端菜单</h3>
+              <nz-tree #menuAppTree
+                       [(nzCheckedKeys)]="appCheckedMenuIds"
+                       [nzData]="appMenus"
+                       nzCheckable
+                       nzExpandAll
+                       nzMultiple
+              ></nz-tree>
+            </div>
           </div>
         </div>
-        <div *ngIf="isAllowAppMenu" [nzSpan]="12" nz-col>
-          <div class="tree-panel">
-            <h3>移动端菜单</h3>
-            <nz-tree #menuAppTree
-                     [nzData]="appMenus"
-                     nzCheckable
-                     nzMultiple
-                     nzExpandAll
-                     [(nzCheckedKeys)]="appCheckedMenuIds"
-            ></nz-tree>
-          </div>
-        </div>
-      </div>
+      </nz-skeleton>
 
     </div>
     <div class="steps-content-1" *ngIf="current == 1">
@@ -60,7 +62,7 @@
     <button (click)="pre()" *ngIf="current > 0 && !nextLoading" nz-button nzType="primary">
       <span>上一步</span>
     </button>
-    <button nz-button nzType="primary" (click)="next()" *ngIf="current < 1">
+    <button (click)="next()" *ngIf="current < 1 && !menuLoading" nz-button nzType="primary">
       <span>下一步</span>
     </button>
     <button (click)="handleOk()" *ngIf="current === 1 && !nextLoading" [nzLoading]="loading" nz-button nzType="primary">
