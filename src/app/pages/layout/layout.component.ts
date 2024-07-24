@@ -23,6 +23,7 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
 import {
   ChangePasswordModalComponent
 } from '@site/app/pages/user-center/change-password-modal/change-password-modal.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-layout',
@@ -32,6 +33,7 @@ import {
     RouterOutlet,
     NgOptimizedImage,
     RouterLink,
+    FormsModule,
 
     NzIconModule,
     NzLayoutModule,
@@ -48,7 +50,8 @@ import {
 
     MenuComponent,
     MessagingComponent,
-    ChangePasswordModalComponent
+    ChangePasswordModalComponent,
+    FormsModule
   ],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.css'
@@ -70,6 +73,7 @@ export class LayoutComponent implements OnInit {
   clickTabIndex: number = -1;
   isLogoutLoading = false;
   userName = '';
+  keyword = '';
 
   constructor(private logoutService: LogoutService, private authService: AuthenticationService,
               private router: Router, private activatedRoute: ActivatedRoute,
@@ -85,6 +89,10 @@ export class LayoutComponent implements OnInit {
 
   showChangePasswordModal() {
     this.changePasswordModalComponent?.showModal();
+  }
+
+  doSearch() {
+
   }
 
   ngOnInit(): void {

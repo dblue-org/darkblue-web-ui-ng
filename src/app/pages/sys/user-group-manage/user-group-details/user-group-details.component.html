@@ -16,17 +16,18 @@
 </app-details-operation-bar>
 
 <app-section dkTitle="用户组基本信息">
-  <ng-container *ngIf="userGroup">
-    <nz-descriptions nzBordered style="margin-bottom: 24px">
-      <nz-descriptions-item nzTitle="用户组名">{{ userGroup.userGroupName }}</nz-descriptions-item>
-      <nz-descriptions-item nzTitle="状态">
-        <nz-badge nzStatus="success" *ngIf="userGroup.isEnable" nzText="正常"></nz-badge>
-        <nz-badge nzStatus="error" *ngIf="!userGroup.isEnable" nzText="停用"></nz-badge>
-      </nz-descriptions-item>
-      <nz-descriptions-item nzTitle="创建时间">{{ userGroup.createTime }}</nz-descriptions-item>
-    </nz-descriptions>
-  </ng-container>
-
+  <nz-skeleton [nzActive]="true" [nzLoading]="detailsLoading">
+    <ng-container *ngIf="userGroup">
+      <nz-descriptions nzBordered style="margin-bottom: 24px">
+        <nz-descriptions-item nzTitle="用户组名">{{ userGroup.userGroupName }}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="状态">
+          <nz-badge *ngIf="userGroup.isEnable" nzStatus="success" nzText="正常"></nz-badge>
+          <nz-badge *ngIf="!userGroup.isEnable" nzStatus="error" nzText="停用"></nz-badge>
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle="创建时间">{{ userGroup.createTime }}</nz-descriptions-item>
+      </nz-descriptions>
+    </ng-container>
+  </nz-skeleton>
 </app-section>
 
 

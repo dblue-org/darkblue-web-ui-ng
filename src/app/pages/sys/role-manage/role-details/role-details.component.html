@@ -17,24 +17,26 @@
   </ng-container>
 </app-details-operation-bar>
 <app-section dkTitle="角色信息">
-  <nz-descriptions nzBordered style="margin-bottom: 24px" *ngIf="roleDetails">
-    <nz-descriptions-item nzTitle="角色名称">{{ roleDetails.roleName }}</nz-descriptions-item>
-    <nz-descriptions-item nzTitle="角色编码">{{ roleDetails.roleCode }}</nz-descriptions-item>
-    <nz-descriptions-item nzTitle="状态">
-      <nz-badge nzStatus="success" *ngIf="roleDetails.isEnable" nzText="正常"></nz-badge>
-      <nz-badge nzStatus="error" *ngIf="!roleDetails.isEnable" nzText="停用"></nz-badge>
-    </nz-descriptions-item>
-    <nz-descriptions-item nzTitle="创建时间">{{ roleDetails.createTime }}</nz-descriptions-item>
-  </nz-descriptions>
+  <nz-skeleton [nzActive]="true" [nzLoading]="roleDetailsLoading">
+    <nz-descriptions *ngIf="roleDetails" nzBordered style="margin-bottom: 24px">
+      <nz-descriptions-item nzTitle="角色名称">{{ roleDetails.roleName }}</nz-descriptions-item>
+      <nz-descriptions-item nzTitle="角色编码">{{ roleDetails.roleCode }}</nz-descriptions-item>
+      <nz-descriptions-item nzTitle="状态">
+        <nz-badge *ngIf="roleDetails.isEnable" nzStatus="success" nzText="正常"></nz-badge>
+        <nz-badge *ngIf="!roleDetails.isEnable" nzStatus="error" nzText="停用"></nz-badge>
+      </nz-descriptions-item>
+      <nz-descriptions-item nzTitle="创建时间">{{ roleDetails.createTime }}</nz-descriptions-item>
+    </nz-descriptions>
+  </nz-skeleton>
 </app-section>
 
 <app-section dkTitle="关联权限">
   <div nz-row [nzGutter]="24">
     <div nz-col [nzSpan]="hasAppMenuPermission ? 12 : 24">
-      <app-role-menu-table [dkLoading]="permissionTableLoading" [dkRoleMenus]="pcMenuPermissions" dkTitle="PC端"/>
+      <app-role-menu-table [dkLoading]="roleDetailsLoading" [dkRoleMenus]="pcMenuPermissions" dkTitle="PC端"/>
     </div>
     <div nz-col [nzSpan]="12" *ngIf="hasAppMenuPermission">
-      <app-role-menu-table [dkLoading]="permissionTableLoading" [dkRoleMenus]="appMenuPermissions" dkTitle="移动端"/>
+      <app-role-menu-table [dkLoading]="roleDetailsLoading" [dkRoleMenus]="appMenuPermissions" dkTitle="移动端"/>
     </div>
   </div>
 </app-section>

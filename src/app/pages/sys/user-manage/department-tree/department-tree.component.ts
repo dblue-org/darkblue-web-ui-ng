@@ -13,16 +13,20 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { toNzTreeNodeOptions } from '@site/utils/nz-tree-node-utils';
 import { PermIfDirective } from '@site/app/directives/perm-if.directive';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
 
 @Component({
   selector: 'app-department-tree',
   standalone: true,
   imports: [
     CommonModule,
+
     NzButtonModule,
     NzCardModule,
     NzIconModule,
     NzTreeModule,
+    NzSpinModule,
+
     DepartmentEditModalComponent,
     PermIfDirective
   ],
@@ -35,6 +39,7 @@ export class DepartmentTreeComponent implements OnInit {
   selectedKeys: string[] = [];
   @Output() onSelect = new EventEmitter<NzTreeNode>();
   @ViewChild('editModalComponent') editModalComponent!: DepartmentEditModalComponent;
+  loading = false;
 
   constructor(private departmentService: DepartmentService, private modalService: NzModalService,
               private messageService: NzMessageService) {
@@ -46,23 +51,28 @@ export class DepartmentTreeComponent implements OnInit {
   }
 
   loadDepartments(): void {
-    this.departmentService.getDepartments().subscribe(res => {
-      if (res.success) {
-        this.departments = [{
-          title: environment.rootDepartmentName || '全公司',
-          key: '',
-          isLeft: false,
-          expanded: true,
-          //children: this.departmentService.toTreeNodes(res.data)
-          children: toNzTreeNodeOptions(res.data || [], d => {
-            return {
-              key: d.deptId,
-              title: d.deptName,
-              //selected: this.selectedDepartment != null && this.selectedDepartment.key == d.deptId
-            }
-          })
-        }];
-      }
+
+    this.loading = true;
+    this.departmentService.getDepartments().subscribe({
+      next: res => {
+        if (res.success) {
+          this.departments = [{
+            title: environment.rootDepartmentName || '全公司',
+            key: '',
+            isLeft: false,
+            expanded: true,
+            //children: this.departmentService.toTreeNodes(res.data)
+            children: toNzTreeNodeOptions(res.data || [], d => {
+              return {
+                key: d.deptId,
+                title: d.deptName
+                //selected: this.selectedDepartment != null && this.selectedDepartment.key == d.deptId
+              };
+            })
+          }];
+        }
+      },
+      complete: () => this.loading = false
     });
   }
 

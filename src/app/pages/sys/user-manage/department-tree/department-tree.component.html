@@ -1,13 +1,14 @@
 <nz-card [nzBordered]="false" nzTitle="部门列表" [nzExtra]="extraTemplate">
-  <nz-tree
-    [nzData]="departments"
-    nzShowLine
-    nzExpandAll
-    [nzSelectedKeys]="selectedKeys"
-    [nzTreeTemplate]="nzTreeTemplate"
-    (nzClick)="onTreeNodeSelected($event)"
-  />
-
+  <nz-spin [nzSpinning]="loading" class="spin-container">
+    <nz-tree
+      (nzClick)="onTreeNodeSelected($event)"
+      [nzData]="departments"
+      [nzSelectedKeys]="selectedKeys"
+      [nzTreeTemplate]="nzTreeTemplate"
+      nzExpandAll
+      nzShowLine
+    />
+  </nz-spin>
   <ng-template #nzTreeTemplate let-node let-origin="origin">
       <span class="custom-node">
         <span *ngIf="!node.isLeaf">

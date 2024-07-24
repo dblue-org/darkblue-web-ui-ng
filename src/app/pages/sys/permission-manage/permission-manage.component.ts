@@ -31,6 +31,7 @@ import { MenuIconComponent } from '@site/app/components/icon/menu-icon/menu-icon
 import { BoxContainerComponent } from '@site/app/components/layout/box-container/box-container.component';
 import { PermIfDirective } from '@site/app/directives/perm-if.directive';
 import { environment } from '@site/environments/environment';
+import { NzSpinComponent } from 'ng-zorro-antd/spin';
 
 @Component({
   selector: 'app-permission-manage',
@@ -58,7 +59,8 @@ import { environment } from '@site/environments/environment';
     NzRadioGroupComponent,
     MenuIconComponent,
     BoxContainerComponent,
-    PermIfDirective
+    PermIfDirective,
+    NzSpinComponent
   ],
   templateUrl: './permission-manage.component.html',
   styleUrl: './permission-manage.component.css'
@@ -170,6 +172,7 @@ export class PermissionManageComponent implements OnInit {
 
   protected loadMenus() {
     this.menuLoading = true;
+    this.tableLoading = true;
     this.menuService.getAllMenu(this.platform).subscribe({
       next: res => {
         if (res.success) {

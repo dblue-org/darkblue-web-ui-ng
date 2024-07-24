@@ -16,7 +16,7 @@
   </ng-container>
 </app-details-operation-bar>
 <app-section dkTitle="职位信息">
-  <nz-skeleton [nzLoading]="detailsLoading">
+  <nz-skeleton [nzActive]="true" [nzLoading]="detailsLoading">
     <nz-descriptions nzBordered style="margin-bottom: 24px" *ngIf="position">
       <nz-descriptions-item nzTitle="职位名称">{{ position.positionName }}</nz-descriptions-item>
       <nz-descriptions-item nzTitle="职位编码">{{ position.positionCode }}</nz-descriptions-item>

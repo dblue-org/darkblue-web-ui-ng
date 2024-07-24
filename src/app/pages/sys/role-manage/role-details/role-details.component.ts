@@ -21,6 +21,7 @@ import {
   DetailsOperationBarComponent
 } from '@site/app/components/layout/details-operation-bar/details-operation-bar.component';
 import { PermIfDirective } from '@site/app/directives/perm-if.directive';
+import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 
 @Component({
   selector: 'app-role-details',
@@ -35,6 +36,7 @@ import { PermIfDirective } from '@site/app/directives/perm-if.directive';
     NzIconModule,
     NzPopconfirmModule,
     NzGridModule,
+    NzSkeletonModule,
 
     SectionComponent,
     RouterLink,
@@ -51,7 +53,7 @@ export class RoleDetailsComponent implements OnInit {
   @Input('roleId') roleId?: string;
   pcMenuPermissions: MenusWithPermission[] = [];
   appMenuPermissions: MenusWithPermission[] = [];
-  permissionTableLoading = false;
+  roleDetailsLoading = false;
   hasAppMenuPermission = false;
 
   roleDetails?: RoleDetailsVo;
@@ -72,7 +74,7 @@ export class RoleDetailsComponent implements OnInit {
   getRole() {
     if (this.roleId) {
       this.hasAppMenuPermission = false;
-      this.permissionTableLoading = true;
+      this.roleDetailsLoading = true;
       this.roleService.getRole(this.roleId).subscribe({
         next: res => {
           if (res.success && res.data) {
@@ -84,7 +86,7 @@ export class RoleDetailsComponent implements OnInit {
             }
           }
         },
-        complete: () => this.permissionTableLoading = false
+        complete: () => this.roleDetailsLoading = false
       });
     }
   }

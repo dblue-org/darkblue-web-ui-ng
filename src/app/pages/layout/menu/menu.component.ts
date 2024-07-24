@@ -6,6 +6,7 @@ import { MenuService } from '../../../services/sys/menu.service';
 import { CommonModule } from '@angular/common';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { MenuIconComponent } from '@site/app/components/icon/menu-icon/menu-icon.component';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
 
 @Component({
   selector: 'app-menu',
@@ -16,6 +17,7 @@ import { MenuIconComponent } from '@site/app/components/icon/menu-icon/menu-icon
 
     NzMenuModule,
     NzIconModule,
+    NzSpinModule,
 
     MenuIconComponent
   ],
@@ -27,14 +29,17 @@ export class MenuComponent implements OnInit {
   @Input() isCollapsed = false;
 
   menuItems: UserMenuVo[] = [];
+  loading = false;
 
   constructor(private menuService: MenuService) {
   }
 
   ngOnInit(): void {
+    this.loading = true;
     this.menuService.getUserMenu().subscribe(res => {
       if (res.success) {
         this.menuItems = res.data || [];
+        this.loading = false;
       }
     });
   }

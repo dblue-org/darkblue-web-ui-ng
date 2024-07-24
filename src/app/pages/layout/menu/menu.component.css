@@ -2,3 +2,11 @@
   /*padding-left: 12px;*/
 }
 
+:host {
+  display: block;
+  height: 100%;
+}
+
+.spin-menu-container {
+  height: 100%;
+}

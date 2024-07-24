@@ -24,6 +24,7 @@ import {
 } from '@site/app/components/layout/details-operation-bar/details-operation-bar.component';
 import { PermIfDirective } from '@site/app/directives/perm-if.directive';
 import { RouterLink } from '@angular/router';
+import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 
 @Component({
   selector: 'app-user-group-details',
@@ -41,6 +42,7 @@ import { RouterLink } from '@angular/router';
     NzPopconfirmDirective,
     NzToolTipModule,
     NzBadgeModule,
+    NzSkeletonModule,
 
     SectionComponent,
     IconifyComponent,
@@ -62,6 +64,7 @@ export class UserGroupDetailsComponent implements OnInit {
   @ViewChild('userSelector') userSelector?: TemplateRef<any>;
 
   userGroup?: UserGroupPageListVo;
+  detailsLoading = false;
 
   roles: RefRoleVo[] = []
   roleTableLoading = false;
@@ -99,12 +102,14 @@ export class UserGroupDetailsComponent implements OnInit {
   }
 
   loadDetails() {
+    this.detailsLoading = true;
     this.userGroupService.get(this.userGroupId).subscribe({
       next: res => {
         if (res.success) {
           this.userGroup = res.data;
         }
-      }
+      },
+      complete: () => this.detailsLoading = false
     })
   }
 

@@ -1,10 +1,12 @@
 <app-details-operation-bar/>
 <app-section dkTitle="权限信息">
-  <nz-descriptions nzBordered style="margin-bottom: 24px">
-    <nz-descriptions-item nzTitle="权限名称">{{ permission?.permissionName }}</nz-descriptions-item>
-    <nz-descriptions-item nzTitle="权限编码">{{ permission?.permissionCode }}</nz-descriptions-item>
-    <nz-descriptions-item nzTitle="创建时间">{{ permission?.createTime }}</nz-descriptions-item>
-  </nz-descriptions>
+  <nz-skeleton [nzActive]="true" [nzLoading]="detailsLoading">
+    <nz-descriptions nzBordered style="margin-bottom: 24px">
+      <nz-descriptions-item nzTitle="权限名称">{{ permission?.permissionName }}</nz-descriptions-item>
+      <nz-descriptions-item nzTitle="权限编码">{{ permission?.permissionCode }}</nz-descriptions-item>
+      <nz-descriptions-item nzTitle="创建时间">{{ permission?.createTime }}</nz-descriptions-item>
+    </nz-descriptions>
+  </nz-skeleton>
 </app-section>
 
 <app-section dkTitle="关联资源">
@@ -14,6 +16,7 @@
             nzBordered
             nzSize="small"
             nzTableLayout="fixed"
+            [nzLoading]="detailsLoading"
             [nzData]="resources">
     <thead>
     <tr>

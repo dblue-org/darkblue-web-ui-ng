@@ -17,6 +17,7 @@ import { NzIconDirective } from 'ng-zorro-antd/icon';
 import {
   DetailsOperationBarComponent
 } from '@site/app/components/layout/details-operation-bar/details-operation-bar.component';
+import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 
 @Component({
   selector: 'app-permission-details',
@@ -29,6 +30,7 @@ import {
     NzTableModule,
     NzPopconfirmModule,
     NzTagModule,
+    NzSkeletonModule,
 
     SectionComponent,
     NzIconDirective,
@@ -41,6 +43,7 @@ export class PermissionDetailsComponent implements OnInit {
 
   @Input() permissionId?: string;
 
+  detailsLoading = false;
   permission?: PermissionDetailsVo;
   resources: ResourceVo[] = [];
   roleTableLoading = false;
@@ -82,13 +85,15 @@ export class PermissionDetailsComponent implements OnInit {
     }
     this.permission = undefined;
     this.resources = [];
+    this.detailsLoading = true;
     this.permissionService.getDetails(this.permissionId).subscribe({
       next: res => {
         if (res.success && res.data) {
           this.permission = res.data
           this.resources = res.data.permissionResourceList
         }
-      }
+      },
+      complete: () => this.detailsLoading = false
     })
   }
 

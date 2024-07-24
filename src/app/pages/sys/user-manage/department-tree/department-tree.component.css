@@ -1,3 +1,12 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+:host [nz-card] {
+  height: 100%;
+}
+
 .dept-tree-toolbar {
   text-align: right;
 }
@@ -7,4 +16,9 @@
 }
 .file-name, .folder-name {
   margin-left: 4px;
+}
+
+.spin-container {
+  height: 100%;
+  min-height: 400px;
 }

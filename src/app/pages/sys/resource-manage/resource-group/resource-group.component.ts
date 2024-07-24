@@ -15,6 +15,7 @@ import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { FormsModule } from '@angular/forms';
 import { PermIfDirective } from '@site/app/directives/perm-if.directive';
 import { environment } from '@site/environments/environment';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
 
 @Component({
   selector: 'app-resource-group',
@@ -28,6 +29,7 @@ import { environment } from '@site/environments/environment';
     NzGridModule,
     NzIconModule,
     NzRadioModule,
+    NzSpinModule,
 
     ResourceGroupEditModalComponent,
     PermIfDirective

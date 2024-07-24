@@ -19,43 +19,45 @@
 </app-details-operation-bar>
 
 <app-section dkTitle="用户基本信息">
-  <nz-descriptions nzBordered style="margin-bottom: 24px" *ngIf="userDetails">
-    <nz-descriptions-item nzTitle="用户名">
-      {{ userDetails.username }}
-      <nz-tag *ngIf="userDetails.isAdmin" nzColor="red">超级管理员</nz-tag>
-    </nz-descriptions-item>
-    <nz-descriptions-item nzTitle="姓名">{{ userDetails.name }}</nz-descriptions-item>
-    <nz-descriptions-item nzTitle="手机号">{{ userDetails.phoneNumber }}</nz-descriptions-item>
-    <nz-descriptions-item nzTitle="状态">
-      <nz-badge nzStatus="success" *ngIf="userDetails.isEnable" nzText="正常"></nz-badge>
-      <nz-badge nzStatus="error" *ngIf="!userDetails.isEnable" nzText="停用"></nz-badge>
-    </nz-descriptions-item>
-    <nz-descriptions-item nzTitle="部门">{{ userDetails.deptName }}</nz-descriptions-item>
-    <nz-descriptions-item nzTitle="创建时间">{{ userDetails.createTime }}</nz-descriptions-item>
-    <nz-descriptions-item nzTitle="最后登录时间">{{ userDetails.lastLoginTime }}</nz-descriptions-item>
-    <nz-descriptions-item nzTitle="职位">{{ userDetails.positionName }}</nz-descriptions-item>
-    <nz-descriptions-item></nz-descriptions-item>
-    <nz-descriptions-item nzTitle="用户组" [nzSpan]="3">
-      <ng-container *ngIf="userDetails.userGroups">
-        @for (item of userDetails.userGroups; track item.userGroupId) {
-          <nz-tag nzColor="cyan">{{ item.userGroupName }}</nz-tag>
-        }
-      </ng-container>
-    </nz-descriptions-item>
-    <nz-descriptions-item nzTitle="角色" [nzSpan]="3">
-      <ng-container *ngIf="userDetails.roles">
-        @for (item of userDetails.roles; track item.roleId) {
-          <nz-tag nzColor="blue" *ngIf="!item.isUserGroup">{{ item.roleName }}</nz-tag>
-          <nz-tag nzColor="geekblue" *ngIf="item.isUserGroup"
-                  nz-tooltip
-                  nzTooltipTitle="此角色来源于用户组">
-            <iconify icon="mingcute:group-line" [size]="12"/>
-            {{ item.roleName }}
-          </nz-tag>
-        }
-      </ng-container>
-    </nz-descriptions-item>
-  </nz-descriptions>
+  <nz-skeleton [nzActive]="true" [nzLoading]="userDetailsLoading">
+    <nz-descriptions *ngIf="userDetails" nzBordered style="margin-bottom: 24px">
+      <nz-descriptions-item nzTitle="用户名">
+        {{ userDetails.username }}
+        <nz-tag *ngIf="userDetails.isAdmin" nzColor="red">超级管理员</nz-tag>
+      </nz-descriptions-item>
+      <nz-descriptions-item nzTitle="姓名">{{ userDetails.name }}</nz-descriptions-item>
+      <nz-descriptions-item nzTitle="手机号">{{ userDetails.phoneNumber }}</nz-descriptions-item>
+      <nz-descriptions-item nzTitle="状态">
+        <nz-badge *ngIf="userDetails.isEnable" nzStatus="success" nzText="正常"></nz-badge>
+        <nz-badge *ngIf="!userDetails.isEnable" nzStatus="error" nzText="停用"></nz-badge>
+      </nz-descriptions-item>
+      <nz-descriptions-item nzTitle="部门">{{ userDetails.deptName }}</nz-descriptions-item>
+      <nz-descriptions-item nzTitle="创建时间">{{ userDetails.createTime }}</nz-descriptions-item>
+      <nz-descriptions-item nzTitle="最后登录时间">{{ userDetails.lastLoginTime }}</nz-descriptions-item>
+      <nz-descriptions-item nzTitle="职位">{{ userDetails.positionName }}</nz-descriptions-item>
+      <nz-descriptions-item></nz-descriptions-item>
+      <nz-descriptions-item [nzSpan]="3" nzTitle="用户组">
+        <ng-container *ngIf="userDetails.userGroups">
+          @for (item of userDetails.userGroups; track item.userGroupId) {
+            <nz-tag nzColor="cyan">{{ item.userGroupName }}</nz-tag>
+          }
+        </ng-container>
+      </nz-descriptions-item>
+      <nz-descriptions-item [nzSpan]="3" nzTitle="角色">
+        <ng-container *ngIf="userDetails.roles">
+          @for (item of userDetails.roles; track item.roleId) {
+            <nz-tag nzColor="blue" *ngIf="!item.isUserGroup">{{ item.roleName }}</nz-tag>
+            <nz-tag nzColor="geekblue" *ngIf="item.isUserGroup"
+                    nz-tooltip
+                    nzTooltipTitle="此角色来源于用户组">
+              <iconify icon="mingcute:group-line" [size]="12"/>
+              {{ item.roleName }}
+            </nz-tag>
+          }
+        </ng-container>
+      </nz-descriptions-item>
+    </nz-descriptions>
+  </nz-skeleton>
 </app-section>
 
 <app-section dkTitle="拥有权限">
@@ -69,10 +71,10 @@
   </ng-template>
   <div [nzGutter]="24" nz-row>
     <div [nzSpan]="hasAppMenuPermission ? 12 : 24" nz-col>
-      <app-role-menu-table [dkLoading]="permissionTableLoading" [dkRoleMenus]="pcMenuPermissions" dkTitle="PC端"/>
+      <app-role-menu-table [dkLoading]="userDetailsLoading" [dkRoleMenus]="pcMenuPermissions" dkTitle="PC端"/>
     </div>
     <div *ngIf="hasAppMenuPermission" [nzSpan]="12" nz-col>
-      <app-role-menu-table [dkLoading]="permissionTableLoading" [dkRoleMenus]="appMenuPermissions" dkTitle="移动端"/>
+      <app-role-menu-table [dkLoading]="userDetailsLoading" [dkRoleMenus]="appMenuPermissions" dkTitle="移动端"/>
     </div>
   </div>
 </app-section>

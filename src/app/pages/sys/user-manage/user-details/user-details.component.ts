@@ -14,15 +14,16 @@ import { LoginLog } from '@site/app/define/logs/login-log';
 import { LoginLogService } from '@site/app/services/logs/login-log.service';
 import { MenusWithPermission } from '@site/app/define/sys/menu';
 import { UserDetailsVo } from '@site/app/define/sys/user';
-import { NzBadgeComponent } from 'ng-zorro-antd/badge';
+import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
-import { NzColDirective, NzRowDirective } from 'ng-zorro-antd/grid';
+import { NzGridModule } from 'ng-zorro-antd/grid';
 import { RoleMenuTableComponent } from '@site/app/pages/sys/role-manage/role-menu-table/role-menu-table.component';
 import { NzAlertModule } from 'ng-zorro-antd/alert';
 import {
   DetailsOperationBarComponent
 } from '@site/app/components/layout/details-operation-bar/details-operation-bar.component';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 
 @Component({
   selector: 'app-user-details',
@@ -39,12 +40,12 @@ import { NzMessageService } from 'ng-zorro-antd/message';
     NzFlexModule,
     NzToolTipModule,
     NzAlertModule,
+    NzSkeletonModule,
+    NzGridModule,
+    NzBadgeModule,
 
     SectionComponent,
     IconifyComponent,
-    NzBadgeComponent,
-    NzColDirective,
-    NzRowDirective,
     RoleMenuTableComponent,
     DetailsOperationBarComponent
   ],
@@ -65,7 +66,7 @@ export class UserDetailsComponent implements OnInit {
     pageSize: 5
   };
 
-  permissionTableLoading = false;
+  userDetailsLoading = false;
   stateLoading = false;
   resetPasswordLoading = false;
   hasAppMenuPermission = false;
@@ -84,7 +85,7 @@ export class UserDetailsComponent implements OnInit {
 
     this.pcMenuPermissions = [];
     this.appMenuPermissions = [];
-    this.permissionTableLoading = true;
+    this.userDetailsLoading = true;
     this.hasAppMenuPermission = false;
     this.userService.getDetails(this.userId).subscribe({
       next: res => {
@@ -98,9 +99,9 @@ export class UserDetailsComponent implements OnInit {
             }
           }
         }
-        this.permissionTableLoading = false;
+        this.userDetailsLoading = false;
       },
-      error: () => this.permissionTableLoading = false
+      error: () => this.userDetailsLoading = false
     });
   }
 

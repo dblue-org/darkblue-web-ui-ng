@@ -29,7 +29,11 @@
             </div>
             <div [nzSpan]="15" class="gutter-row" nz-col>
               <nz-input-group [nzPrefix]="prefixTemplateUser">
-                <input nz-input placeholder="Enter your username" type="text"/>
+                <input (keydown.enter)="doSearch()"
+                       [(ngModel)]="keyword"
+                       nz-input
+                       placeholder="搜索用户、职位、角色等信息"
+                       type="text"/>
               </nz-input-group>
               <ng-template #prefixTemplateUser><span nz-icon nzTheme="outline" nzType="search"></span></ng-template>
             </div>
