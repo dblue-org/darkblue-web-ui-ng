@@ -1,7 +1,6 @@
 import { Component, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { CommonModule } from '@angular/common';
-import { NzListModule } from 'ng-zorro-antd/list';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzTableModule } from 'ng-zorro-antd/table';
@@ -14,7 +13,6 @@ import { TplSearchBarComponent } from '@site/app/components/layout/tpl-search-ba
 import { Resource, ResourceGroup } from '@site/app/define/sys/resource';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { ResourcesService } from '@site/app/services/sys/resources.service';
-import { NzSpinModule } from 'ng-zorro-antd/spin';
 import {
   ResourceEditModalComponent
 } from '@site/app/pages/sys/resource-manage/resource-edit-modal/resource-edit-modal.component';
@@ -43,7 +41,6 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
     ReactiveFormsModule,
 
     NzGridModule,
-    NzListModule,
     NzButtonModule,
     NzIconModule,
     NzTableModule,
@@ -51,7 +48,6 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
     NzTagModule,
     NzInputDirective,
     NzSelectModule,
-    NzSpinModule,
     NzToolTipModule,
 
     ResourceGroupComponent,
@@ -107,7 +103,7 @@ export class ResourceManageComponent implements OnInit, OnChanges {
 
 
   ngOnInit(): void {
-    this.loadData();
+    /*this.loadData();*/
   }
 
 

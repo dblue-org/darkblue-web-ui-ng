@@ -2,3 +2,9 @@ pre {
   max-height: 200px;
   overflow: auto;
 }
+
+.json-code {
+  display: block;
+  max-height: 500px;
+  overflow: auto;
+}
