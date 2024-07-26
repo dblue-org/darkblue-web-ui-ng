@@ -4,6 +4,10 @@
     <img src="public/assets/images/logo-blue.svg" width="200">
 </p>
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/4e2c0226-e704-47b6-a0ee-3d968057b1c4/deploy-status)](https://app.netlify.com/sites/darkblue-angular-demo/deploys)
+[![License](https://img.shields.io/badge/License-Apache%202-blue)](https://www.apache.org/licenses/LICENSE-2.0)
+[![Version](https://img.shields.io/badge/Version-1.0.0-blue)](https://gitee.com/d-blue/darkblue-web-ui-ng/releases)
+
 深蓝系统的前端项目，项目使用 Angular 18 + ng-zorro-antd 18。
 
 文档地址：https://dblud.org/docs/dblue-ui-angular
@@ -12,7 +16,6 @@
 > 文档咱未开放，在项目基础功能完成后，会开放文档访问，并陆续补充文档内容。
 
 ## 开始
-
 
 执行 `ng serve` 启动项目，浏览器中打开 `http://localhost:4200/` 即可访问项目。
 
@@ -73,9 +76,9 @@
   - 系统配置
     - [x] 配置参数管理
     - [x] 字典管理
-  - 消息管理
-    - [ ] 消息模板管理
-    - [ ] 待办消息管理
-    - [ ] 通知消息管理
+- 消息管理
+  - [ ] 消息模板管理
+  - [ ] 待办消息管理
+  - [ ] 通知消息管理
 - 运维中心
   - [x] 缓存管理
