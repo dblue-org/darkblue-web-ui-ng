@@ -122,34 +122,15 @@ export class UserDetailsComponent implements OnInit {
     });
   }
 
-  disable() {
+  toggleState(isEnable: boolean) {
     if (!this.userDetails) {
       return;
     }
     this.stateLoading = true;
-    this.userService.disable(this.userDetails.userId).subscribe({
+    this.userService.toggleState(this.userDetails.userId, isEnable).subscribe({
       next: res => {
-        if (res.success) {
-          if (this.userDetails) {
-            this.userDetails.isEnable = false;
-          }
-        }
-      },
-      complete: () => this.stateLoading = false
-    });
-  }
-
-  enable() {
-    if (!this.userDetails) {
-      return;
-    }
-    this.stateLoading = true;
-    this.userService.enable(this.userDetails.userId).subscribe({
-      next: res => {
-        if (res.success) {
-          if (this.userDetails) {
-            this.userDetails.isEnable = true;
-          }
+        if (res.success && this.userDetails) {
+          this.userDetails.isEnable = isEnable;
         }
       },
       complete: () => this.stateLoading = false

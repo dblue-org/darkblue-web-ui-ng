@@ -1,12 +1,14 @@
 <app-details-operation-bar>
   <ng-container *ngIf="!userDetails?.isAdmin">
-    <button (click)="enable()" *ngIf="!userDetails?.isEnable"
+    <button (click)="toggleState(true)" *ngIf="!userDetails?.isEnable"
             class="ant-btn-success"
             nz-button
+            [nzLoading]="stateLoading"
             nzType="default">启用
     </button>
-    <button (click)="disable()" *ngIf="userDetails?.isEnable"
+    <button (click)="toggleState(false)" *ngIf="userDetails?.isEnable"
             nz-button
+            [nzLoading]="stateLoading"
             nzDanger
             nzType="default">禁用
     </button>

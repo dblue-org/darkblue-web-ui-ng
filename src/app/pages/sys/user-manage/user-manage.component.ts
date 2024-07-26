@@ -138,36 +138,16 @@ export class UserManageComponent implements OnInit {
     });
   }
 
-  disable(user: UserPageListVo) {
+  toggleState(user: UserPageListVo, isEnable: boolean) {
     this.stateLoading = true;
-    this.userService.disable(user.userId).subscribe({
+    this.userService.toggleState(user.userId, isEnable).subscribe({
       next: res => {
         if (res.success) {
-          user.isEnable = false;
+          user.isEnable = isEnable;
         }
       },
       complete: () => this.stateLoading = false
     });
-  }
-
-  enable(user: UserPageListVo) {
-    this.stateLoading = true;
-    this.userService.enable(user.userId).subscribe({
-      next: res => {
-        if (res.success) {
-          user.isEnable = true;
-        }
-      },
-      complete: () => this.stateLoading = false
-    });
-  }
-
-  gotoDetails(user: UserPageListVo): void {
-    this.router.navigate(['/sys/user/details'], {
-      queryParams: {
-        userId: user.userId
-      }
-    }).then();
   }
 
   search() {

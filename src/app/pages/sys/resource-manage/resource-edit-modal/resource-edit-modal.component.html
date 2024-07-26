@@ -1,13 +1,28 @@
-<nz-modal [(nzVisible)]="isVisible" nzWidth="800px" [nzTitle]="isEdit ? '修改资源' : '添加资源'" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()" [nzOkLoading]="loading">
+<nz-modal (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()" [(nzVisible)]="isVisible"
+          [nzOkLoading]="loading" [nzTitle]="isEdit ? '修改资源' : '添加资源'" nzWidth="800px">
   <ng-container *nzModalContent>
     <form nz-form [formGroup]="dataForm">
       <nz-form-item>
         <nz-form-label [nzSm]="6" [nzXs]="24">平台</nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24">
-          <nz-radio-group [nzDisabled]="true" formControlName="platform">
-            <label [nzValue]="1" nz-radio>PC端</label>
-            <label [nzValue]="2" nz-radio>移动端</label>
-          </nz-radio-group>
+          <div nz-row>
+            <div [nzSpan]="16" nz-col>
+              <nz-radio-group [nzDisabled]="true" formControlName="platform">
+                <label [nzValue]="1" nz-radio>PC端</label>
+                <label [nzValue]="2" nz-radio>移动端</label>
+              </nz-radio-group>
+            </div>
+            <div [nzSpan]="8" class="text-align-right" nz-col>
+              <button (click)="syncMappingInfo()"
+                      *ngIf="isEdit" [nzLoading]="resourceMappingLoading" nz-button
+                      nz-tooltip
+                      nzShape="circle" nzTooltipTitle="同步控制层的资源信息"
+                      nzType="default">
+                <span nz-icon nzTheme="outline" nzType="retweet"></span>
+              </button>
+            </div>
+          </div>
+
         </nz-form-control>
       </nz-form-item>
       <nz-form-item *ngIf="!isEdit">

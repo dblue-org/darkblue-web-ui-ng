@@ -93,11 +93,19 @@
             <td (nzExpandChange)="onExpandChange(data.resourceId, $event)"
                 [nzExpand]="expandSet.has(data.resourceId)"></td>
             <td>
-                <span *ngIf="data.isInvalid"
-                      nz-icon nz-tooltip
-                      nzTheme="twotone"
-                      nzTooltipTitle="此资源已失效，可能是接口地址已被修改"
-                      nzTwotoneColor="#f50" nzType="warning"></span>
+              <span *ngIf="data.isAnythingChanged"
+                    nz-icon
+                    nz-tooltip
+                    nzTheme="twotone"
+                    nzTooltipTitle="此资源的信息已发生变更请及时更新"
+                    nzTwotoneColor="#fa8c16"
+                    nzType="exclamation-circle"></span>
+              <span *ngIf="data.isInvalid"
+                    nz-icon
+                    nz-tooltip
+                    nzTheme="twotone"
+                    nzTooltipTitle="此资源已失效，可能是接口地址已被修改"
+                    nzTwotoneColor="#f50" nzType="warning"></span>
               {{ data.resourceName }}
             </td>
             <td>{{ data.requestMethod }}</td>

@@ -17,7 +17,7 @@ export class DepartmentService {
   }
 
   get(deptId: string): Observable<ResponseBean<Department>> {
-    return this.http.get<ResponseBean<Department>>(`/api/department/getOne/${deptId}`);
+    return this.http.get<ResponseBean<Department>>(`/api/department/getDetails/${deptId}`);
   }
 
   add(department: Department): Observable<ResponseBean<void>> {

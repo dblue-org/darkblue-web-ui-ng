@@ -42,6 +42,8 @@ export interface Resource extends Mapping{
   isAuthedAccess: boolean
   createTime: string
   isInvalid?: boolean;
+  isAnythingChanged: boolean;
+  resourceMapping: Mapping;
   permissions: SimplePermission[]
 }
 

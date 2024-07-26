@@ -30,22 +30,29 @@ export class UserService {
     return this.http.delete<ResponseBean<any>>(`/api/user/delete/${userId}`);
   }
 
+  toggleState(userId: string, isEnable: boolean): Observable<ResponseBean<any>> {
+    return this.http.patch<ResponseBean<any>>('/api/user/toggleState', {
+      userId,
+      enable: isEnable
+    });
+  }
+
   enable(userId: string): Observable<ResponseBean<any>> {
-    return this.http.patch<ResponseBean<any>>('/api/user/enable', {
+    return this.http.patch<ResponseBean<any>>('/api/user/toggleState', {
       userId,
       enable: true
     });
   }
 
   disable(userId: string): Observable<ResponseBean<any>> {
-    return this.http.patch<ResponseBean<any>>('/api/user/enable', {
+    return this.http.patch<ResponseBean<any>>('/api/user/toggleState', {
       userId,
       enable: false
     });
   }
 
   findByPage(searchForm: UserSearchForm): Observable<ResponseBean<UserPageListVo[]>> {
-    return this.http.get<ResponseBean<UserPageListVo[]>>('/api/user/page', {
+    return this.http.get<ResponseBean<UserPageListVo[]>>('/api/user/findByPage', {
       params: {
         ...searchForm
       }
@@ -62,7 +69,7 @@ export class UserService {
   }
 
   getDetails(userId: string): Observable<ResponseBean<UserDetailsVo>> {
-    return this.http.get<ResponseBean<UserDetailsVo>>(`/api/user/getOne/${userId}`);
+    return this.http.get<ResponseBean<UserDetailsVo>>(`/api/user/getDetails/${userId}`);
   }
 
   resetPassword(userId: string): Observable<ResponseBean<void>> {

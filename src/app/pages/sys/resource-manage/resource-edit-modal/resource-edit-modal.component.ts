@@ -13,16 +13,22 @@ import { ResourceSelectComponent } from '@site/app/components/form/resource-sele
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { CommonModule } from '@angular/common';
 import { NzRadioComponent, NzRadioGroupComponent } from 'ng-zorro-antd/radio';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
 @Component({
   selector: 'app-resource-edit-modal',
   standalone: true,
   imports: [
     CommonModule,
+    NzButtonModule,
+    NzIconModule,
     NzFormModule,
     NzInputDirective,
     NzModalModule,
     NzGridModule,
+    NzToolTipModule,
     ReactiveFormsModule,
     ResourceSelectComponent,
     NzSwitchModule,
@@ -49,6 +55,8 @@ export class ResourceEditModalComponent extends BasicEditModalComponent {
     method: ['', [Validators.required]],
     isAuthedAccess: [false, [Validators.required]]
   })
+
+  resourceMappingLoading = false;
 
   constructor(private resourceService: ResourcesService, private formBuilder: NonNullableFormBuilder) {
     super();
@@ -90,6 +98,28 @@ export class ResourceEditModalComponent extends BasicEditModalComponent {
       ...this.dataForm.value,
       //isAuthedAccess: this.dataForm.value.isAuthedAccess
     } as Resource
+  }
+
+  syncMappingInfo() {
+
+    const requestMethod = this.dataForm.value.requestMethod;
+    const resourceUrl = this.dataForm.value.resourceUrl;
+    if (requestMethod && resourceUrl) {
+      this.resourceMappingLoading = true;
+      this.resourceService.getMapping(requestMethod, resourceUrl).subscribe({
+        next: res => {
+          if (res.success && res.data) {
+            this.dataForm.patchValue({
+              resourceName: res.data.resourceName,
+              controller: res.data.controller,
+              method: res.data.method
+            });
+          }
+        },
+        complete: () => this.resourceMappingLoading = false
+      });
+    }
+
   }
 
 }
