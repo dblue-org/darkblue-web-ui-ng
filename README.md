@@ -10,12 +10,10 @@
 
 深蓝系统的前端项目，项目使用 Angular 18 + ng-zorro-antd 18。
 
-文档地址：https://dblud.org/docs/dblue-ui-angular
+- 文档地址：https://dblue.org/docs/angular/introduction
+- 演示地址：https://angular.darkblue.dblue.org
 
-> [!warning]
-> 文档咱未开放，在项目基础功能完成后，会开放文档访问，并陆续补充文档内容。
-
-## 开始
+## 快速开始
 
 执行 `ng serve` 启动项目，浏览器中打开 `http://localhost:4200/` 即可访问项目。
 
@@ -56,6 +54,8 @@
   },
   ```
 4. 修改 `package.json`，在 `scripts` 中增加：`"build:stable": "ng build --configuration stable",`
+
+完成上面的配置之后就可以使用 `npm run build:stable` 来打包 `stable` 的代码了。
 
 ## 开发进度
 
