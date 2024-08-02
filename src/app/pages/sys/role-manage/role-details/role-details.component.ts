@@ -75,7 +75,7 @@ export class RoleDetailsComponent implements OnInit {
     if (this.roleId) {
       this.hasAppMenuPermission = false;
       this.roleDetailsLoading = true;
-      this.roleService.getRole(this.roleId).subscribe({
+      this.roleService.getDetails(this.roleId).subscribe({
         next: res => {
           if (res.success && res.data) {
             this.roleDetails = res.data;

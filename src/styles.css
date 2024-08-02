@@ -49,3 +49,7 @@ nz-table [nz-button] {
 .text-align-right {
   text-align: right;
 }
+
+.std-gutter-bottom {
+  margin-bottom: 12px;
+}

@@ -127,4 +127,17 @@ export interface RefUserVo {
   createTime?: string
 }
 
+export interface SimpleUserVo extends SimpleUser {
+  deptId: string;
+  deptName: string;
+  positionId: string;
+  positionName: string;
+  identityNo: string;
+}
+
+export interface UserSelfUpdateDto {
+  name: string;
+  phoneNumber: string;
+  identityNo?: string;
+}
 

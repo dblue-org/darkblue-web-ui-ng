@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import {
   UserGroupAddDto,
-  UserGroupPageListVo, UserGroupRefQueryDto,
+  UserGroupPageListVo,
+  UserGroupRefQueryDto,
   UserGroupSearchForm,
   UserGroupUpdateDto
 } from '@site/app/define/sys/user-group';
-import { delay, Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ResponseBean } from '@site/app/define/sys/response';
-import { Role, RefRoleVo } from '@site/app/define/sys/role';
-import { RefUserVo, UserPageListVo } from '@site/app/define/sys/user';
+import { RefRoleVo } from '@site/app/define/sys/role';
+import { RefUserVo } from '@site/app/define/sys/user';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -26,8 +27,8 @@ export class UserGroupService {
     })
   }
 
-  get(userGroupId: string): Observable<ResponseBean<UserGroupPageListVo>> {
-    return this.http.get<ResponseBean<UserGroupPageListVo>>(`/api/user/group/getOne/${userGroupId}`)
+  getDetails(userGroupId: string): Observable<ResponseBean<UserGroupPageListVo>> {
+    return this.http.get<ResponseBean<UserGroupPageListVo>>(`/api/user/group/getDetails/${userGroupId}`);
   }
 
   getRoles(queryDto: UserGroupRefQueryDto): Observable<ResponseBean<RefRoleVo[]>> {
@@ -69,6 +70,13 @@ export class UserGroupService {
     return this.http.post<ResponseBean<void>>('/api/user/group/addUser', {
       userGroupId,
       userIdList
+    });
+  }
+
+  toggleState(userGroupId: string, enable: boolean): Observable<ResponseBean<void>> {
+    return this.http.patch<ResponseBean<void>>('/api/user/group/toggleState', {
+      userGroupId,
+      isEnable: enable
     });
   }
 

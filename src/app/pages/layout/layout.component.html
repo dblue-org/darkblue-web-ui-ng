@@ -54,7 +54,9 @@
             </span>
               <nz-dropdown-menu #menu="nzDropdownMenu">
                 <ul nz-menu nzSelectable style="min-width: 150px">
-                  <li nz-menu-item><span nz-icon nzTheme="outline" nzType="user"></span> 个人设置</li>
+                  <li (click)="showUserProfileModal()" nz-menu-item>
+                    <span nz-icon nzTheme="outline" nzType="user"></span> 个人设置
+                  </li>
                   <li (click)="showChangePasswordModal()" nz-menu-item>
                     <span nz-icon nzTheme="outline" nzType="key"></span> 修改密码
                   </li>
@@ -110,4 +112,5 @@
   </ul>
 </nz-dropdown-menu>
 
-<app-change-password-modal #changePasswordModalComponent/>
+<app-change-password-modal #changePasswordModalComponent (onSuccess)="onPasswordChanged()"/>
+<app-user-profile-modal #userProfileModalComponent></app-user-profile-modal>

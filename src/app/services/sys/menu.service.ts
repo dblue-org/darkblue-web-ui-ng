@@ -42,6 +42,13 @@ export class MenuService {
   deleteMenu(menuId: string): Observable<ResponseBean<any>> {
     return this.http.delete<ResponseBean<void>>(`/api/menu/delete/${menuId}`)
   }
+
+  toggleState(menuId: string, enable: boolean): Observable<ResponseBean<any>> {
+    return this.http.patch<ResponseBean<void>>('/api/menu/toggleState', {
+      menuId,
+      enable
+    });
+  }
   enableMenu(menuId: string): Observable<ResponseBean<any>> {
     return this.http.patch<ResponseBean<void>>('/api/menu/enable', {
       menuId,

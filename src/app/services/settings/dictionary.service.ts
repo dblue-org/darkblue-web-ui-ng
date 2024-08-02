@@ -1,10 +1,14 @@
 import { Injectable } from '@angular/core';
-import { delay, Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ResponseBean } from '@site/app/define/sys/response';
 import {
-  DictionaryAddDto, DictionaryItemAddDto,
-  DictionaryItemListVo, DictionaryItemPageQueryDto, DictionaryItemUpdateDto,
-  DictionaryListVo, DictionaryMixedVo
+  DictionaryAddDto,
+  DictionaryItemAddDto,
+  DictionaryItemListVo,
+  DictionaryItemPageQueryDto,
+  DictionaryItemUpdateDto,
+  DictionaryListVo,
+  DictionaryMixedVo
 } from '@site/app/define/settings/dictionary';
 import { HttpClient } from '@angular/common/http';
 
@@ -40,7 +44,7 @@ export class DictionaryService {
   }
 
   getDictionaryItemList(queryDto: DictionaryItemPageQueryDto): Observable<ResponseBean<DictionaryItemListVo[]>> {
-    return this.http.get<ResponseBean<DictionaryItemListVo[]>>('/api/dictionary/page', {
+    return this.http.get<ResponseBean<DictionaryItemListVo[]>>('/api/dictionary/findItemByPage', {
       params: {
         ...queryDto
       }
@@ -64,7 +68,7 @@ export class DictionaryService {
   }
 
   toggleDictionaryItemState(dictionaryItemId: string, isEnable: boolean): Observable<ResponseBean<void>> {
-    return this.http.patch<ResponseBean<void>>('/api/dictionary/enableItem', {
+    return this.http.patch<ResponseBean<void>>('/api/dictionary/toggleItemState', {
       dictionaryItemId,
       isEnable
     })

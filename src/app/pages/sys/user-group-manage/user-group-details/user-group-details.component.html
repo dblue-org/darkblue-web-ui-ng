@@ -1,12 +1,12 @@
 <app-details-operation-bar>
   <ng-container *permIf="'USER_GROUP_CHANGE_STATE'">
-    <button (click)="enable()"
+    <button (click)="toggleState(true)"
             *ngIf="!userGroup?.isEnable"
             class="ant-btn-success"
             nz-button
             nzType="default">启用
     </button>
-    <button (click)="disable()"
+    <button (click)="toggleState(false)"
             *ngIf="userGroup?.isEnable"
             nz-button
             nzDanger

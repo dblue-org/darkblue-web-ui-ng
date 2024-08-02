@@ -24,6 +24,7 @@ import {
   ChangePasswordModalComponent
 } from '@site/app/pages/user-center/change-password-modal/change-password-modal.component';
 import { FormsModule } from '@angular/forms';
+import { UserProfileModalComponent } from '@site/app/pages/user-center/user-profile-modal/user-profile-modal.component';
 
 @Component({
   selector: 'app-layout',
@@ -51,7 +52,8 @@ import { FormsModule } from '@angular/forms';
     MenuComponent,
     MessagingComponent,
     ChangePasswordModalComponent,
-    FormsModule
+    FormsModule,
+    UserProfileModalComponent
   ],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.css'
@@ -59,6 +61,7 @@ import { FormsModule } from '@angular/forms';
 export class LayoutComponent implements OnInit {
   @ViewChild('messaging') messagingDrawer?: MessagingComponent;
   @ViewChild('changePasswordModalComponent') changePasswordModalComponent?: ChangePasswordModalComponent;
+  @ViewChild('userProfileModalComponent') userProfileModalComponent?: UserProfileModalComponent;
   isCollapsed = false;
   showFooter = true;
   selectedTabIndex = 0;
@@ -89,6 +92,14 @@ export class LayoutComponent implements OnInit {
 
   showChangePasswordModal() {
     this.changePasswordModalComponent?.showModal();
+  }
+
+  onPasswordChanged() {
+    this.logout();
+  }
+
+  showUserProfileModal() {
+    this.userProfileModalComponent?.showModal();
   }
 
   doSearch() {

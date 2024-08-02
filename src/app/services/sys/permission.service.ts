@@ -28,7 +28,7 @@ export class PermissionService {
   }
 
   getDetails(permissionId: string): Observable<ResponseBean<PermissionDetailsVo>> {
-    return this.http.get<ResponseBean<PermissionDetailsVo>>(`/api/permission/getOne/${permissionId}`)
+    return this.http.get<ResponseBean<PermissionDetailsVo>>(`/api/permission/getDetails/${permissionId}`);
   }
 
   add(permission: Permission): Observable<ResponseBean<void>> {

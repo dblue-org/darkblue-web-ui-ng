@@ -3,10 +3,12 @@ import { Observable } from 'rxjs';
 import { ResponseBean } from '../../define/sys/response';
 import {
   SimpleUser,
+  SimpleUserVo,
   UserAddDto,
   UserDetailsVo,
   UserPageListVo,
   UserSearchForm,
+  UserSelfUpdateDto,
   UserUpdateDto
 } from '../../define/sys/user';
 import { HttpClient } from '@angular/common/http';
@@ -37,20 +39,6 @@ export class UserService {
     });
   }
 
-  enable(userId: string): Observable<ResponseBean<any>> {
-    return this.http.patch<ResponseBean<any>>('/api/user/toggleState', {
-      userId,
-      enable: true
-    });
-  }
-
-  disable(userId: string): Observable<ResponseBean<any>> {
-    return this.http.patch<ResponseBean<any>>('/api/user/toggleState', {
-      userId,
-      enable: false
-    });
-  }
-
   findByPage(searchForm: UserSearchForm): Observable<ResponseBean<UserPageListVo[]>> {
     return this.http.get<ResponseBean<UserPageListVo[]>>('/api/user/findByPage', {
       params: {
@@ -76,11 +64,15 @@ export class UserService {
     return this.http.patch<ResponseBean<void>>(`/api/user/resetPassword/${userId}`, {});
   }
 
-  changePassword(oldPassword: string, newPassword: string): Observable<ResponseBean<void>> {
-    return this.http.patch<ResponseBean<void>>('/api/user/changePassword', {
-      oldPassword,
-      newPassword
-    });
+  changePassword(data: { oldPassword: string, newPassword: string }): Observable<ResponseBean<void>> {
+    return this.http.patch<ResponseBean<void>>('/api/user/changePassword', data);
   }
 
+  getMyselfInfo(): Observable<ResponseBean<SimpleUserVo>> {
+    return this.http.get<ResponseBean<SimpleUserVo>>('/api/user/getMyselfInfo');
+  }
+
+  updateMyselfInfo(user: UserSelfUpdateDto): Observable<ResponseBean<void>> {
+    return this.http.patch<ResponseBean<any>>('/api/user/updateMyselfInfo', user);
+  }
 }

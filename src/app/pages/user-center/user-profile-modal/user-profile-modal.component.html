@@ -1,1 +1,223 @@
-<p>user-profile-modal works!</p>
+<nz-modal (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()"
+          [(nzVisible)]="isVisible"
+          nzTitle="个人设置"
+          nzWidth="1400px">
+  <ng-container *nzModalContent>
+    <div nz-row>
+      <div [nzSpan]="4" class="profile-items" nz-col>
+        <nz-list [nzBordered]="false" nzSize="small">
+          <ng-container *ngFor="let item of items; let i = index">
+            <nz-list-item (click)="onItemSelect(i)" [class]="{'profile-item-selected': i == selectedIndex}">{{ item }}
+            </nz-list-item>
+          </ng-container>
+        </nz-list>
+      </div>
+      <div [nzSpan]="20" class="profile-content" nz-col>
+        <div *ngIf="selectedIndex == 0">
+          <div [nzGutter]="24" nz-row>
+            <div [nzSpan]="16" nz-col>
+              <h2 class="std-gutter-bottom">基本信息</h2>
+              <div class="user-form-container">
+                <form [formGroup]="dataForm" nz-form nzLayout="vertical">
+                  <nz-form-item>
+                    <nz-form-label>用户名</nz-form-label>
+                    <nz-form-control>
+                      <input [disabled]="true" formControlName="username" nz-input/>
+                    </nz-form-control>
+                  </nz-form-item>
+                  <nz-form-item>
+                    <nz-form-label>姓名</nz-form-label>
+                    <nz-form-control>
+                      <input formControlName="name" nz-input/>
+                    </nz-form-control>
+                  </nz-form-item>
+                  <nz-form-item>
+                    <nz-form-label>手机号</nz-form-label>
+                    <nz-form-control>
+                      <input formControlName="phoneNumber" nz-input/>
+                    </nz-form-control>
+                  </nz-form-item>
+                  <nz-form-item>
+                    <nz-form-label>部门</nz-form-label>
+                    <nz-form-control>
+                      <input formControlName="deptName" nz-input/>
+                    </nz-form-control>
+                  </nz-form-item>
+                  <nz-form-item>
+                    <nz-form-label>职位</nz-form-label>
+                    <nz-form-control>
+                      <input formControlName="positionName" nz-input/>
+                    </nz-form-control>
+                  </nz-form-item>
+                </form>
+                <button (click)="updateUserInfo()" [nzLoading]="updateLoading" nz-button nzType="primary">更新基础信息
+                </button>
+              </div>
+            </div>
+            <div [nzSpan]="8" nz-col>
+              <div class="std-gutter-bottom">头像</div>
+              <nz-avatar [nzSize]="128" class="std-gutter-bottom" nzIcon="user"></nz-avatar>
+              <div>
+                <button nz-button nzType="default">
+                  <span nz-icon nzType="upload"></span>更换头像
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="selectedIndex == 1">
+          <h2 class="std-gutter-bottom">安全设置</h2>
+          <ul nz-list>
+            <nz-list-item>
+              <nz-list-item-meta>
+                <nz-list-item-meta-title>密码强度</nz-list-item-meta-title>
+                <nz-list-item-meta-description>当前密码强度：强</nz-list-item-meta-description>
+              </nz-list-item-meta>
+              <ul nz-list-item-actions>
+                <nz-list-item-action><a>修改</a></nz-list-item-action>
+              </ul>
+            </nz-list-item>
+
+            <nz-list-item>
+              <nz-list-item-meta>
+                <nz-list-item-meta-title>密保手机</nz-list-item-meta-title>
+                <nz-list-item-meta-description>未绑定密保手机，绑定手机号可以通过手机号找回密码并且可以使用验证码登录
+                </nz-list-item-meta-description>
+              </nz-list-item-meta>
+              <ul nz-list-item-actions>
+                <nz-list-item-action><a>绑定</a></nz-list-item-action>
+              </ul>
+            </nz-list-item>
+            <nz-list-item>
+              <nz-list-item-meta>
+                <nz-list-item-meta-title>密保问题</nz-list-item-meta-title>
+                <nz-list-item-meta-description>未设置密保问题，密保问题可有效保护账户安全</nz-list-item-meta-description>
+              </nz-list-item-meta>
+              <ul nz-list-item-actions>
+                <nz-list-item-action><a>设置</a></nz-list-item-action>
+              </ul>
+            </nz-list-item>
+            <nz-list-item>
+              <nz-list-item-meta>
+                <nz-list-item-meta-title>绑定邮箱</nz-list-item-meta-title>
+                <nz-list-item-meta-description>未绑定邮箱，绑定邮箱可以用来找回密码</nz-list-item-meta-description>
+              </nz-list-item-meta>
+              <ul nz-list-item-actions>
+                <nz-list-item-action><a>绑定</a></nz-list-item-action>
+              </ul>
+            </nz-list-item>
+            <nz-list-item>
+              <nz-list-item-meta>
+                <nz-list-item-meta-title>MFA 设备</nz-list-item-meta-title>
+                <nz-list-item-meta-description>未绑定 MFA 设备，绑定后，可以进行二次确认</nz-list-item-meta-description>
+              </nz-list-item-meta>
+              <ul nz-list-item-actions>
+                <nz-list-item-action><a>绑定</a></nz-list-item-action>
+              </ul>
+            </nz-list-item>
+          </ul>
+        </div>
+        <div *ngIf="selectedIndex == 2">
+          <h2 class="std-gutter-bottom">账号绑定</h2>
+          <ul nz-list>
+            <nz-list-item>
+              <nz-list-item-meta [nzAvatar]="wechatAvatar">
+                <nz-list-item-meta-title>微信</nz-list-item-meta-title>
+                <nz-list-item-meta-description>当前未绑定微信账号</nz-list-item-meta-description>
+              </nz-list-item-meta>
+              <ul nz-list-item-actions>
+                <nz-list-item-action><a>绑定</a></nz-list-item-action>
+              </ul>
+              <ng-template #wechatAvatar>
+                <span nz-icon nzTheme="outline" nzType="wechat"></span>
+              </ng-template>
+            </nz-list-item>
+
+            <nz-list-item>
+              <nz-list-item-meta [nzAvatar]="alipayAvatar">
+                <nz-list-item-meta-title>支付宝</nz-list-item-meta-title>
+                <nz-list-item-meta-description>当前未绑定支付宝账号
+                </nz-list-item-meta-description>
+              </nz-list-item-meta>
+              <ul nz-list-item-actions>
+                <nz-list-item-action><a>绑定</a></nz-list-item-action>
+              </ul>
+              <ng-template #alipayAvatar>
+                <span nz-icon nzTheme="outline" nzType="alipay-circle"></span>
+              </ng-template>
+            </nz-list-item>
+            <nz-list-item>
+              <nz-list-item-meta [nzAvatar]="dingAvatar">
+                <nz-list-item-meta-title>钉钉</nz-list-item-meta-title>
+                <nz-list-item-meta-description>当前未绑定钉钉账号</nz-list-item-meta-description>
+              </nz-list-item-meta>
+              <ul nz-list-item-actions>
+                <nz-list-item-action><a>绑定</a></nz-list-item-action>
+              </ul>
+              <ng-template #dingAvatar>
+                <span nz-icon nzTheme="outline" nzType="dingtalk"></span>
+              </ng-template>
+            </nz-list-item>
+            <nz-list-item>
+              <nz-list-item-meta [nzAvatar]="githubAvatar">
+                <nz-list-item-meta-title>Github</nz-list-item-meta-title>
+                <nz-list-item-meta-description>已绑定Github账号：github-account-name</nz-list-item-meta-description>
+              </nz-list-item-meta>
+              <ul nz-list-item-actions>
+                <nz-list-item-action><a>修改</a></nz-list-item-action>
+              </ul>
+              <ng-template #githubAvatar>
+                <span nz-icon nzTheme="outline" nzType="github"></span>
+              </ng-template>
+            </nz-list-item>
+          </ul>
+        </div>
+        <div *ngIf="selectedIndex == 3">
+          <h2 class="std-gutter-bottom">新消息通知</h2>
+          <ul nz-list>
+            <nz-list-item>
+              <nz-list-item-meta>
+                <nz-list-item-meta-title>系统公告</nz-list-item-meta-title>
+                <nz-list-item-meta-description>
+                  系统向全部用户特定用户推送的公告消息，消息可以在“通知”中查看
+                </nz-list-item-meta-description>
+              </nz-list-item-meta>
+              <ul nz-list-item-actions>
+                <nz-list-item-action>
+                  <nz-switch [ngModel]="true" nzCheckedChildren="开" nzUnCheckedChildren="关"></nz-switch>
+                </nz-list-item-action>
+              </ul>
+            </nz-list-item>
+
+            <nz-list-item>
+              <nz-list-item-meta>
+                <nz-list-item-meta-title>业务通知</nz-list-item-meta-title>
+                <nz-list-item-meta-description>
+                  在您提交的业务请求完成或者有状态变更时，给您发送通知消息，消息可以在“通知”中查看
+                </nz-list-item-meta-description>
+              </nz-list-item-meta>
+              <ul nz-list-item-actions>
+                <nz-list-item-action>
+                  <nz-switch [ngModel]="true" nzCheckedChildren="开" nzUnCheckedChildren="关"></nz-switch>
+                </nz-list-item-action>
+              </ul>
+            </nz-list-item>
+            <nz-list-item>
+              <nz-list-item-meta>
+                <nz-list-item-meta-title>待办事项</nz-list-item-meta-title>
+                <nz-list-item-meta-description>
+                  当有您需要处理业务时，给您发送通知消息，消息可以在“待办”中查看
+                </nz-list-item-meta-description>
+              </nz-list-item-meta>
+              <ul nz-list-item-actions>
+                <nz-list-item-action>
+                  <nz-switch [ngModel]="true" nzCheckedChildren="开" nzUnCheckedChildren="关"></nz-switch>
+                </nz-list-item-action>
+              </ul>
+            </nz-list-item>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</nz-modal>

@@ -32,6 +32,7 @@ import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
   imports: [
     CommonModule,
     FormsModule,
+    RouterLink,
 
     NzDescriptionsModule,
     NzButtonModule,
@@ -50,7 +51,6 @@ import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
     UserSelectComponent,
     DetailsOperationBarComponent,
     PermIfDirective,
-    RouterLink
   ],
   templateUrl: './user-group-details.component.html',
   styleUrl: './user-group-details.component.css'
@@ -103,7 +103,7 @@ export class UserGroupDetailsComponent implements OnInit {
 
   loadDetails() {
     this.detailsLoading = true;
-    this.userGroupService.get(this.userGroupId).subscribe({
+    this.userGroupService.getDetails(this.userGroupId).subscribe({
       next: res => {
         if (res.success) {
           this.userGroup = res.data;
@@ -128,6 +128,7 @@ export class UserGroupDetailsComponent implements OnInit {
       complete: () => this.roleTableLoading = false
     })
   }
+
   loadUsers() {
     this.userTableLoading = true;
     this.userGroupService.getUsers({
@@ -212,28 +213,17 @@ export class UserGroupDetailsComponent implements OnInit {
     })
   }
 
-  enable() {
+  toggleState(enable: boolean) {
     this.stateLoading = true;
-    this.userGroupService.enable(this.userGroupId).subscribe({
+    this.userGroupService.toggleState(this.userGroupId, enable).subscribe({
       next: res => {
         if (res.success) {
-          this.messageService.success('已启用');
+          this.messageService.success(enable ? '已启用' : '已禁用');
           this.loadDetails();
         }
       },
       complete: () => this.stateLoading = false
     })
   }
-  disable() {
-    this.stateLoading = true;
-    this.userGroupService.disable(this.userGroupId).subscribe({
-      next: res => {
-        if (res.success) {
-          this.messageService.success('已禁用');
-          this.loadDetails();
-        }
-      },
-      complete: () => this.stateLoading = false
-    })
-  }
+
 }

@@ -116,26 +116,13 @@ export class PositionManageComponent implements OnInit {
     })
   }
 
-  enable(position: Position) {
+  toggleState(position: Position, enable: boolean) {
     this.stateLoading = true;
-    this.positionService.enable(position.positionId).subscribe({
+    this.positionService.toggleState(position.positionId, enable).subscribe({
       next: res => {
         if (res.success) {
-          this.messageService.success('已启用');
-          position.isEnable = true;
-        }
-      },
-      complete: () => this.stateLoading = false
-    })
-  }
-
-  disable(position: Position) {
-    this.stateLoading = true;
-    this.positionService.disable(position.positionId).subscribe({
-      next: res => {
-        if (res.success) {
-          this.messageService.success('已禁用');
-          position.isEnable = false;
+          this.messageService.success(enable ? '已启用' : '已禁用');
+          position.isEnable = enable;
         }
       },
       complete: () => this.stateLoading = false

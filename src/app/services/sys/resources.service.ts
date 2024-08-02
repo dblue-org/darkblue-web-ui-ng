@@ -1,13 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ResponseBean } from '@site/app/define/sys/response';
-import {
-  Mapping,
-  Resource,
-  ResourceBatchAddDto,
-  ResourceCheckVo,
-  ResourceSearchForm
-} from '@site/app/define/sys/resource';
+import { Resource, ResourceBatchAddDto, ResourceCheckVo, ResourceSearchForm } from '@site/app/define/sys/resource';
 import { SimplePermission } from '@site/app/define/sys/permission';
 import { HttpClient } from '@angular/common/http';
 
@@ -56,12 +50,4 @@ export class ResourcesService {
     });
   }
 
-  getMapping(requestMethod: string, resourceUrl: string): Observable<ResponseBean<Mapping>> {
-    return this.http.get<ResponseBean<Mapping>>(`/api/resource/getMapping`, {
-      params: {
-        requestMethod,
-        resourceUrl
-      }
-    });
-  }
 }

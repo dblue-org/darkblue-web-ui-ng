@@ -109,16 +109,8 @@ export class MenuManageComponent extends BasicTreeTable<MenuItem> implements OnI
     });
   }
 
-  enableMenu(menuId: string) {
-    this.menuService.enableMenu(menuId).subscribe(res => {
-      if (res.success) {
-        this.loadMenu();
-      }
-    });
-  }
-
-  disabledMenu(menuId: string) {
-    this.menuService.disabledMenu(menuId).subscribe(res => {
+  toggleState(menuId: string, enable: boolean) {
+    this.menuService.toggleState(menuId, enable).subscribe(res => {
       if (res.success) {
         this.loadMenu();
       }

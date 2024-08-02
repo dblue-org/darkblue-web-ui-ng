@@ -88,30 +88,15 @@ export class PositionDetailsManageComponent implements OnInit {
     });
   }
 
-  enable() {
+  toggleState(enable: boolean) {
     this.stateLoading = true;
 
-    this.positionService.enable(this.positionId).subscribe({
+    this.positionService.toggleState(this.positionId, enable).subscribe({
       next: res => {
         if (res.success) {
-          this.messageService.success('已启用');
+          this.messageService.success(enable ? '已启用' : '已禁用');
           if (this.position) {
-            this.position.isEnable = true;
-          }
-        }
-      },
-      complete: () => this.stateLoading = false
-    });
-  }
-
-  disable() {
-    this.stateLoading = true;
-    this.positionService.disable(this.positionId).subscribe({
-      next: res => {
-        if (res.success) {
-          this.messageService.success('已禁用');
-          if (this.position) {
-            this.position.isEnable = false;
+            this.position.isEnable = enable;
           }
         }
       },

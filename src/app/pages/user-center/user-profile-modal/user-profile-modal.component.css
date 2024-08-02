@@ -1,0 +1,34 @@
+.profile-items {
+  border-right: 1px solid #f0f0f0;
+  padding-right: 24px;
+}
+
+.profile-item-selected {
+  color: #1890ff;
+  background-color: #e6f7ff;
+}
+
+.profile-items ::ng-deep nz-list-item {
+  border-radius: 5px;
+  text-align: center;
+  border: none;
+  padding-left: 24px;
+  cursor: pointer;
+  margin-bottom: 8px;
+}
+
+.profile-items ::ng-deep nz-list-item:hover {
+  background-color: #eeeeee;
+}
+
+.profile-item-selected:hover {
+  background-color: #e6f7ff !important;
+}
+
+.profile-content {
+  padding: 0 24px;
+}
+
+.user-form-container {
+  max-width: 400px;
+}

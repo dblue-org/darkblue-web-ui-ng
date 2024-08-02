@@ -30,8 +30,8 @@ export class RoleService {
     });
   }
 
-  getRole(roleId: string): Observable<ResponseBean<RoleDetailsVo>> {
-    return this.http.get<ResponseBean<RoleDetailsVo>>(`/api/role/getOne/${roleId}`);
+  getDetails(roleId: string): Observable<ResponseBean<RoleDetailsVo>> {
+    return this.http.get<ResponseBean<RoleDetailsVo>>(`/api/role/getDetails/${roleId}`);
   }
 
   getRoles(): Observable<ResponseBean<SimpleRole[]>> {
@@ -47,7 +47,7 @@ export class RoleService {
   }
 
   toggleState(roleId: string, isEnable: boolean): Observable<ResponseBean<void>> {
-    return this.http.patch<ResponseBean<void>>('/api/role/enable', {
+    return this.http.patch<ResponseBean<void>>('/api/role/toggleState', {
       roleId,
       enable: isEnable
     });

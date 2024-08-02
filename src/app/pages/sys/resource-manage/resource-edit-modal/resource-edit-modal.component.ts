@@ -16,6 +16,7 @@ import { NzRadioComponent, NzRadioGroupComponent } from 'ng-zorro-antd/radio';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { MappingsService } from '@site/app/services/sys/mappings.service';
 
 @Component({
   selector: 'app-resource-edit-modal',
@@ -58,7 +59,8 @@ export class ResourceEditModalComponent extends BasicEditModalComponent {
 
   resourceMappingLoading = false;
 
-  constructor(private resourceService: ResourcesService, private formBuilder: NonNullableFormBuilder) {
+  constructor(private resourceService: ResourcesService, private formBuilder: NonNullableFormBuilder,
+              private mappingService: MappingsService) {
     super();
   }
 
@@ -96,17 +98,15 @@ export class ResourceEditModalComponent extends BasicEditModalComponent {
   getFormData(): Resource {
     return {
       ...this.dataForm.value,
-      //isAuthedAccess: this.dataForm.value.isAuthedAccess
     } as Resource
   }
 
   syncMappingInfo() {
-
     const requestMethod = this.dataForm.value.requestMethod;
     const resourceUrl = this.dataForm.value.resourceUrl;
     if (requestMethod && resourceUrl) {
       this.resourceMappingLoading = true;
-      this.resourceService.getMapping(requestMethod, resourceUrl).subscribe({
+      this.mappingService.getMapping(requestMethod, resourceUrl).subscribe({
         next: res => {
           if (res.success && res.data) {
             this.dataForm.patchValue({

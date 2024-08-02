@@ -86,10 +86,10 @@
               </button>
             </ng-container>
             <ng-container *permIf="'MENU_CHANGE_STATE'">
-              <button (click)="disabledMenu(item.menuId)" *ngIf="item.isEnable" nz-button nzDanger nzSize="small"
+              <button (click)="toggleState(item.menuId, false)" *ngIf="item.isEnable" nz-button nzDanger nzSize="small"
                       nzType="default">禁用
               </button>
-              <button (click)="enableMenu(item.menuId)" *ngIf="!item.isEnable" class="ant-btn-success" nz-button
+              <button (click)="toggleState(item.menuId, true)" *ngIf="!item.isEnable" class="ant-btn-success" nz-button
                       nzSize="small">启用
               </button>
             </ng-container>
