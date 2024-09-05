@@ -1,4 +1,8 @@
-<div class="section">
+<div [class]="{
+section: true,
+'section-border': bordered,
+'section-padding': padding
+}">
   <div [class]="{'section-header': true, 'section-header-small': size == 'small'}" nz-row>
     <div nz-col [nzSpan]="12" class="section-title">
       <ng-container *ngIf="isTemplate(title); else text">

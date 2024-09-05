@@ -9,7 +9,6 @@ import { NzMessageService } from "ng-zorro-antd/message";
 import { BasicEditModalComponent } from "@site/app/components/basic-edit-modal/basic-edit-modal.component";
 import { Observable } from "rxjs";
 import { ResponseBean } from "@site/app/define/sys/response";
-import { Position } from "@site/app/define/sys/position";
 import {
   MessageTemplateGroupAddDto,
   MessageTemplateGroupUpdateDto

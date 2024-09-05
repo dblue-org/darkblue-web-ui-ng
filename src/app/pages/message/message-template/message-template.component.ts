@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { TwoColumnComponent } from "@site/app/components/layout/two-column/two-column.component";
 import {
   MessageTemplateGroupComponent
@@ -25,6 +25,9 @@ import {
 import { RouterLink } from "@angular/router";
 import { MessageTemplateGroupListVo } from "@site/app/define/message/message-template-group";
 import { MessageTemplateService } from "@site/app/services/message/message-template.service";
+import {
+  MessageTemplateEditModalComponent
+} from '@site/app/pages/message/message-template/message-template-edit-modal/message-template-edit-modal.component';
 
 @Component({
   selector: 'app-message-template',
@@ -53,18 +56,21 @@ import { MessageTemplateService } from "@site/app/services/message/message-templ
     NzThMeasureDirective,
     NzTheadComponent,
     NzTrDirective,
-    RouterLink
+    RouterLink,
+    MessageTemplateEditModalComponent
   ],
   templateUrl: './message-template.component.html',
   styleUrl: './message-template.component.css'
 })
 export class MessageTemplateComponent {
 
+  @ViewChild('messageTemplateEditModalComponent') messageTemplateEditModalComponent?: MessageTemplateEditModalComponent;
+
   searchForm = this.fb.group({
     messageTemplateCode: [''],
     messageTemplateName: [''],
     messageTemplateGroupId: ['']
-  })
+  });
   messageTemplates: MessageTemplateListVo[] = [];
   tableOptions = {
     total: 0,
@@ -112,7 +118,9 @@ export class MessageTemplateComponent {
   }
 
   showAddModal() {
-
+    this.messageTemplateEditModalComponent?.showAddModal({
+      ...this.selectedGroup
+    });
   }
 
   showEditModal(data: MessageTemplateListVo) {

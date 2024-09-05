@@ -17,7 +17,8 @@ import { isTemplateRef } from 'ng-zorro-antd/core/util';
 export class SectionComponent {
   @Input('dkTitle') title: string | TemplateRef<any> = '';
   @Input('dkExtra') extra?: TemplateRef<any>;
-  @Input('dkBordered') bordered = false;
+  @Input('dkBordered') bordered = true;
+  @Input('dkPadding') padding = true;
   @Input('dkSize') size: 'large' | 'small' = 'small';
 
   isTemplate(value: any): value is TemplateRef<any> {
