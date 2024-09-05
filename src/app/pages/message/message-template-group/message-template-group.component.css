@@ -1,0 +1,23 @@
+.message-template-group-item {
+  cursor: pointer;
+  user-select: none;
+  padding: 8px 16px;
+}
+
+.message-template-group-item.selected {
+  background-color: #e6f7ff;
+  color: #1890ff;
+}
+
+.message-template-group-item:hover {
+  background-color: #f0f0f0;
+}
+
+.message-template-group-item.selected:hover {
+  background-color: #e6f7ff;
+}
+
+.spin-container {
+  height: 100%;
+  min-height: 400px;
+}

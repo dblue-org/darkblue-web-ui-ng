@@ -47,6 +47,11 @@ export const routes: Routes = [
         path: 'ops',
         loadChildren: () => import('./pages/ops/ops.routers').then(m => m.OPS_ROUTES),
         canActivate: [unAuthGuard]
+      },
+      {
+        path: 'message',
+        loadChildren: () => import('./pages/message/message.routes').then(m => m.MESSAGE_ROUTES),
+        canActivate: [unAuthGuard]
       }
     ]
   },

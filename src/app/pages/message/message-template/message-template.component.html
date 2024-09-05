@@ -1,0 +1,92 @@
+<app-tow-column>
+  <ng-container *twoColumnSider>
+    <app-message-template-group (onSelected)="onGroupSelected($event)" />
+  </ng-container>
+
+  <app-tpl-search-bar [formGroup]="searchForm"
+                      (onSearch)="search()"
+                      [buttons]="tableButtons"
+                      [loading]="tableLoading"
+                      [items]="[
+                          {label: '消息模板编号', item: messageTemplateCode},
+                          {label: '消息模板名称', item: messageTemplateName}
+                        ]">
+    <ng-template #messageTemplateCode>
+      <input nz-input placeholder="模糊搜索消息模板编号" formControlName="messageTemplateCode"/>
+    </ng-template>
+    <ng-template #messageTemplateName>
+      <input nz-input placeholder="模糊搜索消息模板名称" formControlName="messageTemplateName"/>
+    </ng-template>
+
+    <ng-template #tableButtons>
+      <button (click)="showAddModal()" nz-button nzType="primary"
+              [disabled]="!(selectedGroup && selectedGroup.messageTemplateGroupId)">
+        <span nz-icon nzType="plus"></span>
+        新增
+      </button>
+    </ng-template>
+  </app-tpl-search-bar>
+
+  <app-box-container>
+    <nz-table #basicTable
+              [nzFrontPagination]="false"
+              nzShowPagination
+              nzBordered
+              nzSize="small"
+              [nzTotal]="tableOptions.total"
+              [(nzPageIndex)]="tableOptions.page"
+              [(nzPageSize)]="tableOptions.pageSize"
+              [nzLoading]="tableLoading"
+              [nzData]="messageTemplates"
+              (nzPageSizeChange)="loadMessageTemplates()"
+              (nzPageIndexChange)="loadMessageTemplates()">
+      <thead>
+      <tr>
+        <th>消息模板组</th>
+        <th>消息模板编码</th>
+        <th>消息模板名称</th>
+        <th>消息标题</th>
+        <th>创建时间</th>
+        <th nzWidth="230px">操作</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let data of basicTable.data">
+        <td>{{ data.messageTemplateGroupName }}</td>
+        <td>
+          <ng-container *permIf="'MESSAGE_TEMPLATE_DETAILS' else nameTpl">
+            <a [queryParams]="{messageTemplateId: data.messageTemplateId}"
+               routerLink="/message/template/details">{{ data.messageTemplateName }}</a>
+          </ng-container>
+          <ng-template #nameTpl>
+            {{ data.messageTemplateName }}
+          </ng-template>
+        </td>
+        <td>{{ data.messageTemplateCode }}</td>
+        <td>{{ data.messageTitle }}</td>
+        <td>{{ data.createTime }}</td>
+        <td>
+          <ng-container>
+            <button (click)="showEditModal(data)"
+                    nz-button
+                    nzSize="small"
+                    nzType="default">修改
+            </button>
+          </ng-container>
+          <ng-container>
+            <button (nzOnConfirm)="delete(data.messageTemplateId)"
+                    [nzLoading]="deleteLoading"
+                    nz-button
+                    nz-popconfirm
+                    nzDanger
+                    nzPopconfirmTitle="是否确认删除此消息模板?"
+                    nzSize="small"
+                    nzType="primary">删除
+            </button>
+          </ng-container>
+        </td>
+      </tr>
+      </tbody>
+    </nz-table>
+  </app-box-container>
+</app-tow-column>

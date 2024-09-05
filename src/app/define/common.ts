@@ -15,3 +15,13 @@ export interface RouterLinkTabItem {
   queryParams: any,
   closeable: boolean
 }
+
+export interface PermConfig {
+  [key: string]: string
+}
+
+export interface GroupPermConfig {
+  add: string
+  update: string
+  delete: string
+}

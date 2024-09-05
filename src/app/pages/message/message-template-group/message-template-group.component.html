@@ -1,0 +1,23 @@
+<app-group-panel dkTitle="消息模板组"
+                 (onReload)="loadGroups()"
+                 (onAdd)="showAddModal()"
+                 (onUpdate)="showEditModal()"
+                 (onDelete)="doDelete()"
+                 [dkLoading]="loading"
+                 [dkIsSelected]="!!selected">
+  <ul nz-list nzSize="default">
+    <nz-spin [nzSpinning]="loading" class="spin-container">
+      @for (item of groups; track item) {
+        <nz-list-item
+          [class]="{'message-template-group-item': true, 'selected': selected?.messageTemplateGroupId == item.messageTemplateGroupId}"
+          (click)="selectGroup(item)"
+        >
+          {{ item.messageTemplateGroupName }}
+        </nz-list-item>
+      }
+    </nz-spin>
+  </ul>
+</app-group-panel>
+
+<app-message-template-group-edit-modal #messageTemplateGroupEditModalComponent (onSuccess)="loadGroups()"/>
+

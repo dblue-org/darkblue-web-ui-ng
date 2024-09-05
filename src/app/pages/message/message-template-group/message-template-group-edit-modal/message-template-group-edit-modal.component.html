@@ -1,0 +1,13 @@
+<nz-modal [(nzVisible)]="isVisible" nzWidth="600px" [nzTitle]="isEdit ? '修改消息模板组' : '添加消息模板组'" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()" [nzOkLoading]="loading">
+  <ng-container *nzModalContent>
+    <form nz-form [formGroup]="dataForm">
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="messageTemplateGroupName">消息模板组名称</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="消息模板组名称不能为空">
+          <input nz-input formControlName="messageTemplateGroupName" id="messageTemplateGroupName"/>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </ng-container>
+</nz-modal>
+

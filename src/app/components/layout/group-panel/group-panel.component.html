@@ -1,0 +1,42 @@
+<div [class]="!!footer ? 'group-panel-with-footer' : 'group-panel'">
+  <div class="group-panel-header">
+    <div nz-row [nzGutter]="12">
+      <div nz-col [nzSpan]="8">
+        {{title}}
+      </div>
+      <div nz-col [nzSpan]="16" class="group-panel-actions">
+        <button (click)="onAddClick()"
+                *permIf="'RESOURCE_GROUP_ADD'" nz-button
+                nzShape="circle" nzType="default">
+          <span nz-icon nzType="plus"></span>
+        </button>
+        <button *permIf="'RESOURCE_GROUP_UPDATE'"
+                nz-button nzShape="circle" nzType="default"
+                (click)="onUpdateClick()"
+                [disabled]="!isSelected">
+          <span nz-icon nzType="edit"></span>
+        </button>
+        <button *permIf="'RESOURCE_GROUP_DELETE'"
+                nz-button nzShape="circle" nzType="default"
+                (click)="onDeleteClick()"
+                [disabled]="!isSelected">
+          <span nz-icon nzType="delete"></span>
+        </button>
+        <button nz-button nzType="default" nzShape="circle"
+                [nzLoading]="loading"
+                (click)="onReloadClick()">
+          <span nz-icon nzType="reload"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="group-panel-content">
+    <ng-content/>
+  </div>
+
+</div>
+<div class="group-panel-footer" *ngIf="footer">
+  <ng-container *ngTemplateOutlet="footer">
+  </ng-container>
+</div>
