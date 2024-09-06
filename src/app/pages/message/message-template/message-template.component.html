@@ -19,7 +19,8 @@
     </ng-template>
 
     <ng-template #tableButtons>
-      <button (click)="showAddModal()" nz-button nzType="primary"
+      <button nz-button nzType="primary"
+              routerLink="/message/template/create"
               [disabled]="!(selectedGroup && selectedGroup.messageTemplateGroupId)">
         <span nz-icon nzType="plus"></span>
         新增

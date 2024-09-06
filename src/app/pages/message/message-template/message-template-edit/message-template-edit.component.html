@@ -1,0 +1,86 @@
+<app-details-operation-bar>
+
+</app-details-operation-bar>
+
+<div>
+  <app-section dkTitle="消息模板基础信息">
+    <form nz-form [formGroup]="dataForm">
+      <div nz-row [nzGutter]="8">
+        <div nz-col [nzSpan]="8">
+          <nz-form-item>
+            <nz-form-label class="form-label" nzFor="messageTemplateGroupName">消息模板组名称
+            </nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="messageTemplateGroupName" id="messageTemplateGroupName" readonly/>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col [nzSpan]="8">
+          <nz-form-item>
+            <nz-form-label class="form-label" nzRequired>消息模板名称
+            </nz-form-label>
+            <nz-form-control nzErrorTip="消息模板名称不能为空">
+              <input nz-input formControlName="messageTemplateGroupName"/>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col [nzSpan]="8">
+          <nz-form-item>
+            <nz-form-label class="form-label" nzRequired>消息模板编码
+            </nz-form-label>
+            <nz-form-control nzErrorTip="消息模板编码不能为空">
+              <input nz-input formControlName="messageTemplateGroupName"/>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col [nzSpan]="8">
+          <nz-form-item>
+            <nz-form-label class="form-label" nzRequired>消息模板类型
+            </nz-form-label>
+            <nz-form-control nzErrorTip="消息模板编码不能为空">
+              <input nz-input formControlName="messageTemplateGroupName"/>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col [nzSpan]="8">
+          <nz-form-item>
+            <nz-form-label class="form-label" nzRequired>业务数据编码
+            </nz-form-label>
+            <nz-form-control nzErrorTip="消息模板编码不能为空">
+              <input nz-input formControlName="messageTemplateGroupName"/>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col [nzSpan]="24">
+          <nz-form-item>
+            <nz-form-label class="form-label" nzRequired>消息标题
+            </nz-form-label>
+            <nz-form-control nzErrorTip="消息模板编码不能为空">
+              <input nz-input formControlName="messageTemplateGroupName"/>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col [nzSpan]="24">
+          <nz-form-item>
+            <nz-form-label class="form-label" nzRequired>消息内容
+            </nz-form-label>
+            <nz-form-control nzErrorTip="消息模板编码不能为空">
+              <textarea nz-input
+                        [nzAutosize]="{ minRows: 3, maxRows: 5 }"
+                        formControlName="messageTemplateGroupName"></textarea>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </form>
+  </app-section>
+  <app-section dkTitle="条件标签设置">
+
+  </app-section>
+  <app-section dkTitle="跳转路由设置">
+
+  </app-section>
+  <app-section dkTitle="操作设置">
+
+  </app-section>
+</div>
