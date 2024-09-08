@@ -63,6 +63,6 @@ export class MessageTemplateService {
       data: [
         {macroCode: 'makeComplete', macroName: '完成', macroClass: 'com.depsea.macro.MakeComplete'}
       ]
-    }).pipe(delay(1000))
+    })
   }
 }

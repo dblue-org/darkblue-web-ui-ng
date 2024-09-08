@@ -16,10 +16,13 @@ import { NzSelectModule } from "ng-zorro-antd/select";
 import { NzIconModule } from "ng-zorro-antd/icon";
 import { NzAlertModule } from "ng-zorro-antd/alert";
 import { IconifyComponent } from "@site/app/components/icon/iconify/iconify.component";
-import { messageTypes, routePlatforms } from "@site/app/define/message/message-template";
+import { MessageTemplateAction, messageTypes, routePlatforms } from "@site/app/define/message/message-template";
 import {
   MessageTemplateActionModalComponent
 } from "@site/app/pages/message/message-template/message-template-edit/message-template-action-modal/message-template-action-modal.component";
+import { NzTableModule } from "ng-zorro-antd/table";
+import { PermIfDirective } from "@site/app/directives/perm-if.directive";
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-message-template-edit',
@@ -27,6 +30,7 @@ import {
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    RouterLink,
 
     NzButtonComponent,
     NzFormModule,
@@ -36,11 +40,14 @@ import {
     NzSelectModule,
     NzIconModule,
     NzAlertModule,
+    NzTableModule,
 
     SectionComponent,
     DetailsOperationBarComponent,
     IconifyComponent,
     MessageTemplateActionModalComponent,
+    PermIfDirective,
+
   ],
   templateUrl: './message-template-edit.component.html',
   styleUrl: './message-template-edit.component.css'
@@ -57,12 +64,12 @@ export class MessageTemplateEditComponent {
     messageTemplateType: [2, [Validators.required]],
     serviceCodeTpl: [''],
     messageTitleTpl: [''],
-    messageContentTpl: [''],
-    tags: [[]]
+    messageContentTpl: ['']
   })
 
   tags: FormGroup[] = [];
   routers: FormGroup[] = [];
+  actions: MessageTemplateAction[] = []
 
   varDefine = '${变量}';
   messageTemplateTypes = messageTypes;
@@ -96,5 +103,33 @@ export class MessageTemplateEditComponent {
 
   showAddActionModal() {
     this.messageTemplateActionModalComponent.showAddModal();
+  }
+
+  onActionCreateOk(data: MessageTemplateAction) {
+    this.actions = [
+      ...this.actions,
+      data
+    ]
+  }
+
+  onActionUpdateOk(data: MessageTemplateAction) {
+    const actionsCopy = [
+      ...this.actions
+    ]
+    for (let i = 0; i < actionsCopy.length; i++) {
+      const action = actionsCopy[i];
+      if (action.actionId == data.actionId) {
+        actionsCopy[i] = data;
+      }
+    }
+    this.actions = actionsCopy;
+  }
+
+  deleteAction(data: MessageTemplateAction) {
+    this.actions = this.actions.filter(act => act.actionId != data.actionId);
+  }
+
+  editAction(data: MessageTemplateAction) {
+    this.messageTemplateActionModalComponent.showUpdateModal(data);
   }
 }

@@ -47,11 +47,13 @@ export interface MessageTemplateActionMacro {
 }
 
 export interface MessageTemplateAction {
+  actionId: string
   actionName: string
+  actionMark: string
   actionType: number // 1-路由跳转；2-宏
   actionMatchState: number
   actionShowCondition: string
-  macro?: MessageTemplateActionMacro
+  macroCode?: string
   links?: MessageTemplateLink[]
 }
 

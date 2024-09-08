@@ -31,7 +31,7 @@
               <nz-form-label class="form-label" nzRequired>操作类型
               </nz-form-label>
               <nz-form-control nzErrorTip="操作类型不能为空">
-                <nz-select formControlName="actionType">
+                <nz-select formControlName="actionType" (ngModelChange)="onSelectChange($event)">
                   <nz-option [nzValue]="1" nzLabel="链接跳转"/>
                   <nz-option [nzValue]="2" nzLabel="宏"/>
                 </nz-select>
@@ -106,7 +106,7 @@
                     <nz-form-label class="form-label" nzRequired>
                       路由地址
                     </nz-form-label>
-                    <nz-form-control>
+                    <nz-form-control nzErrorTip="路由地址不能为空">
                       <nz-input-group [nzSuffix]="templateIconSpring">
                         <input type="text" nz-input formControlName="routeLink"/>
                       </nz-input-group>
