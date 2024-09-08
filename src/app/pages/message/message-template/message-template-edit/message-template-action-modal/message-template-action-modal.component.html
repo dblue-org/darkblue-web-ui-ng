@@ -1,0 +1,141 @@
+<nz-modal [(nzVisible)]="isVisible" nzWidth="60vw"
+          [nzTitle]="isEdit ? '修改操作' : '添加操作'"
+          (nzOnCancel)="handleCancel()"
+          (nzOnOk)="handleOk()">
+  <ng-container *nzModalContent>
+
+    <form nz-form [formGroup]="dataForm">
+      <app-section dkTitle="基础信息" [dkBordered]="false" [dkPadding]="false">
+        <div nz-row [nzGutter]="8">
+
+          <div nz-col [nzSpan]="12">
+            <nz-form-item>
+              <nz-form-label class="form-label" nzRequired>操作名称
+              </nz-form-label>
+              <nz-form-control nzErrorTip="操作名称不能为空">
+                <input nz-input formControlName="actionName"/>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col [nzSpan]="12">
+            <nz-form-item>
+              <nz-form-label class="form-label">操作标识
+              </nz-form-label>
+              <nz-form-control>
+                <input nz-input formControlName="actionMark"/>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col [nzSpan]="12">
+            <nz-form-item>
+              <nz-form-label class="form-label" nzRequired>操作类型
+              </nz-form-label>
+              <nz-form-control nzErrorTip="操作类型不能为空">
+                <nz-select formControlName="actionType">
+                  <nz-option [nzValue]="1" nzLabel="链接跳转"/>
+                  <nz-option [nzValue]="2" nzLabel="宏"/>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col [nzSpan]="12">
+            <nz-form-item>
+              <nz-form-label class="form-label" nzRequired>匹配状态
+              </nz-form-label>
+              <nz-form-control nzErrorTip="匹配状态不能为空">
+                <nz-radio-group formControlName="actionMatchState">
+                  <label nz-radio [nzValue]="0">全部</label>
+                  <label nz-radio [nzValue]="1">未处理</label>
+                  <label nz-radio [nzValue]="2">已处理</label>
+                </nz-radio-group>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col [nzSpan]="24">
+            <nz-form-item>
+              <nz-form-label class="form-label">显示条件
+              </nz-form-label>
+              <nz-form-control>
+                <nz-input-group [nzSuffix]="templateIconTpl">
+                  <input nz-input formControlName="actionShowCondition"/>
+                </nz-input-group>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+      </app-section>
+      <app-section dkTitle="操作配置"
+                   *ngIf="dataForm.value.actionType == 2"
+                   [dkBordered]="false" [dkPadding]="false">
+        <div nz-row>
+          <div nz-col [nzSpan]="24">
+            <nz-form-item>
+              <nz-form-label class="form-label">执行宏操作
+              </nz-form-label>
+              <nz-form-control>
+                <app-macro-select formControlName="macroCode"/>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+      </app-section>
+    </form>
+    <app-section dkTitle="操作配置"
+                 *ngIf="dataForm.value.actionType == 1"
+                 [dkBordered]="false" [dkPadding]="false">
+      <div nz-row>
+        <div nz-col [nzSpan]="24">
+          @for (item of routers; track item; let idx = $index) {
+            <form nz-form [formGroup]="item">
+              <div nz-row [nzGutter]="8">
+                <div nz-col [nzSpan]="6">
+                  <nz-form-item>
+                    <nz-form-label class="form-label" nzRequired>路由类型
+                    </nz-form-label>
+                    <nz-form-control>
+                      <nz-select formControlName="routeType">
+                        @for (item of messageRoutePlatforms; track item.value) {
+                          <nz-option [nzValue]="item.value" [nzLabel]="item.label"></nz-option>
+                        }
+                      </nz-select>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="16">
+                  <nz-form-item>
+                    <nz-form-label class="form-label" nzRequired>
+                      路由地址
+                    </nz-form-label>
+                    <nz-form-control>
+                      <nz-input-group [nzSuffix]="templateIconSpring">
+                        <input type="text" nz-input formControlName="routeLink"/>
+                      </nz-input-group>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="2" class="tag-button-container">
+                  <button *ngIf="idx != 0" nz-button
+                          nzType="default" nzShape="circle"
+                          (click)="removeRouter(idx)">
+                    <span nz-icon nzType="minus" nzTheme="outline"></span>
+                  </button>
+                  <button nz-button nzType="default" nzShape="circle" (click)="addRouter()">
+                    <span nz-icon nzType="plus" nzTheme="outline"></span>
+                  </button>
+                </div>
+              </div>
+            </form>
+          }
+        </div>
+      </div>
+    </app-section>
+  </ng-container>
+</nz-modal>
+
+<ng-template #templateIconTpl>
+  <span nz-icon nzType="function" nzTheme="outline"></span>
+</ng-template>
+<ng-template #templateIconSpring>
+  <iconify [size]="16" icon="cib:spring"/>
+</ng-template>
+

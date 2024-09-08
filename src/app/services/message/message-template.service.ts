@@ -7,6 +7,7 @@ import {
   MessageTemplateGroupListVo, MessageTemplateGroupUpdateDto
 } from "@site/app/define/message/message-template-group";
 import {
+  MessageTemplateActionMacro,
   MessageTemplateAddDto,
   MessageTemplateListVo, MessageTemplateQueryDto,
   MessageTemplateUpdateDto
@@ -53,6 +54,15 @@ export class MessageTemplateService {
   delete(messageTemplateId: string): Observable<ResponseBean<void>> {
     return of({
       success: true
+    }).pipe(delay(1000))
+  }
+
+  getMacros(): Observable<ResponseBean<MessageTemplateActionMacro[]>> {
+    return of({
+      success: true,
+      data: [
+        {macroCode: 'makeComplete', macroName: '完成', macroClass: 'com.depsea.macro.MakeComplete'}
+      ]
     }).pipe(delay(1000))
   }
 }
