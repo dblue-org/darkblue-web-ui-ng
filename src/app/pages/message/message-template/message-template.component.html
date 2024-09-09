@@ -21,6 +21,10 @@
     <ng-template #tableButtons>
       <button nz-button nzType="primary"
               routerLink="/message/template/create"
+              [queryParams]="{
+                messageTemplateGroupId: selectedGroup?.messageTemplateGroupId,
+                messageTemplateGroupName: selectedGroup?.messageTemplateGroupName,
+              }"
               [disabled]="!(selectedGroup && selectedGroup.messageTemplateGroupId)">
         <span nz-icon nzType="plus"></span>
         新增
@@ -48,7 +52,7 @@
         <th>消息模板名称</th>
         <th>消息标题</th>
         <th>创建时间</th>
-        <th nzWidth="230px">操作</th>
+        <th nzWidth="140px">操作</th>
       </tr>
       </thead>
       <tbody>
@@ -91,5 +95,3 @@
     </nz-table>
   </app-box-container>
 </app-tow-column>
-
-<app-message-template-edit-modal #messageTemplateEditModalComponent />

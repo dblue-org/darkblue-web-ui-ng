@@ -1,33 +1,24 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { TwoColumnComponent } from "@site/app/components/layout/two-column/two-column.component";
 import {
   MessageTemplateGroupComponent
 } from "@site/app/pages/message/message-template-group/message-template-group.component";
 import { TwoColumnSiderDirective } from "@site/app/components/layout/two-column/two-column-sider.directive";
 import { FormsModule, NonNullableFormBuilder, ReactiveFormsModule } from "@angular/forms";
-import { NzInputDirective, NzInputModule } from "ng-zorro-antd/input";
+import { NzInputModule } from "ng-zorro-antd/input";
 import { TplSearchBarComponent } from "@site/app/components/layout/tpl-search-bar/tpl-search-bar.component";
 import { NzButtonModule } from "ng-zorro-antd/button";
 import { NzIconModule } from "ng-zorro-antd/icon";
 import { PermIfDirective } from "@site/app/directives/perm-if.directive";
 import { CommonModule } from "@angular/common";
-import { UserPageListVo } from "@site/app/define/sys/user";
 import { BoxContainerComponent } from "@site/app/components/layout/box-container/box-container.component";
 import { MessageTemplateListVo } from "@site/app/define/message/message-template";
-import { NzPopconfirmDirective } from "ng-zorro-antd/popconfirm";
-import {
-  NzTableCellDirective,
-  NzTableComponent,
-  NzTbodyComponent,
-  NzTheadComponent,
-  NzThMeasureDirective, NzTrDirective
-} from "ng-zorro-antd/table";
-import { RouterLink } from "@angular/router";
+import { NzPopconfirmModule } from "ng-zorro-antd/popconfirm";
+import { NzTableModule } from "ng-zorro-antd/table";
+import { Router, RouterLink } from "@angular/router";
 import { MessageTemplateGroupListVo } from "@site/app/define/message/message-template-group";
 import { MessageTemplateService } from "@site/app/services/message/message-template.service";
-import {
-  MessageTemplateEditModalComponent
-} from '@site/app/pages/message/message-template/message-template-edit-modal/message-template-edit-modal.component';
+import { group } from "@angular/animations";
 
 @Component({
   selector: 'app-message-template',
@@ -40,31 +31,22 @@ import {
     NzInputModule,
     NzButtonModule,
     NzIconModule,
+    NzTableModule,
+    NzPopconfirmModule,
 
     TwoColumnComponent,
     MessageTemplateGroupComponent,
     TwoColumnSiderDirective,
 
-    NzInputDirective,
     TplSearchBarComponent,
     PermIfDirective,
     BoxContainerComponent,
-    NzPopconfirmDirective,
-    NzTableCellDirective,
-    NzTableComponent,
-    NzTbodyComponent,
-    NzThMeasureDirective,
-    NzTheadComponent,
-    NzTrDirective,
     RouterLink,
-    MessageTemplateEditModalComponent
   ],
   templateUrl: './message-template.component.html',
   styleUrl: './message-template.component.css'
 })
 export class MessageTemplateComponent {
-
-  @ViewChild('messageTemplateEditModalComponent') messageTemplateEditModalComponent?: MessageTemplateEditModalComponent;
 
   searchForm = this.fb.group({
     messageTemplateCode: [''],
@@ -83,7 +65,8 @@ export class MessageTemplateComponent {
   selectedGroup?: MessageTemplateGroupListVo;
 
 
-  constructor(private fb: NonNullableFormBuilder, private messageTemplateService: MessageTemplateService) {
+  constructor(private fb: NonNullableFormBuilder, private messageTemplateService: MessageTemplateService,
+              private router: Router) {
   }
 
   search() {
@@ -117,12 +100,6 @@ export class MessageTemplateComponent {
 
   }
 
-  showAddModal() {
-    this.messageTemplateEditModalComponent?.showAddModal({
-      ...this.selectedGroup
-    });
-  }
-
   showEditModal(data: MessageTemplateListVo) {
 
   }
@@ -130,4 +107,5 @@ export class MessageTemplateComponent {
   delete(messageTemplateId: string) {
 
   }
+
 }

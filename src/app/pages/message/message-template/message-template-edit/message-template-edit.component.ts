@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   DetailsOperationBarComponent
@@ -55,11 +55,14 @@ import { TabsetStoreService } from '@site/app/services/common/tabset-store.servi
 })
 
 export class MessageTemplateEditComponent {
+  @Input('messageTemplateGroupId')
+  messageTemplateGroupId: string = '';
+
+  @Input('messageTemplateGroupName')
+  messageTemplateGroupName: string = ''
 
   @ViewChild('messageTemplateActionModalComponent') messageTemplateActionModalComponent!: MessageTemplateActionModalComponent;
   dataForm = this.formBuilder.group({
-    messageTemplateGroupId: ['', [Validators.required]],
-    messageTemplateGroupName: [''],
     messageTemplateName: ['', [Validators.required]],
     messageTemplateCode: ['', [Validators.required]],
     messageTemplateType: [2, [Validators.required]],
