@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { RouterLinkTabItem } from '@site/app/define/common';
 
 @Injectable({
@@ -7,6 +7,8 @@ import { RouterLinkTabItem } from '@site/app/define/common';
 export class TabsetStoreService {
 
   private cacheKey = 'router-link-tabset-items';
+
+  closeCurrentEvent: EventEmitter<void> = new EventEmitter<void>()
 
   defaultTab: RouterLinkTabItem = {
     name: '首页',
@@ -34,5 +36,15 @@ export class TabsetStoreService {
 
   clear() {
     sessionStorage.clear();
+  }
+
+  setCloseActiveTabHook(fn: Function) {
+    this.closeCurrentEvent.subscribe(() => {
+      fn();
+    })
+  }
+
+  closeActiveTab() {
+    this.closeCurrentEvent.emit()
   }
 }

@@ -23,6 +23,7 @@ import {
 import { NzTableModule } from "ng-zorro-antd/table";
 import { PermIfDirective } from "@site/app/directives/perm-if.directive";
 import { RouterLink } from "@angular/router";
+import { TabsetStoreService } from '@site/app/services/common/tabset-store.service';
 
 @Component({
   selector: 'app-message-template-edit',
@@ -76,7 +77,7 @@ export class MessageTemplateEditComponent {
   messageRoutePlatforms = routePlatforms;
 
   constructor(private formBuilder: NonNullableFormBuilder, private messageTemplateService: MessageTemplateService,
-              private messageService: NzMessageService) {
+              private messageService: NzMessageService, private tabsetStoreService: TabsetStoreService) {
   }
 
   addTag() {
@@ -131,5 +132,9 @@ export class MessageTemplateEditComponent {
 
   editAction(data: MessageTemplateAction) {
     this.messageTemplateActionModalComponent.showUpdateModal(data);
+  }
+
+  doSubmit() {
+    this.tabsetStoreService.closeActiveTab();
   }
 }

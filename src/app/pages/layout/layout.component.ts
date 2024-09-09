@@ -136,6 +136,8 @@ export class LayoutComponent implements OnInit {
       }
     }
 
+    this.tabsetStoreService.setCloseActiveTabHook(() => this.closeCurrent());
+
   }
 
   private tripePath(path: string) {
@@ -192,6 +194,10 @@ export class LayoutComponent implements OnInit {
     $event.preventDefault();
     this.clickTabIndex = index;
     setTimeout(() => this.contextMenuService.create($event, menu), 50);
+  }
+
+  closeCurrent() {
+    this.closeTab({index: this.selectedTabIndex})
   }
 
   closeAll() {
