@@ -1,0 +1,119 @@
+<app-tpl-search-bar [formGroup]="searchForm"
+                    (onSearch)="search()"
+                    [loading]="tableLoading"
+                    [buttons]="tableButtons"
+                    [items]="[
+                          {label: '所属模块', item: moduleId},
+                          {label: '接收人', item: toUser},
+                          {label: '业务编码', item: serviceCode},
+                          {label: '待办消息标题', item: totoTitle},
+                          {label: '待办状态', item: state},
+                          {label: '创建时间', item: createTime},
+                        ]">
+  <ng-template #moduleId>
+    <app-message-template-group-select dkWidth="100%"
+                                       dkPlaceholder="请选择模块"
+                                       formControlName="moduleId"/>
+  </ng-template>
+  <ng-template #toUser>
+    <app-user-select formControlName="toUser" dkPlaceholder="请选择接收人"/>
+  </ng-template>
+  <ng-template #serviceCode>
+    <input nz-input placeholder="请输入业务编码" formControlName="serviceCode"/>
+  </ng-template>
+  <ng-template #totoTitle>
+    <input nz-input placeholder="模糊匹配待办消息标题" formControlName="totoTitle"/>
+  </ng-template>
+  <ng-template #state>
+    <nz-select formControlName="state" style="width: 100%">
+      <nz-option [nzValue]="1" nzLabel="未处理"/>
+      <nz-option [nzValue]="2" nzLabel="已处理"/>
+    </nz-select>
+  </ng-template>
+  <ng-template #createTime>
+    <nz-range-picker style="width: 100%" formControlName="createTime"/>
+  </ng-template>
+
+  <ng-template #tableButtons>
+    <div nz-row class="notification-statistic">
+      <div nz-col [nzSpan]="4">
+        <label class="item-label">待办总量：</label> 300
+      </div>
+      <div nz-col [nzSpan]="4">
+        <label class="item-label">已处理数量：</label> 200
+      </div>
+      <div nz-col [nzSpan]="4">
+        <label class="item-label">未处理数量：</label> 200
+      </div>
+      <div nz-col [nzSpan]="4">
+        <label class="item-label">业务待办总量：</label> 98
+      </div>
+      <div nz-col [nzSpan]="4">
+        <label class="item-label">审批待办总量：</label> 202
+      </div>
+      <div nz-col [nzSpan]="4">
+        <label class="item-label">已处理比例：</label> 66.67%
+      </div>
+    </div>
+  </ng-template>
+</app-tpl-search-bar>
+
+<ng-template #totalTemplate let-total>共 {{ total }} 条</ng-template>
+<app-box-container>
+  <nz-table #basicTable
+            [nzFrontPagination]="false"
+            nzTableLayout="fixed"
+            nzShowPagination
+            nzBordered
+            nzSize="small"
+            nzShowSizeChanger
+            [nzShowTotal]="totalTemplate"
+            [nzTotal]="tableOptions.total"
+            [(nzPageIndex)]="tableOptions.page"
+            [(nzPageSize)]="tableOptions.pageSize"
+            [nzLoading]="tableLoading"
+            [nzData]="todoList"
+            (nzPageSizeChange)="loadTodoList()"
+            (nzPageIndexChange)="loadTodoList()">
+    <thead>
+    <tr>
+      <th nzWidth="200px">所属模块</th>
+      <th nzWidth="200px">业务编码</th>
+      <th nzWidth="200px">待办类型</th>
+      <th>消息标题</th>
+      <th nzWidth="150px">接收人</th>
+      <th nzWidth="120px">待办状态</th>
+      <th nzWidth="120px">业务单据状态</th>
+      <th nzWidth="180px">创建时间</th>
+      <th nzWidth="220px">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of basicTable.data">
+      <td>{{ data.moduleName }}</td>
+      <td>{{ data.serviceCode }}</td>
+      <td>{{ data.todoType == 1 ? '审批类' : '业务类' }}</td>
+      <td [title]="data.todoTitle" nzEllipsis>{{ data.todoTitle }}</td>
+      <td>{{ data.toUserName }}</td>
+      <td>
+        <nz-badge nzStatus="success" *ngIf="data.state == 2" nzText="已处理"></nz-badge>
+        <nz-badge nzStatus="error" *ngIf="data.state == 1" nzText="未处理"></nz-badge>
+      </td>
+      <td>{{ data.serviceStateName }}</td>
+      <td>{{ data.createTime }}</td>
+      <td>
+        <button (nzOnConfirm)="delete(data.todoId)"
+                [nzLoading]="deleteLoading"
+                nz-button
+                nz-popconfirm
+                nzDanger
+                nzPopconfirmTitle="是否确认删除此待办消息?"
+                nzSize="small"
+                nzType="primary">删除
+        </button>
+        <button *ngIf="data.state == 1" nz-button nzSize="small">标记为已处理</button>
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
+</app-box-container>

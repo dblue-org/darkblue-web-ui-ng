@@ -1,0 +1,105 @@
+<app-tpl-search-bar [formGroup]="searchForm"
+                    (onSearch)="search()"
+                    [loading]="tableLoading"
+                    [buttons]="tableButtons"
+                    [items]="[
+                          {label: '所属模块', item: moduleId},
+                          {label: '接收人', item: toUser},
+                          {label: '业务编码', item: serviceCode},
+                          {label: '通知消息标题', item: notificationTitle},
+                          {label: '是否已读', item: isRead},
+                          {label: '创建时间', item: createTime},
+                        ]">
+  <ng-template #moduleId>
+    <app-message-template-group-select dkWidth="100%"
+                                       dkPlaceholder="请选择模块"
+                                       formControlName="moduleId" />
+  </ng-template>
+  <ng-template #toUser>
+    <app-user-select formControlName="toUser" dkPlaceholder="请选择接收人" />
+  </ng-template>
+  <ng-template #serviceCode>
+    <input nz-input placeholder="请输入业务编码" formControlName="serviceCode"/>
+  </ng-template>
+  <ng-template #notificationTitle>
+    <input nz-input placeholder="模糊匹配通知消息标题" formControlName="notificationTitle"/>
+  </ng-template>
+  <ng-template #isRead>
+    <app-boolean-select dkWidth="100%" formControlName="isRead" />
+  </ng-template>
+  <ng-template #createTime>
+    <nz-range-picker style="width: 100%" formControlName="createTime" />
+  </ng-template>
+
+  <ng-template #tableButtons>
+    <div nz-row class="notification-statistic">
+      <div nz-col [nzSpan]="4">
+        <label class="item-label">通知消息总量：</label> 300
+      </div>
+      <div nz-col [nzSpan]="4">
+        <label class="item-label">已读数量：</label> 200
+      </div>
+      <div nz-col [nzSpan]="4">
+        <label class="item-label">未读数量：</label> 200
+      </div>
+      <div nz-col [nzSpan]="4">
+        <label class="item-label">已读比例：</label> 66.67%
+      </div>
+    </div>
+  </ng-template>
+</app-tpl-search-bar>
+
+<ng-template #totalTemplate let-total>共 {{ total }} 条</ng-template>
+<app-box-container>
+  <nz-table #basicTable
+            [nzFrontPagination]="false"
+            nzTableLayout="fixed"
+            nzShowPagination
+            nzBordered
+            nzSize="small"
+            nzShowSizeChanger
+            [nzShowTotal]="totalTemplate"
+            [nzTotal]="tableOptions.total"
+            [(nzPageIndex)]="tableOptions.page"
+            [(nzPageSize)]="tableOptions.pageSize"
+            [nzLoading]="tableLoading"
+            [nzData]="notifications"
+            (nzPageSizeChange)="loadNotifications()"
+            (nzPageIndexChange)="loadNotifications()">
+    <thead>
+    <tr>
+      <th nzWidth="200px">所属模块</th>
+      <th nzWidth="200px">业务编码</th>
+      <th>通知消息标题</th>
+      <th nzWidth="150px">接收人</th>
+      <th nzWidth="120px">状态</th>
+      <th nzWidth="180px">创建时间</th>
+      <th nzWidth="120px">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of basicTable.data">
+      <td>{{ data.moduleName }}</td>
+      <td>{{ data.serviceCode }}</td>
+      <td [title]="data.notificationTitle" nzEllipsis>{{ data.notificationTitle }}</td>
+      <td>{{ data.toUserName }}</td>
+      <td>
+        <nz-badge nzStatus="success" *ngIf="data.isRead" nzText="已读"></nz-badge>
+        <nz-badge nzStatus="error" *ngIf="!data.isRead" nzText="未读"></nz-badge>
+      </td>
+      <td>{{ data.createTime }}</td>
+      <td>
+        <button (nzOnConfirm)="delete(data.notificationId)"
+                [nzLoading]="deleteLoading"
+                nz-button
+                nz-popconfirm
+                nzDanger
+                nzPopconfirmTitle="是否确认删除此通知消息?"
+                nzSize="small"
+                nzType="primary">删除
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
+</app-box-container>

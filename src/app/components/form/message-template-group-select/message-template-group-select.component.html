@@ -1,0 +1,14 @@
+<nz-select
+  [nzMaxTagCount]="10"
+  nzMode="default"
+  [nzPlaceHolder]="placeholder"
+  [style]="{minWidth: width}"
+  [(ngModel)]="value"
+  [nzDisabled]="isDisabled"
+  (ngModelChange)="onModalValueChange($event)"
+>
+  @for (item of options; track item.messageTemplateGroupId) {
+    <nz-option [nzLabel]="item.messageTemplateGroupName"
+               [nzValue]="item.messageTemplateGroupId" />
+  }
+</nz-select>

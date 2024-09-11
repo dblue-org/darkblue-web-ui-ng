@@ -28,6 +28,7 @@ import { BehaviorSubject, map, Observable, switchMap, debounceTime } from 'rxjs'
 export class UserSelectComponent implements ControlValueAccessor, OnInit {
   @Input('dkWidth') width: string = 'auto';
   @Input('dkMode') mode: 'multiple' | 'tags' | 'default' = 'default';
+  @Input('dkPlaceholder') placeholder: string = '请选择用户';
   value?: string[] | string;
   options?: SimpleUser[] = [];
   isDisabled = false
