@@ -4,12 +4,19 @@ export interface TodoListVo {
   todoId: string
   todoTitle: string
   todoType: number
+  messageType: number
   moduleId: string
   moduleName: string
   serviceId: string
   serviceCode: string
+  starter: string
+  starterName: string
   toUserId: string
   toUserName: string
+  handleUser?: string
+  handleUserName?: string
+  serviceData?: string
+  tags?: string[]
   state: number
   stateName: string
   serviceState: string
