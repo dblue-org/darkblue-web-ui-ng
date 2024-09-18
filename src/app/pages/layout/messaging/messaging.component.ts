@@ -10,6 +10,10 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { ActionComponent } from './action/action.component';
+import { NzCheckboxModule } from "ng-zorro-antd/checkbox";
+import { NzBadgeModule } from "ng-zorro-antd/badge";
+import { NzRadioModule } from "ng-zorro-antd/radio";
+import { FormsModule } from "@angular/forms";
 
 export interface Action {
   name: string;
@@ -40,29 +44,32 @@ export interface TodoItem {
     NzGridModule,
     NzButtonModule,
     NzCardModule,
+    NzCheckboxModule,
+    NzBadgeModule,
+    NzRadioModule,
 
-    ActionComponent
+    ActionComponent,
+    FormsModule
   ],
   templateUrl: './messaging.component.html',
   styleUrl: './messaging.component.css'
 })
 export class MessagingComponent {
   visible = false;
-
+  todoType = 0;
   todoList: TodoItem[] = [
     {
       type: '合同',
       createTime: '2024-10-05 12:30',
       status: '待审批',
-      title: '合同审批，这是一个比较长的待办标题',
+      title: '河南XXX有限公司采购合同',
       content: [
-        '合同名称：太空发射计划',
         '合同编号：HT-2024-000001',
-        '客户：NASA',
-        '合同金额：300亿美元'
+        '客户：河南XXX有限公司',
+        '合同金额：2000000'
       ],
       tags: [
-        '大客户合同', '跨国合同'
+        '大客户'
       ],
       actions: [
         {name: '去审批', url: '/'},
@@ -72,16 +79,14 @@ export class MessagingComponent {
     {
       type: '合同',
       createTime: '2024-10-05 12:30',
-      status: '待审批',
-      title: '合同审批',
+      status: '审批通过',
+      title: '河南XXX有限公司销售合同',
       content: [
-        '合同名称：太空发射计划',
-        '合同编号：HT-2024-000001',
-        '客户：NASA',
-        '合同金额：300亿美元'
+        '合同编号：HT-2024-000002',
+        '客户：河南XXX有限公司',
+        '合同金额：2000000'
       ],
       actions: [
-        {name: '去审批', url: '/'},
         {name: '详情', url: '/'}
       ]
     }

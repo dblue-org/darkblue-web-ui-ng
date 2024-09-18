@@ -1,0 +1,32 @@
+<nz-modal (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()" [(nzVisible)]="isVisible"
+          nzTitle="消息模板测试" nzWidth="600px">
+  <ng-container *nzModalContent>
+    <ng-container *ngIf="step == 1">
+      <textarea nz-input rows="20" [(ngModel)]="varModel">
+    </textarea>
+    </ng-container>
+    <ng-container *ngIf="step == 2">
+      <nz-descriptions>
+        <nz-descriptions-item nzTitle="业务记录编码" [nzSpan]="3">
+          {{resolvedMessage.serviceCode}}
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle="消息标题" [nzSpan]="3">
+          {{resolvedMessage.messageTitle}}
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle="消息内容" [nzSpan]="3">
+          <span style="white-space: pre-wrap">{{ resolvedMessage.messageContent }}</span>
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle="标签" [nzSpan]="3">
+          @for (item of resolvedMessage.tags;track item) {
+            <nz-tag [nzColor]="'#108ee9'">{{item}}</nz-tag>
+          }
+        </nz-descriptions-item>
+      </nz-descriptions>
+    </ng-container>
+  </ng-container>
+  <div *nzModalFooter>
+    <button nz-button nzType="default" (click)="handleCancel()">取消</button>
+    <button nz-button nzType="primary" (click)="next()" *ngIf="step === 1">下一步</button>
+    <button nz-button nzType="primary" (click)="handleOk()" *ngIf="step === 2">确定</button>
+  </div>
+</nz-modal>

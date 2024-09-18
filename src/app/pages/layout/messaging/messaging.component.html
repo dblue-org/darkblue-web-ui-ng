@@ -3,37 +3,59 @@
   [nzVisible]="visible"
   nzPlacement="right"
   nzWrapClassName="message-container"
+
   (nzOnClose)="close()"
 >
   <ng-container *nzDrawerContent>
     <nz-tabset>
       <nz-tab nzTitle="通知">
+        <div class="notification-button">
+          <label nz-checkbox>只看未读</label>
+          <a nz-button nzType="link">全部标记为已读</a>
+        </div>
         <nz-list nzItemLayout="vertical">
           <nz-list-item>
             <nz-list-item-meta>
               <nz-list-item-meta-avatar nzSrc="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></nz-list-item-meta-avatar>
               <nz-list-item-meta-title>
-                系统将于 2024-7-10 20:30 停服更新，届时系统所有功能将停用。预计 3 小时更新完毕。请合理安排工作任务，谢谢大家的配合。
+                <div nz-row>
+                  <div nz-col nzSpan="22">
+                    系统停服更新通知
+                  </div>
+                  <div nz-col nzSpan="2">
+                    <nz-badge nzDot />
+                  </div>
+                </div>
+
               </nz-list-item-meta-title>
               <nz-list-item-meta-description>
-                2024-07-03 09:10:23
+                系统将于 2024-7-10 20:30 停服更新，届时系统所有功能将停用。预计 3 小时更新完毕。请合理安排工作任务，谢谢大家的配合。
+                <div class="notification-date">2024-07-03 09:10:23</div>
               </nz-list-item-meta-description>
             </nz-list-item-meta>
           </nz-list-item>
+
           <nz-list-item>
             <nz-list-item-meta>
               <nz-list-item-meta-avatar nzSrc="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></nz-list-item-meta-avatar>
               <nz-list-item-meta-title>
-                您提交的合同[HT-2024-000001]已审批通过。
+                合同审批通过通知
               </nz-list-item-meta-title>
               <nz-list-item-meta-description>
-                2024-07-03 09:17:43
+                您提交的合同[HT-2024-000001]已审批通过，可以继续开展后续业务了。
+                <div class="notification-date">2024-07-03 09:17:43</div>
               </nz-list-item-meta-description>
             </nz-list-item-meta>
           </nz-list-item>
         </nz-list>
       </nz-tab>
       <nz-tab nzTitle="待办">
+        <nz-radio-group [(ngModel)]="todoType" style="margin-bottom: 8px;">
+          <label nz-radio-button [nzValue]="0">全部</label>
+          <label nz-radio-button [nzValue]="1">我发起的</label>
+          <label nz-radio-button [nzValue]="2">我的待办</label>
+          <label nz-radio-button [nzValue]="3">我处理的</label>
+        </nz-radio-group>
         <ng-container *ngFor="let item of todoList">
           <nz-card [nzTitle]="titleTpl" [nzActions]="createActionTemplates(item.actions)" class="message-card">
             <div nz-row style="margin-bottom: 10px;">
@@ -43,9 +65,8 @@
             </div>
             <div *ngFor="let contentItem of item.content">{{contentItem}}</div>
             <div *ngIf="item.tags" class="tags">
-              <nz-tag *ngFor="let tag of item.tags">{{ tag }}</nz-tag>
+              <nz-tag [nzColor]="'#108ee9'" *ngFor="let tag of item.tags">{{ tag }}</nz-tag>
             </div>
-
           </nz-card>
           <ng-template #titleTpl>
             <div nz-row>

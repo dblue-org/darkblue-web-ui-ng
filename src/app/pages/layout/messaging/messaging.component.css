@@ -73,3 +73,12 @@
   border-radius: 8px;
 }
 
+.notification-date {
+  text-align: right;
+  margin-top: 12px;
+}
+
+.notification-button {
+  text-align: right;
+  margin-bottom: 12px;
+}

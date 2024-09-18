@@ -1,1 +1,127 @@
-<p>message-template-details works!</p>
+<app-details-operation-bar>
+  <button nz-button nzType="primary" (click)="showTestModal()">
+    <span nz-icon nzType="caret-right" nzTheme="outline"></span>
+    测试
+  </button>
+</app-details-operation-bar>
+
+<div nz-row [nzGutter]="24">
+  <div nz-col [nzSpan]="19">
+    <app-section dkTitle="基础信息">
+      <nz-descriptions nzBordered [nzColumn]="3">
+        <nz-descriptions-item nzTitle="消息模板组">合同</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="消息模板名称">合同审批</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="消息模板编码">合同审批</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="消息模板类型">{{ details.messageTemplateType == 1 ? '通知' : '待办' }}
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle="业务记录编码" [nzSpan]="2">{{ details.serviceCodeTpl }}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="消息标题" [nzSpan]="3">{{ details.messageTitleTpl }}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="消息内容" [nzSpan]="3">
+          <span style="white-space: pre-wrap">{{ details.messageContentTpl }}</span>
+        </nz-descriptions-item>
+      </nz-descriptions>
+    </app-section>
+    <app-section dkTitle="跳转路由设置" *ngIf="details.messageTemplateType == 1">
+      <nz-table #directRoutersTable
+                [nzShowPagination]="false"
+                [nzData]="directRouters" nzSize="small" nzBordered>
+        <thead>
+        <tr>
+          <th>路由类型</th>
+          <th>路由地址</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let data of directRoutersTable.data">
+          <td>{{ data.routerTypeName }}</td>
+          <td>{{ data.routerLink }}</td>
+        </tr>
+        </tbody>
+      </nz-table>
+    </app-section>
+    <app-section dkTitle="条件标签设置" *ngIf="details.messageTemplateType == 2">
+      <nz-table #tagsTable
+                [nzShowPagination]="false"
+                [nzData]="tags" nzSize="small" nzBordered>
+        <thead>
+        <tr>
+          <th>标签名称</th>
+          <th>显示条件</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let data of tagsTable.data">
+          <td>{{ data.tagName }}</td>
+          <td>{{ data.showCondition }}</td>
+        </tr>
+        </tbody>
+      </nz-table>
+    </app-section>
+    <app-section dkTitle="操作设置" *ngIf="details.messageTemplateType == 2">
+      <nz-table #actionTable
+                [nzFrontPagination]="false"
+                [nzShowPagination]="false"
+                nzBordered
+                nzSize="small"
+                [nzData]="actions">
+        <thead>
+        <tr>
+          <th nzWidth="160px">操作名称</th>
+          <th nzWidth="240px">操作标识</th>
+          <th nzWidth="160px">操作类型</th>
+          <th nzWidth="160px">匹配状态</th>
+          <th>显示条件</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let data of actionTable.data">
+          <td>{{ data.actionName }}</td>
+          <td>
+            {{ data.actionMark }}
+          </td>
+          <td>
+            <span nz-tooltip [nzTooltipTitle]="titleTemplate"
+                  [nzTooltipTitleContext]="{ $implicit: data }">
+              {{ data.actionType == 1 ? '链接跳转' : '宏' }}
+            </span>
+            <ng-template #titleTemplate let-thing>
+              <ng-container *ngIf="thing.actionType == 1">
+                @for (item of thing.links;track item) {
+                  <div class="operation-item">
+                    <label>{{item.routerTypeName}}：</label>
+                    <span>{{item.routerLink}}</span>
+                  </div>
+                }
+              </ng-container>
+              <ng-container *ngIf="thing.actionType == 2">
+                <div class="operation-item">
+                  <label>宏名称：</label>
+                  <span>{{thing.macro.macroName}}</span>
+                </div>
+                <div class="operation-item">
+                  <label>宏编码：</label>
+                  <span>{{thing.macro.macroCode}}</span>
+                </div>
+                <div class="operation-item">
+                  <label>宏处理类：</label>
+                  <span>{{thing.macro.macroClass}}</span>
+                </div>
+              </ng-container>
+            </ng-template>
+          </td>
+          <td>{{ data.actionMatchState == 0 ? '全部' : (data.actionMatchState == 1 ? '未处理' : '已处理') }}</td>
+          <td>{{ data.actionShowCondition }}</td>
+        </tr>
+        </tbody>
+      </nz-table>
+    </app-section>
+  </div>
+  <div nz-col [nzSpan]="5">
+    <app-box-container>
+      <h3>变量信息</h3>
+      <nz-tree nzShowExpand nzShowLine nzExpandAll [nzData]="varTree"/>
+    </app-box-container>
+  </div>
+</div>
+
+<app-message-template-test-modal #messageTemplateTestModalComponent/>
