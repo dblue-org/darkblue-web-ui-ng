@@ -1,5 +1,3 @@
-import { FormControl } from "@angular/forms";
-
 export interface MessageTemplateListVo {
   messageTemplateId: string
   messageTemplateCode: string
@@ -69,5 +67,3 @@ export const routePlatforms = [
   {value: 4, label: '小程序'},
   {value: 5, label: 'H5'},
 ]
-
-

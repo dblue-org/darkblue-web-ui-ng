@@ -8,7 +8,7 @@
               nzWidth="256px">
       <div class="sidebar-logo">
         <img alt="logo" height="10" ngSrc="/assets/images/logo-white.svg" width="10">
-        <h1 *ngIf="!isCollapsed">消息系統</h1>
+        <h1 *ngIf="!isCollapsed">Dark Blue Of Angular</h1>
       </div>
       <div class="app-menu">
         <app-menu [isCollapsed]="isCollapsed"></app-menu>
@@ -28,14 +28,14 @@
               </button>
             </div>
             <div [nzSpan]="15" class="gutter-row" nz-col>
-              <!--<nz-input-group [nzPrefix]="prefixTemplateUser">
+              <nz-input-group [nzPrefix]="prefixTemplateUser">
                 <input (keydown.enter)="doSearch()"
                        [(ngModel)]="keyword"
                        nz-input
                        placeholder="搜索用户、职位、角色等信息"
                        type="text"/>
               </nz-input-group>
-              <ng-template #prefixTemplateUser><span nz-icon nzTheme="outline" nzType="search"></span></ng-template>-->
+              <ng-template #prefixTemplateUser><span nz-icon nzTheme="outline" nzType="search"></span></ng-template>
             </div>
             <div [nzSpan]="6" class="gutter-row" nz-col style="text-align: right;padding-right:32px;">
               <button (click)="showMessagingDrawer()" class="header-button" nz-button nzType="primary">
