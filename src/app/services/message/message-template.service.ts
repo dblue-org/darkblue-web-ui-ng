@@ -1,68 +1,61 @@
 import { Injectable } from '@angular/core';
-import { delay, Observable, of } from "rxjs";
-import { ResponseBean } from "@site/app/define/sys/response";
-import { DictionaryListVo } from "@site/app/define/settings/dictionary";
+import { delay, Observable, of } from 'rxjs';
+import { ResponseBean } from '@site/app/define/sys/response';
+import { DictionaryListVo } from '@site/app/define/settings/dictionary';
 import {
   MessageTemplateGroupAddDto,
   MessageTemplateGroupListVo, MessageTemplateGroupUpdateDto
-} from "@site/app/define/message/message-template-group";
+} from '@site/app/define/message/message-template-group';
 import {
   MessageTemplateActionMacro,
-  MessageTemplateAddDto,
+  MessageTemplateAddDto, MessageTemplateDetailsVo,
   MessageTemplateListVo, MessageTemplateQueryDto,
   MessageTemplateUpdateDto
-} from "@site/app/define/message/message-template";
+} from '@site/app/define/message/message-template';
+import { HttpClient } from '@angular/common/http';
+import { EnumValue } from '@site/app/define/common';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MessageTemplateService {
 
-  constructor() { }
+  constructor(private http: HttpClient) {
+  }
 
   findMessageTemplates(params: MessageTemplateQueryDto): Observable<ResponseBean<MessageTemplateListVo[]>> {
-    return of({
-      success: true,
-      data: [
-        {
-          messageTemplateId: '4156456464',
-          messageTemplateCode: 'CONTRACT-AUDIT',
-          messageTemplateName: '消息审批',
-          messageTitle: '合同标题-${contractTitle}',
-          messageContent: '666666666',
-          messageTemplateGroupId: '001',
-          messageTemplateGroupName: '合同',
-          createTime: '2024-08-16 23:55:55'
-        },
-
-      ]
-    }).pipe(delay(1000))
+    return this.http.get<ResponseBean<MessageTemplateListVo[]>>('/api/message-template/findByPage', {
+      params: {
+        ...params
+      }
+    });
   }
 
   add(addDto: MessageTemplateAddDto): Observable<ResponseBean<void>> {
-    return of({
-      success: true
-    }).pipe(delay(1000))
+    return this.http.post<ResponseBean<void>>('/api/message-template/add', addDto);
   }
 
   update(updateDto: MessageTemplateUpdateDto): Observable<ResponseBean<void>> {
-    return of({
-      success: true
-    }).pipe(delay(1000))
+    return this.http.put<ResponseBean<void>>('/api/message-template/update', updateDto);
   }
 
   delete(messageTemplateId: string): Observable<ResponseBean<void>> {
-    return of({
-      success: true
-    }).pipe(delay(1000))
+    return this.http.delete<ResponseBean<void>>(`/api/message-template/delete/${messageTemplateId}`);
   }
 
   getMacros(): Observable<ResponseBean<MessageTemplateActionMacro[]>> {
-    return of({
-      success: true,
-      data: [
-        {macroCode: 'makeComplete', macroName: '完成', macroClass: 'com.depsea.macro.MakeComplete'}
-      ]
-    })
+    return this.http.get<ResponseBean<MessageTemplateActionMacro[]>>('/api/message-template/macro/findAll');
+  }
+
+  getRouterTypes(): Observable<ResponseBean<EnumValue[]>> {
+    return this.http.get<ResponseBean<EnumValue[]>>('/api/message-template/getRouterTypes');
+  }
+
+  getDetails(messageTemplateId: string, withVars: boolean): Observable<ResponseBean<MessageTemplateDetailsVo>> {
+    return this.http.get<ResponseBean<MessageTemplateDetailsVo>>(`/api/message-template/getDetails/${messageTemplateId}`,{
+      params: {
+        withVars
+      }
+    });
   }
 }

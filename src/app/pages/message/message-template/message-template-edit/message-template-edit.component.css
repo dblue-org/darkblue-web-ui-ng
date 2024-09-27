@@ -8,3 +8,14 @@
   line-height: 32px;
   text-align: right;
 }
+
+.details-container {
+  height: calc(100% - 90px);
+  overflow-y: auto;
+}
+
+.action-error-icon{
+  color: red;
+  font-size: 14px;
+  display: inline-block;
+}

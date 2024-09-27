@@ -25,3 +25,8 @@ export interface GroupPermConfig {
   update: string
   delete: string
 }
+
+export interface EnumValue {
+  value: number;
+  label: string
+}

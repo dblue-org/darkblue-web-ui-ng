@@ -1,0 +1,13 @@
+<nz-select
+  [nzMaxTagCount]="10"
+  nzMode="default"
+  [nzPlaceHolder]="placeHolder"
+  [style]="{minWidth: width}"
+  [(ngModel)]="value"
+  [nzDisabled]="isDisabled"
+  (ngModelChange)="onModalValueChange($event)"
+>
+  <nz-option *ngFor="let item of options"
+             [nzLabel]="item.label"
+             [nzValue]="item.value" />
+</nz-select>

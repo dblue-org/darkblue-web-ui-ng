@@ -19,6 +19,7 @@ import { Router, RouterLink } from "@angular/router";
 import { MessageTemplateGroupListVo } from "@site/app/define/message/message-template-group";
 import { MessageTemplateService } from "@site/app/services/message/message-template.service";
 import { group } from "@angular/animations";
+import { NzSelectModule } from 'ng-zorro-antd/select';
 
 @Component({
   selector: 'app-message-template',
@@ -33,6 +34,7 @@ import { group } from "@angular/animations";
     NzIconModule,
     NzTableModule,
     NzPopconfirmModule,
+    NzSelectModule,
 
     TwoColumnComponent,
     MessageTemplateGroupComponent,
@@ -51,6 +53,7 @@ export class MessageTemplateComponent {
   searchForm = this.fb.group({
     messageTemplateCode: [''],
     messageTemplateName: [''],
+    messageTemplateType: [''],
     messageTemplateGroupId: ['']
   });
   messageTemplates: MessageTemplateListVo[] = [];

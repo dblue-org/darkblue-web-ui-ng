@@ -43,7 +43,7 @@
               <nz-form-label class="form-label" nzRequired>匹配状态
               </nz-form-label>
               <nz-form-control nzErrorTip="匹配状态不能为空">
-                <nz-radio-group formControlName="actionMatchState">
+                <nz-radio-group formControlName="matchState">
                   <label nz-radio [nzValue]="0">全部</label>
                   <label nz-radio [nzValue]="1">未处理</label>
                   <label nz-radio [nzValue]="2">已处理</label>
@@ -57,7 +57,7 @@
               </nz-form-label>
               <nz-form-control>
                 <nz-input-group [nzSuffix]="templateIconTpl">
-                  <input nz-input formControlName="actionShowCondition"/>
+                  <input nz-input formControlName="showConditional"/>
                 </nz-input-group>
               </nz-form-control>
             </nz-form-item>
@@ -93,11 +93,7 @@
                     <nz-form-label class="form-label" nzRequired>路由类型
                     </nz-form-label>
                     <nz-form-control>
-                      <nz-select formControlName="routeType">
-                        @for (item of messageRoutePlatforms; track item.value) {
-                          <nz-option [nzValue]="item.value" [nzLabel]="item.label"></nz-option>
-                        }
-                      </nz-select>
+                      <app-router-type-select formControlName="routerType"/>
                     </nz-form-control>
                   </nz-form-item>
                 </div>
@@ -108,7 +104,7 @@
                     </nz-form-label>
                     <nz-form-control nzErrorTip="路由地址不能为空">
                       <nz-input-group [nzSuffix]="templateIconSpring">
-                        <input type="text" nz-input formControlName="routeLink"/>
+                        <input type="text" nz-input formControlName="routerLink"/>
                       </nz-input-group>
                     </nz-form-control>
                   </nz-form-item>

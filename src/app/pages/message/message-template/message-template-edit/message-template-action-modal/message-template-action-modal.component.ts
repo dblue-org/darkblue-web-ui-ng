@@ -1,18 +1,19 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from "@angular/forms";
-import { CommonModule } from "@angular/common";
-import { NzModalModule } from "ng-zorro-antd/modal";
-import { NzButtonModule } from "ng-zorro-antd/button";
-import { NzFormModule } from "ng-zorro-antd/form";
-import { NzMessageService } from "ng-zorro-antd/message";
-import { NzInputDirective, NzInputModule } from "ng-zorro-antd/input";
-import { NzSelectModule } from "ng-zorro-antd/select";
-import { NzRadioComponent, NzRadioModule } from "ng-zorro-antd/radio";
-import { MacroSelectComponent } from "@site/app/components/form/macro-select/macro-select.component";
-import { MessageTemplateAction, MessageTemplateLink, routePlatforms } from "@site/app/define/message/message-template";
-import { IconifyComponent } from "@site/app/components/icon/iconify/iconify.component";
-import { NzIconDirective } from "ng-zorro-antd/icon";
-import { SectionComponent } from "@site/app/components/layout/section/section.component";
+import { FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { MacroSelectComponent } from '@site/app/components/form/macro-select/macro-select.component';
+import { MessageTemplateAction, MessageTemplateLink } from '@site/app/define/message/message-template';
+import { IconifyComponent } from '@site/app/components/icon/iconify/iconify.component';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { SectionComponent } from '@site/app/components/layout/section/section.component';
+import { RouterTypeSelectComponent } from '@site/app/components/form/router-type-select/router-type-select.component';
 
 @Component({
   selector: 'app-message-template-action-modal',
@@ -27,10 +28,12 @@ import { SectionComponent } from "@site/app/components/layout/section/section.co
     NzSelectModule,
     NzInputModule,
     NzRadioModule,
+    NzIconModule,
+
     MacroSelectComponent,
     IconifyComponent,
-    NzIconDirective,
-    SectionComponent
+    SectionComponent,
+    RouterTypeSelectComponent
   ],
   templateUrl: './message-template-action-modal.component.html',
   styleUrl: './message-template-action-modal.component.css'
@@ -43,19 +46,19 @@ export class MessageTemplateActionModalComponent {
   @Output() onEditOk: EventEmitter<MessageTemplateAction> = new EventEmitter<MessageTemplateAction>();
 
   dataForm = this.formBuilder.group({
-    actionId: ['', [Validators.required]],
+    messageTemplateActionId: ['', [Validators.required]],
     actionName: ['', [Validators.required]],
     actionMark: [''],
     actionType: [1, Validators.required],
-    actionMatchState: [0, Validators.required],
-    actionShowCondition: [''],
+    matchState: [0, Validators.required],
+    showConditional: [''],
     macroCode: ['']
   })
 
   routers: FormGroup[] = [
     this.formBuilder.group({
-      routeType: [1, [Validators.required]],
-      routeLink: ['', [Validators.required]],
+      routerType: [1, [Validators.required]],
+      routerLink: ['', [Validators.required]],
     })
   ];
 
@@ -66,8 +69,8 @@ export class MessageTemplateActionModalComponent {
     this.dataForm.reset({});
     this.routers = [
       this.formBuilder.group({
-        routeType: [1, [Validators.required]],
-        routeLink: ['', [Validators.required]],
+        routerType: [1, [Validators.required]],
+        routerLink: ['', [Validators.required]],
       })
     ];
     this.isVisible = true;
@@ -78,11 +81,11 @@ export class MessageTemplateActionModalComponent {
     this.dataForm.reset({});
     this.routers = [];
     this.dataForm.patchValue(data);
-    if (data.links && data.links.length > 0) {
-      for (let link of data.links) {
+    if (data.routes && data.routes.length > 0) {
+      for (let link of data.routes) {
         const linkForm = this.formBuilder.group({
-          routeType: [1, [Validators.required]],
-          routeLink: ['', [Validators.required]],
+          routerType: [1, [Validators.required]],
+          routerLink: ['', [Validators.required]],
         })
         linkForm.patchValue(link);
         this.routers.push(linkForm);
@@ -94,8 +97,8 @@ export class MessageTemplateActionModalComponent {
 
   addRouter() {
     this.routers.push(this.formBuilder.group({
-      routeType: [1, [Validators.required]],
-      routeLink: ['', [Validators.required]],
+      routerType: [1, [Validators.required]],
+      routerLink: ['', [Validators.required]],
     }))
   }
 
@@ -118,13 +121,13 @@ export class MessageTemplateActionModalComponent {
   handleOk(): void {
     if (!this.isEdit) {
       this.dataForm.patchValue({
-        actionId: Date.now() + ''
+        messageTemplateActionId: Date.now() + ''
       })
     }
     if (this.dataForm.valid && this.routersValid()) {
       const action = {
         ...this.dataForm.value,
-        links: this.getLinks()
+        routers: this.getLinks()
       }
       if (this.dataForm.value.actionType == 1) {
         action.macroCode = undefined
@@ -153,7 +156,6 @@ export class MessageTemplateActionModalComponent {
           });
         })
       }
-
     }
   }
 
@@ -180,5 +182,4 @@ export class MessageTemplateActionModalComponent {
     }
   }
 
-  protected readonly messageRoutePlatforms = routePlatforms;
 }

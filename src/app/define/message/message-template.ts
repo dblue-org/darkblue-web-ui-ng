@@ -1,28 +1,46 @@
+import { NzTreeNodeOptions } from 'ng-zorro-antd/tree';
+
 export interface MessageTemplateListVo {
   messageTemplateId: string
   messageTemplateCode: string
   messageTemplateName: string
-  messageTitle: string
-  messageContent: string
+  messageTemplateType: number
+  serviceCodeTpl: string
+  messageTitleTpl: string
+  messageContentTpl: string
   messageTemplateGroupId: string
   messageTemplateGroupName: string
   createTime: string
 }
 
+export interface MessageTemplateTagDto {
+  tagName: string
+  showConditional: string
+}
+
 export interface MessageTemplateAddDto {
   messageTemplateCode: string
   messageTemplateName: string
-  messageTitle: string
-  messageContent: string
+  messageTemplateType: number
+  serviceCodeTpl: string
+  messageTitleTpl: string
+  messageContentTpl: string
   messageTemplateGroupId: string
+  directRouters?: MessageTemplateLink[]
+  tags?: MessageTemplateTagDto[]
+  actions?: MessageTemplateAction[]
 }
 
 export interface MessageTemplateUpdateDto {
   messageTemplateId: string
   messageTemplateCode: string
   messageTemplateName: string
-  messageTitle: string
-  messageContent: string
+  serviceCodeTpl: string
+  messageTitleTpl: string
+  messageContentTpl: string
+  directRouters?: MessageTemplateLink[]
+  tags?: MessageTemplateTagDto[]
+  actions?: MessageTemplateAction[]
 }
 
 export interface MessageTemplateQueryDto {
@@ -34,8 +52,8 @@ export interface MessageTemplateQueryDto {
 }
 
 export interface MessageTemplateLink {
-  routeType: number,
-  routeLink: string
+  routerType: number,
+  routerLink: string
 }
 
 export interface MessageTemplateActionMacro {
@@ -45,14 +63,61 @@ export interface MessageTemplateActionMacro {
 }
 
 export interface MessageTemplateAction {
-  actionId: string
+  messageTemplateActionId?: string
   actionName: string
   actionMark: string
   actionType: number // 1-路由跳转；2-宏
-  actionMatchState: number
-  actionShowCondition: string
+  matchState: number
+  showConditional: string
   macroCode?: string
-  links?: MessageTemplateLink[]
+  routes?: MessageTemplateLink[]
+}
+
+export interface MessageTemplateTagVo {
+  messageTemplateTagId: string
+  tagName: string
+  showConditional: string
+}
+
+export interface MessageTemplateLinkVo {
+  routerType: number,
+  routerTypeName: string,
+  routerLink: string
+}
+
+export interface MessageTemplateDirectRouteVo extends MessageTemplateLinkVo {
+  messageTemplateDirectRouteId: string
+}
+
+export interface MessageTemplateActionRouteVo extends MessageTemplateLinkVo {
+  messageTemplateActionRouteId: string
+}
+export interface MessageTemplateActionVo {
+  messageTemplateActionId?: string
+  actionName: string
+  actionMark: string
+  actionType: number // 1-路由跳转；2-宏
+  matchState: number
+  showConditional: string
+  macroCode?: string
+  routes?: MessageTemplateActionRouteVo[]
+}
+
+export interface MessageTemplateDetailsVo {
+  messageTemplateId: string
+  messageTemplateCode: string
+  messageTemplateName: string
+  messageTemplateType: number
+  serviceCodeTpl: string
+  messageTitleTpl: string
+  messageContentTpl: string
+  messageTemplateGroupId: string
+  messageTemplateGroupName: string
+  createTime: string
+  directRouters?: MessageTemplateDirectRouteVo[]
+  tags?: MessageTemplateTagVo[]
+  actions?: MessageTemplateActionVo[]
+  variables: NzTreeNodeOptions[]
 }
 
 export const messageTypes = [

@@ -1,230 +1,241 @@
 <app-details-operation-bar>
-  <button nz-button nzType="primary" (click)="doSubmit()">提交</button>
+  <button nz-button nzType="primary" (click)="doSubmit()">
+    {{ isEdit ? '更新' : '提交' }}
+  </button>
 </app-details-operation-bar>
 
-<nz-alert nzType="info" [nzMessage]="alertMessage" nzShowIcon style="margin-bottom: 24px;"></nz-alert>
-<ng-template #alertMessage>
-  带有 <span nz-icon nzType="function" nzTheme="outline"></span> 图标的输入框表示这是一个支持使用 Apache Velocity
-  模板语法的字段。
-  带有
-  <iconify [size]="16" icon="cib:spring"/>
-  图标的输入框这是一个支持使用 SPEL(Spring Expression Language) 语法的字段，一般为条件表达式。
-  使用 <code>{{ varDefine }}</code> 插入一个变量。
-</ng-template>
+<div class="details-container">
+  <nz-alert nzType="info" [nzMessage]="alertMessage" nzShowIcon style="margin-bottom: 24px;"></nz-alert>
+  <ng-template #alertMessage>
+    带有 <span nz-icon nzType="function" nzTheme="outline"></span> 图标的输入框表示这是一个支持使用 Apache Velocity
+    模板语法的字段。
+    带有
+    <iconify [size]="16" icon="cib:spring"/>
+    图标的输入框这是一个支持使用 SPEL(Spring Expression Language) 语法的字段，一般为条件表达式。
+    使用 <code>{{ varDefine }}</code> 插入一个变量。
+  </ng-template>
 
-<div>
-  <app-section dkTitle="消息模板基础信息">
-    <form nz-form [formGroup]="dataForm">
-      <div nz-row [nzGutter]="8">
-        <div nz-col [nzSpan]="8">
-          <nz-form-item>
-            <nz-form-label class="form-label" nzFor="messageTemplateGroupName">消息模板组名称
-            </nz-form-label>
-            <nz-form-control>
-              <input nz-input [value]="messageTemplateGroupName" id="messageTemplateGroupName" readonly/>
-            </nz-form-control>
-          </nz-form-item>
-        </div>
-        <div nz-col [nzSpan]="8">
-          <nz-form-item>
-            <nz-form-label class="form-label" nzRequired>消息模板名称
-            </nz-form-label>
-            <nz-form-control nzErrorTip="消息模板名称不能为空">
-              <input nz-input formControlName="messageTemplateGroupName"/>
-            </nz-form-control>
-          </nz-form-item>
-        </div>
-        <div nz-col [nzSpan]="8">
-          <nz-form-item>
-            <nz-form-label class="form-label" nzRequired>消息模板编码
-            </nz-form-label>
-            <nz-form-control nzErrorTip="消息模板编码不能为空">
-              <input nz-input formControlName="messageTemplateGroupName"/>
-            </nz-form-control>
-          </nz-form-item>
-        </div>
-        <div nz-col [nzSpan]="8">
-          <nz-form-item>
-            <nz-form-label class="form-label" nzRequired>消息模板类型
-            </nz-form-label>
-            <nz-form-control nzErrorTip="消息模板类型不能为空">
-              <nz-select formControlName="messageTemplateType">
-                @for (item of messageTemplateTypes; track item.value) {
-                  <nz-option [nzValue]="item.value" [nzLabel]="item.label"></nz-option>
-                }
-              </nz-select>
-            </nz-form-control>
-          </nz-form-item>
-        </div>
-        <div nz-col [nzSpan]="8">
-          <nz-form-item>
-            <nz-form-label class="form-label" nzRequired>业务记录编码
-            </nz-form-label>
-            <nz-form-control nzErrorTip="业务记录编码">
-              <nz-input-group [nzSuffix]="templateIconTpl">
-                <input type="text" nz-input formControlName="messageTemplateGroupName"/>
-              </nz-input-group>
-            </nz-form-control>
-          </nz-form-item>
-        </div>
-        <div nz-col [nzSpan]="24">
-          <nz-form-item>
-            <nz-form-label class="form-label" nzRequired>消息标题
-            </nz-form-label>
-            <nz-form-control nzErrorTip="消息标题不能为空">
-              <nz-input-group [nzSuffix]="templateIconTpl">
-                <input type="text" nz-input formControlName="messageTemplateGroupName"/>
-              </nz-input-group>
-            </nz-form-control>
-          </nz-form-item>
-        </div>
-        <div nz-col [nzSpan]="24">
-          <nz-form-item>
-            <nz-form-label class="form-label" nzRequired>消息内容
-            </nz-form-label>
-            <nz-form-control nzErrorTip="消息内容不能为空">
-              <nz-input-group [nzSuffix]="templateIconTpl">
-                <textarea nz-input
-                          [nzAutosize]="{ minRows: 3, maxRows: 5 }"
-                          formControlName="messageTemplateGroupName"></textarea>
-              </nz-input-group>
-            </nz-form-control>
-          </nz-form-item>
-        </div>
-      </div>
-    </form>
-  </app-section>
-  <app-section *ngIf="dataForm.value.messageTemplateType == 2"
-               dkTitle="条件标签设置" [dkExtra]="conditionTagButtons">
-    @for (item of tags; track item; let idx = $index) {
-      <form nz-form [formGroup]="item">
+  <div>
+    <app-section dkTitle="消息模板基础信息">
+      <form nz-form [formGroup]="dataForm">
         <div nz-row [nzGutter]="8">
-          <div nz-col [nzSpan]="6">
+          <div nz-col [nzSpan]="8">
             <nz-form-item>
-              <nz-form-label class="form-label" nzRequired>标签名称
+              <nz-form-label class="form-label" nzFor="messageTemplateGroupName">消息模板组名称
               </nz-form-label>
               <nz-form-control>
-                <input nz-input formControlName="tagName"/>
+                <input nz-input [value]="messageTemplateGroupName" id="messageTemplateGroupName" readonly/>
               </nz-form-control>
             </nz-form-item>
           </div>
-          <div nz-col [nzSpan]="17">
+          <div nz-col [nzSpan]="8">
             <nz-form-item>
-              <nz-form-label class="form-label" nzRequired>
-                显示条件
+              <nz-form-label class="form-label" nzRequired>消息模板名称
               </nz-form-label>
-              <nz-form-control>
-                <nz-input-group [nzSuffix]="templateIconSpring">
-                  <input type="text" nz-input formControlName="showCondition"/>
-                </nz-input-group>
+              <nz-form-control nzErrorTip="消息模板名称不能为空">
+                <input nz-input formControlName="messageTemplateName"/>
               </nz-form-control>
             </nz-form-item>
           </div>
-          <div nz-col [nzSpan]="1" class="tag-button-container">
-            <button nz-button nzSize="small" (click)="removeTag(idx)">删除</button>
-          </div>
-        </div>
-      </form>
-    }
-
-    <ng-template #conditionTagButtons>
-      <button nz-button nzType="primary" nzSize="small" (click)="addTag()">添加</button>
-    </ng-template>
-  </app-section>
-  <app-section *ngIf="dataForm.value.messageTemplateType == 1"
-               dkTitle="跳转路由设置" [dkExtra]="routeButtons">
-    @for (item of routers; track item; let idx = $index) {
-      <form nz-form [formGroup]="item">
-        <div nz-row [nzGutter]="8">
-          <div nz-col [nzSpan]="6">
+          <div nz-col [nzSpan]="8">
             <nz-form-item>
-              <nz-form-label class="form-label" nzRequired>路由类型
+              <nz-form-label class="form-label" nzRequired>消息模板编码
               </nz-form-label>
-              <nz-form-control>
-                <nz-select formControlName="routeType">
-                  @for (item of messageRoutePlatforms; track item.value) {
+              <nz-form-control nzErrorTip="消息模板编码不能为空">
+                <input nz-input formControlName="messageTemplateCode"/>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col [nzSpan]="8">
+            <nz-form-item>
+              <nz-form-label class="form-label" nzRequired>消息模板类型
+              </nz-form-label>
+              <nz-form-control nzErrorTip="消息模板类型不能为空">
+                <nz-select formControlName="messageTemplateType" [nzDisabled]="isEdit">
+                  @for (item of messageTemplateTypes; track item.value) {
                     <nz-option [nzValue]="item.value" [nzLabel]="item.label"></nz-option>
                   }
                 </nz-select>
               </nz-form-control>
             </nz-form-item>
           </div>
-          <div nz-col [nzSpan]="17">
+          <div nz-col [nzSpan]="8">
             <nz-form-item>
-              <nz-form-label class="form-label" nzRequired>
-                路由地址
+              <nz-form-label class="form-label">业务记录编码
               </nz-form-label>
               <nz-form-control>
-                <nz-input-group [nzSuffix]="templateIconSpring">
-                  <input type="text" nz-input formControlName="routeLink"/>
+                <nz-input-group [nzSuffix]="templateIconTpl">
+                  <input type="text" nz-input formControlName="serviceCodeTpl"/>
                 </nz-input-group>
               </nz-form-control>
             </nz-form-item>
           </div>
-          <div nz-col [nzSpan]="1" class="tag-button-container">
-            <button nz-button nzSize="small" (click)="removeRouter(idx)">删除</button>
+          <div nz-col [nzSpan]="24">
+            <nz-form-item>
+              <nz-form-label class="form-label" nzRequired>消息标题
+              </nz-form-label>
+              <nz-form-control nzErrorTip="消息标题不能为空">
+                <nz-input-group [nzSuffix]="templateIconTpl">
+                  <input type="text" nz-input formControlName="messageTitleTpl"/>
+                </nz-input-group>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col [nzSpan]="24">
+            <nz-form-item>
+              <nz-form-label class="form-label" nzRequired>消息内容
+              </nz-form-label>
+              <nz-form-control nzErrorTip="消息内容不能为空">
+                <nz-input-group [nzSuffix]="templateIconTpl">
+                <textarea nz-input
+                          [nzAutosize]="{ minRows: 3, maxRows: 5 }"
+                          formControlName="messageContentTpl"></textarea>
+                </nz-input-group>
+              </nz-form-control>
+            </nz-form-item>
           </div>
         </div>
       </form>
-    }
-    <ng-template #routeButtons>
-      <button nz-button nzType="primary" nzSize="small" (click)="addRouter()">添加</button>
+    </app-section>
+    <app-section *ngIf="dataForm.value.messageTemplateType == 2"
+                 dkTitle="条件标签设置" [dkExtra]="conditionTagButtons">
+      @for (item of tags; track item; let idx = $index) {
+        <form nz-form [formGroup]="item">
+          <div nz-row [nzGutter]="8">
+            <div nz-col [nzSpan]="6">
+              <nz-form-item>
+                <nz-form-label class="form-label" nzRequired>标签名称
+                </nz-form-label>
+                <nz-form-control nzErrorTip="标签名称不能为空">
+                  <input nz-input formControlName="tagName"/>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col [nzSpan]="17">
+              <nz-form-item>
+                <nz-form-label class="form-label" nzRequired>
+                  显示条件
+                </nz-form-label>
+                <nz-form-control nzErrorTip="显示条件不能为空">
+                  <nz-input-group [nzSuffix]="templateIconSpring">
+                    <input type="text" nz-input formControlName="showConditional"/>
+                  </nz-input-group>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col [nzSpan]="1" class="tag-button-container">
+              <button nz-button nzSize="small" (click)="removeTag(idx)">删除</button>
+            </div>
+          </div>
+        </form>
+      }
+
+      <ng-template #conditionTagButtons>
+        <button nz-button nzType="primary" nzSize="small" (click)="addTag()">添加</button>
+      </ng-template>
+    </app-section>
+    <app-section *ngIf="dataForm.value.messageTemplateType == 1"
+                 dkTitle="跳转路由设置" [dkExtra]="routeButtons">
+      @for (item of routers; track item; let idx = $index) {
+        <form nz-form [formGroup]="item">
+          <div nz-row [nzGutter]="8">
+            <div nz-col [nzSpan]="6">
+              <nz-form-item>
+                <nz-form-label class="form-label" nzRequired>路由类型
+                </nz-form-label>
+                <nz-form-control>
+                  <app-router-type-select formControlName="routerType"/>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col [nzSpan]="17">
+              <nz-form-item>
+                <nz-form-label class="form-label" nzRequired>
+                  路由地址
+                </nz-form-label>
+                <nz-form-control>
+                  <nz-input-group [nzSuffix]="templateIconSpring">
+                    <input type="text" nz-input formControlName="routerLink"/>
+                  </nz-input-group>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col [nzSpan]="1" class="tag-button-container">
+              <button nz-button nzSize="small" (click)="removeRouter(idx)">删除</button>
+            </div>
+          </div>
+        </form>
+      }
+      <ng-template #routeButtons>
+        <button nz-button nzType="primary" nzSize="small" (click)="addRouter()">添加</button>
+      </ng-template>
+    </app-section>
+    <app-section *ngIf="dataForm.value.messageTemplateType == 2"
+                 [dkTitle]="actionTitle" [dkExtra]="operationButtons">
+      <nz-table #actionTable
+                [nzFrontPagination]="false"
+                [nzShowPagination]="false"
+                nzBordered
+                nzSize="small"
+                [nzData]="actions">
+        <thead>
+        <tr>
+          <th nzWidth="160px">操作名称</th>
+          <th nzWidth="240px">操作标识</th>
+          <th nzWidth="160px">操作类型</th>
+          <th nzWidth="160px">匹配状态</th>
+          <th>显示条件</th>
+          <th nzWidth="140px">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let data of actionTable.data">
+          <td>{{ data.actionName }}</td>
+          <td>
+            {{ data.actionMark }}
+          </td>
+          <td>{{ data.actionType == 1 ? '链接跳转' : '宏' }}</td>
+          <td>{{ data.matchState == 0 ? '全部' : (data.matchState == 1 ? '未处理' : '已处理') }}</td>
+          <td>{{ data.showConditional }}</td>
+          <td>
+            <button nz-button nzSize="small"
+                    nzDanger
+                    (click)="deleteAction(data)"
+                    nzType="primary">删除
+            </button>
+            <button nz-button nzSize="small"
+                    (click)="editAction(data)"
+                    nzType="primary">编辑
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </nz-table>
+      <ng-template #operationButtons>
+        <button nz-button nzType="primary" nzSize="small" (click)="showAddActionModal()">添加</button>
+      </ng-template>
+    </app-section>
+    <ng-template #actionTitle>
+      操作设置
+      <span *ngIf="!actions || actions.length == 0"
+            nz-icon
+            nzType="warning"
+            nz-tooltip
+            nzTooltipTitle="待办类型的消息模板至少需要配置一个操作"
+            nzTheme="outline"
+            class="action-error-icon"></span>
     </ng-template>
-  </app-section>
-  <app-section *ngIf="dataForm.value.messageTemplateType == 2"
-               dkTitle="操作设置" [dkExtra]="operationButtons">
-    <nz-table #actionTable
-              [nzFrontPagination]="false"
-              [nzShowPagination]="false"
-              nzBordered
-              nzSize="small"
-              [nzData]="actions">
-      <thead>
-      <tr>
-        <th nzWidth="160px">操作名称</th>
-        <th nzWidth="240px">操作标识</th>
-        <th nzWidth="160px">操作类型</th>
-        <th nzWidth="160px">匹配状态</th>
-        <th>显示条件</th>
-        <th nzWidth="140px">操作</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let data of actionTable.data">
-        <td>{{ data.actionName }}</td>
-        <td>
-          {{ data.actionMark }}
-        </td>
-        <td>{{ data.actionType == 1 ? '链接跳转' : '宏' }}</td>
-        <td>{{ data.actionMatchState == 0 ? '全部' : (data.actionMatchState == 1 ? '未处理' : '已处理') }}</td>
-        <td>{{ data.actionShowCondition }}</td>
-        <td>
-          <button nz-button nzSize="small"
-                  nzDanger
-                  (click)="deleteAction(data)"
-                  nzType="primary">删除
-          </button>
-          <button nz-button nzSize="small"
-                  (click)="editAction(data)"
-                  nzType="primary">编辑
-          </button>
-        </td>
-      </tr>
-      </tbody>
-    </nz-table>
-    <ng-template #operationButtons>
-      <button nz-button nzType="primary" nzSize="small" (click)="showAddActionModal()">添加</button>
-    </ng-template>
-  </app-section>
+  </div>
+
+  <ng-template #templateIconTpl>
+    <span nz-icon nzType="function" nzTheme="outline"></span>
+  </ng-template>
+  <ng-template #templateIconSpring>
+    <iconify [size]="16" icon="cib:spring"/>
+  </ng-template>
 </div>
 
-<ng-template #templateIconTpl>
-  <span nz-icon nzType="function" nzTheme="outline"></span>
-</ng-template>
-<ng-template #templateIconSpring>
-  <iconify [size]="16" icon="cib:spring"/>
-</ng-template>
-
-<app-message-template-action-modal #messageTemplateActionModalComponent
-                                   (onCreateOk)="onActionCreateOk($event)"
-                                   (onEditOk)="onActionUpdateOk($event)"/>
+<app-message-template-action-modal
+  #messageTemplateActionModalComponent
+  (onCreateOk)="onActionCreateOk($event)"
+  (onEditOk)="onActionUpdateOk($event)"/>
