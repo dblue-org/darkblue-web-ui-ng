@@ -11,9 +11,9 @@ import {
 
 export const MESSAGE_ROUTES: Routes = [
   { path: 'template', component: MessageTemplateComponent, title: '消息模板', data: {shouldReuse: true}},
-  { path: 'template/create', component: MessageTemplateEditComponent, title: '添加消息模板', data: {shouldReuse: true}},
-  { path: 'template/edit', component: MessageTemplateEditComponent, title: '编辑消息模板', data: {shouldReuse: true}},
-  { path: 'template/details', component: MessageTemplateDetailsComponent, title: '消息模板详情', data: {shouldReuse: true}},
+  { path: 'template/create', component: MessageTemplateEditComponent, title: '添加消息模板', data: {shouldReuse: false}},
+  { path: 'template/edit', component: MessageTemplateEditComponent, title: '编辑消息模板', data: {shouldReuse: false}},
+  { path: 'template/details', component: MessageTemplateDetailsComponent, title: '消息模板详情', data: {shouldReuse: false}},
   { path: 'notification', component: NotificationManageComponent, title: '通知管理', data: {shouldReuse: true}},
   { path: 'todo', component: TodoManageComponent, title: '待办管理', data: {shouldReuse: true}},
 ]
